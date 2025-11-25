@@ -1,0 +1,315 @@
+{
+    "common": {
+        "success": "Success",
+        "error": "Error",
+        "created": "Created",
+        "updated": "Updated",
+        "deleted": "Deleted",
+        "notFound": "Not found",
+        "unauthorized": "Unauthorized",
+        "forbidden": "Forbidden",
+        "validationFailed": "Validation failed",
+        "serverError": "Server error"
+    },
+    "auth": {
+        "register": {
+            "success": "Registration successful",
+            "emailExists": "Email already exists",
+            "handleExists": "Username already exists"
+        },
+        "login": {
+            "success": "Login successful",
+            "invalidCredentials": "Invalid email or password",
+            "accountSuspended": "Account has been suspended"
+        },
+        "logout": {
+            "success": "Logout successful"
+        },
+        "refresh": {
+            "success": "Token refreshed successfully",
+            "invalidToken": "Invalid token"
+        },
+        "google": {
+            "failed": "Google authentication failed"
+        },
+        "oauth": {
+            "profile": "OAuth profile info"
+        }
+    },
+    "users": {
+        "profile": {
+            "updated": "Profile updated successfully",
+            "notFound": "User not found",
+            "setupComplete": "Profile setup completed",
+            "invalidRole": "Invalid role. Allowed: SEEKER, LISTENER, EXPERT",
+            "invalidYob": "Invalid year of birth",
+            "retrieved": "Profile retrieved successfully"
+        },
+        "avatar": {
+            "uploaded": "Avatar uploaded successfully",
+            "invalidFormat": "Invalid image format"
+        },
+        "follow": {
+            "success": "Followed successfully",
+            "alreadyFollowing": "You are already following this user",
+            "cannotFollowSelf": "Cannot follow yourself"
+        },
+        "unfollow": {
+            "success": "Unfollowed successfully"
+        }
+    },
+    "experts": {
+        "profile": {
+            "created": "Expert profile created successfully",
+            "updated": "Expert profile updated successfully",
+            "notFound": "Expert not found",
+            "onlyExperts": "Only experts can update expert profile",
+            "invalidPrice": "Price must be a positive number",
+            "invalidSpecialties": "Specialties must be an array of strings",
+            "updateFailed": "Failed to update expert profile",
+            "retrieved": "Expert profile retrieved successfully",
+            "retrievalFailed": "Failed to retrieve expert profile"
+        },
+        "skills": {
+            "added": "Skill added successfully",
+            "updated": "Skill updated successfully",
+            "deleted": "Skill deleted successfully",
+            "addFailed": "Failed to add skill",
+            "updateFailed": "Failed to update skill",
+            "removeFailed": "Failed to remove skill"
+        },
+        "experience": {
+            "added": "Experience added successfully",
+            "updated": "Experience updated successfully",
+            "deleted": "Experience deleted successfully",
+            "addFailed": "Failed to add experience",
+            "updateFailed": "Failed to update experience",
+            "removeFailed": "Failed to remove experience"
+        },
+        "education": {
+            "added": "Education added successfully",
+            "updated": "Education updated successfully",
+            "deleted": "Education deleted successfully",
+            "addFailed": "Failed to add education",
+            "updateFailed": "Failed to update education",
+            "removeFailed": "Failed to remove education"
+        },
+        "certifications": {
+            "added": "Certification added successfully",
+            "updated": "Certification updated successfully",
+            "deleted": "Certification deleted successfully",
+            "addFailed": "Failed to add certification",
+            "updateFailed": "Failed to update certification",
+            "removeFailed": "Failed to remove certification"
+        },
+        "availability": {
+            "set": "Availability set successfully",
+            "deleted": "Availability deleted successfully",
+            "conflict": "Availability conflict",
+            "retrieved": "Availability retrieved successfully",
+            "retrievalFailed": "Failed to retrieve availability",
+            "addFailed": "Failed to add availability",
+            "updateFailed": "Failed to update availability",
+            "removeFailed": "Failed to remove availability"
+        },
+        "audience": {
+            "updated": "Target audience updated successfully",
+            "updateFailed": "Failed to update target audience"
+        },
+        "domains": {
+            "updated": "Domains updated successfully",
+            "updateFailed": "Failed to update domains"
+        },
+        "media": {
+            "retrieved": "Media retrieved successfully",
+            "retrievalFailed": "Failed to retrieve media",
+            "added": "Media added successfully",
+            "addFailed": "Failed to add media",
+            "updated": "Media updated successfully",
+            "updateFailed": "Failed to update media",
+            "removed": "Media removed successfully",
+            "removeFailed": "Failed to remove media"
+        },
+        "status": {
+            "updated": "Status updated successfully",
+            "updateFailed": "Failed to update status"
+        },
+        "search": {
+            "success": "Experts search completed successfully",
+            "failed": "Experts search failed"
+        },
+        "stats": {
+            "retrieved": "Statistics retrieved successfully",
+            "failed": "Failed to retrieve statistics"
+        },
+        "validation": {
+            "success": "Profile validation completed",
+            "failed": "Profile validation failed"
+        },
+        "performance": {
+            "updated": "Performance updated successfully",
+            "failed": "Failed to update performance"
+        }
+    },
+    "bookings": {
+        "create": {
+            "success": "Booking created successfully",
+            "paymentInitiated": "Booking created and payment initiated",
+            "expertNotFound": "Expert not found",
+            "conflictTime": "Time slot already booked",
+            "invalidTime": "Invalid time"
+        },
+        "confirm": {
+            "success": "Booking confirmed successfully",
+            "alreadyConfirmed": "Booking already confirmed",
+            "cannotConfirm": "Cannot confirm this booking"
+        },
+        "cancel": {
+            "success": "Booking cancelled successfully",
+            "alreadyCancelled": "Booking already cancelled",
+            "cannotCancel": "Cannot cancel this booking"
+        },
+        "complete": {
+            "success": "Booking completed successfully",
+            "notConfirmed": "Booking not confirmed",
+            "alreadyCompleted": "Booking already completed"
+        },
+        "list": {
+            "retrieved": "Bookings retrieved successfully"
+        },
+        "details": {
+            "retrieved": "Booking details retrieved successfully"
+        },
+        "admin": {
+            "autoComplete": "Auto-completed expired bookings",
+            "accessRequired": "Admin access required"
+        },
+        "errors": {
+            "notFound": "Booking not found",
+            "notAuthorized": "You are not authorized to access this booking",
+            "timeConflict": "Expert already has a booking during this time slot. Please select a different time.",
+            "timeConflictSuggestion": "Try selecting a different time slot or check the expert's availability"
+        }
+    },
+    "payments": {
+        "create": {
+            "success": "Payment created successfully",
+            "failed": "Payment creation failed"
+        },
+        "momo": {
+            "success": "MoMo payment successful",
+            "pending": "Payment pending",
+            "failed": "Payment failed",
+            "expired": "Payment expired"
+        },
+        "refund": {
+            "success": "Refund successful",
+            "failed": "Refund failed"
+        }
+    },
+    "chat": {
+        "thread": {
+            "created": "Chat thread created successfully",
+            "notFound": "Chat thread not found"
+        },
+        "message": {
+            "sent": "Message sent successfully",
+            "edited": "Message edited successfully",
+            "deleted": "Message deleted successfully",
+            "notFound": "Message not found"
+        },
+        "read": {
+            "marked": "Marked as read"
+        }
+    },
+    "posts": {
+        "create": {
+            "success": "Post created successfully"
+        },
+        "update": {
+            "success": "Post updated successfully"
+        },
+        "delete": {
+            "success": "Post deleted successfully"
+        },
+        "react": {
+            "success": "Reacted to post",
+            "removed": "Reaction removed"
+        },
+        "save": {
+            "success": "Post saved",
+            "removed": "Post unsaved"
+        },
+        "errors": {
+            "notFound": "Post not found",
+            "notAuthorized": "You are not authorized to edit this post"
+        }
+    },
+    "comments": {
+        "create": {
+            "success": "Comment created successfully"
+        },
+        "update": {
+            "success": "Comment updated successfully"
+        },
+        "delete": {
+            "success": "Comment deleted successfully"
+        },
+        "errors": {
+            "notFound": "Comment not found",
+            "notAuthorized": "You are not authorized to edit this comment"
+        }
+    },
+    "reviews": {
+        "create": {
+            "success": "Review created successfully",
+            "alreadyReviewed": "You have already reviewed this booking"
+        },
+        "update": {
+            "success": "Review updated successfully"
+        },
+        "errors": {
+            "notFound": "Review not found",
+            "bookingNotCompleted": "Booking not completed"
+        }
+    },
+    "payouts": {
+        "request": {
+            "success": "Payout request submitted successfully",
+            "insufficientBalance": "Insufficient balance"
+        },
+        "account": {
+            "created": "Payout account created successfully",
+            "updated": "Payout account updated successfully",
+            "deleted": "Payout account deleted successfully"
+        }
+    },
+    "email": {
+        "otp": {
+            "sent": "OTP sent",
+            "verified": "Email verified successfully",
+            "invalid": "Invalid OTP",
+            "expired": "OTP expired"
+        }
+    },
+    "validation": {
+        "failed": "Validation failed",
+        "required": "{{field}} is required",
+        "email": "Invalid email",
+        "minLength": "{{field}} must be at least {{min}} characters",
+        "maxLength": "{{field}} must not exceed {{max}} characters",
+        "min": "{{field}} must be greater than or equal to {{min}}",
+        "max": "{{field}} must be less than or equal to {{max}}",
+        "invalid": "Invalid {{field}}",
+        "mustBePositive": "{{field}} must be a positive number",
+        "invalidFormat": "Invalid {{field}} format"
+    },
+    "errors": {
+        "internal": "Internal server error",
+        "notFound": "Resource not found",
+        "unauthorized": "You are not logged in",
+        "forbidden": "You do not have permission",
+        "badRequest": "Bad request",
+        "conflict": "Data conflict"
+    }
+}

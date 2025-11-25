@@ -11,17 +11,14 @@ import { cacheMiddleware, checkCacheHealth } from "./utils/cache.js";
 import routes from "./routes/index.js";
 import setupPassport from "./config/passport.js";
 import passport from "passport";
-import chatRoutes from './AI/routes.js';
+import i18nMiddleware from "./middlewares/i18n.js";
 
 const app = express();
 setupPassport();
 app.use(passport.initialize());
 
-
-// Apply request middleware
 applyRequestMiddleware(app);
 
-// Security middleware
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
@@ -38,27 +35,24 @@ app.use(cors({
   origin: process.env.ALLOWED_ORIGINS?.split(',') || true,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Request-ID']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'X-Request-ID', 'Accept-Language']
 }));
 
-// Body parsing middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// Request logging
 app.use(requestLogger);
 
-// Rate limiting
+// Add i18n middleware for multi-language support
+app.use(i18nMiddleware);
+
 app.use(rateLimiters.api);
 
-// Static files
 app.use("/uploads", express.static(path.resolve("uploads")));
 app.use("/uploads/avatar", express.static(path.resolve("uploads/avatar")));
 
-// Cache middleware for static assets
-app.use("/uploads", cacheMiddleware(3600000)); // 1 hour cache for uploads
+app.use("/uploads", cacheMiddleware(3600000));
 
-// Health check endpoint
 app.get("/health", (req, res) => {
   const cacheHealth = checkCacheHealth();
   res.json({
@@ -70,7 +64,6 @@ app.get("/health", (req, res) => {
   });
 });
 
-// Database test endpoint
 app.get("/dbtest", async (req, res) => {
   try {
     const { query } = await import("./config/db.js");
@@ -89,10 +82,8 @@ app.get("/dbtest", async (req, res) => {
   }
 });
 
-// API routes
 app.use("/api/v1", routes);
 
-// Cache warming endpoint
 app.get("/api/v1/cache/stats", (req, res) => {
   import("./utils/cache.js").then(({ cache }) => {
     const stats = {
@@ -105,14 +96,11 @@ app.get("/api/v1/cache/stats", (req, res) => {
     res.status(500).json({ error: "Failed to get cache stats", message: err.message });
   });
 });
-app.use('/api', chatRoutes);
-// 404 handler
+
 app.use(notFoundHandler);
 
-// Global error handler
 app.use(errorHandler);
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received, shutting down gracefully');
   process.exit(0);

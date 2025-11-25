@@ -215,11 +215,13 @@ export const validateRequest = (schema) => (req, res, next) => {
     if (error instanceof z.ZodError) {
       const errorMessages = error.errors.map(err => ({
         field: err.path.join('.'),
-        message: err.message
+        message: req.t ? req.t(`validation.${err.code}`, { field: err.path.join('.'), ...err }) : err.message
       }));
       return res.status(400).json({
-        error: "Validation failed",
-        details: errorMessages
+        success: false,
+        message: req.t ? req.t('validation.failed') : "Validation failed",
+        details: errorMessages,
+        timestamp: new Date().toISOString()
       });
     }
     next(error);
@@ -236,11 +238,13 @@ export const validateQuery = (schema) => (req, res, next) => {
     if (error instanceof z.ZodError) {
       const errorMessages = error.errors.map(err => ({
         field: err.path.join('.'),
-        message: err.message
+        message: req.t ? req.t(`validation.${err.code}`, { field: err.path.join('.'), ...err }) : err.message
       }));
       return res.status(400).json({
-        error: "Query validation failed",
-        details: errorMessages
+        success: false,
+        message: req.t ? req.t('validation.failed') : "Query validation failed",
+        details: errorMessages,
+        timestamp: new Date().toISOString()
       });
     }
     next(error);

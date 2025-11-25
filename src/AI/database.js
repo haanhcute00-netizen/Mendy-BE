@@ -1,13 +1,7 @@
-// Import hàm 'query' từ file cấu hình database mới của bạn
+
 import { query } from '../config/db.js';
 
-/**
- * Lấy lịch sử trò chuyện gần đây của một người dùng.
- * LƯU Ý: Subquery để lấy `thread_id` cần được điều chỉnh cho phù hợp với logic của bạn.
- * Ví dụ này giả định bạn có cách xác định thread gần nhất của user.
- * @param {number} userId - ID của người dùng.
- * @returns {Promise<Array>} - Mảng các tin nhắn gần đây.
- */
+
 export const getRecentChatHistory = async (userId) => {
     const sql = `
         SELECT sender_id, content
@@ -26,19 +20,14 @@ export const getRecentChatHistory = async (userId) => {
         LIMIT 10;
     `;
     
-    // Truyền userId vào câu truy vấn như một tham số an toàn
+    
     const values = [userId];
     
     const result = await query(sql, values);
-    return result.rows.reverse(); // Trả về thứ tự đúng (cũ nhất -> mới nhất)
+    return result.rows.reverse();
 };
 
-/**
- * Tìm chuyên gia phù hợp dựa trên danh sách từ khóa.
- * Sử dụng toán tử && (overlap) của PostgreSQL để tìm kiếm hiệu quả trên mảng (array).
- * @param {string[]} keywords - Mảng các từ khóa.
- * @returns {Promise<Array>} - Mảng các đối tượng chuyên gia phù hợp.
- */
+
 export const findExpertsByKeywords = async (keywords) => {
     if (!keywords || keywords.length === 0) {
         return [];
@@ -68,7 +57,7 @@ export const findExpertsByKeywords = async (keywords) => {
     
     const values = [keywords];
     
-    // Sử dụng hàm query() đã được import
+
     const result = await query(sql, values);
     return result.rows;
 };

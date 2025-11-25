@@ -1,29 +1,29 @@
 import "dotenv/config";
 import http from "http";
+import { Server } from "socket.io";
 import { env } from "./utils/envValidator.js";
 import { logger, handleUncaughtExceptions, handleUnhandledRejections } from "./utils/logger.js";
 import { handleUnhandledRejections as errorHandlerUnhandledRejections } from "./middlewares/errorHandler.js";
 import app from "./app.js";
 import { initChatSocket } from "./sockets/chat.socket.js";
 import { initRtcSocket } from "./sockets/rtc.socket.js";
-import * as BookingsService from "./services/bookings.service.js";
+import * as BookingsService from "./modules/bookings/bookings.service.js";
 
-// Validate environment variables
 const validatedEnv = env;
 
-// Set up global error handlers
 handleUncaughtExceptions();
 handleUnhandledRejections();
 errorHandlerUnhandledRejections();
 
 const PORT = validatedEnv.PORT || 4000;
 const server = http.createServer(app);
+const io = new Server(server, {
+  cors: { origin: true, credentials: true }
+});
 
-// Socket.io setup
-initChatSocket(server);
-initRtcSocket(server);
+initChatSocket(io);
+initRtcSocket(io);
 
-// Start server
 server.listen(PORT, () => {
   logger.info(`✅ API running: http://localhost:${PORT}`, {
     environment: validatedEnv.NODE_ENV,
@@ -32,7 +32,6 @@ server.listen(PORT, () => {
   });
 });
 
-// Schedule job to auto-complete expired bookings every 5 minutes
 setInterval(async () => {
   try {
     const completedBookings = await BookingsService.autoCompleteExpiredBookings();
@@ -42,19 +41,17 @@ setInterval(async () => {
   } catch (error) {
     logger.error('Error in auto-complete job', { error: error.message, stack: error.stack });
   }
-}, 5 * 60 * 1000); // Run every 5 minutes
+}, 5 * 60 * 1000);
 
-// Handle server errors
 server.on('error', (error) => {
   logger.error('Server error', { error: error.message, stack: error.stack });
-  
+
   if (error.syscall !== 'listen') {
     throw error;
   }
 
   const bind = typeof PORT === 'string' ? `Pipe ${PORT}` : `Port ${PORT}`;
 
-  // Handle specific listen errors
   switch (error.code) {
     case 'EACCES':
       logger.error(`${bind} requires elevated privileges`);
@@ -69,7 +66,6 @@ server.on('error', (error) => {
   }
 });
 
-// Graceful shutdown
 process.on('SIGTERM', () => {
   logger.info('SIGTERM received, shutting down gracefully');
   server.close(() => {
@@ -85,6 +81,3 @@ process.on('SIGINT', () => {
     process.exit(0);
   });
 });
-
-// Note: Error handlers are already set up above (lines 14-16)
-// These are kept for reference but are redundant
