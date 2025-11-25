@@ -1,7 +1,7 @@
 // sockets/chat.socket.js
 import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
-import * as ChatRepo from "../repositories/chat.repo.js";
+import * as ChatRepo from "../modules/chat/chat.repo.js";
 import { verifyJwt } from "../utils/verifyJwt.js";
 
 
@@ -21,25 +21,23 @@ function escapeHtml(s) { return s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<':
 
 
 
-export function initChatSocket(server) {
-  const io = new Server(server, {
-    cors: { origin: true, credentials: true }
-  });
+export function initChatSocket(io) {
+  // const io = new Server(server, { ... }); // Removed, passed from server.js
 
   // Xác thực JWT ở handshake
   io.use((socket, next) => {
-  try {
-    const token =
-      socket.handshake.auth?.token ||
-      socket.handshake.headers?.authorization?.replace("Bearer ", "");
-    const payload = verifyJwt(token);        // ✅ dùng chung
-    socket.userId = Number(payload.sub);
-    socket.role = payload.role || "SEEKER";
-    next();
-  } catch (err) {
-    next(new Error("Unauthorized"));
-  }
-});
+    try {
+      const token =
+        socket.handshake.auth?.token ||
+        socket.handshake.headers?.authorization?.replace("Bearer ", "");
+      const payload = verifyJwt(token);        // ✅ dùng chung
+      socket.userId = Number(payload.sub);
+      socket.role = payload.role || "SEEKER";
+      next();
+    } catch (err) {
+      next(new Error("Unauthorized"));
+    }
+  });
 
 
   io.on("connection", (socket) => {

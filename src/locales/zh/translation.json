@@ -1,0 +1,315 @@
+{
+    "common": {
+        "success": "成功",
+        "error": "错误",
+        "created": "已创建",
+        "updated": "已更新",
+        "deleted": "已删除",
+        "notFound": "未找到",
+        "unauthorized": "未授权",
+        "forbidden": "禁止访问",
+        "validationFailed": "验证失败",
+        "serverError": "服务器错误"
+    },
+    "auth": {
+        "register": {
+            "success": "注册成功",
+            "emailExists": "邮箱已存在",
+            "handleExists": "用户名已存在"
+        },
+        "login": {
+            "success": "登录成功",
+            "invalidCredentials": "邮箱或密码无效",
+            "accountSuspended": "账户已被暂停"
+        },
+        "logout": {
+            "success": "退出成功"
+        },
+        "refresh": {
+            "success": "令牌刷新成功",
+            "invalidToken": "无效令牌"
+        },
+        "google": {
+            "failed": "Google验证失败"
+        },
+        "oauth": {
+            "profile": "OAuth个人资料"
+        }
+    },
+    "users": {
+        "profile": {
+            "updated": "个人资料更新成功",
+            "notFound": "未找到用户",
+            "setupComplete": "个人资料设置完成",
+            "invalidRole": "无效角色。允许：SEEKER, LISTENER, EXPERT",
+            "invalidYob": "出生年份无效",
+            "retrieved": "个人资料获取成功"
+        },
+        "avatar": {
+            "uploaded": "头像上传成功",
+            "invalidFormat": "图片格式无效"
+        },
+        "follow": {
+            "success": "关注成功",
+            "alreadyFollowing": "您已关注此用户",
+            "cannotFollowSelf": "无法关注自己"
+        },
+        "unfollow": {
+            "success": "取消关注成功"
+        }
+    },
+    "experts": {
+        "profile": {
+            "created": "专家资料创建成功",
+            "updated": "专家资料更新成功",
+            "notFound": "未找到专家",
+            "onlyExperts": "只有专家可以更新专家资料",
+            "invalidPrice": "价格必须是正数",
+            "invalidSpecialties": "专业必须是字符串数组",
+            "updateFailed": "更新专家资料失败",
+            "retrieved": "专家资料获取成功",
+            "retrievalFailed": "获取专家资料失败"
+        },
+        "skills": {
+            "added": "技能添加成功",
+            "updated": "技能更新成功",
+            "deleted": "技能删除成功",
+            "addFailed": "添加技能失败",
+            "updateFailed": "更新技能失败",
+            "removeFailed": "删除技能失败"
+        },
+        "experience": {
+            "added": "经验添加成功",
+            "updated": "经验更新成功",
+            "deleted": "经验删除成功",
+            "addFailed": "添加经验失败",
+            "updateFailed": "更新经验失败",
+            "removeFailed": "删除经验失败"
+        },
+        "education": {
+            "added": "教育经历添加成功",
+            "updated": "教育经历更新成功",
+            "deleted": "教育经历删除成功",
+            "addFailed": "添加教育经历失败",
+            "updateFailed": "更新教育经历失败",
+            "removeFailed": "删除教育经历失败"
+        },
+        "certifications": {
+            "added": "证书添加成功",
+            "updated": "证书更新成功",
+            "deleted": "证书删除成功",
+            "addFailed": "添加证书失败",
+            "updateFailed": "更新证书失败",
+            "removeFailed": "删除证书失败"
+        },
+        "availability": {
+            "set": "可用时间设置成功",
+            "deleted": "可用时间删除成功",
+            "conflict": "可用时间冲突",
+            "retrieved": "可用时间获取成功",
+            "retrievalFailed": "获取可用时间失败",
+            "addFailed": "添加可用时间失败",
+            "updateFailed": "更新可用时间失败",
+            "removeFailed": "删除可用时间失败"
+        },
+        "audience": {
+            "updated": "目标受众更新成功",
+            "updateFailed": "更新目标受众失败"
+        },
+        "domains": {
+            "updated": "领域更新成功",
+            "updateFailed": "更新领域失败"
+        },
+        "media": {
+            "retrieved": "媒体获取成功",
+            "retrievalFailed": "获取媒体失败",
+            "added": "媒体添加成功",
+            "addFailed": "添加媒体失败",
+            "updated": "媒体更新成功",
+            "updateFailed": "更新媒体失败",
+            "removed": "媒体删除成功",
+            "removeFailed": "删除媒体失败"
+        },
+        "status": {
+            "updated": "状态更新成功",
+            "updateFailed": "更新状态失败"
+        },
+        "search": {
+            "success": "专家搜索成功",
+            "failed": "专家搜索失败"
+        },
+        "stats": {
+            "retrieved": "统计数据获取成功",
+            "failed": "获取统计数据失败"
+        },
+        "validation": {
+            "success": "资料验证完成",
+            "failed": "资料验证失败"
+        },
+        "performance": {
+            "updated": "绩效更新成功",
+            "failed": "更新绩效失败"
+        }
+    },
+    "bookings": {
+        "create": {
+            "success": "预约创建成功",
+            "paymentInitiated": "预约创建并启动支付成功",
+            "expertNotFound": "未找到专家",
+            "conflictTime": "时间段已被预约",
+            "invalidTime": "时间无效"
+        },
+        "confirm": {
+            "success": "预约确认成功",
+            "alreadyConfirmed": "预约已确认",
+            "cannotConfirm": "无法确认此预约"
+        },
+        "cancel": {
+            "success": "预约取消成功",
+            "alreadyCancelled": "预约已取消",
+            "cannotCancel": "无法取消此预约"
+        },
+        "complete": {
+            "success": "预约完成成功",
+            "notConfirmed": "预约未确认",
+            "alreadyCompleted": "预约已完成"
+        },
+        "list": {
+            "retrieved": "预约列表获取成功"
+        },
+        "details": {
+            "retrieved": "预约详情获取成功"
+        },
+        "admin": {
+            "autoComplete": "自动完成过期预约",
+            "accessRequired": "需要管理员权限"
+        },
+        "errors": {
+            "notFound": "未找到预约",
+            "notAuthorized": "您无权访问此预约",
+            "timeConflict": "专家在此时间段已有预约。请选择其他时间。",
+            "timeConflictSuggestion": "尝试选择其他时间段或检查专家的可用时间"
+        }
+    },
+    "payments": {
+        "create": {
+            "success": "支付创建成功",
+            "failed": "支付创建失败"
+        },
+        "momo": {
+            "success": "MoMo支付成功",
+            "pending": "支付待处理",
+            "failed": "支付失败",
+            "expired": "支付已过期"
+        },
+        "refund": {
+            "success": "退款成功",
+            "failed": "退款失败"
+        }
+    },
+    "chat": {
+        "thread": {
+            "created": "聊天创建成功",
+            "notFound": "未找到聊天"
+        },
+        "message": {
+            "sent": "消息发送成功",
+            "edited": "消息编辑成功",
+            "deleted": "消息删除成功",
+            "notFound": "未找到消息"
+        },
+        "read": {
+            "marked": "已标记为已读"
+        }
+    },
+    "posts": {
+        "create": {
+            "success": "帖子创建成功"
+        },
+        "update": {
+            "success": "帖子更新成功"
+        },
+        "delete": {
+            "success": "帖子删除成功"
+        },
+        "react": {
+            "success": "已回应帖子",
+            "removed": "回应已移除"
+        },
+        "save": {
+            "success": "帖子已保存",
+            "removed": "帖子已取消保存"
+        },
+        "errors": {
+            "notFound": "未找到帖子",
+            "notAuthorized": "您无权编辑此帖子"
+        }
+    },
+    "comments": {
+        "create": {
+            "success": "评论创建成功"
+        },
+        "update": {
+            "success": "评论更新成功"
+        },
+        "delete": {
+            "success": "评论删除成功"
+        },
+        "errors": {
+            "notFound": "未找到评论",
+            "notAuthorized": "您无权编辑此评论"
+        }
+    },
+    "reviews": {
+        "create": {
+            "success": "评价创建成功",
+            "alreadyReviewed": "您已评价此预约"
+        },
+        "update": {
+            "success": "评价更新成功"
+        },
+        "errors": {
+            "notFound": "未找到评价",
+            "bookingNotCompleted": "预约未完成"
+        }
+    },
+    "payouts": {
+        "request": {
+            "success": "提款请求提交成功",
+            "insufficientBalance": "余额不足"
+        },
+        "account": {
+            "created": "提款账户创建成功",
+            "updated": "提款账户更新成功",
+            "deleted": "提款账户删除成功"
+        }
+    },
+    "email": {
+        "otp": {
+            "sent": "OTP已发送",
+            "verified": "邮箱验证成功",
+            "invalid": "OTP无效",
+            "expired": "OTP已过期"
+        }
+    },
+    "validation": {
+        "failed": "验证失败",
+        "required": "{{field}}是必需的",
+        "email": "邮箱无效",
+        "minLength": "{{field}}必须至少{{min}}个字符",
+        "maxLength": "{{field}}不得超过{{max}}个字符",
+        "min": "{{field}}必须大于或等于{{min}}",
+        "max": "{{field}}必须小于或等于{{max}}",
+        "invalid": "{{field}}无效",
+        "mustBePositive": "{{field}}必须是正数",
+        "invalidFormat": "{{field}}格式无效"
+    },
+    "errors": {
+        "internal": "内部服务器错误",
+        "notFound": "未找到资源",
+        "unauthorized": "您未登录",
+        "forbidden": "您没有权限",
+        "badRequest": "请求错误",
+        "conflict": "数据冲突"
+    }
+}

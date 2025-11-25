@@ -1,0 +1,315 @@
+{
+    "common": {
+        "success": "Thành công",
+        "error": "Lỗi",
+        "created": "Đã tạo",
+        "updated": "Đã cập nhật",
+        "deleted": "Đã xóa",
+        "notFound": "Không tìm thấy",
+        "unauthorized": "Chưa xác thực",
+        "forbidden": "Không có quyền truy cập",
+        "validationFailed": "Dữ liệu không hợp lệ",
+        "serverError": "Lỗi máy chủ"
+    },
+    "auth": {
+        "register": {
+            "success": "Đăng ký thành công",
+            "emailExists": "Email đã tồn tại",
+            "handleExists": "Tên người dùng đã tồn tại"
+        },
+        "login": {
+            "success": "Đăng nhập thành công",
+            "invalidCredentials": "Email hoặc mật khẩu không đúng",
+            "accountSuspended": "Tài khoản đã bị tạm khóa"
+        },
+        "logout": {
+            "success": "Đăng xuất thành công"
+        },
+        "refresh": {
+            "success": "Làm mới token thành công",
+            "invalidToken": "Token không hợp lệ"
+        },
+        "google": {
+            "failed": "Xác thực Google thất bại"
+        },
+        "oauth": {
+            "profile": "Thông tin hồ sơ OAuth"
+        }
+    },
+    "users": {
+        "profile": {
+            "updated": "Cập nhật hồ sơ thành công",
+            "notFound": "Không tìm thấy người dùng",
+            "setupComplete": "Thiết lập hồ sơ hoàn tất",
+            "invalidRole": "Vai trò không hợp lệ. Chỉ cho phép: SEEKER, LISTENER, EXPERT",
+            "invalidYob": "Năm sinh không hợp lệ",
+            "retrieved": "Lấy thông tin hồ sơ thành công"
+        },
+        "avatar": {
+            "uploaded": "Tải lên ảnh đại diện thành công",
+            "invalidFormat": "Định dạng ảnh không hợp lệ"
+        },
+        "follow": {
+            "success": "Đã theo dõi",
+            "alreadyFollowing": "Bạn đã theo dõi người này",
+            "cannotFollowSelf": "Không thể tự theo dõi mình"
+        },
+        "unfollow": {
+            "success": "Đã bỏ theo dõi"
+        }
+    },
+    "experts": {
+        "profile": {
+            "created": "Tạo hồ sơ chuyên gia thành công",
+            "updated": "Cập nhật hồ sơ chuyên gia thành công",
+            "notFound": "Không tìm thấy chuyên gia",
+            "onlyExperts": "Chỉ chuyên gia mới có thể cập nhật hồ sơ chuyên gia",
+            "invalidPrice": "Giá phải là số dương",
+            "invalidSpecialties": "Chuyên môn phải là danh sách các chuỗi",
+            "updateFailed": "Cập nhật hồ sơ chuyên gia thất bại",
+            "retrieved": "Lấy hồ sơ chuyên gia thành công",
+            "retrievalFailed": "Lấy hồ sơ chuyên gia thất bại"
+        },
+        "skills": {
+            "added": "Thêm kỹ năng thành công",
+            "updated": "Cập nhật kỹ năng thành công",
+            "deleted": "Xóa kỹ năng thành công",
+            "addFailed": "Thêm kỹ năng thất bại",
+            "updateFailed": "Cập nhật kỹ năng thất bại",
+            "removeFailed": "Xóa kỹ năng thất bại"
+        },
+        "experience": {
+            "added": "Thêm kinh nghiệm thành công",
+            "updated": "Cập nhật kinh nghiệm thành công",
+            "deleted": "Xóa kinh nghiệm thành công",
+            "addFailed": "Thêm kinh nghiệm thất bại",
+            "updateFailed": "Cập nhật kinh nghiệm thất bại",
+            "removeFailed": "Xóa kinh nghiệm thất bại"
+        },
+        "education": {
+            "added": "Thêm học vấn thành công",
+            "updated": "Cập nhật học vấn thành công",
+            "deleted": "Xóa học vấn thành công",
+            "addFailed": "Thêm học vấn thất bại",
+            "updateFailed": "Cập nhật học vấn thất bại",
+            "removeFailed": "Xóa học vấn thất bại"
+        },
+        "certifications": {
+            "added": "Thêm chứng chỉ thành công",
+            "updated": "Cập nhật chứng chỉ thành công",
+            "deleted": "Xóa chứng chỉ thành công",
+            "addFailed": "Thêm chứng chỉ thất bại",
+            "updateFailed": "Cập nhật chứng chỉ thất bại",
+            "removeFailed": "Xóa chứng chỉ thất bại"
+        },
+        "availability": {
+            "set": "Thiết lập lịch rảnh thành công",
+            "deleted": "Xóa lịch rảnh thành công",
+            "conflict": "Lịch rảnh bị trùng",
+            "retrieved": "Lấy lịch rảnh thành công",
+            "retrievalFailed": "Lấy lịch rảnh thất bại",
+            "addFailed": "Thêm lịch rảnh thất bại",
+            "updateFailed": "Cập nhật lịch rảnh thất bại",
+            "removeFailed": "Xóa lịch rảnh thất bại"
+        },
+        "audience": {
+            "updated": "Cập nhật đối tượng mục tiêu thành công",
+            "updateFailed": "Cập nhật đối tượng mục tiêu thất bại"
+        },
+        "domains": {
+            "updated": "Cập nhật lĩnh vực thành công",
+            "updateFailed": "Cập nhật lĩnh vực thất bại"
+        },
+        "media": {
+            "retrieved": "Lấy media thành công",
+            "retrievalFailed": "Lấy media thất bại",
+            "added": "Thêm media thành công",
+            "addFailed": "Thêm media thất bại",
+            "updated": "Cập nhật media thành công",
+            "updateFailed": "Cập nhật media thất bại",
+            "removed": "Xóa media thành công",
+            "removeFailed": "Xóa media thất bại"
+        },
+        "status": {
+            "updated": "Cập nhật trạng thái thành công",
+            "updateFailed": "Cập nhật trạng thái thất bại"
+        },
+        "search": {
+            "success": "Tìm kiếm chuyên gia thành công",
+            "failed": "Tìm kiếm chuyên gia thất bại"
+        },
+        "stats": {
+            "retrieved": "Lấy thống kê thành công",
+            "failed": "Lấy thống kê thất bại"
+        },
+        "validation": {
+            "success": "Xác thực hồ sơ thành công",
+            "failed": "Xác thực hồ sơ thất bại"
+        },
+        "performance": {
+            "updated": "Cập nhật hiệu suất thành công",
+            "failed": "Cập nhật hiệu suất thất bại"
+        }
+    },
+    "bookings": {
+        "create": {
+            "success": "Tạo booking thành công",
+            "paymentInitiated": "Tạo booking và thanh toán thành công",
+            "expertNotFound": "Không tìm thấy chuyên gia",
+            "conflictTime": "Thời gian đã bị trùng",
+            "invalidTime": "Thời gian không hợp lệ"
+        },
+        "confirm": {
+            "success": "Xác nhận booking thành công",
+            "alreadyConfirmed": "Booking đã được xác nhận",
+            "cannotConfirm": "Không thể xác nhận booking này"
+        },
+        "cancel": {
+            "success": "Hủy booking thành công",
+            "alreadyCancelled": "Booking đã bị hủy",
+            "cannotCancel": "Không thể hủy booking này"
+        },
+        "complete": {
+            "success": "Hoàn thành booking thành công",
+            "notConfirmed": "Booking chưa được xác nhận",
+            "alreadyCompleted": "Booking đã hoàn thành"
+        },
+        "list": {
+            "retrieved": "Lấy danh sách booking thành công"
+        },
+        "details": {
+            "retrieved": "Lấy chi tiết booking thành công"
+        },
+        "admin": {
+            "autoComplete": "Tự động hoàn thành các booking hết hạn",
+            "accessRequired": "Yêu cầu quyền Admin"
+        },
+        "errors": {
+            "notFound": "Không tìm thấy booking",
+            "notAuthorized": "Bạn không có quyền truy cập booking này",
+            "timeConflict": "Chuyên gia đã có lịch trong thời gian này. Vui lòng chọn thời gian khác.",
+            "timeConflictSuggestion": "Thử chọn thời gian khác hoặc kiểm tra lịch rảnh của chuyên gia"
+        }
+    },
+    "payments": {
+        "create": {
+            "success": "Tạo thanh toán thành công",
+            "failed": "Tạo thanh toán thất bại"
+        },
+        "momo": {
+            "success": "Thanh toán MoMo thành công",
+            "pending": "Thanh toán đang chờ xử lý",
+            "failed": "Thanh toán thất bại",
+            "expired": "Thanh toán đã hết hạn"
+        },
+        "refund": {
+            "success": "Hoàn tiền thành công",
+            "failed": "Hoàn tiền thất bại"
+        }
+    },
+    "chat": {
+        "thread": {
+            "created": "Tạo cuộc trò chuyện thành công",
+            "notFound": "Không tìm thấy cuộc trò chuyện"
+        },
+        "message": {
+            "sent": "Gửi tin nhắn thành công",
+            "edited": "Chỉnh sửa tin nhắn thành công",
+            "deleted": "Xóa tin nhắn thành công",
+            "notFound": "Không tìm thấy tin nhắn"
+        },
+        "read": {
+            "marked": "Đã đánh dấu đã đọc"
+        }
+    },
+    "posts": {
+        "create": {
+            "success": "Tạo bài viết thành công"
+        },
+        "update": {
+            "success": "Cập nhật bài viết thành công"
+        },
+        "delete": {
+            "success": "Xóa bài viết thành công"
+        },
+        "react": {
+            "success": "Đã thả cảm xúc",
+            "removed": "Đã xóa cảm xúc"
+        },
+        "save": {
+            "success": "Đã lưu bài viết",
+            "removed": "Đã bỏ lưu bài viết"
+        },
+        "errors": {
+            "notFound": "Không tìm thấy bài viết",
+            "notAuthorized": "Bạn không có quyền chỉnh sửa bài viết này"
+        }
+    },
+    "comments": {
+        "create": {
+            "success": "Tạo bình luận thành công"
+        },
+        "update": {
+            "success": "Cập nhật bình luận thành công"
+        },
+        "delete": {
+            "success": "Xóa bình luận thành công"
+        },
+        "errors": {
+            "notFound": "Không tìm thấy bình luận",
+            "notAuthorized": "Bạn không có quyền chỉnh sửa bình luận này"
+        }
+    },
+    "reviews": {
+        "create": {
+            "success": "Tạo đánh giá thành công",
+            "alreadyReviewed": "Bạn đã đánh giá booking này"
+        },
+        "update": {
+            "success": "Cập nhật đánh giá thành công"
+        },
+        "errors": {
+            "notFound": "Không tìm thấy đánh giá",
+            "bookingNotCompleted": "Booking chưa hoàn thành"
+        }
+    },
+    "payouts": {
+        "request": {
+            "success": "Gửi yêu cầu rút tiền thành công",
+            "insufficientBalance": "Số dư không đủ"
+        },
+        "account": {
+            "created": "Tạo tài khoản rút tiền thành công",
+            "updated": "Cập nhật tài khoản rút tiền thành công",
+            "deleted": "Xóa tài khoản rút tiền thành công"
+        }
+    },
+    "email": {
+        "otp": {
+            "sent": "Đã gửi mã OTP",
+            "verified": "Xác thực email thành công",
+            "invalid": "Mã OTP không hợp lệ",
+            "expired": "Mã OTP đã hết hạn"
+        }
+    },
+    "validation": {
+        "failed": "Dữ liệu không hợp lệ",
+        "required": "{{field}} là bắt buộc",
+        "email": "Email không hợp lệ",
+        "minLength": "{{field}} phải có ít nhất {{min}} ký tự",
+        "maxLength": "{{field}} không được quá {{max}} ký tự",
+        "min": "{{field}} phải lớn hơn hoặc bằng {{min}}",
+        "max": "{{field}} phải nhỏ hơn hoặc bằng {{max}}",
+        "invalid": "{{field}} không hợp lệ",
+        "mustBePositive": "{{field}} phải là số dương",
+        "invalidFormat": "Định dạng {{field}} không hợp lệ"
+    },
+    "errors": {
+        "internal": "Lỗi máy chủ nội bộ",
+        "notFound": "Không tìm thấy tài nguyên",
+        "unauthorized": "Bạn chưa đăng nhập",
+        "forbidden": "Bạn không có quyền truy cập",
+        "badRequest": "Yêu cầu không hợp lệ",
+        "conflict": "Dữ liệu bị trùng lặp"
+    }
+}

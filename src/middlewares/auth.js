@@ -12,7 +12,7 @@ export function auth(req, res, next) {
       audience: process.env.JWT_AUD || "healing.webapp"
     });
     const userRole = payload.role || "SEEKER";
-    console.log(`[DEBUG] Auth middleware - User ID: ${payload.sub}, Role: ${userRole}`);
+    // Removed debug log - do not expose user info in logs
     req.user = { id: payload.sub, role: userRole };
     next();
   } catch {

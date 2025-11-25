@@ -1,5 +1,7 @@
 import { buildPrompt } from "./prompt.js";
 import { getRecentChatHistory, findExpertsByKeywords } from "./database.js";
+import { findExpertsByKeywordsSmart } from "./database/expert.js";
+
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -36,7 +38,7 @@ export const handleChat = async (userId, userMessage) => {
 
         if (!aiRaw) {
             return {
-                aiMessage: "Xin lỗi, tôi chưa thể trả lời lúc này.",
+                aiMessage: "Mình rất tiếc, hiện mình chưa thể phản hồi ngay lúc này. Bạn cứ bình tĩnh một chút nhé, mình sẽ quay lại với bạn sớm nhất có thể.",
                 suggestions: { experts: [] },
             };
         }
@@ -72,9 +74,15 @@ export const handleChat = async (userId, userMessage) => {
         // 2. Query expert từ DB theo keywords
         // ==============================
         let experts = [];
+        let matchedKeywords = [];
+
         if (keywords.length > 0) {
-            experts = await findExpertsByKeywords(keywords);
+            const result = await findExpertsByKeywordsSmart(keywords);
+            experts = result.experts;
+            matchedKeywords = result.matchedKeywords;
         }
+
+
 
         // ==============================
         // 3. Trả response
@@ -83,9 +91,11 @@ export const handleChat = async (userId, userMessage) => {
             aiMessage,
             suggestions: {
                 experts,
-                keywords,
-            },
+                keywords: matchedKeywords
+            }
         };
+
+
 
     } catch (error) {
         console.error("Error in AI Core Service:", error);
