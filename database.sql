@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict 7WYB5k6oJrOZLQN4VjzlhNsESTicDLKkAMv0RXuiIBSun60TiDyzkRa6b1KbNdM
+\restrict Wt6caIWIfyzS7H6Jl2X0cMlGXdS1lQC10WCp9BadOZbtHpeyN2z1NCkrwb8teZ1
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
 
--- Started on 2025-11-24 13:51:06
+-- Started on 2025-12-01 11:38:48
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -40,7 +40,7 @@ CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
 
 
 --
--- TOC entry 6068 (class 0 OID 0)
+-- TOC entry 6127 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
 --
@@ -57,7 +57,7 @@ CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 
 
 --
--- TOC entry 6069 (class 0 OID 0)
+-- TOC entry 6128 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
 --
@@ -66,7 +66,7 @@ COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings
 
 
 --
--- TOC entry 1182 (class 1247 OID 17034)
+-- TOC entry 1190 (class 1247 OID 17034)
 -- Name: booking_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -82,7 +82,7 @@ CREATE TYPE app.booking_status AS ENUM (
 ALTER TYPE app.booking_status OWNER TO postgres;
 
 --
--- TOC entry 1194 (class 1247 OID 17084)
+-- TOC entry 1202 (class 1247 OID 17084)
 -- Name: gender; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -97,7 +97,7 @@ CREATE TYPE app.gender AS ENUM (
 ALTER TYPE app.gender OWNER TO postgres;
 
 --
--- TOC entry 1305 (class 1247 OID 18645)
+-- TOC entry 1313 (class 1247 OID 18645)
 -- Name: media_kind; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -110,7 +110,7 @@ CREATE TYPE app.media_kind AS ENUM (
 ALTER TYPE app.media_kind OWNER TO postgres;
 
 --
--- TOC entry 1185 (class 1247 OID 17046)
+-- TOC entry 1193 (class 1247 OID 17046)
 -- Name: payment_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -120,14 +120,15 @@ CREATE TYPE app.payment_status AS ENUM (
     'PAID',
     'FAILED',
     'REFUNDED',
-    'REQUIRES_ACTION'
+    'REQUIRES_ACTION',
+    'EXPIRED'
 );
 
 
 ALTER TYPE app.payment_status OWNER TO postgres;
 
 --
--- TOC entry 1299 (class 1247 OID 18620)
+-- TOC entry 1307 (class 1247 OID 18620)
 -- Name: post_privacy; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -142,7 +143,7 @@ CREATE TYPE app.post_privacy AS ENUM (
 ALTER TYPE app.post_privacy OWNER TO postgres;
 
 --
--- TOC entry 1311 (class 1247 OID 18665)
+-- TOC entry 1319 (class 1247 OID 18665)
 -- Name: reaction_kind; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -160,7 +161,7 @@ CREATE TYPE app.reaction_kind AS ENUM (
 ALTER TYPE app.reaction_kind OWNER TO postgres;
 
 --
--- TOC entry 1191 (class 1247 OID 17072)
+-- TOC entry 1199 (class 1247 OID 17072)
 -- Name: report_reason; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -176,7 +177,7 @@ CREATE TYPE app.report_reason AS ENUM (
 ALTER TYPE app.report_reason OWNER TO postgres;
 
 --
--- TOC entry 1197 (class 1247 OID 17094)
+-- TOC entry 1205 (class 1247 OID 17094)
 -- Name: user_file_type; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -190,7 +191,7 @@ CREATE TYPE app.user_file_type AS ENUM (
 ALTER TYPE app.user_file_type OWNER TO postgres;
 
 --
--- TOC entry 1176 (class 1247 OID 17016)
+-- TOC entry 1184 (class 1247 OID 17016)
 -- Name: user_role; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -205,7 +206,7 @@ CREATE TYPE app.user_role AS ENUM (
 ALTER TYPE app.user_role OWNER TO postgres;
 
 --
--- TOC entry 1179 (class 1247 OID 17026)
+-- TOC entry 1187 (class 1247 OID 17026)
 -- Name: user_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -219,7 +220,7 @@ CREATE TYPE app.user_status AS ENUM (
 ALTER TYPE app.user_status OWNER TO postgres;
 
 --
--- TOC entry 1188 (class 1247 OID 17058)
+-- TOC entry 1196 (class 1247 OID 17058)
 -- Name: wallet_tx_type; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -237,7 +238,7 @@ CREATE TYPE app.wallet_tx_type AS ENUM (
 ALTER TYPE app.wallet_tx_type OWNER TO postgres;
 
 --
--- TOC entry 1323 (class 1247 OID 18757)
+-- TOC entry 1331 (class 1247 OID 18757)
 -- Name: booking_status; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -252,7 +253,7 @@ CREATE TYPE public.booking_status AS ENUM (
 ALTER TYPE public.booking_status OWNER TO postgres;
 
 --
--- TOC entry 438 (class 1255 OID 18241)
+-- TOC entry 446 (class 1255 OID 18241)
 -- Name: enforce_dm_member_limit(); Type: FUNCTION; Schema: app; Owner: postgres
 --
 
@@ -279,7 +280,7 @@ $$;
 ALTER FUNCTION app.enforce_dm_member_limit() OWNER TO postgres;
 
 --
--- TOC entry 436 (class 1255 OID 18735)
+-- TOC entry 444 (class 1255 OID 18735)
 -- Name: fn_posts_touch_updated_at(); Type: FUNCTION; Schema: app; Owner: postgres
 --
 
@@ -296,7 +297,7 @@ CREATE FUNCTION app.fn_posts_touch_updated_at() RETURNS trigger
 ALTER FUNCTION app.fn_posts_touch_updated_at() OWNER TO postgres;
 
 --
--- TOC entry 367 (class 1255 OID 18868)
+-- TOC entry 375 (class 1255 OID 18868)
 -- Name: fn_reviews_touch_updated_at(); Type: FUNCTION; Schema: app; Owner: postgres
 --
 
@@ -345,7 +346,7 @@ CREATE SEQUENCE app.audience_id_seq
 ALTER SEQUENCE app.audience_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6070 (class 0 OID 0)
+-- TOC entry 6129 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: audience_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -389,7 +390,7 @@ CREATE SEQUENCE app.audit_logs_id_seq
 ALTER SEQUENCE app.audit_logs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6071 (class 0 OID 0)
+-- TOC entry 6130 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: audit_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -437,7 +438,7 @@ CREATE SEQUENCE app.bookings_id_seq
 ALTER SEQUENCE app.bookings_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6072 (class 0 OID 0)
+-- TOC entry 6131 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -478,12 +479,96 @@ CREATE SEQUENCE app.call_events_id_seq
 ALTER SEQUENCE app.call_events_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6073 (class 0 OID 0)
+-- TOC entry 6132 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: call_events_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
 
 ALTER SEQUENCE app.call_events_id_seq OWNED BY app.call_events.id;
+
+
+--
+-- TOC entry 313 (class 1259 OID 19155)
+-- Name: call_metrics; Type: TABLE; Schema: app; Owner: postgres
+--
+
+CREATE TABLE app.call_metrics (
+    id integer NOT NULL,
+    call_id integer,
+    "timestamp" timestamp with time zone DEFAULT now(),
+    rtt_ms integer,
+    packet_loss double precision,
+    jitter_ms integer
+);
+
+
+ALTER TABLE app.call_metrics OWNER TO postgres;
+
+--
+-- TOC entry 312 (class 1259 OID 19154)
+-- Name: call_metrics_id_seq; Type: SEQUENCE; Schema: app; Owner: postgres
+--
+
+CREATE SEQUENCE app.call_metrics_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE app.call_metrics_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 6133 (class 0 OID 0)
+-- Dependencies: 312
+-- Name: call_metrics_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
+--
+
+ALTER SEQUENCE app.call_metrics_id_seq OWNED BY app.call_metrics.id;
+
+
+--
+-- TOC entry 315 (class 1259 OID 19169)
+-- Name: call_recordings; Type: TABLE; Schema: app; Owner: postgres
+--
+
+CREATE TABLE app.call_recordings (
+    id integer NOT NULL,
+    call_id integer,
+    url text NOT NULL,
+    mime_type text NOT NULL,
+    size_bytes integer,
+    created_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE app.call_recordings OWNER TO postgres;
+
+--
+-- TOC entry 314 (class 1259 OID 19168)
+-- Name: call_recordings_id_seq; Type: SEQUENCE; Schema: app; Owner: postgres
+--
+
+CREATE SEQUENCE app.call_recordings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE app.call_recordings_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 6134 (class 0 OID 0)
+-- Dependencies: 314
+-- Name: call_recordings_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
+--
+
+ALTER SEQUENCE app.call_recordings_id_seq OWNED BY app.call_recordings.id;
 
 
 --
@@ -527,12 +612,55 @@ CREATE SEQUENCE app.call_sessions_id_seq
 ALTER SEQUENCE app.call_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6074 (class 0 OID 0)
+-- TOC entry 6135 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: call_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
 
 ALTER SEQUENCE app.call_sessions_id_seq OWNED BY app.call_sessions.id;
+
+
+--
+-- TOC entry 311 (class 1259 OID 19138)
+-- Name: chat_attachments; Type: TABLE; Schema: app; Owner: postgres
+--
+
+CREATE TABLE app.chat_attachments (
+    id integer NOT NULL,
+    message_id integer,
+    file_name text NOT NULL,
+    mime_type text NOT NULL,
+    url text NOT NULL,
+    size_bytes integer,
+    uploaded_at timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE app.chat_attachments OWNER TO postgres;
+
+--
+-- TOC entry 310 (class 1259 OID 19137)
+-- Name: chat_attachments_id_seq; Type: SEQUENCE; Schema: app; Owner: postgres
+--
+
+CREATE SEQUENCE app.chat_attachments_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE app.chat_attachments_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 6136 (class 0 OID 0)
+-- Dependencies: 310
+-- Name: chat_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
+--
+
+ALTER SEQUENCE app.chat_attachments_id_seq OWNED BY app.chat_attachments.id;
 
 
 --
@@ -584,7 +712,7 @@ CREATE SEQUENCE app.chat_messages_id_seq
 ALTER SEQUENCE app.chat_messages_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6075 (class 0 OID 0)
+-- TOC entry 6137 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: chat_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -608,6 +736,49 @@ CREATE TABLE app.chat_read_state (
 ALTER TABLE app.chat_read_state OWNER TO postgres;
 
 --
+-- TOC entry 317 (class 1259 OID 19185)
+-- Name: chat_thread_invitations; Type: TABLE; Schema: app; Owner: postgres
+--
+
+CREATE TABLE app.chat_thread_invitations (
+    id integer NOT NULL,
+    thread_id integer,
+    inviter_id integer,
+    invitee_id integer,
+    status text DEFAULT 'PENDING'::text,
+    created_at timestamp with time zone DEFAULT now(),
+    CONSTRAINT chat_thread_invitations_status_check CHECK ((status = ANY (ARRAY['PENDING'::text, 'ACCEPTED'::text, 'REJECTED'::text])))
+);
+
+
+ALTER TABLE app.chat_thread_invitations OWNER TO postgres;
+
+--
+-- TOC entry 316 (class 1259 OID 19184)
+-- Name: chat_thread_invitations_id_seq; Type: SEQUENCE; Schema: app; Owner: postgres
+--
+
+CREATE SEQUENCE app.chat_thread_invitations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE app.chat_thread_invitations_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 6138 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: chat_thread_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
+--
+
+ALTER SEQUENCE app.chat_thread_invitations_id_seq OWNED BY app.chat_thread_invitations.id;
+
+
+--
 -- TOC entry 249 (class 1259 OID 17372)
 -- Name: chat_threads; Type: TABLE; Schema: app; Owner: postgres
 --
@@ -618,6 +789,7 @@ CREATE TABLE app.chat_threads (
     booking_id bigint,
     last_message_at timestamp with time zone,
     created_at timestamp with time zone DEFAULT now() NOT NULL,
+    name text,
     CONSTRAINT chat_threads_type_check CHECK ((type = ANY (ARRAY['DM'::text, 'BOOKING'::text])))
 );
 
@@ -640,7 +812,7 @@ CREATE SEQUENCE app.chat_threads_id_seq
 ALTER SEQUENCE app.chat_threads_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6076 (class 0 OID 0)
+-- TOC entry 6139 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: chat_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -700,7 +872,7 @@ CREATE SEQUENCE app.comments_id_seq
 ALTER SEQUENCE app.comments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6077 (class 0 OID 0)
+-- TOC entry 6140 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -739,7 +911,7 @@ CREATE SEQUENCE app.consents_id_seq
 ALTER SEQUENCE app.consents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6078 (class 0 OID 0)
+-- TOC entry 6141 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: consents_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -776,7 +948,7 @@ CREATE SEQUENCE app.domains_id_seq
 ALTER SEQUENCE app.domains_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6079 (class 0 OID 0)
+-- TOC entry 6142 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: domains_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -818,7 +990,7 @@ CREATE SEQUENCE app.email_verifications_id_seq
 ALTER SEQUENCE app.email_verifications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6080 (class 0 OID 0)
+-- TOC entry 6143 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: email_verifications_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -873,7 +1045,7 @@ CREATE SEQUENCE app.expert_availabilities_id_seq
 ALTER SEQUENCE app.expert_availabilities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6081 (class 0 OID 0)
+-- TOC entry 6144 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: expert_availabilities_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -915,7 +1087,7 @@ CREATE SEQUENCE app.expert_certifications_id_seq
 ALTER SEQUENCE app.expert_certifications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6082 (class 0 OID 0)
+-- TOC entry 6145 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: expert_certifications_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -969,7 +1141,7 @@ CREATE SEQUENCE app.expert_education_id_seq
 ALTER SEQUENCE app.expert_education_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6083 (class 0 OID 0)
+-- TOC entry 6146 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: expert_education_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1012,7 +1184,7 @@ CREATE SEQUENCE app.expert_experience_id_seq
 ALTER SEQUENCE app.expert_experience_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6084 (class 0 OID 0)
+-- TOC entry 6147 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: expert_experience_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1054,7 +1226,7 @@ CREATE SEQUENCE app.expert_media_id_seq
 ALTER SEQUENCE app.expert_media_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6085 (class 0 OID 0)
+-- TOC entry 6148 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: expert_media_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1119,7 +1291,7 @@ CREATE SEQUENCE app.expert_profiles_id_seq
 ALTER SEQUENCE app.expert_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6086 (class 0 OID 0)
+-- TOC entry 6149 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: expert_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1188,7 +1360,7 @@ CREATE SEQUENCE app.listener_profiles_id_seq
 ALTER SEQUENCE app.listener_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6087 (class 0 OID 0)
+-- TOC entry 6150 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: listener_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1232,7 +1404,7 @@ CREATE SEQUENCE app.moderation_actions_id_seq
 ALTER SEQUENCE app.moderation_actions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6088 (class 0 OID 0)
+-- TOC entry 6151 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: moderation_actions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1274,7 +1446,7 @@ CREATE SEQUENCE app.oauth_users_id_seq
 ALTER SEQUENCE app.oauth_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6089 (class 0 OID 0)
+-- TOC entry 6152 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: oauth_users_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1321,7 +1493,7 @@ CREATE SEQUENCE app.payment_intents_id_seq
 ALTER SEQUENCE app.payment_intents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6090 (class 0 OID 0)
+-- TOC entry 6153 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: payment_intents_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1361,7 +1533,7 @@ CREATE SEQUENCE app.payments_id_seq
 ALTER SEQUENCE app.payments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6091 (class 0 OID 0)
+-- TOC entry 6154 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1404,7 +1576,7 @@ CREATE SEQUENCE app.payout_accounts_id_seq
 ALTER SEQUENCE app.payout_accounts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6092 (class 0 OID 0)
+-- TOC entry 6155 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: payout_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1510,7 +1682,7 @@ CREATE SEQUENCE app.post_media_id_seq
 ALTER SEQUENCE app.post_media_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6093 (class 0 OID 0)
+-- TOC entry 6156 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: post_media_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1583,7 +1755,7 @@ CREATE SEQUENCE app.posts_id_seq
 ALTER SEQUENCE app.posts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6094 (class 0 OID 0)
+-- TOC entry 6157 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1639,7 +1811,7 @@ CREATE SEQUENCE app.reports_id_seq
 ALTER SEQUENCE app.reports_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6095 (class 0 OID 0)
+-- TOC entry 6158 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1683,7 +1855,7 @@ CREATE SEQUENCE app.reviews_id_seq
 ALTER SEQUENCE app.reviews_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6096 (class 0 OID 0)
+-- TOC entry 6159 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: reviews_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1723,7 +1895,7 @@ CREATE SEQUENCE app.schema_migrations_id_seq
 ALTER SEQUENCE app.schema_migrations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6097 (class 0 OID 0)
+-- TOC entry 6160 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: schema_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1763,7 +1935,7 @@ CREATE SEQUENCE app.session_notes_id_seq
 ALTER SEQUENCE app.session_notes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6098 (class 0 OID 0)
+-- TOC entry 6161 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: session_notes_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1801,7 +1973,7 @@ CREATE SEQUENCE app.skills_id_seq
 ALTER SEQUENCE app.skills_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6099 (class 0 OID 0)
+-- TOC entry 6162 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1843,7 +2015,7 @@ CREATE SEQUENCE app.tips_id_seq
 ALTER SEQUENCE app.tips_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6100 (class 0 OID 0)
+-- TOC entry 6163 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: tips_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1886,7 +2058,7 @@ CREATE SEQUENCE app.user_files_id_seq
 ALTER SEQUENCE app.user_files_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6101 (class 0 OID 0)
+-- TOC entry 6164 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: user_files_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1978,7 +2150,7 @@ CREATE SEQUENCE app.user_sessions_id_seq
 ALTER SEQUENCE app.user_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6102 (class 0 OID 0)
+-- TOC entry 6165 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: user_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2024,7 +2196,7 @@ CREATE SEQUENCE app.users_id_seq
 ALTER SEQUENCE app.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6103 (class 0 OID 0)
+-- TOC entry 6166 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2067,7 +2239,7 @@ CREATE SEQUENCE app.wallet_ledger_id_seq
 ALTER SEQUENCE app.wallet_ledger_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6104 (class 0 OID 0)
+-- TOC entry 6167 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: wallet_ledger_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2105,7 +2277,7 @@ CREATE SEQUENCE app.wallets_id_seq
 ALTER SEQUENCE app.wallets_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6105 (class 0 OID 0)
+-- TOC entry 6168 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: wallets_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2114,7 +2286,7 @@ ALTER SEQUENCE app.wallets_id_seq OWNED BY app.wallets.id;
 
 
 --
--- TOC entry 5477 (class 2604 OID 19005)
+-- TOC entry 5497 (class 2604 OID 19005)
 -- Name: audience id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2122,7 +2294,7 @@ ALTER TABLE ONLY app.audience ALTER COLUMN id SET DEFAULT nextval('app.audience_
 
 
 --
--- TOC entry 5439 (class 2604 OID 17532)
+-- TOC entry 5459 (class 2604 OID 17532)
 -- Name: audit_logs id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2130,7 +2302,7 @@ ALTER TABLE ONLY app.audit_logs ALTER COLUMN id SET DEFAULT nextval('app.audit_l
 
 
 --
--- TOC entry 5401 (class 2604 OID 17235)
+-- TOC entry 5421 (class 2604 OID 17235)
 -- Name: bookings id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2138,7 +2310,7 @@ ALTER TABLE ONLY app.bookings ALTER COLUMN id SET DEFAULT nextval('app.bookings_
 
 
 --
--- TOC entry 5444 (class 2604 OID 18565)
+-- TOC entry 5464 (class 2604 OID 18565)
 -- Name: call_events id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2146,7 +2318,23 @@ ALTER TABLE ONLY app.call_events ALTER COLUMN id SET DEFAULT nextval('app.call_e
 
 
 --
--- TOC entry 5442 (class 2604 OID 18536)
+-- TOC entry 5506 (class 2604 OID 19158)
+-- Name: call_metrics id; Type: DEFAULT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_metrics ALTER COLUMN id SET DEFAULT nextval('app.call_metrics_id_seq'::regclass);
+
+
+--
+-- TOC entry 5508 (class 2604 OID 19172)
+-- Name: call_recordings id; Type: DEFAULT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_recordings ALTER COLUMN id SET DEFAULT nextval('app.call_recordings_id_seq'::regclass);
+
+
+--
+-- TOC entry 5462 (class 2604 OID 18536)
 -- Name: call_sessions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2154,7 +2342,15 @@ ALTER TABLE ONLY app.call_sessions ALTER COLUMN id SET DEFAULT nextval('app.call
 
 
 --
--- TOC entry 5421 (class 2604 OID 17407)
+-- TOC entry 5504 (class 2604 OID 19141)
+-- Name: chat_attachments id; Type: DEFAULT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_attachments ALTER COLUMN id SET DEFAULT nextval('app.chat_attachments_id_seq'::regclass);
+
+
+--
+-- TOC entry 5441 (class 2604 OID 17407)
 -- Name: chat_messages id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2162,7 +2358,15 @@ ALTER TABLE ONLY app.chat_messages ALTER COLUMN id SET DEFAULT nextval('app.chat
 
 
 --
--- TOC entry 5418 (class 2604 OID 17375)
+-- TOC entry 5510 (class 2604 OID 19188)
+-- Name: chat_thread_invitations id; Type: DEFAULT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_thread_invitations ALTER COLUMN id SET DEFAULT nextval('app.chat_thread_invitations_id_seq'::regclass);
+
+
+--
+-- TOC entry 5438 (class 2604 OID 17375)
 -- Name: chat_threads id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2170,7 +2374,7 @@ ALTER TABLE ONLY app.chat_threads ALTER COLUMN id SET DEFAULT nextval('app.chat_
 
 
 --
--- TOC entry 5429 (class 2604 OID 17463)
+-- TOC entry 5449 (class 2604 OID 17463)
 -- Name: comments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2178,7 +2382,7 @@ ALTER TABLE ONLY app.comments ALTER COLUMN id SET DEFAULT nextval('app.comments_
 
 
 --
--- TOC entry 5437 (class 2604 OID 17517)
+-- TOC entry 5457 (class 2604 OID 17517)
 -- Name: consents id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2186,7 +2390,7 @@ ALTER TABLE ONLY app.consents ALTER COLUMN id SET DEFAULT nextval('app.consents_
 
 
 --
--- TOC entry 5478 (class 2604 OID 19031)
+-- TOC entry 5498 (class 2604 OID 19031)
 -- Name: domains id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2194,7 +2398,7 @@ ALTER TABLE ONLY app.domains ALTER COLUMN id SET DEFAULT nextval('app.domains_id
 
 
 --
--- TOC entry 5392 (class 2604 OID 17166)
+-- TOC entry 5412 (class 2604 OID 17166)
 -- Name: email_verifications id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2202,7 +2406,7 @@ ALTER TABLE ONLY app.email_verifications ALTER COLUMN id SET DEFAULT nextval('ap
 
 
 --
--- TOC entry 5399 (class 2604 OID 17219)
+-- TOC entry 5419 (class 2604 OID 17219)
 -- Name: expert_availabilities id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2210,7 +2414,7 @@ ALTER TABLE ONLY app.expert_availabilities ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 5468 (class 2604 OID 18948)
+-- TOC entry 5488 (class 2604 OID 18948)
 -- Name: expert_certifications id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2218,7 +2422,7 @@ ALTER TABLE ONLY app.expert_certifications ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 5467 (class 2604 OID 18934)
+-- TOC entry 5487 (class 2604 OID 18934)
 -- Name: expert_education id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2226,7 +2430,7 @@ ALTER TABLE ONLY app.expert_education ALTER COLUMN id SET DEFAULT nextval('app.e
 
 
 --
--- TOC entry 5466 (class 2604 OID 18920)
+-- TOC entry 5486 (class 2604 OID 18920)
 -- Name: expert_experience id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2234,7 +2438,7 @@ ALTER TABLE ONLY app.expert_experience ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5475 (class 2604 OID 18990)
+-- TOC entry 5495 (class 2604 OID 18990)
 -- Name: expert_media id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2242,7 +2446,7 @@ ALTER TABLE ONLY app.expert_media ALTER COLUMN id SET DEFAULT nextval('app.exper
 
 
 --
--- TOC entry 5395 (class 2604 OID 17183)
+-- TOC entry 5415 (class 2604 OID 17183)
 -- Name: expert_profiles id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2250,7 +2454,7 @@ ALTER TABLE ONLY app.expert_profiles ALTER COLUMN id SET DEFAULT nextval('app.ex
 
 
 --
--- TOC entry 5397 (class 2604 OID 17202)
+-- TOC entry 5417 (class 2604 OID 17202)
 -- Name: listener_profiles id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2258,7 +2462,7 @@ ALTER TABLE ONLY app.listener_profiles ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5435 (class 2604 OID 17500)
+-- TOC entry 5455 (class 2604 OID 17500)
 -- Name: moderation_actions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2266,7 +2470,7 @@ ALTER TABLE ONLY app.moderation_actions ALTER COLUMN id SET DEFAULT nextval('app
 
 
 --
--- TOC entry 5462 (class 2604 OID 18875)
+-- TOC entry 5482 (class 2604 OID 18875)
 -- Name: oauth_users id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2274,7 +2478,7 @@ ALTER TABLE ONLY app.oauth_users ALTER COLUMN id SET DEFAULT nextval('app.oauth_
 
 
 --
--- TOC entry 5407 (class 2604 OID 17283)
+-- TOC entry 5427 (class 2604 OID 17283)
 -- Name: payment_intents id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2282,7 +2486,7 @@ ALTER TABLE ONLY app.payment_intents ALTER COLUMN id SET DEFAULT nextval('app.pa
 
 
 --
--- TOC entry 5411 (class 2604 OID 17307)
+-- TOC entry 5431 (class 2604 OID 17307)
 -- Name: payments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2290,7 +2494,7 @@ ALTER TABLE ONLY app.payments ALTER COLUMN id SET DEFAULT nextval('app.payments_
 
 
 --
--- TOC entry 5459 (class 2604 OID 18843)
+-- TOC entry 5479 (class 2604 OID 18843)
 -- Name: payout_accounts id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2298,7 +2502,7 @@ ALTER TABLE ONLY app.payout_accounts ALTER COLUMN id SET DEFAULT nextval('app.pa
 
 
 --
--- TOC entry 5447 (class 2604 OID 18653)
+-- TOC entry 5467 (class 2604 OID 18653)
 -- Name: post_media id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2306,7 +2510,7 @@ ALTER TABLE ONLY app.post_media ALTER COLUMN id SET DEFAULT nextval('app.post_me
 
 
 --
--- TOC entry 5423 (class 2604 OID 17427)
+-- TOC entry 5443 (class 2604 OID 17427)
 -- Name: posts id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2314,7 +2518,7 @@ ALTER TABLE ONLY app.posts ALTER COLUMN id SET DEFAULT nextval('app.posts_id_seq
 
 
 --
--- TOC entry 5433 (class 2604 OID 17484)
+-- TOC entry 5453 (class 2604 OID 17484)
 -- Name: reports id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2322,7 +2526,7 @@ ALTER TABLE ONLY app.reports ALTER COLUMN id SET DEFAULT nextval('app.reports_id
 
 
 --
--- TOC entry 5453 (class 2604 OID 18798)
+-- TOC entry 5473 (class 2604 OID 18798)
 -- Name: reviews id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2330,7 +2534,7 @@ ALTER TABLE ONLY app.reviews ALTER COLUMN id SET DEFAULT nextval('app.reviews_id
 
 
 --
--- TOC entry 5482 (class 2604 OID 19074)
+-- TOC entry 5502 (class 2604 OID 19074)
 -- Name: schema_migrations id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2338,7 +2542,7 @@ ALTER TABLE ONLY app.schema_migrations ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5405 (class 2604 OID 17261)
+-- TOC entry 5425 (class 2604 OID 17261)
 -- Name: session_notes id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2346,7 +2550,7 @@ ALTER TABLE ONLY app.session_notes ALTER COLUMN id SET DEFAULT nextval('app.sess
 
 
 --
--- TOC entry 5464 (class 2604 OID 18893)
+-- TOC entry 5484 (class 2604 OID 18893)
 -- Name: skills id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2354,7 +2558,7 @@ ALTER TABLE ONLY app.skills ALTER COLUMN id SET DEFAULT nextval('app.skills_id_s
 
 
 --
--- TOC entry 5416 (class 2604 OID 17354)
+-- TOC entry 5436 (class 2604 OID 17354)
 -- Name: tips id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2362,7 +2566,7 @@ ALTER TABLE ONLY app.tips ALTER COLUMN id SET DEFAULT nextval('app.tips_id_seq':
 
 
 --
--- TOC entry 5390 (class 2604 OID 17150)
+-- TOC entry 5410 (class 2604 OID 17150)
 -- Name: user_files id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2370,7 +2574,7 @@ ALTER TABLE ONLY app.user_files ALTER COLUMN id SET DEFAULT nextval('app.user_fi
 
 
 --
--- TOC entry 5456 (class 2604 OID 18825)
+-- TOC entry 5476 (class 2604 OID 18825)
 -- Name: user_sessions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2378,7 +2582,7 @@ ALTER TABLE ONLY app.user_sessions ALTER COLUMN id SET DEFAULT nextval('app.user
 
 
 --
--- TOC entry 5381 (class 2604 OID 17105)
+-- TOC entry 5401 (class 2604 OID 17105)
 -- Name: users id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2386,7 +2590,7 @@ ALTER TABLE ONLY app.users ALTER COLUMN id SET DEFAULT nextval('app.users_id_seq
 
 
 --
--- TOC entry 5414 (class 2604 OID 17338)
+-- TOC entry 5434 (class 2604 OID 17338)
 -- Name: wallet_ledger id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2394,7 +2598,7 @@ ALTER TABLE ONLY app.wallet_ledger ALTER COLUMN id SET DEFAULT nextval('app.wall
 
 
 --
--- TOC entry 5412 (class 2604 OID 17323)
+-- TOC entry 5432 (class 2604 OID 17323)
 -- Name: wallets id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -2402,7 +2606,7 @@ ALTER TABLE ONLY app.wallets ALTER COLUMN id SET DEFAULT nextval('app.wallets_id
 
 
 --
--- TOC entry 6054 (class 0 OID 19002)
+-- TOC entry 6105 (class 0 OID 19002)
 -- Dependencies: 301
 -- Data for Name: audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2412,7 +2616,7 @@ COPY app.audience (id, name) FROM stdin;
 
 
 --
--- TOC entry 6018 (class 0 OID 17529)
+-- TOC entry 6069 (class 0 OID 17529)
 -- Dependencies: 265
 -- Data for Name: audit_logs; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2421,11 +2625,100 @@ COPY app.audit_logs (id, user_id, action, resource, resource_id, ip_addr, user_a
 1	2	DASHBOARD_VIEWED	\N	\N	::1	PostmanRuntime/7.48.0	2025-10-16 13:21:46.308111+07	{}
 2	2	USERS_LIST_VIEWED	\N	\N	::1	PostmanRuntime/7.48.0	2025-10-16 13:23:40.759365+07	{"filters": {"limit": 50, "offset": 0}}
 3	2	USER_VIEWED	\N	\N	::1	PostmanRuntime/7.48.0	2025-10-16 13:24:16.080379+07	{}
+4	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:13:06.093959+07	{}
+5	13	USERS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:13:25.882546+07	{"filters": {"limit": 5, "offset": 0}}
+6	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:13:34.848482+07	{}
+7	13	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:13:38.876472+07	{"filters": {"limit": 5, "offset": 0}}
+8	13	SYSTEM_SETTINGS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:13:54.456334+07	{}
+9	13	USER_STATUS_UPDATE	USER	5	\N	\N	2025-11-27 14:14:23.608489+07	{"new_status": "SUSPENDED"}
+10	13	USER_SUSPENDED	\N	\N	\N	\N	2025-11-27 14:14:23.611814+07	{"reason": "Test suspension", "previous_status": "ACTIVE"}
+11	13	USER_STATUS_UPDATE	USER	5	\N	\N	2025-11-27 14:14:32.897801+07	{"new_status": "ACTIVE"}
+12	13	USER_ACTIVATED	\N	\N	\N	\N	2025-11-27 14:14:32.899965+07	{"previous_status": "SUSPENDED"}
+13	13	MODERATION_ACTION	USER	14	\N	\N	2025-11-27 14:14:44.431324+07	{"action": "BAN", "reason": "Test ban"}
+14	13	USER_STATUS_UPDATE	USER	14	\N	\N	2025-11-27 14:14:44.43485+07	{"new_status": "SUSPENDED"}
+15	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:14:53.702408+07	{}
+16	13	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:17:18.691518+07	{"filters": {"limit": 3, "offset": 0, "userId": null, "expertId": null}}
+17	13	REPORTED_CONTENT_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:17:26.936406+07	{"filters": {"limit": 5, "offset": 0}}
+18	13	EXPERT_KYC_APPROVED	\N	\N	\N	\N	2025-11-27 14:17:30.04275+07	{"notes": "Test approval"}
+19	13	EXPERT_KYC_APPROVED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:17:30.044113+07	{"notes": "Test approval"}
+20	13	EXPERT_KYC_REJECTED	\N	\N	\N	\N	2025-11-27 14:17:39.800544+07	{"notes": "Please upload ID", "reason": "Missing documents"}
+21	13	EXPERT_KYC_REJECTED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:17:39.801725+07	{"notes": "Please upload ID", "reason": "Missing documents"}
+22	13	SYSTEM_SETTINGS_UPDATED	\N	\N	\N	\N	2025-11-27 14:17:48.824077+07	{"settings": {"maintenance_mode": false}}
+23	13	SYSTEM_SETTINGS_UPDATED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:17:48.826902+07	{"settings": {"maintenance_mode": false}}
+24	13	BOOKING_STATUS_UPDATED	\N	\N	\N	\N	2025-11-27 14:18:28.615536+07	{"reason": "Admin approved", "status": "CONFIRMED"}
+25	13	BOOKING_STATUS_UPDATED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:18:28.618178+07	{"reason": "Admin approved", "status": "CONFIRMED"}
+26	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:27:02.167044+07	{}
+27	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:28:18.226401+07	{}
+28	13	USERS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:28:49.526461+07	{"filters": {"limit": 10, "offset": 0}}
+29	13	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:28:58.524016+07	{"filters": {"limit": 10, "offset": 0}}
+30	13	EXPERT_KYC_APPROVED	\N	\N	\N	\N	2025-11-27 14:29:01.870474+07	{"notes": "Đã xác minh đầy đủ"}
+31	13	EXPERT_KYC_APPROVED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:29:01.874478+07	{"notes": "Đã xác minh đầy đủ"}
+32	13	EXPERT_KYC_REJECTED	\N	\N	\N	\N	2025-11-27 14:29:03.820791+07	{"notes": "Vui lòng upload CMND/CCCD", "reason": "Thiếu giấy tờ"}
+33	13	EXPERT_KYC_REJECTED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:29:03.825189+07	{"notes": "Vui lòng upload CMND/CCCD", "reason": "Thiếu giấy tờ"}
+34	13	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:29:08.660961+07	{"filters": {"limit": 10, "offset": 0, "userId": null, "expertId": null}}
+35	13	MODERATION_ACTION	POST	1	\N	\N	2025-11-27 14:29:13.813173+07	{"action": "HIDE", "reason": "Vi phạm nội quy"}
+36	13	MODERATION_ACTION	POST	1	\N	\N	2025-11-27 14:29:16.867679+07	{"action": "DELETE", "reason": "Nội dung vi phạm nghiêm trọng"}
+37	13	SYSTEM_SETTINGS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:29:19.954102+07	{}
+38	13	SYSTEM_SETTINGS_UPDATED	\N	\N	\N	\N	2025-11-27 14:29:24.466524+07	{"settings": {"max_upload_size": 10485760, "maintenance_mode": false}}
+39	13	SYSTEM_SETTINGS_UPDATED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:29:24.481526+07	{"settings": {"max_upload_size": 10485760, "maintenance_mode": false}}
+40	13	MODERATION_ACTION	POST	1	\N	\N	2025-11-27 14:31:21.424904+07	{"action": "HIDE", "reason": "Vi phạm nội quy"}
+41	13	MODERATION_ACTION	USER	14	\N	\N	2025-11-27 14:33:21.087441+07	{"action": "BAN", "reason": "Spam và lừa đảo"}
+42	13	USER_STATUS_UPDATE	USER	14	\N	\N	2025-11-27 14:33:21.097258+07	{"new_status": "SUSPENDED"}
+43	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:33:33.624649+07	{}
+44	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:33:50.882314+07	{}
+45	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:33:51.102145+07	{}
+46	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:34:04.397082+07	{}
+47	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:34:12.913815+07	{}
+48	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:34:17.867286+07	{}
+49	13	USER_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:34:25.274641+07	{}
+50	13	USERS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:34:32.748169+07	{"filters": {"role": "EXPERT", "limit": 10, "offset": 0}}
+51	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:35:36.109719+07	{}
+52	13	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:36:37.564664+07	{"filters": {"limit": 6, "offset": 0, "userId": null, "expertId": null}}
+53	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:37:23.363292+07	{}
+54	13	MODERATION_ACTION	USER	8	\N	\N	2025-11-27 14:37:36.512843+07	{"action": "BAN", "reason": "Spam và lừa đảo"}
+55	13	USER_STATUS_UPDATE	USER	8	\N	\N	2025-11-27 14:37:36.526859+07	{"new_status": "SUSPENDED"}
+56	13	MODERATION_ACTION	USER	8	\N	\N	2025-11-27 14:37:46.377605+07	{"action": "BAN", "reason": "Spam và lừa đảo eqfhbibqwfh"}
+57	13	USER_STATUS_UPDATE	USER	8	\N	\N	2025-11-27 14:37:46.388506+07	{"new_status": "SUSPENDED"}
+58	13	MODERATION_ACTION	USER	8	\N	\N	2025-11-27 14:37:56.801939+07	{"action": "BAN", "reason": "Spam và lừa đảo "}
+59	13	USER_STATUS_UPDATE	USER	8	\N	\N	2025-11-27 14:37:56.806587+07	{"new_status": "SUSPENDED"}
+60	13	MODERATION_ACTION	USER	8	\N	\N	2025-11-27 14:38:03.864637+07	{"action": "BAN", "reason": "Spam "}
+61	13	USER_STATUS_UPDATE	USER	8	\N	\N	2025-11-27 14:38:03.869946+07	{"new_status": "SUSPENDED"}
+62	13	MODERATION_ACTION	USER	9	\N	\N	2025-11-27 14:38:14.64313+07	{"action": "BAN", "reason": "Spam "}
+63	13	USER_STATUS_UPDATE	USER	9	\N	\N	2025-11-27 14:38:14.64762+07	{"new_status": "SUSPENDED"}
+64	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:45:01.953878+07	{"filters": {"limit": 3, "offset": 0, "authorId": null}}
+65	13	BULK_POSTS_SCANNED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:45:11.299492+07	{"safe": 3, "low_risk": 0, "high_risk": 0, "medium_risk": 0, "total_scanned": 3}
+66	13	POST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	2025-11-27 14:45:25.885156+07	{}
+67	13	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:48:01.927691+07	{}
+68	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:48:11.451219+07	{"filters": {"limit": 10, "offset": 0, "authorId": null}}
+69	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:04.161642+07	{"filters": {"limit": 10, "offset": 0, "privacy": "PUBLIC", "authorId": null}}
+70	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:06.245795+07	{"filters": {"limit": 10, "offset": 0, "privacy": "PUBLIC", "authorId": null}}
+71	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:06.556303+07	{"filters": {"limit": 10, "offset": 0, "privacy": "PUBLIC", "authorId": null}}
+72	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:06.773281+07	{"filters": {"limit": 10, "offset": 0, "privacy": "PUBLIC", "authorId": null}}
+73	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:12.745092+07	{"filters": {"limit": 10, "offset": 0, "privacy": "FRIENDS", "authorId": null}}
+74	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:17.315641+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+75	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:18.953234+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+76	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:19.153026+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+77	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:19.326073+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+78	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:19.559974+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+79	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:19.966179+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+80	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:20.177617+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+81	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:20.403224+07	{"filters": {"limit": 10, "offset": 0, "privacy": "ONLY_ME", "authorId": null}}
+82	13	FLAGGED_POSTS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:26.047826+07	{"count": 0}
+83	13	POST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:32.646092+07	{}
+84	13	BULK_POSTS_SCANNED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:35.424207+07	{"safe": 3, "low_risk": 0, "high_risk": 0, "medium_risk": 0, "total_scanned": 3}
+85	13	POST_DELETED	POST	9	\N	\N	2025-11-27 14:49:38.869285+07	{"reason": "Scam/Lừa đảo", "post_title": "Hello world fdafadfadf"}
+86	13	MODERATION_ACTION	POST	9	\N	\N	2025-11-27 14:49:38.876611+07	{"action": "DELETE", "reason": "Scam/Lừa đảo"}
+87	13	POST_DELETED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:49:38.879139+07	{"title": "Hello world fdafadfadf", "reason": "Scam/Lừa đảo"}
+88	13	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:51:52.02762+07	{"filters": {"limit": 10, "offset": 0, "authorId": null}}
+89	13	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:52:01.03115+07	{"filters": {"limit": 10, "offset": 0, "userId": null, "expertId": null}}
+90	13	SYSTEM_SETTINGS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:52:11.196386+07	{}
+91	13	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:53:53.230527+07	{"filters": {"limit": 10, "offset": 0}}
+92	13	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-11-27 14:53:53.813346+07	{"filters": {"limit": 10, "offset": 0}}
 \.
 
 
 --
--- TOC entry 5988 (class 0 OID 17232)
+-- TOC entry 6039 (class 0 OID 17232)
 -- Dependencies: 235
 -- Data for Name: bookings; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2444,12 +2737,12 @@ COPY app.bookings (id, user_id, expert_id, start_at, end_at, channel, price, sta
 11	5	1	2025-10-10 04:00:00+07	2025-10-10 05:00:00+07	VIDEO	0.00	COMPLETED	2025-10-09 12:45:35.689863+07
 15	5	1	2025-10-16 03:00:00+07	2025-10-16 04:30:00+07	VIDEO	750000.00	COMPLETED	2025-10-15 19:22:24.467554+07
 18	5	1	2025-10-16 05:00:00+07	2025-10-16 06:30:00+07	VIDEO	750000.00	COMPLETED	2025-10-15 20:39:52.391024+07
-20	21	17	2025-11-23 17:00:00+07	2025-11-23 19:00:00+07	CHAT	600000.00	PENDING	2025-11-23 16:35:21.938811+07
+20	21	17	2025-11-23 17:00:00+07	2025-11-23 19:00:00+07	CHAT	600000.00	COMPLETED	2025-11-23 16:35:21.938811+07
 \.
 
 
 --
--- TOC entry 6023 (class 0 OID 18562)
+-- TOC entry 6074 (class 0 OID 18562)
 -- Dependencies: 270
 -- Data for Name: call_events; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2580,7 +2873,27 @@ COPY app.call_events (id, call_id, at, type, by_user, payload) FROM stdin;
 
 
 --
--- TOC entry 6021 (class 0 OID 18533)
+-- TOC entry 6117 (class 0 OID 19155)
+-- Dependencies: 313
+-- Data for Name: call_metrics; Type: TABLE DATA; Schema: app; Owner: postgres
+--
+
+COPY app.call_metrics (id, call_id, "timestamp", rtt_ms, packet_loss, jitter_ms) FROM stdin;
+\.
+
+
+--
+-- TOC entry 6119 (class 0 OID 19169)
+-- Dependencies: 315
+-- Data for Name: call_recordings; Type: TABLE DATA; Schema: app; Owner: postgres
+--
+
+COPY app.call_recordings (id, call_id, url, mime_type, size_bytes, created_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 6072 (class 0 OID 18533)
 -- Dependencies: 268
 -- Data for Name: call_sessions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2641,7 +2954,17 @@ COPY app.call_sessions (id, thread_id, caller_id, callee_id, kind, status, start
 
 
 --
--- TOC entry 6003 (class 0 OID 17386)
+-- TOC entry 6115 (class 0 OID 19138)
+-- Dependencies: 311
+-- Data for Name: chat_attachments; Type: TABLE DATA; Schema: app; Owner: postgres
+--
+
+COPY app.chat_attachments (id, message_id, file_name, mime_type, url, size_bytes, uploaded_at) FROM stdin;
+\.
+
+
+--
+-- TOC entry 6054 (class 0 OID 17386)
 -- Dependencies: 250
 -- Data for Name: chat_members; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2661,7 +2984,7 @@ COPY app.chat_members (thread_id, user_id, role_in_thread, joined_at) FROM stdin
 
 
 --
--- TOC entry 6005 (class 0 OID 17404)
+-- TOC entry 6056 (class 0 OID 17404)
 -- Dependencies: 252
 -- Data for Name: chat_messages; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2674,7 +2997,7 @@ COPY app.chat_messages (id, thread_id, sender_id, content, created_at, edited_at
 
 
 --
--- TOC entry 6019 (class 0 OID 18246)
+-- TOC entry 6070 (class 0 OID 18246)
 -- Dependencies: 266
 -- Data for Name: chat_read_state; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2685,23 +3008,33 @@ COPY app.chat_read_state (thread_id, user_id, last_read_message_id, updated_at) 
 
 
 --
--- TOC entry 6002 (class 0 OID 17372)
--- Dependencies: 249
--- Data for Name: chat_threads; Type: TABLE DATA; Schema: app; Owner: postgres
+-- TOC entry 6121 (class 0 OID 19185)
+-- Dependencies: 317
+-- Data for Name: chat_thread_invitations; Type: TABLE DATA; Schema: app; Owner: postgres
 --
 
-COPY app.chat_threads (id, type, booking_id, last_message_at, created_at) FROM stdin;
-1	DM	\N	2025-09-18 11:57:06.029006+07	2025-09-18 11:57:06.029006+07
-2	DM	\N	2025-09-18 14:48:33.930167+07	2025-09-18 11:58:30.226518+07
-3	DM	\N	2025-09-18 18:18:36.387743+07	2025-09-18 18:18:36.387743+07
-4	BOOKING	2	2025-09-23 19:39:05.251839+07	2025-09-23 19:39:05.251839+07
-5	DM	\N	2025-10-09 13:19:57.850905+07	2025-10-09 13:17:48.635687+07
-6	DM	\N	2025-11-23 16:36:48.665428+07	2025-11-23 16:36:48.665428+07
+COPY app.chat_thread_invitations (id, thread_id, inviter_id, invitee_id, status, created_at) FROM stdin;
 \.
 
 
 --
--- TOC entry 6028 (class 0 OID 18679)
+-- TOC entry 6053 (class 0 OID 17372)
+-- Dependencies: 249
+-- Data for Name: chat_threads; Type: TABLE DATA; Schema: app; Owner: postgres
+--
+
+COPY app.chat_threads (id, type, booking_id, last_message_at, created_at, name) FROM stdin;
+1	DM	\N	2025-09-18 11:57:06.029006+07	2025-09-18 11:57:06.029006+07	\N
+2	DM	\N	2025-09-18 14:48:33.930167+07	2025-09-18 11:58:30.226518+07	\N
+3	DM	\N	2025-09-18 18:18:36.387743+07	2025-09-18 18:18:36.387743+07	\N
+4	BOOKING	2	2025-09-23 19:39:05.251839+07	2025-09-23 19:39:05.251839+07	\N
+5	DM	\N	2025-10-09 13:19:57.850905+07	2025-10-09 13:17:48.635687+07	\N
+6	DM	\N	2025-11-23 16:36:48.665428+07	2025-11-23 16:36:48.665428+07	\N
+\.
+
+
+--
+-- TOC entry 6079 (class 0 OID 18679)
 -- Dependencies: 275
 -- Data for Name: comment_reactions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2711,19 +3044,18 @@ COPY app.comment_reactions (comment_id, user_id, kind, created_at) FROM stdin;
 
 
 --
--- TOC entry 6010 (class 0 OID 17460)
+-- TOC entry 6061 (class 0 OID 17460)
 -- Dependencies: 257
 -- Data for Name: comments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
 
 COPY app.comments (id, post_id, author_id, anonymous, content, created_at, parent_id, edited, updated_at) FROM stdin;
 2	6	7	t	Bài viết hay quá!	2025-09-26 12:08:22.516113+07	\N	f	\N
-3	9	5	t	Bài viết hay quá!	2025-10-09 13:32:13.153475+07	\N	f	\N
 \.
 
 
 --
--- TOC entry 6016 (class 0 OID 17514)
+-- TOC entry 6067 (class 0 OID 17514)
 -- Dependencies: 263
 -- Data for Name: consents; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2733,7 +3065,7 @@ COPY app.consents (id, user_id, version, consented_at) FROM stdin;
 
 
 --
--- TOC entry 6057 (class 0 OID 19028)
+-- TOC entry 6108 (class 0 OID 19028)
 -- Dependencies: 304
 -- Data for Name: domains; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2743,7 +3075,7 @@ COPY app.domains (id, name) FROM stdin;
 
 
 --
--- TOC entry 5980 (class 0 OID 17163)
+-- TOC entry 6031 (class 0 OID 17163)
 -- Dependencies: 227
 -- Data for Name: email_verifications; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2755,7 +3087,7 @@ COPY app.email_verifications (id, user_id, email, otp_code, expires_at, verified
 
 
 --
--- TOC entry 6055 (class 0 OID 19012)
+-- TOC entry 6106 (class 0 OID 19012)
 -- Dependencies: 302
 -- Data for Name: expert_audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2765,7 +3097,7 @@ COPY app.expert_audience (expert_id, audience_id) FROM stdin;
 
 
 --
--- TOC entry 5986 (class 0 OID 17216)
+-- TOC entry 6037 (class 0 OID 17216)
 -- Dependencies: 233
 -- Data for Name: expert_availabilities; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2775,7 +3107,7 @@ COPY app.expert_availabilities (id, expert_id, start_at, end_at, is_recurring, r
 
 
 --
--- TOC entry 6048 (class 0 OID 18945)
+-- TOC entry 6099 (class 0 OID 18945)
 -- Dependencies: 295
 -- Data for Name: expert_certifications; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2785,7 +3117,7 @@ COPY app.expert_certifications (id, expert_id, certificate_name, issuing_org, is
 
 
 --
--- TOC entry 6058 (class 0 OID 19038)
+-- TOC entry 6109 (class 0 OID 19038)
 -- Dependencies: 305
 -- Data for Name: expert_domain; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2795,7 +3127,7 @@ COPY app.expert_domain (expert_id, domain_id) FROM stdin;
 
 
 --
--- TOC entry 6046 (class 0 OID 18931)
+-- TOC entry 6097 (class 0 OID 18931)
 -- Dependencies: 293
 -- Data for Name: expert_education; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2805,7 +3137,7 @@ COPY app.expert_education (id, expert_id, degree, institution, year_completed, d
 
 
 --
--- TOC entry 6044 (class 0 OID 18917)
+-- TOC entry 6095 (class 0 OID 18917)
 -- Dependencies: 291
 -- Data for Name: expert_experience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2815,7 +3147,7 @@ COPY app.expert_experience (id, expert_id, "position", organization, years, desc
 
 
 --
--- TOC entry 6052 (class 0 OID 18987)
+-- TOC entry 6103 (class 0 OID 18987)
 -- Dependencies: 299
 -- Data for Name: expert_media; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2825,7 +3157,7 @@ COPY app.expert_media (id, expert_id, media_type, url, title, description, creat
 
 
 --
--- TOC entry 6049 (class 0 OID 18958)
+-- TOC entry 6100 (class 0 OID 18958)
 -- Dependencies: 296
 -- Data for Name: expert_performance; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2835,24 +3167,24 @@ COPY app.expert_performance (expert_id, response_time_avg, acceptance_rate, comp
 
 
 --
--- TOC entry 5982 (class 0 OID 17180)
+-- TOC entry 6033 (class 0 OID 17180)
 -- Dependencies: 229
 -- Data for Name: expert_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
 
 COPY app.expert_profiles (id, user_id, specialties, price_per_session, rating_avg, kyc_status, intro) FROM stdin;
-1	7	{}	0.00	\N	PENDING	New expert
-2	9	{}	0.00	\N	PENDING	New expert
 3	1	{Anxiety,Depression,Relationship}	500000.00	5.0	PENDING	I'm a licensed therapist with 5 years of experience...
-4	17	{stress,anxiety,life-coaching}	300000.00	4.8	PENDING	10 năm kinh nghiệm life coaching
-5	18	{marriage,family-conflict,relationship}	350000.00	4.9	PENDING	15 năm kinh nghiệm tư vấn hôn nhân gia đình
 6	19	{career,productivity,interview}	250000.00	4.7	PENDING	Hỗ trợ định hướng nghề nghiệp & kỹ năng phỏng vấn
 7	20	{depression,anxiety,healing}	400000.00	5.0	PENDING	10 năm kinh nghiệm trị liệu trầm cảm và sang chấn
+1	7	{}	0.00	\N	VERIFIED	New expert
+2	9	{}	0.00	\N	REJECTED	New expert
+4	17	{stress,anxiety,life-coaching}	300000.00	4.8	VERIFIED	10 năm kinh nghiệm life coaching
+5	18	{marriage,family-conflict,relationship}	350000.00	4.9	REJECTED	15 năm kinh nghiệm tư vấn hôn nhân gia đình
 \.
 
 
 --
--- TOC entry 6042 (class 0 OID 18900)
+-- TOC entry 6093 (class 0 OID 18900)
 -- Dependencies: 289
 -- Data for Name: expert_skills; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2862,7 +3194,7 @@ COPY app.expert_skills (expert_id, skill_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6050 (class 0 OID 18971)
+-- TOC entry 6101 (class 0 OID 18971)
 -- Dependencies: 297
 -- Data for Name: expert_status; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2876,7 +3208,7 @@ COPY app.expert_status (expert_id, is_online, last_active_at, active_score, stat
 
 
 --
--- TOC entry 5984 (class 0 OID 17199)
+-- TOC entry 6035 (class 0 OID 17199)
 -- Dependencies: 231
 -- Data for Name: listener_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2886,17 +3218,28 @@ COPY app.listener_profiles (id, user_id, intro, verified) FROM stdin;
 
 
 --
--- TOC entry 6014 (class 0 OID 17497)
+-- TOC entry 6065 (class 0 OID 17497)
 -- Dependencies: 261
 -- Data for Name: moderation_actions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
 
 COPY app.moderation_actions (id, admin_id, target_type, target_id, action, reason, created_at) FROM stdin;
+1	13	USER	14	BAN	Test ban	2025-11-27 14:14:44.423436+07
+2	13	POST	1	HIDE	Vi phạm nội quy	2025-11-27 14:29:13.808373+07
+3	13	POST	1	DELETE	Nội dung vi phạm nghiêm trọng	2025-11-27 14:29:16.854442+07
+4	13	POST	1	HIDE	Vi phạm nội quy	2025-11-27 14:31:21.410118+07
+5	13	USER	14	BAN	Spam và lừa đảo	2025-11-27 14:33:21.06122+07
+6	13	USER	8	BAN	Spam và lừa đảo	2025-11-27 14:37:36.495739+07
+7	13	USER	8	BAN	Spam và lừa đảo eqfhbibqwfh	2025-11-27 14:37:46.361645+07
+8	13	USER	8	BAN	Spam và lừa đảo 	2025-11-27 14:37:56.788752+07
+9	13	USER	8	BAN	Spam 	2025-11-27 14:38:03.826818+07
+10	13	USER	9	BAN	Spam 	2025-11-27 14:38:14.629498+07
+11	13	POST	9	DELETE	Scam/Lừa đảo	2025-11-27 14:49:38.872439+07
 \.
 
 
 --
--- TOC entry 6039 (class 0 OID 18872)
+-- TOC entry 6090 (class 0 OID 18872)
 -- Dependencies: 286
 -- Data for Name: oauth_users; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2908,7 +3251,7 @@ COPY app.oauth_users (id, app_user_id, google_id, email, name, avatar, created_a
 
 
 --
--- TOC entry 5992 (class 0 OID 17280)
+-- TOC entry 6043 (class 0 OID 17280)
 -- Dependencies: 239
 -- Data for Name: payment_intents; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2929,7 +3272,7 @@ COPY app.payment_intents (id, booking_id, user_id, provider, amount, currency, s
 
 
 --
--- TOC entry 5994 (class 0 OID 17304)
+-- TOC entry 6045 (class 0 OID 17304)
 -- Dependencies: 241
 -- Data for Name: payments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2939,7 +3282,7 @@ COPY app.payments (id, intent_id, paid_at, status, gateway_payload) FROM stdin;
 
 
 --
--- TOC entry 6037 (class 0 OID 18840)
+-- TOC entry 6088 (class 0 OID 18840)
 -- Dependencies: 284
 -- Data for Name: payout_accounts; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2950,7 +3293,7 @@ COPY app.payout_accounts (id, user_id, bank_name, account_number, account_holder
 
 
 --
--- TOC entry 6060 (class 0 OID 19056)
+-- TOC entry 6111 (class 0 OID 19056)
 -- Dependencies: 307
 -- Data for Name: payout_requests; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2961,7 +3304,7 @@ COPY app.payout_requests (id, user_id, amount, status, payout_account_id, admin_
 
 
 --
--- TOC entry 6025 (class 0 OID 18629)
+-- TOC entry 6076 (class 0 OID 18629)
 -- Dependencies: 272
 -- Data for Name: post_audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2971,7 +3314,7 @@ COPY app.post_audience (post_id, user_id) FROM stdin;
 
 
 --
--- TOC entry 6029 (class 0 OID 18701)
+-- TOC entry 6080 (class 0 OID 18701)
 -- Dependencies: 276
 -- Data for Name: post_files; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2981,7 +3324,7 @@ COPY app.post_files (post_id, file_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6027 (class 0 OID 18650)
+-- TOC entry 6078 (class 0 OID 18650)
 -- Dependencies: 274
 -- Data for Name: post_media; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -2991,7 +3334,7 @@ COPY app.post_media (id, post_id, kind, url, width, height, duration_ms, created
 
 
 --
--- TOC entry 6008 (class 0 OID 17440)
+-- TOC entry 6059 (class 0 OID 17440)
 -- Dependencies: 255
 -- Data for Name: post_reactions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3001,7 +3344,7 @@ COPY app.post_reactions (post_id, user_id, reaction, created_at) FROM stdin;
 
 
 --
--- TOC entry 6030 (class 0 OID 18718)
+-- TOC entry 6081 (class 0 OID 18718)
 -- Dependencies: 277
 -- Data for Name: post_saves; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3011,7 +3354,7 @@ COPY app.post_saves (user_id, post_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6007 (class 0 OID 17424)
+-- TOC entry 6058 (class 0 OID 17424)
 -- Dependencies: 254
 -- Data for Name: posts; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3019,12 +3362,11 @@ COPY app.post_saves (user_id, post_id, created_at) FROM stdin;
 COPY app.posts (id, author_id, anonymous, title, content, tags, created_at, updated_at, privacy) FROM stdin;
 6	4	t	Hello world	Nội dung bài viết đầu tiên	\N	2025-09-26 11:35:25.999037+07	2025-09-26 11:35:25.999037+07	PUBLIC
 8	9	t	Hello world fdafadfadf	Nội dung bài viết đầu tiên àdsafadfaf	\N	2025-10-08 20:56:24.861694+07	2025-10-08 20:56:24.861694+07	PUBLIC
-9	5	t	Hello world fdafadfadf	Nội dung bài viết đầu tiên àdsafadfaf	\N	2025-10-09 13:31:38.529154+07	2025-10-09 13:31:38.529154+07	PUBLIC
 \.
 
 
 --
--- TOC entry 6031 (class 0 OID 18765)
+-- TOC entry 6082 (class 0 OID 18765)
 -- Dependencies: 278
 -- Data for Name: processed_events; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3034,7 +3376,7 @@ COPY app.processed_events (idempotency_key, occurred_at) FROM stdin;
 
 
 --
--- TOC entry 6012 (class 0 OID 17481)
+-- TOC entry 6063 (class 0 OID 17481)
 -- Dependencies: 259
 -- Data for Name: reports; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3044,7 +3386,7 @@ COPY app.reports (id, target_type, target_id, reporter_id, reason, details, crea
 
 
 --
--- TOC entry 6033 (class 0 OID 18795)
+-- TOC entry 6084 (class 0 OID 18795)
 -- Dependencies: 280
 -- Data for Name: reviews; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3055,7 +3397,7 @@ COPY app.reviews (id, user_id, expert_id, booking_id, rating, comment, created_a
 
 
 --
--- TOC entry 6062 (class 0 OID 19071)
+-- TOC entry 6113 (class 0 OID 19071)
 -- Dependencies: 309
 -- Data for Name: schema_migrations; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3064,11 +3406,18 @@ COPY app.schema_migrations (id, version, name, executed_at) FROM stdin;
 1	000_tracking	Initialize migration tracking	2025-11-21 19:20:24.816692+07
 3	001_create_payout_requests	001_create_payout_requests.sql	2025-11-21 20:35:08.990008+07
 4	002_add_performance_indexes	002_add_performance_indexes.sql	2025-11-21 20:35:08.997636+07
+8	20251121120000_add_chat_attachments_and_message_edit	20251121120000_add_chat_attachments_and_message_edit.sql	2025-11-24 13:59:17.067665+07
+9	20251121121000_add_call_metrics	20251121121000_add_call_metrics.sql	2025-11-24 13:59:17.077544+07
+10	20251121122000_add_call_recordings	20251121122000_add_call_recordings.sql	2025-11-24 13:59:17.087499+07
+11	20251121123000_add_chat_thread_invitations	20251121123000_add_chat_thread_invitations.sql	2025-11-24 13:59:17.100386+07
+12	20251121124000_add_group_name_to_chat_threads	20251121124000_add_group_name_to_chat_threads.sql	2025-11-24 13:59:17.108382+07
+13	20251121125000_add_message_edit_delete_columns	20251121125000_add_message_edit_delete_columns.sql	2025-11-24 13:59:17.113779+07
+14	20251124135630_fix_critical_database_issues	20251124135630_fix_critical_database_issues.sql	2025-11-24 13:59:17.116511+07
 \.
 
 
 --
--- TOC entry 5990 (class 0 OID 17258)
+-- TOC entry 6041 (class 0 OID 17258)
 -- Dependencies: 237
 -- Data for Name: session_notes; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3078,7 +3427,7 @@ COPY app.session_notes (id, booking_id, expert_id, content, created_at) FROM std
 
 
 --
--- TOC entry 6041 (class 0 OID 18890)
+-- TOC entry 6092 (class 0 OID 18890)
 -- Dependencies: 288
 -- Data for Name: skills; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3088,7 +3437,7 @@ COPY app.skills (id, name, category) FROM stdin;
 
 
 --
--- TOC entry 6000 (class 0 OID 17351)
+-- TOC entry 6051 (class 0 OID 17351)
 -- Dependencies: 247
 -- Data for Name: tips; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3098,7 +3447,7 @@ COPY app.tips (id, from_user_id, to_user_id, amount, message, created_at) FROM s
 
 
 --
--- TOC entry 5978 (class 0 OID 17147)
+-- TOC entry 6029 (class 0 OID 17147)
 -- Dependencies: 225
 -- Data for Name: user_files; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3108,7 +3457,7 @@ COPY app.user_files (id, user_id, file_type, file_url, mime_type, byte_size, cre
 
 
 --
--- TOC entry 6024 (class 0 OID 18603)
+-- TOC entry 6075 (class 0 OID 18603)
 -- Dependencies: 271
 -- Data for Name: user_follows; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3119,7 +3468,7 @@ COPY app.user_follows (follower_id, followee_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 5975 (class 0 OID 17121)
+-- TOC entry 6026 (class 0 OID 17121)
 -- Dependencies: 222
 -- Data for Name: user_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3136,7 +3485,7 @@ COPY app.user_profiles (user_id, display_name, avatar_url, bio, gender, year_of_
 
 
 --
--- TOC entry 5976 (class 0 OID 17136)
+-- TOC entry 6027 (class 0 OID 17136)
 -- Dependencies: 223
 -- Data for Name: user_roles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3146,7 +3495,7 @@ COPY app.user_roles (user_id, role) FROM stdin;
 
 
 --
--- TOC entry 6035 (class 0 OID 18822)
+-- TOC entry 6086 (class 0 OID 18822)
 -- Dependencies: 282
 -- Data for Name: user_sessions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3220,11 +3569,32 @@ COPY app.user_sessions (id, user_id, token, device_info, ip_address, expires_at,
 66	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjM4OTAwMjcsImV4cCI6MTc2NjQ4MjAyNywiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.ELHoF_H4rfYVGi_dH7A0Qt7QrRBMsItSgyPxQ7jowgs	PostmanRuntime/7.49.1	::1	2025-11-23 17:27:07.322+07	2025-11-23 16:27:07.323924+07	f
 67	5	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1IiwidHlwIjoicmVmcmVzaCIsImlhdCI6MTc2Mzg5MDY4MSwiZXhwIjoxNzY2NDgyNjgxLCJhdWQiOiJoZWFsaW5nLndlYmFwcCIsImlzcyI6ImhlYWxpbmcuYXBpIn0.gp7-9S0QRTaEvvyXRHTAeDLyaf0V7WMtK3VP2euHLsg	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0	::1	2025-11-23 17:38:01.319+07	2025-11-23 16:38:01.320382+07	f
 68	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjM4OTA2OTQsImV4cCI6MTc2NjQ4MjY5NCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.lQRFuW8kjfdcTPuVBw0k2LomTjoel1hZGu4dybf-N5A	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36 Edg/142.0.0.0	::1	2025-11-23 17:38:14.951+07	2025-11-23 16:38:14.951957+07	f
+69	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc1NjcsImV4cCI6MTc2NjgxOTU2NywiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.6Z6e0hdDRviZoJqJsOQx16XYy4-M4XuTckU9gQWZuWA	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:12:47.948+07	2025-11-27 14:12:47.949686+07	f
+70	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc1NzYsImV4cCI6MTc2NjgxOTU3NiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.oNjums2tAZuWDK6kbkZs6kI3NzQzwRC-uSq7d4uriFU	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:12:56.39+07	2025-11-27 14:12:56.391787+07	f
+71	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4MzgsImV4cCI6MTc2NjgxOTgzOCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.X2jN6ljkXxzn_UTv2W0KyIyGN0fjDCtPSjvA2if-Pes	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:18.653+07	2025-11-27 14:17:18.654815+07	f
+72	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4NDYsImV4cCI6MTc2NjgxOTg0NiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.hpq-ntsedebkAP4KsQA5_kbff4BNLjamq3KbZCVYrjQ	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:26.896+07	2025-11-27 14:17:26.897767+07	f
+73	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4NTAsImV4cCI6MTc2NjgxOTg1MCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.DXTBGw8gvoAfMUtg-ePjBc6GDiACeNLYQAfq_fBW7R0	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:30.019+07	2025-11-27 14:17:30.021119+07	f
+74	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4NTksImV4cCI6MTc2NjgxOTg1OSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.s8yoImUNQcJgny297OrtfsXsVtdfkgnpjauvqD_0q20	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:39.78+07	2025-11-27 14:17:39.781682+07	f
+75	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4NjgsImV4cCI6MTc2NjgxOTg2OCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.ytfbxuhKbzKL7NFkDDJBbTknGAX0Y3szacV9IxYDop0	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:48.816+07	2025-11-27 14:17:48.817575+07	f
+76	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc4NzgsImV4cCI6MTc2NjgxOTg3OCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.rSSX4iBaJ4XcHmKYWaepTOAwnmM0i7zu9XpXPW3Vk78	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:17:58.929+07	2025-11-27 14:17:58.929913+07	f
+77	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjc5MDgsImV4cCI6MTc2NjgxOTkwOCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.hJNke-mMCwqkgXKyQbW1sxL8JW5Q51IyIdw23LpQQvw	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:18:28.565+07	2025-11-27 14:18:28.567323+07	f
+78	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjgyNDcsImV4cCI6MTc2NjgyMDI0NywiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.D75WYlgUBJ0ZC4ph3zWBEPHSFSEwnQoii9uejqieHmw	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:24:07.06+07	2025-11-27 14:24:07.061483+07	f
+79	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg0MjIsImV4cCI6MTc2NjgyMDQyMiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.GtAPh3IspwaQnDl2sbOInplwCwpJi98jAhOIW8-rAPY	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:27:02.127+07	2025-11-27 14:27:02.128452+07	f
+80	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg0OTUsImV4cCI6MTc2NjgyMDQ5NSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.lnkpgKnhpcMsw1T8ZnYGuqIYpffNYc58bwF4UBdQ7kw	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:28:15.333+07	2025-11-27 14:28:15.334692+07	f
+81	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg2NjYsImV4cCI6MTc2NjgyMDY2NiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.QwJ9UoFjGL1pQt-R1ZcqODCVl6roG6SptGW1XX5Zcns	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:31:06.968+07	2025-11-27 14:31:06.968616+07	f
+82	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg2NjcsImV4cCI6MTc2NjgyMDY2NywiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.5HrPKa01UQO4B-Jrez5TAyXaJeYZRVObGuCCGrA_lM4	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:31:07.902+07	2025-11-27 14:31:07.902831+07	f
+83	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg2NjgsImV4cCI6MTc2NjgyMDY2OCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.TN4lbkaSRSzRkR0B4gE6TX7aC-CI_8gGqm9slX4iz1A	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:31:08.113+07	2025-11-27 14:31:08.114088+07	f
+84	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg2NjgsImV4cCI6MTc2NjgyMDY2OCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.TN4lbkaSRSzRkR0B4gE6TX7aC-CI_8gGqm9slX4iz1A	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:31:08.319+07	2025-11-27 14:31:08.320343+07	f
+85	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjg5MjIsImV4cCI6MTc2NjgyMDkyMiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.0Biljzk57U9vhjXKKD0nNBrFYaa_BLjVVMjgcY5XPug	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:35:22.99+07	2025-11-27 14:35:22.991464+07	f
+86	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjk1MDEsImV4cCI6MTc2NjgyMTUwMSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.nDxutC77RoZRmWvo8qIojef0MGypF8l2_yylLWxp6-4	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:45:01.916+07	2025-11-27 14:45:01.91806+07	f
+87	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjk1MTEsImV4cCI6MTc2NjgyMTUxMSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.cJ5FDNybo3yGE6R12H5lR49IfNvtrBLJKMc152KvKyI	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:45:11.271+07	2025-11-27 14:45:11.272315+07	f
+88	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjk1MjUsImV4cCI6MTc2NjgyMTUyNSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.vA9ivfCu2sfhLW5VJ5pOKrJZgaQeyWg5p6ZLSbxLkhY	Mozilla/5.0 (Windows NT; Windows NT 10.0; en-US) WindowsPowerShell/5.1.26100.7019	::1	2025-11-27 15:45:25.874+07	2025-11-27 14:45:25.875064+07	f
+89	13	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMyIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQyMjk2ODAsImV4cCI6MTc2NjgyMTY4MCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.joDqR9iktYGfPgesL9290FrSsCmDULV0ExGItzPIyTM	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-11-27 15:48:00.502+07	2025-11-27 14:48:00.504475+07	f
 \.
 
 
 --
--- TOC entry 5974 (class 0 OID 17102)
+-- TOC entry 6025 (class 0 OID 17102)
 -- Dependencies: 221
 -- Data for Name: users; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3235,12 +3605,8 @@ COPY app.users (id, handle, email, phone, password_hash, role_primary, is_email_
 4	phat	\N	\N	$2b$10$J6mNcwWi.CsAdqdQ/cNrk.ivl1AhaCJl40X.TKOM1TrQR1wwOcPve	SEEKER	f	ACTIVE	2025-09-18 18:17:06.316332+07	2025-09-18 18:17:06.316332+07
 6	datbike	\N	\N	$2b$10$jB1N/SKHgIz7j/4Vc1FkDuR0IQAohBB0rFIrVEUU2B3/DDk39o0WK	SEEKER	f	ACTIVE	2025-09-23 19:17:05.339169+07	2025-09-23 19:17:05.339169+07
 7	long999	\N	\N	$2b$10$qGL9t0CsXnOXLrEx08190.8OG6mlj0uSWeo5ZmuP.YQEi.gV/0IJi	EXPERT	f	ACTIVE	2025-09-23 19:17:15.781882+07	2025-09-23 19:38:29.346052+07
-8	hoang19	\N	\N	$2b$10$EX3NTgodP.af1ou1CLaBYuxvZ0MIsCaFrp18Qc/T6JS9ELCNB5cI.	SEEKER	f	ACTIVE	2025-10-05 18:30:59.863278+07	2025-10-05 18:30:59.863278+07
-9	hoang1999	\N	\N	$2b$10$owItQg6qIUYiJf0TKTTLMOiL0fHbwfGIYHgZOEPOfE1BNb/pcok1S	EXPERT	f	ACTIVE	2025-10-08 19:21:54.937956+07	2025-10-08 20:11:59.983794+07
-5	hoang	nguyenquyhoang.dh2022@gmail.com	\N	$2b$10$Gk/6MSlNiw7AAyKKvHeaiuELuGXf6TWx.GMgvqKayqdl2aNCES3OW	SEEKER	t	ACTIVE	2025-09-18 18:17:12.551167+07	2025-10-09 13:57:57.400312+07
 11	admin	admin@healing.com	\N	$2b$10$rOzJqQjQjQjQjQjQjQjQuOzJqQjQjQjQjQjQjQjQjQuOzJqQjQjQjQjQjQjQ	ADMIN	f	ACTIVE	2025-10-09 15:21:16.12008+07	2025-10-09 15:21:16.12008+07
 13	admin1	admi3n@healing.com	\N	$2b$10$zUUXfxb0tNMV4dT4q6SE7exZox3lv15m3b42U2BIBW0f874iVc3Vu	ADMIN	f	ACTIVE	2025-10-09 15:29:57.954001+07	2025-10-09 15:29:57.954001+07
-14	hoang19099	\N	\N	$2b$10$Bhw7M/gfjBfCmdI2r/k2Y.xBeQ73p.dWzlFpZBTVppIyF7hhBpZ9y	SEEKER	f	ACTIVE	2025-10-10 21:41:06.94826+07	2025-10-10 21:41:06.94826+07
 2	user2	\N	\N	$2b$10$QdcLOX0A18ESIb/cCgaEg.S07H8cWXlOMf0cvPPzkhuBfUaqPxopm	ADMIN	f	ACTIVE	2025-09-17 10:46:34.854443+07	2025-09-17 10:46:34.854443+07
 15	skytua121_mhyldrq9	skytua121@gmail.com	\N	GOOGLE_OAUTH_ONLY	SEEKER	f	ACTIVE	2025-11-14 15:24:34.210636+07	2025-11-14 15:24:34.210636+07
 16	2254810130_mi2m96uy	2254810130@vaa.edu.vn	\N	GOOGLE_OAUTH_ONLY	SEEKER	f	ACTIVE	2025-11-17 11:00:04.85883+07	2025-11-17 11:00:04.85883+07
@@ -3249,11 +3615,15 @@ COPY app.users (id, handle, email, phone, password_hash, role_primary, is_email_
 19	expert_kevin	kevin@example.com	0901000003	hash123	EXPERT	f	ACTIVE	2025-11-18 22:51:16.311789+07	2025-11-18 22:51:16.311789+07
 20	expert_sara	sara@example.com	0901000004	hash123	EXPERT	f	ACTIVE	2025-11-18 22:51:21.317694+07	2025-11-18 22:51:21.317694+07
 21	mendyu1	\N	\N	$2b$10$r5cPlO4wukdZHssAhLFm7.uthUJ8zOQpi2hyEeZz6SfxW47wWk/e6	SEEKER	f	ACTIVE	2025-11-21 19:32:55.645794+07	2025-11-21 19:32:55.645794+07
+5	hoang	nguyenquyhoang.dh2022@gmail.com	\N	$2b$10$Gk/6MSlNiw7AAyKKvHeaiuELuGXf6TWx.GMgvqKayqdl2aNCES3OW	SEEKER	t	ACTIVE	2025-09-18 18:17:12.551167+07	2025-11-27 14:14:32.894485+07
+14	hoang19099	\N	\N	$2b$10$Bhw7M/gfjBfCmdI2r/k2Y.xBeQ73p.dWzlFpZBTVppIyF7hhBpZ9y	SEEKER	f	SUSPENDED	2025-10-10 21:41:06.94826+07	2025-11-27 14:33:21.092777+07
+8	hoang19	\N	\N	$2b$10$EX3NTgodP.af1ou1CLaBYuxvZ0MIsCaFrp18Qc/T6JS9ELCNB5cI.	SEEKER	f	SUSPENDED	2025-10-05 18:30:59.863278+07	2025-11-27 14:38:03.867207+07
+9	hoang1999	\N	\N	$2b$10$owItQg6qIUYiJf0TKTTLMOiL0fHbwfGIYHgZOEPOfE1BNb/pcok1S	EXPERT	f	SUSPENDED	2025-10-08 19:21:54.937956+07	2025-11-27 14:38:14.645053+07
 \.
 
 
 --
--- TOC entry 5998 (class 0 OID 17335)
+-- TOC entry 6049 (class 0 OID 17335)
 -- Dependencies: 245
 -- Data for Name: wallet_ledger; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3267,7 +3637,7 @@ COPY app.wallet_ledger (id, wallet_id, tx_type, amount, ref_table, ref_id, creat
 
 
 --
--- TOC entry 5996 (class 0 OID 17320)
+-- TOC entry 6047 (class 0 OID 17320)
 -- Dependencies: 243
 -- Data for Name: wallets; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -3278,7 +3648,7 @@ COPY app.wallets (id, owner_user_id, balance) FROM stdin;
 
 
 --
--- TOC entry 6106 (class 0 OID 0)
+-- TOC entry 6169 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: audience_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3287,16 +3657,16 @@ SELECT pg_catalog.setval('app.audience_id_seq', 1, false);
 
 
 --
--- TOC entry 6107 (class 0 OID 0)
+-- TOC entry 6170 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: audit_logs_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.audit_logs_id_seq', 3, true);
+SELECT pg_catalog.setval('app.audit_logs_id_seq', 92, true);
 
 
 --
--- TOC entry 6108 (class 0 OID 0)
+-- TOC entry 6171 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: bookings_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3305,7 +3675,7 @@ SELECT pg_catalog.setval('app.bookings_id_seq', 20, true);
 
 
 --
--- TOC entry 6109 (class 0 OID 0)
+-- TOC entry 6172 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: call_events_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3314,7 +3684,25 @@ SELECT pg_catalog.setval('app.call_events_id_seq', 122, true);
 
 
 --
--- TOC entry 6110 (class 0 OID 0)
+-- TOC entry 6173 (class 0 OID 0)
+-- Dependencies: 312
+-- Name: call_metrics_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
+--
+
+SELECT pg_catalog.setval('app.call_metrics_id_seq', 1, false);
+
+
+--
+-- TOC entry 6174 (class 0 OID 0)
+-- Dependencies: 314
+-- Name: call_recordings_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
+--
+
+SELECT pg_catalog.setval('app.call_recordings_id_seq', 1, false);
+
+
+--
+-- TOC entry 6175 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: call_sessions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3323,7 +3711,16 @@ SELECT pg_catalog.setval('app.call_sessions_id_seq', 51, true);
 
 
 --
--- TOC entry 6111 (class 0 OID 0)
+-- TOC entry 6176 (class 0 OID 0)
+-- Dependencies: 310
+-- Name: chat_attachments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
+--
+
+SELECT pg_catalog.setval('app.chat_attachments_id_seq', 1, false);
+
+
+--
+-- TOC entry 6177 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: chat_messages_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3332,7 +3729,16 @@ SELECT pg_catalog.setval('app.chat_messages_id_seq', 3, true);
 
 
 --
--- TOC entry 6112 (class 0 OID 0)
+-- TOC entry 6178 (class 0 OID 0)
+-- Dependencies: 316
+-- Name: chat_thread_invitations_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
+--
+
+SELECT pg_catalog.setval('app.chat_thread_invitations_id_seq', 1, false);
+
+
+--
+-- TOC entry 6179 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: chat_threads_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3341,7 +3747,7 @@ SELECT pg_catalog.setval('app.chat_threads_id_seq', 6, true);
 
 
 --
--- TOC entry 6113 (class 0 OID 0)
+-- TOC entry 6180 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: comments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3350,7 +3756,7 @@ SELECT pg_catalog.setval('app.comments_id_seq', 4, true);
 
 
 --
--- TOC entry 6114 (class 0 OID 0)
+-- TOC entry 6181 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: consents_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3359,7 +3765,7 @@ SELECT pg_catalog.setval('app.consents_id_seq', 1, false);
 
 
 --
--- TOC entry 6115 (class 0 OID 0)
+-- TOC entry 6182 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: domains_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3368,7 +3774,7 @@ SELECT pg_catalog.setval('app.domains_id_seq', 1, false);
 
 
 --
--- TOC entry 6116 (class 0 OID 0)
+-- TOC entry 6183 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: email_verifications_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3377,7 +3783,7 @@ SELECT pg_catalog.setval('app.email_verifications_id_seq', 14, true);
 
 
 --
--- TOC entry 6117 (class 0 OID 0)
+-- TOC entry 6184 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: expert_availabilities_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3386,7 +3792,7 @@ SELECT pg_catalog.setval('app.expert_availabilities_id_seq', 1, false);
 
 
 --
--- TOC entry 6118 (class 0 OID 0)
+-- TOC entry 6185 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: expert_certifications_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3395,7 +3801,7 @@ SELECT pg_catalog.setval('app.expert_certifications_id_seq', 1, false);
 
 
 --
--- TOC entry 6119 (class 0 OID 0)
+-- TOC entry 6186 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: expert_education_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3404,7 +3810,7 @@ SELECT pg_catalog.setval('app.expert_education_id_seq', 1, false);
 
 
 --
--- TOC entry 6120 (class 0 OID 0)
+-- TOC entry 6187 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: expert_experience_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3413,7 +3819,7 @@ SELECT pg_catalog.setval('app.expert_experience_id_seq', 1, false);
 
 
 --
--- TOC entry 6121 (class 0 OID 0)
+-- TOC entry 6188 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: expert_media_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3422,7 +3828,7 @@ SELECT pg_catalog.setval('app.expert_media_id_seq', 1, false);
 
 
 --
--- TOC entry 6122 (class 0 OID 0)
+-- TOC entry 6189 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: expert_profiles_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3431,7 +3837,7 @@ SELECT pg_catalog.setval('app.expert_profiles_id_seq', 7, true);
 
 
 --
--- TOC entry 6123 (class 0 OID 0)
+-- TOC entry 6190 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: listener_profiles_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3440,16 +3846,16 @@ SELECT pg_catalog.setval('app.listener_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 6124 (class 0 OID 0)
+-- TOC entry 6191 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: moderation_actions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.moderation_actions_id_seq', 1, false);
+SELECT pg_catalog.setval('app.moderation_actions_id_seq', 11, true);
 
 
 --
--- TOC entry 6125 (class 0 OID 0)
+-- TOC entry 6192 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: oauth_users_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3458,7 +3864,7 @@ SELECT pg_catalog.setval('app.oauth_users_id_seq', 2, true);
 
 
 --
--- TOC entry 6126 (class 0 OID 0)
+-- TOC entry 6193 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: payment_intents_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3467,7 +3873,7 @@ SELECT pg_catalog.setval('app.payment_intents_id_seq', 11, true);
 
 
 --
--- TOC entry 6127 (class 0 OID 0)
+-- TOC entry 6194 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: payments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3476,7 +3882,7 @@ SELECT pg_catalog.setval('app.payments_id_seq', 1, false);
 
 
 --
--- TOC entry 6128 (class 0 OID 0)
+-- TOC entry 6195 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: payout_accounts_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3485,7 +3891,7 @@ SELECT pg_catalog.setval('app.payout_accounts_id_seq', 2, true);
 
 
 --
--- TOC entry 6129 (class 0 OID 0)
+-- TOC entry 6196 (class 0 OID 0)
 -- Dependencies: 306
 -- Name: payout_requests_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3494,7 +3900,7 @@ SELECT pg_catalog.setval('app.payout_requests_id_seq', 1, true);
 
 
 --
--- TOC entry 6130 (class 0 OID 0)
+-- TOC entry 6197 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: post_media_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3503,7 +3909,7 @@ SELECT pg_catalog.setval('app.post_media_id_seq', 1, false);
 
 
 --
--- TOC entry 6131 (class 0 OID 0)
+-- TOC entry 6198 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3512,7 +3918,7 @@ SELECT pg_catalog.setval('app.posts_id_seq', 9, true);
 
 
 --
--- TOC entry 6132 (class 0 OID 0)
+-- TOC entry 6199 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: reports_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3521,7 +3927,7 @@ SELECT pg_catalog.setval('app.reports_id_seq', 1, false);
 
 
 --
--- TOC entry 6133 (class 0 OID 0)
+-- TOC entry 6200 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: reviews_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3530,16 +3936,16 @@ SELECT pg_catalog.setval('app.reviews_id_seq', 2, true);
 
 
 --
--- TOC entry 6134 (class 0 OID 0)
+-- TOC entry 6201 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: schema_migrations_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.schema_migrations_id_seq', 5, true);
+SELECT pg_catalog.setval('app.schema_migrations_id_seq', 14, true);
 
 
 --
--- TOC entry 6135 (class 0 OID 0)
+-- TOC entry 6202 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: session_notes_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3548,7 +3954,7 @@ SELECT pg_catalog.setval('app.session_notes_id_seq', 1, false);
 
 
 --
--- TOC entry 6136 (class 0 OID 0)
+-- TOC entry 6203 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: skills_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3557,7 +3963,7 @@ SELECT pg_catalog.setval('app.skills_id_seq', 1, false);
 
 
 --
--- TOC entry 6137 (class 0 OID 0)
+-- TOC entry 6204 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: tips_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3566,7 +3972,7 @@ SELECT pg_catalog.setval('app.tips_id_seq', 1, false);
 
 
 --
--- TOC entry 6138 (class 0 OID 0)
+-- TOC entry 6205 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: user_files_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3575,16 +3981,16 @@ SELECT pg_catalog.setval('app.user_files_id_seq', 1, false);
 
 
 --
--- TOC entry 6139 (class 0 OID 0)
+-- TOC entry 6206 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: user_sessions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.user_sessions_id_seq', 68, true);
+SELECT pg_catalog.setval('app.user_sessions_id_seq', 89, true);
 
 
 --
--- TOC entry 6140 (class 0 OID 0)
+-- TOC entry 6207 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3593,7 +3999,7 @@ SELECT pg_catalog.setval('app.users_id_seq', 21, true);
 
 
 --
--- TOC entry 6141 (class 0 OID 0)
+-- TOC entry 6208 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: wallet_ledger_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3602,7 +4008,7 @@ SELECT pg_catalog.setval('app.wallet_ledger_id_seq', 5, true);
 
 
 --
--- TOC entry 6142 (class 0 OID 0)
+-- TOC entry 6209 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: wallets_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -3611,7 +4017,7 @@ SELECT pg_catalog.setval('app.wallets_id_seq', 2, true);
 
 
 --
--- TOC entry 5734 (class 2606 OID 19011)
+-- TOC entry 5766 (class 2606 OID 19011)
 -- Name: audience audience_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3620,7 +4026,7 @@ ALTER TABLE ONLY app.audience
 
 
 --
--- TOC entry 5736 (class 2606 OID 19009)
+-- TOC entry 5768 (class 2606 OID 19009)
 -- Name: audience audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3629,7 +4035,7 @@ ALTER TABLE ONLY app.audience
 
 
 --
--- TOC entry 5649 (class 2606 OID 17537)
+-- TOC entry 5681 (class 2606 OID 17537)
 -- Name: audit_logs audit_logs_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3638,7 +4044,7 @@ ALTER TABLE ONLY app.audit_logs
 
 
 --
--- TOC entry 5551 (class 2606 OID 17244)
+-- TOC entry 5581 (class 2606 OID 17244)
 -- Name: bookings bookings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3647,7 +4053,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 5668 (class 2606 OID 18570)
+-- TOC entry 5700 (class 2606 OID 18570)
 -- Name: call_events call_events_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3656,7 +4062,25 @@ ALTER TABLE ONLY app.call_events
 
 
 --
--- TOC entry 5660 (class 2606 OID 18543)
+-- TOC entry 5790 (class 2606 OID 19161)
+-- Name: call_metrics call_metrics_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_metrics
+    ADD CONSTRAINT call_metrics_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5793 (class 2606 OID 19177)
+-- Name: call_recordings call_recordings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_recordings
+    ADD CONSTRAINT call_recordings_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5692 (class 2606 OID 18543)
 -- Name: call_sessions call_sessions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3665,7 +4089,16 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 5604 (class 2606 OID 17392)
+-- TOC entry 5787 (class 2606 OID 19146)
+-- Name: chat_attachments chat_attachments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_attachments
+    ADD CONSTRAINT chat_attachments_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5635 (class 2606 OID 17392)
 -- Name: chat_members chat_members_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3674,7 +4107,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 5611 (class 2606 OID 17412)
+-- TOC entry 5642 (class 2606 OID 17412)
 -- Name: chat_messages chat_messages_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3683,7 +4116,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 5657 (class 2606 OID 18251)
+-- TOC entry 5689 (class 2606 OID 18251)
 -- Name: chat_read_state chat_read_state_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3692,7 +4125,16 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 5599 (class 2606 OID 17380)
+-- TOC entry 5796 (class 2606 OID 19195)
+-- Name: chat_thread_invitations chat_thread_invitations_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_thread_invitations
+    ADD CONSTRAINT chat_thread_invitations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 5629 (class 2606 OID 17380)
 -- Name: chat_threads chat_threads_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3701,7 +4143,7 @@ ALTER TABLE ONLY app.chat_threads
 
 
 --
--- TOC entry 5680 (class 2606 OID 18684)
+-- TOC entry 5712 (class 2606 OID 18684)
 -- Name: comment_reactions comment_reactions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3710,7 +4152,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 5630 (class 2606 OID 17469)
+-- TOC entry 5662 (class 2606 OID 17469)
 -- Name: comments comments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3719,7 +4161,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5647 (class 2606 OID 17522)
+-- TOC entry 5679 (class 2606 OID 17522)
 -- Name: consents consents_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3728,7 +4170,7 @@ ALTER TABLE ONLY app.consents
 
 
 --
--- TOC entry 5740 (class 2606 OID 19037)
+-- TOC entry 5772 (class 2606 OID 19037)
 -- Name: domains domains_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3737,7 +4179,7 @@ ALTER TABLE ONLY app.domains
 
 
 --
--- TOC entry 5742 (class 2606 OID 19035)
+-- TOC entry 5774 (class 2606 OID 19035)
 -- Name: domains domains_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3746,7 +4188,7 @@ ALTER TABLE ONLY app.domains
 
 
 --
--- TOC entry 5528 (class 2606 OID 17172)
+-- TOC entry 5558 (class 2606 OID 17172)
 -- Name: email_verifications email_verifications_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3755,7 +4197,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 5738 (class 2606 OID 19016)
+-- TOC entry 5770 (class 2606 OID 19016)
 -- Name: expert_audience expert_audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3764,7 +4206,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 5546 (class 2606 OID 17225)
+-- TOC entry 5576 (class 2606 OID 17225)
 -- Name: expert_availabilities expert_availabilities_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3773,7 +4215,7 @@ ALTER TABLE ONLY app.expert_availabilities
 
 
 --
--- TOC entry 5726 (class 2606 OID 18952)
+-- TOC entry 5758 (class 2606 OID 18952)
 -- Name: expert_certifications expert_certifications_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3782,7 +4224,7 @@ ALTER TABLE ONLY app.expert_certifications
 
 
 --
--- TOC entry 5744 (class 2606 OID 19042)
+-- TOC entry 5776 (class 2606 OID 19042)
 -- Name: expert_domain expert_domain_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3791,7 +4233,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 5724 (class 2606 OID 18938)
+-- TOC entry 5756 (class 2606 OID 18938)
 -- Name: expert_education expert_education_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3800,7 +4242,7 @@ ALTER TABLE ONLY app.expert_education
 
 
 --
--- TOC entry 5722 (class 2606 OID 18924)
+-- TOC entry 5754 (class 2606 OID 18924)
 -- Name: expert_experience expert_experience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3809,7 +4251,7 @@ ALTER TABLE ONLY app.expert_experience
 
 
 --
--- TOC entry 5732 (class 2606 OID 18995)
+-- TOC entry 5764 (class 2606 OID 18995)
 -- Name: expert_media expert_media_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3818,7 +4260,7 @@ ALTER TABLE ONLY app.expert_media
 
 
 --
--- TOC entry 5728 (class 2606 OID 18965)
+-- TOC entry 5760 (class 2606 OID 18965)
 -- Name: expert_performance expert_performance_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3827,7 +4269,7 @@ ALTER TABLE ONLY app.expert_performance
 
 
 --
--- TOC entry 5534 (class 2606 OID 17190)
+-- TOC entry 5564 (class 2606 OID 17190)
 -- Name: expert_profiles expert_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3836,7 +4278,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 5536 (class 2606 OID 17192)
+-- TOC entry 5566 (class 2606 OID 17192)
 -- Name: expert_profiles expert_profiles_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3845,7 +4287,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 5720 (class 2606 OID 18905)
+-- TOC entry 5752 (class 2606 OID 18905)
 -- Name: expert_skills expert_skills_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3854,7 +4296,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 5730 (class 2606 OID 18980)
+-- TOC entry 5762 (class 2606 OID 18980)
 -- Name: expert_status expert_status_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3863,7 +4305,7 @@ ALTER TABLE ONLY app.expert_status
 
 
 --
--- TOC entry 5542 (class 2606 OID 17207)
+-- TOC entry 5572 (class 2606 OID 17207)
 -- Name: listener_profiles listener_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3872,7 +4314,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 5544 (class 2606 OID 17209)
+-- TOC entry 5574 (class 2606 OID 17209)
 -- Name: listener_profiles listener_profiles_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3881,7 +4323,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 5645 (class 2606 OID 17507)
+-- TOC entry 5677 (class 2606 OID 17507)
 -- Name: moderation_actions moderation_actions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3890,7 +4332,7 @@ ALTER TABLE ONLY app.moderation_actions
 
 
 --
--- TOC entry 5561 (class 2606 OID 18217)
+-- TOC entry 5591 (class 2606 OID 18217)
 -- Name: bookings no_overlap_per_expert; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3899,7 +4341,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 5712 (class 2606 OID 18882)
+-- TOC entry 5744 (class 2606 OID 18882)
 -- Name: oauth_users oauth_users_google_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3908,7 +4350,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 5714 (class 2606 OID 18880)
+-- TOC entry 5746 (class 2606 OID 18880)
 -- Name: oauth_users oauth_users_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3917,7 +4359,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 5572 (class 2606 OID 17290)
+-- TOC entry 5602 (class 2606 OID 17290)
 -- Name: payment_intents payment_intents_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3926,7 +4368,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5574 (class 2606 OID 17292)
+-- TOC entry 5604 (class 2606 OID 17292)
 -- Name: payment_intents payment_intents_tx_ref_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3935,7 +4377,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5579 (class 2606 OID 17313)
+-- TOC entry 5609 (class 2606 OID 17313)
 -- Name: payments payments_intent_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3944,7 +4386,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 5581 (class 2606 OID 17311)
+-- TOC entry 5611 (class 2606 OID 17311)
 -- Name: payments payments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3953,7 +4395,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 5708 (class 2606 OID 18849)
+-- TOC entry 5740 (class 2606 OID 18849)
 -- Name: payout_accounts payout_accounts_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3962,7 +4404,7 @@ ALTER TABLE ONLY app.payout_accounts
 
 
 --
--- TOC entry 5748 (class 2606 OID 19067)
+-- TOC entry 5780 (class 2606 OID 19067)
 -- Name: payout_requests payout_requests_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3971,7 +4413,7 @@ ALTER TABLE ONLY app.payout_requests
 
 
 --
--- TOC entry 5676 (class 2606 OID 18633)
+-- TOC entry 5708 (class 2606 OID 18633)
 -- Name: post_audience post_audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3980,7 +4422,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 5683 (class 2606 OID 18706)
+-- TOC entry 5715 (class 2606 OID 18706)
 -- Name: post_files post_files_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3989,7 +4431,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 5678 (class 2606 OID 18658)
+-- TOC entry 5710 (class 2606 OID 18658)
 -- Name: post_media post_media_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -3998,7 +4440,7 @@ ALTER TABLE ONLY app.post_media
 
 
 --
--- TOC entry 5628 (class 2606 OID 17448)
+-- TOC entry 5660 (class 2606 OID 17448)
 -- Name: post_reactions post_reactions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4007,7 +4449,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 5686 (class 2606 OID 18723)
+-- TOC entry 5718 (class 2606 OID 18723)
 -- Name: post_saves post_saves_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4016,7 +4458,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 5623 (class 2606 OID 17434)
+-- TOC entry 5655 (class 2606 OID 17434)
 -- Name: posts posts_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4025,7 +4467,7 @@ ALTER TABLE ONLY app.posts
 
 
 --
--- TOC entry 5688 (class 2606 OID 18772)
+-- TOC entry 5720 (class 2606 OID 18772)
 -- Name: processed_events processed_events_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4034,7 +4476,7 @@ ALTER TABLE ONLY app.processed_events
 
 
 --
--- TOC entry 5643 (class 2606 OID 17490)
+-- TOC entry 5675 (class 2606 OID 17490)
 -- Name: reports reports_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4043,7 +4485,7 @@ ALTER TABLE ONLY app.reports
 
 
 --
--- TOC entry 5697 (class 2606 OID 18804)
+-- TOC entry 5729 (class 2606 OID 18804)
 -- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4052,7 +4494,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 5699 (class 2606 OID 18864)
+-- TOC entry 5731 (class 2606 OID 18864)
 -- Name: reviews reviews_user_booking_unique; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4061,7 +4503,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 5751 (class 2606 OID 19079)
+-- TOC entry 5783 (class 2606 OID 19079)
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4070,7 +4512,7 @@ ALTER TABLE ONLY app.schema_migrations
 
 
 --
--- TOC entry 5753 (class 2606 OID 19081)
+-- TOC entry 5785 (class 2606 OID 19081)
 -- Name: schema_migrations schema_migrations_version_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4079,7 +4521,7 @@ ALTER TABLE ONLY app.schema_migrations
 
 
 --
--- TOC entry 5563 (class 2606 OID 17268)
+-- TOC entry 5593 (class 2606 OID 17268)
 -- Name: session_notes session_notes_booking_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4088,7 +4530,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 5565 (class 2606 OID 17266)
+-- TOC entry 5595 (class 2606 OID 17266)
 -- Name: session_notes session_notes_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4097,7 +4539,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 5716 (class 2606 OID 18899)
+-- TOC entry 5748 (class 2606 OID 18899)
 -- Name: skills skills_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4106,7 +4548,7 @@ ALTER TABLE ONLY app.skills
 
 
 --
--- TOC entry 5718 (class 2606 OID 18897)
+-- TOC entry 5750 (class 2606 OID 18897)
 -- Name: skills skills_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4115,7 +4557,7 @@ ALTER TABLE ONLY app.skills
 
 
 --
--- TOC entry 5597 (class 2606 OID 17360)
+-- TOC entry 5627 (class 2606 OID 17360)
 -- Name: tips tips_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4124,7 +4566,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 5532 (class 2606 OID 17555)
+-- TOC entry 5562 (class 2606 OID 17555)
 -- Name: email_verifications uq_email_verif_user_all; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4133,7 +4575,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 5526 (class 2606 OID 17156)
+-- TOC entry 5556 (class 2606 OID 17156)
 -- Name: user_files user_files_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4142,7 +4584,7 @@ ALTER TABLE ONLY app.user_files
 
 
 --
--- TOC entry 5674 (class 2606 OID 18608)
+-- TOC entry 5706 (class 2606 OID 18608)
 -- Name: user_follows user_follows_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4151,7 +4593,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 5522 (class 2606 OID 17130)
+-- TOC entry 5552 (class 2606 OID 17130)
 -- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4160,7 +4602,7 @@ ALTER TABLE ONLY app.user_profiles
 
 
 --
--- TOC entry 5524 (class 2606 OID 17140)
+-- TOC entry 5554 (class 2606 OID 17140)
 -- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4169,7 +4611,7 @@ ALTER TABLE ONLY app.user_roles
 
 
 --
--- TOC entry 5706 (class 2606 OID 18831)
+-- TOC entry 5738 (class 2606 OID 18831)
 -- Name: user_sessions user_sessions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4178,7 +4620,7 @@ ALTER TABLE ONLY app.user_sessions
 
 
 --
--- TOC entry 5514 (class 2606 OID 17118)
+-- TOC entry 5544 (class 2606 OID 17118)
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4187,7 +4629,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5516 (class 2606 OID 17116)
+-- TOC entry 5546 (class 2606 OID 17116)
 -- Name: users users_handle_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4196,7 +4638,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5518 (class 2606 OID 18776)
+-- TOC entry 5548 (class 2606 OID 18776)
 -- Name: users users_phone_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4205,7 +4647,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5520 (class 2606 OID 17114)
+-- TOC entry 5550 (class 2606 OID 17114)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4214,7 +4656,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5595 (class 2606 OID 17344)
+-- TOC entry 5625 (class 2606 OID 17344)
 -- Name: wallet_ledger wallet_ledger_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4223,7 +4665,7 @@ ALTER TABLE ONLY app.wallet_ledger
 
 
 --
--- TOC entry 5587 (class 2606 OID 17328)
+-- TOC entry 5617 (class 2606 OID 17328)
 -- Name: wallets wallets_owner_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4232,7 +4674,7 @@ ALTER TABLE ONLY app.wallets
 
 
 --
--- TOC entry 5589 (class 2606 OID 17326)
+-- TOC entry 5619 (class 2606 OID 17326)
 -- Name: wallets wallets_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -4241,7 +4683,7 @@ ALTER TABLE ONLY app.wallets
 
 
 --
--- TOC entry 5650 (class 1259 OID 18593)
+-- TOC entry 5682 (class 1259 OID 18593)
 -- Name: idx_audit_action_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4249,7 +4691,7 @@ CREATE INDEX idx_audit_action_time ON app.audit_logs USING btree (action, create
 
 
 --
--- TOC entry 5651 (class 1259 OID 19129)
+-- TOC entry 5683 (class 1259 OID 19129)
 -- Name: idx_audit_logs_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4257,7 +4699,7 @@ CREATE INDEX idx_audit_logs_created_at ON app.audit_logs USING btree (created_at
 
 
 --
--- TOC entry 5652 (class 1259 OID 19128)
+-- TOC entry 5684 (class 1259 OID 19128)
 -- Name: idx_audit_logs_resource; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4265,7 +4707,7 @@ CREATE INDEX idx_audit_logs_resource ON app.audit_logs USING btree (resource, re
 
 
 --
--- TOC entry 5653 (class 1259 OID 19127)
+-- TOC entry 5685 (class 1259 OID 19127)
 -- Name: idx_audit_logs_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4273,7 +4715,7 @@ CREATE INDEX idx_audit_logs_user_id ON app.audit_logs USING btree (user_id);
 
 
 --
--- TOC entry 5654 (class 1259 OID 18591)
+-- TOC entry 5686 (class 1259 OID 18591)
 -- Name: idx_audit_time_desc; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4281,7 +4723,7 @@ CREATE INDEX idx_audit_time_desc ON app.audit_logs USING btree (created_at DESC)
 
 
 --
--- TOC entry 5655 (class 1259 OID 18592)
+-- TOC entry 5687 (class 1259 OID 18592)
 -- Name: idx_audit_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4289,7 +4731,7 @@ CREATE INDEX idx_audit_user_time ON app.audit_logs USING btree (user_id, created
 
 
 --
--- TOC entry 5547 (class 1259 OID 17542)
+-- TOC entry 5577 (class 1259 OID 17542)
 -- Name: idx_avail_expert; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4297,7 +4739,7 @@ CREATE INDEX idx_avail_expert ON app.expert_availabilities USING btree (expert_i
 
 
 --
--- TOC entry 5552 (class 1259 OID 17543)
+-- TOC entry 5582 (class 1259 OID 17543)
 -- Name: idx_booking_expert; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4305,7 +4747,7 @@ CREATE INDEX idx_booking_expert ON app.bookings USING btree (expert_id, start_at
 
 
 --
--- TOC entry 5553 (class 1259 OID 17544)
+-- TOC entry 5583 (class 1259 OID 17544)
 -- Name: idx_booking_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4313,7 +4755,7 @@ CREATE INDEX idx_booking_user ON app.bookings USING btree (user_id, start_at);
 
 
 --
--- TOC entry 5554 (class 1259 OID 19098)
+-- TOC entry 5584 (class 1259 OID 19098)
 -- Name: idx_bookings_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4321,7 +4763,7 @@ CREATE INDEX idx_bookings_created_at ON app.bookings USING btree (created_at DES
 
 
 --
--- TOC entry 5555 (class 1259 OID 19096)
+-- TOC entry 5585 (class 1259 OID 19096)
 -- Name: idx_bookings_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4329,7 +4771,7 @@ CREATE INDEX idx_bookings_expert_id ON app.bookings USING btree (expert_id);
 
 
 --
--- TOC entry 5556 (class 1259 OID 19099)
+-- TOC entry 5586 (class 1259 OID 19099)
 -- Name: idx_bookings_start_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4337,7 +4779,7 @@ CREATE INDEX idx_bookings_start_at ON app.bookings USING btree (start_at);
 
 
 --
--- TOC entry 5557 (class 1259 OID 19097)
+-- TOC entry 5587 (class 1259 OID 19097)
 -- Name: idx_bookings_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4345,7 +4787,7 @@ CREATE INDEX idx_bookings_status ON app.bookings USING btree (status);
 
 
 --
--- TOC entry 5558 (class 1259 OID 19095)
+-- TOC entry 5588 (class 1259 OID 19095)
 -- Name: idx_bookings_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4353,7 +4795,7 @@ CREATE INDEX idx_bookings_user_id ON app.bookings USING btree (user_id);
 
 
 --
--- TOC entry 5559 (class 1259 OID 18793)
+-- TOC entry 5589 (class 1259 OID 18793)
 -- Name: idx_bookings_user_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4361,7 +4803,7 @@ CREATE INDEX idx_bookings_user_status ON app.bookings USING btree (user_id, stat
 
 
 --
--- TOC entry 5661 (class 1259 OID 18586)
+-- TOC entry 5693 (class 1259 OID 18586)
 -- Name: idx_call_callee_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4369,7 +4811,7 @@ CREATE INDEX idx_call_callee_time ON app.call_sessions USING btree (callee_id, s
 
 
 --
--- TOC entry 5662 (class 1259 OID 18585)
+-- TOC entry 5694 (class 1259 OID 18585)
 -- Name: idx_call_caller_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4377,7 +4819,7 @@ CREATE INDEX idx_call_caller_time ON app.call_sessions USING btree (caller_id, s
 
 
 --
--- TOC entry 5669 (class 1259 OID 18601)
+-- TOC entry 5701 (class 1259 OID 18601)
 -- Name: idx_call_events_call_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4385,7 +4827,7 @@ CREATE INDEX idx_call_events_call_at ON app.call_events USING btree (call_id, at
 
 
 --
--- TOC entry 5670 (class 1259 OID 18597)
+-- TOC entry 5702 (class 1259 OID 18597)
 -- Name: idx_call_events_call_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4393,7 +4835,23 @@ CREATE INDEX idx_call_events_call_time ON app.call_events USING btree (call_id, 
 
 
 --
--- TOC entry 5663 (class 1259 OID 18602)
+-- TOC entry 5791 (class 1259 OID 19167)
+-- Name: idx_call_metrics_call_id; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_call_metrics_call_id ON app.call_metrics USING btree (call_id);
+
+
+--
+-- TOC entry 5794 (class 1259 OID 19183)
+-- Name: idx_call_recordings_call_id; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_call_recordings_call_id ON app.call_recordings USING btree (call_id);
+
+
+--
+-- TOC entry 5695 (class 1259 OID 18602)
 -- Name: idx_call_sessions_thread_start; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4401,7 +4859,7 @@ CREATE INDEX idx_call_sessions_thread_start ON app.call_sessions USING btree (th
 
 
 --
--- TOC entry 5664 (class 1259 OID 18596)
+-- TOC entry 5696 (class 1259 OID 18596)
 -- Name: idx_call_thread_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4409,7 +4867,7 @@ CREATE INDEX idx_call_thread_time ON app.call_sessions USING btree (thread_id, s
 
 
 --
--- TOC entry 5665 (class 1259 OID 18559)
+-- TOC entry 5697 (class 1259 OID 18559)
 -- Name: idx_call_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4417,7 +4875,7 @@ CREATE INDEX idx_call_user_time ON app.call_sessions USING btree (caller_id, sta
 
 
 --
--- TOC entry 5666 (class 1259 OID 18560)
+-- TOC entry 5698 (class 1259 OID 18560)
 -- Name: idx_call_user_time2; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4425,7 +4883,15 @@ CREATE INDEX idx_call_user_time2 ON app.call_sessions USING btree (callee_id, st
 
 
 --
--- TOC entry 5605 (class 1259 OID 19118)
+-- TOC entry 5788 (class 1259 OID 19152)
+-- Name: idx_chat_attachments_message_id; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_chat_attachments_message_id ON app.chat_attachments USING btree (message_id);
+
+
+--
+-- TOC entry 5636 (class 1259 OID 19118)
 -- Name: idx_chat_members_thread_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4433,7 +4899,7 @@ CREATE INDEX idx_chat_members_thread_id ON app.chat_members USING btree (thread_
 
 
 --
--- TOC entry 5606 (class 1259 OID 18243)
+-- TOC entry 5637 (class 1259 OID 18243)
 -- Name: idx_chat_members_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4441,7 +4907,7 @@ CREATE INDEX idx_chat_members_thread_user ON app.chat_members USING btree (threa
 
 
 --
--- TOC entry 5607 (class 1259 OID 19119)
+-- TOC entry 5638 (class 1259 OID 19119)
 -- Name: idx_chat_members_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4449,7 +4915,7 @@ CREATE INDEX idx_chat_members_user_id ON app.chat_members USING btree (user_id);
 
 
 --
--- TOC entry 5612 (class 1259 OID 19122)
+-- TOC entry 5643 (class 1259 OID 19122)
 -- Name: idx_chat_messages_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4457,7 +4923,15 @@ CREATE INDEX idx_chat_messages_created_at ON app.chat_messages USING btree (crea
 
 
 --
--- TOC entry 5613 (class 1259 OID 19121)
+-- TOC entry 5644 (class 1259 OID 19153)
+-- Name: idx_chat_messages_deleted; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_chat_messages_deleted ON app.chat_messages USING btree (deleted_at);
+
+
+--
+-- TOC entry 5645 (class 1259 OID 19121)
 -- Name: idx_chat_messages_sender_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4465,7 +4939,7 @@ CREATE INDEX idx_chat_messages_sender_id ON app.chat_messages USING btree (sende
 
 
 --
--- TOC entry 5614 (class 1259 OID 18244)
+-- TOC entry 5646 (class 1259 OID 18244)
 -- Name: idx_chat_messages_thread_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4473,7 +4947,7 @@ CREATE INDEX idx_chat_messages_thread_created ON app.chat_messages USING btree (
 
 
 --
--- TOC entry 5615 (class 1259 OID 19120)
+-- TOC entry 5647 (class 1259 OID 19120)
 -- Name: idx_chat_messages_thread_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4481,7 +4955,7 @@ CREATE INDEX idx_chat_messages_thread_id ON app.chat_messages USING btree (threa
 
 
 --
--- TOC entry 5616 (class 1259 OID 18598)
+-- TOC entry 5648 (class 1259 OID 18598)
 -- Name: idx_chat_messages_thread_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4489,7 +4963,7 @@ CREATE INDEX idx_chat_messages_thread_time ON app.chat_messages USING btree (thr
 
 
 --
--- TOC entry 5658 (class 1259 OID 18600)
+-- TOC entry 5690 (class 1259 OID 18600)
 -- Name: idx_chat_read_state_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4497,7 +4971,23 @@ CREATE INDEX idx_chat_read_state_thread_user ON app.chat_read_state USING btree 
 
 
 --
--- TOC entry 5600 (class 1259 OID 19116)
+-- TOC entry 5797 (class 1259 OID 19212)
+-- Name: idx_chat_thread_invitations_invitee; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_chat_thread_invitations_invitee ON app.chat_thread_invitations USING btree (invitee_id);
+
+
+--
+-- TOC entry 5798 (class 1259 OID 19211)
+-- Name: idx_chat_thread_invitations_thread; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_chat_thread_invitations_thread ON app.chat_thread_invitations USING btree (thread_id);
+
+
+--
+-- TOC entry 5630 (class 1259 OID 19116)
 -- Name: idx_chat_threads_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4505,7 +4995,7 @@ CREATE INDEX idx_chat_threads_booking_id ON app.chat_threads USING btree (bookin
 
 
 --
--- TOC entry 5601 (class 1259 OID 19117)
+-- TOC entry 5631 (class 1259 OID 19117)
 -- Name: idx_chat_threads_last_message_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4513,7 +5003,7 @@ CREATE INDEX idx_chat_threads_last_message_at ON app.chat_threads USING btree (l
 
 
 --
--- TOC entry 5602 (class 1259 OID 18245)
+-- TOC entry 5632 (class 1259 OID 18245)
 -- Name: idx_chat_threads_last_msg; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4521,7 +5011,15 @@ CREATE INDEX idx_chat_threads_last_msg ON app.chat_threads USING btree (last_mes
 
 
 --
--- TOC entry 5631 (class 1259 OID 19111)
+-- TOC entry 5633 (class 1259 OID 19213)
+-- Name: idx_chat_threads_name; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_chat_threads_name ON app.chat_threads USING btree (name);
+
+
+--
+-- TOC entry 5663 (class 1259 OID 19111)
 -- Name: idx_comments_author_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4529,7 +5027,7 @@ CREATE INDEX idx_comments_author_id ON app.comments USING btree (author_id);
 
 
 --
--- TOC entry 5632 (class 1259 OID 19113)
+-- TOC entry 5664 (class 1259 OID 19113)
 -- Name: idx_comments_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4537,7 +5035,7 @@ CREATE INDEX idx_comments_created_at ON app.comments USING btree (created_at DES
 
 
 --
--- TOC entry 5633 (class 1259 OID 18792)
+-- TOC entry 5665 (class 1259 OID 18792)
 -- Name: idx_comments_parent_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4545,7 +5043,7 @@ CREATE INDEX idx_comments_parent_created_at ON app.comments USING btree (post_id
 
 
 --
--- TOC entry 5634 (class 1259 OID 19112)
+-- TOC entry 5666 (class 1259 OID 19112)
 -- Name: idx_comments_parent_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4553,7 +5051,7 @@ CREATE INDEX idx_comments_parent_id ON app.comments USING btree (parent_id) WHER
 
 
 --
--- TOC entry 5635 (class 1259 OID 17549)
+-- TOC entry 5667 (class 1259 OID 17549)
 -- Name: idx_comments_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4561,7 +5059,7 @@ CREATE INDEX idx_comments_post ON app.comments USING btree (post_id, created_at)
 
 
 --
--- TOC entry 5636 (class 1259 OID 18754)
+-- TOC entry 5668 (class 1259 OID 18754)
 -- Name: idx_comments_post_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4569,7 +5067,7 @@ CREATE INDEX idx_comments_post_created_at ON app.comments USING btree (post_id, 
 
 
 --
--- TOC entry 5637 (class 1259 OID 19110)
+-- TOC entry 5669 (class 1259 OID 19110)
 -- Name: idx_comments_post_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4577,7 +5075,7 @@ CREATE INDEX idx_comments_post_id ON app.comments USING btree (post_id);
 
 
 --
--- TOC entry 5638 (class 1259 OID 18755)
+-- TOC entry 5670 (class 1259 OID 18755)
 -- Name: idx_comments_post_parent_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4585,7 +5083,7 @@ CREATE INDEX idx_comments_post_parent_created_at ON app.comments USING btree (po
 
 
 --
--- TOC entry 5639 (class 1259 OID 18594)
+-- TOC entry 5671 (class 1259 OID 18594)
 -- Name: idx_comments_post_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4593,7 +5091,7 @@ CREATE INDEX idx_comments_post_time ON app.comments USING btree (post_id, create
 
 
 --
--- TOC entry 5529 (class 1259 OID 18219)
+-- TOC entry 5559 (class 1259 OID 18219)
 -- Name: idx_email_verif_user_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4601,7 +5099,7 @@ CREATE INDEX idx_email_verif_user_created ON app.email_verifications USING btree
 
 
 --
--- TOC entry 5548 (class 1259 OID 19093)
+-- TOC entry 5578 (class 1259 OID 19093)
 -- Name: idx_expert_availabilities_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4609,7 +5107,7 @@ CREATE INDEX idx_expert_availabilities_expert_id ON app.expert_availabilities US
 
 
 --
--- TOC entry 5549 (class 1259 OID 19094)
+-- TOC entry 5579 (class 1259 OID 19094)
 -- Name: idx_expert_availabilities_start_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4617,7 +5115,7 @@ CREATE INDEX idx_expert_availabilities_start_at ON app.expert_availabilities USI
 
 
 --
--- TOC entry 5537 (class 1259 OID 19091)
+-- TOC entry 5567 (class 1259 OID 19091)
 -- Name: idx_expert_profiles_kyc_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4625,7 +5123,7 @@ CREATE INDEX idx_expert_profiles_kyc_status ON app.expert_profiles USING btree (
 
 
 --
--- TOC entry 5538 (class 1259 OID 19092)
+-- TOC entry 5568 (class 1259 OID 19092)
 -- Name: idx_expert_profiles_rating_avg; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4633,7 +5131,7 @@ CREATE INDEX idx_expert_profiles_rating_avg ON app.expert_profiles USING btree (
 
 
 --
--- TOC entry 5539 (class 1259 OID 19090)
+-- TOC entry 5569 (class 1259 OID 19090)
 -- Name: idx_expert_profiles_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4641,7 +5139,7 @@ CREATE INDEX idx_expert_profiles_user_id ON app.expert_profiles USING btree (use
 
 
 --
--- TOC entry 5540 (class 1259 OID 17541)
+-- TOC entry 5570 (class 1259 OID 17541)
 -- Name: idx_expert_specs; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4649,7 +5147,7 @@ CREATE INDEX idx_expert_specs ON app.expert_profiles USING gin (specialties);
 
 
 --
--- TOC entry 5710 (class 1259 OID 18888)
+-- TOC entry 5742 (class 1259 OID 18888)
 -- Name: idx_oauth_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4657,7 +5155,7 @@ CREATE INDEX idx_oauth_users_email ON app.oauth_users USING btree (email);
 
 
 --
--- TOC entry 5576 (class 1259 OID 17546)
+-- TOC entry 5606 (class 1259 OID 17546)
 -- Name: idx_pay_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4665,7 +5163,7 @@ CREATE INDEX idx_pay_status ON app.payments USING btree (status);
 
 
 --
--- TOC entry 5566 (class 1259 OID 19101)
+-- TOC entry 5596 (class 1259 OID 19101)
 -- Name: idx_payment_intents_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4673,7 +5171,7 @@ CREATE INDEX idx_payment_intents_booking_id ON app.payment_intents USING btree (
 
 
 --
--- TOC entry 5567 (class 1259 OID 19102)
+-- TOC entry 5597 (class 1259 OID 19102)
 -- Name: idx_payment_intents_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4681,7 +5179,7 @@ CREATE INDEX idx_payment_intents_status ON app.payment_intents USING btree (stat
 
 
 --
--- TOC entry 5568 (class 1259 OID 19103)
+-- TOC entry 5598 (class 1259 OID 19103)
 -- Name: idx_payment_intents_tx_ref; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4689,7 +5187,7 @@ CREATE INDEX idx_payment_intents_tx_ref ON app.payment_intents USING btree (tx_r
 
 
 --
--- TOC entry 5569 (class 1259 OID 19100)
+-- TOC entry 5599 (class 1259 OID 19100)
 -- Name: idx_payment_intents_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4697,7 +5195,7 @@ CREATE INDEX idx_payment_intents_user_id ON app.payment_intents USING btree (use
 
 
 --
--- TOC entry 5577 (class 1259 OID 19104)
+-- TOC entry 5607 (class 1259 OID 19104)
 -- Name: idx_payments_intent_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4705,7 +5203,7 @@ CREATE INDEX idx_payments_intent_id ON app.payments USING btree (intent_id);
 
 
 --
--- TOC entry 5745 (class 1259 OID 19069)
+-- TOC entry 5777 (class 1259 OID 19069)
 -- Name: idx_payout_requests_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4713,7 +5211,7 @@ CREATE INDEX idx_payout_requests_status ON app.payout_requests USING btree (stat
 
 
 --
--- TOC entry 5746 (class 1259 OID 19068)
+-- TOC entry 5778 (class 1259 OID 19068)
 -- Name: idx_payout_requests_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4721,7 +5219,7 @@ CREATE INDEX idx_payout_requests_user_id ON app.payout_requests USING btree (use
 
 
 --
--- TOC entry 5570 (class 1259 OID 17545)
+-- TOC entry 5600 (class 1259 OID 17545)
 -- Name: idx_pi_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4729,7 +5227,7 @@ CREATE INDEX idx_pi_status ON app.payment_intents USING btree (status);
 
 
 --
--- TOC entry 5681 (class 1259 OID 18717)
+-- TOC entry 5713 (class 1259 OID 18717)
 -- Name: idx_post_files_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4737,7 +5235,7 @@ CREATE INDEX idx_post_files_post ON app.post_files USING btree (post_id, created
 
 
 --
--- TOC entry 5624 (class 1259 OID 19114)
+-- TOC entry 5656 (class 1259 OID 19114)
 -- Name: idx_post_reactions_post_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4745,7 +5243,7 @@ CREATE INDEX idx_post_reactions_post_id ON app.post_reactions USING btree (post_
 
 
 --
--- TOC entry 5625 (class 1259 OID 19115)
+-- TOC entry 5657 (class 1259 OID 19115)
 -- Name: idx_post_reactions_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4753,7 +5251,7 @@ CREATE INDEX idx_post_reactions_user_id ON app.post_reactions USING btree (user_
 
 
 --
--- TOC entry 5684 (class 1259 OID 18734)
+-- TOC entry 5716 (class 1259 OID 18734)
 -- Name: idx_post_saves_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4761,7 +5259,7 @@ CREATE INDEX idx_post_saves_post ON app.post_saves USING btree (post_id, created
 
 
 --
--- TOC entry 5617 (class 1259 OID 18697)
+-- TOC entry 5649 (class 1259 OID 18697)
 -- Name: idx_posts_author; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4769,7 +5267,7 @@ CREATE INDEX idx_posts_author ON app.posts USING btree (author_id, created_at DE
 
 
 --
--- TOC entry 5618 (class 1259 OID 19109)
+-- TOC entry 5650 (class 1259 OID 19109)
 -- Name: idx_posts_author_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4777,7 +5275,7 @@ CREATE INDEX idx_posts_author_id ON app.posts USING btree (author_id);
 
 
 --
--- TOC entry 5619 (class 1259 OID 17548)
+-- TOC entry 5651 (class 1259 OID 17548)
 -- Name: idx_posts_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4785,7 +5283,7 @@ CREATE INDEX idx_posts_created ON app.posts USING btree (created_at DESC);
 
 
 --
--- TOC entry 5620 (class 1259 OID 18696)
+-- TOC entry 5652 (class 1259 OID 18696)
 -- Name: idx_posts_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4793,7 +5291,7 @@ CREATE INDEX idx_posts_created_at ON app.posts USING btree (created_at DESC);
 
 
 --
--- TOC entry 5621 (class 1259 OID 18698)
+-- TOC entry 5653 (class 1259 OID 18698)
 -- Name: idx_posts_privacy; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4801,7 +5299,7 @@ CREATE INDEX idx_posts_privacy ON app.posts USING btree (privacy);
 
 
 --
--- TOC entry 5626 (class 1259 OID 18595)
+-- TOC entry 5658 (class 1259 OID 18595)
 -- Name: idx_react_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4809,7 +5307,7 @@ CREATE INDEX idx_react_post ON app.post_reactions USING btree (post_id);
 
 
 --
--- TOC entry 5640 (class 1259 OID 19130)
+-- TOC entry 5672 (class 1259 OID 19130)
 -- Name: idx_reports_reporter_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4817,7 +5315,7 @@ CREATE INDEX idx_reports_reporter_id ON app.reports USING btree (reporter_id);
 
 
 --
--- TOC entry 5641 (class 1259 OID 17550)
+-- TOC entry 5673 (class 1259 OID 17550)
 -- Name: idx_reports_target; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4825,7 +5323,7 @@ CREATE INDEX idx_reports_target ON app.reports USING btree (target_type, target_
 
 
 --
--- TOC entry 5689 (class 1259 OID 19125)
+-- TOC entry 5721 (class 1259 OID 19125)
 -- Name: idx_reviews_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4833,7 +5331,7 @@ CREATE INDEX idx_reviews_booking_id ON app.reviews USING btree (booking_id);
 
 
 --
--- TOC entry 5690 (class 1259 OID 19126)
+-- TOC entry 5722 (class 1259 OID 19126)
 -- Name: idx_reviews_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4841,7 +5339,7 @@ CREATE INDEX idx_reviews_created_at ON app.reviews USING btree (created_at DESC)
 
 
 --
--- TOC entry 5691 (class 1259 OID 19123)
+-- TOC entry 5723 (class 1259 OID 19123)
 -- Name: idx_reviews_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4849,7 +5347,7 @@ CREATE INDEX idx_reviews_expert_id ON app.reviews USING btree (expert_id);
 
 
 --
--- TOC entry 5692 (class 1259 OID 18867)
+-- TOC entry 5724 (class 1259 OID 18867)
 -- Name: idx_reviews_expert_rating; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4857,7 +5355,7 @@ CREATE INDEX idx_reviews_expert_rating ON app.reviews USING btree (expert_id, ra
 
 
 --
--- TOC entry 5693 (class 1259 OID 18820)
+-- TOC entry 5725 (class 1259 OID 18820)
 -- Name: idx_reviews_expert_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4865,7 +5363,7 @@ CREATE INDEX idx_reviews_expert_time ON app.reviews USING btree (expert_id, crea
 
 
 --
--- TOC entry 5694 (class 1259 OID 18866)
+-- TOC entry 5726 (class 1259 OID 18866)
 -- Name: idx_reviews_user_booking; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4873,7 +5371,7 @@ CREATE INDEX idx_reviews_user_booking ON app.reviews USING btree (user_id, booki
 
 
 --
--- TOC entry 5695 (class 1259 OID 19124)
+-- TOC entry 5727 (class 1259 OID 19124)
 -- Name: idx_reviews_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4881,7 +5379,7 @@ CREATE INDEX idx_reviews_user_id ON app.reviews USING btree (user_id);
 
 
 --
--- TOC entry 5749 (class 1259 OID 19082)
+-- TOC entry 5781 (class 1259 OID 19082)
 -- Name: idx_schema_migrations_version; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4889,7 +5387,7 @@ CREATE INDEX idx_schema_migrations_version ON app.schema_migrations USING btree 
 
 
 --
--- TOC entry 5700 (class 1259 OID 18838)
+-- TOC entry 5732 (class 1259 OID 18838)
 -- Name: idx_sessions_token; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4897,7 +5395,7 @@ CREATE INDEX idx_sessions_token ON app.user_sessions USING btree (token);
 
 
 --
--- TOC entry 5701 (class 1259 OID 18837)
+-- TOC entry 5733 (class 1259 OID 18837)
 -- Name: idx_sessions_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4905,7 +5403,7 @@ CREATE INDEX idx_sessions_user_time ON app.user_sessions USING btree (user_id, c
 
 
 --
--- TOC entry 5671 (class 1259 OID 18699)
+-- TOC entry 5703 (class 1259 OID 18699)
 -- Name: idx_user_follows_followee; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4913,7 +5411,7 @@ CREATE INDEX idx_user_follows_followee ON app.user_follows USING btree (followee
 
 
 --
--- TOC entry 5672 (class 1259 OID 18700)
+-- TOC entry 5704 (class 1259 OID 18700)
 -- Name: idx_user_follows_follower; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4921,7 +5419,7 @@ CREATE INDEX idx_user_follows_follower ON app.user_follows USING btree (follower
 
 
 --
--- TOC entry 5702 (class 1259 OID 19089)
+-- TOC entry 5734 (class 1259 OID 19089)
 -- Name: idx_user_sessions_expires_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4929,7 +5427,7 @@ CREATE INDEX idx_user_sessions_expires_at ON app.user_sessions USING btree (expi
 
 
 --
--- TOC entry 5703 (class 1259 OID 19088)
+-- TOC entry 5735 (class 1259 OID 19088)
 -- Name: idx_user_sessions_token; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4937,7 +5435,7 @@ CREATE INDEX idx_user_sessions_token ON app.user_sessions USING btree (token);
 
 
 --
--- TOC entry 5704 (class 1259 OID 19087)
+-- TOC entry 5736 (class 1259 OID 19087)
 -- Name: idx_user_sessions_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4945,7 +5443,7 @@ CREATE INDEX idx_user_sessions_user_id ON app.user_sessions USING btree (user_id
 
 
 --
--- TOC entry 5505 (class 1259 OID 19084)
+-- TOC entry 5535 (class 1259 OID 19084)
 -- Name: idx_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4953,7 +5451,7 @@ CREATE INDEX idx_users_email ON app.users USING btree (email);
 
 
 --
--- TOC entry 5506 (class 1259 OID 19083)
+-- TOC entry 5536 (class 1259 OID 19083)
 -- Name: idx_users_handle; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4961,7 +5459,7 @@ CREATE INDEX idx_users_handle ON app.users USING btree (handle);
 
 
 --
--- TOC entry 5507 (class 1259 OID 17540)
+-- TOC entry 5537 (class 1259 OID 17540)
 -- Name: idx_users_role; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4969,7 +5467,7 @@ CREATE INDEX idx_users_role ON app.users USING btree (role_primary);
 
 
 --
--- TOC entry 5508 (class 1259 OID 19086)
+-- TOC entry 5538 (class 1259 OID 19086)
 -- Name: idx_users_role_primary; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4977,7 +5475,7 @@ CREATE INDEX idx_users_role_primary ON app.users USING btree (role_primary);
 
 
 --
--- TOC entry 5509 (class 1259 OID 19085)
+-- TOC entry 5539 (class 1259 OID 19085)
 -- Name: idx_users_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4985,7 +5483,7 @@ CREATE INDEX idx_users_status ON app.users USING btree (status);
 
 
 --
--- TOC entry 5590 (class 1259 OID 19108)
+-- TOC entry 5620 (class 1259 OID 19108)
 -- Name: idx_wallet_ledger_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -4993,7 +5491,7 @@ CREATE INDEX idx_wallet_ledger_created_at ON app.wallet_ledger USING btree (crea
 
 
 --
--- TOC entry 5591 (class 1259 OID 19107)
+-- TOC entry 5621 (class 1259 OID 19107)
 -- Name: idx_wallet_ledger_tx_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5001,7 +5499,7 @@ CREATE INDEX idx_wallet_ledger_tx_type ON app.wallet_ledger USING btree (tx_type
 
 
 --
--- TOC entry 5592 (class 1259 OID 19106)
+-- TOC entry 5622 (class 1259 OID 19106)
 -- Name: idx_wallet_ledger_wallet_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5009,7 +5507,7 @@ CREATE INDEX idx_wallet_ledger_wallet_id ON app.wallet_ledger USING btree (walle
 
 
 --
--- TOC entry 5593 (class 1259 OID 18590)
+-- TOC entry 5623 (class 1259 OID 18590)
 -- Name: idx_wallet_ledger_wallet_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5017,7 +5515,7 @@ CREATE INDEX idx_wallet_ledger_wallet_time ON app.wallet_ledger USING btree (wal
 
 
 --
--- TOC entry 5583 (class 1259 OID 17547)
+-- TOC entry 5613 (class 1259 OID 17547)
 -- Name: idx_wallet_owner; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5025,7 +5523,7 @@ CREATE INDEX idx_wallet_owner ON app.wallets USING btree (owner_user_id);
 
 
 --
--- TOC entry 5584 (class 1259 OID 19105)
+-- TOC entry 5614 (class 1259 OID 19105)
 -- Name: idx_wallets_owner_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5033,7 +5531,7 @@ CREATE INDEX idx_wallets_owner_user_id ON app.wallets USING btree (owner_user_id
 
 
 --
--- TOC entry 5608 (class 1259 OID 18576)
+-- TOC entry 5639 (class 1259 OID 18576)
 -- Name: uq_chat_member; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5041,7 +5539,7 @@ CREATE UNIQUE INDEX uq_chat_member ON app.chat_members USING btree (thread_id, u
 
 
 --
--- TOC entry 5530 (class 1259 OID 17178)
+-- TOC entry 5560 (class 1259 OID 17178)
 -- Name: uq_email_verif_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5049,7 +5547,7 @@ CREATE UNIQUE INDEX uq_email_verif_user ON app.email_verifications USING btree (
 
 
 --
--- TOC entry 5582 (class 1259 OID 18588)
+-- TOC entry 5612 (class 1259 OID 18588)
 -- Name: uq_payments_intent; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5057,7 +5555,7 @@ CREATE UNIQUE INDEX uq_payments_intent ON app.payments USING btree (intent_id);
 
 
 --
--- TOC entry 5709 (class 1259 OID 18855)
+-- TOC entry 5741 (class 1259 OID 18855)
 -- Name: uq_payout_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5065,7 +5563,7 @@ CREATE UNIQUE INDEX uq_payout_user ON app.payout_accounts USING btree (user_id);
 
 
 --
--- TOC entry 5575 (class 1259 OID 18587)
+-- TOC entry 5605 (class 1259 OID 18587)
 -- Name: uq_pi_txref; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5073,7 +5571,7 @@ CREATE UNIQUE INDEX uq_pi_txref ON app.payment_intents USING btree (tx_ref);
 
 
 --
--- TOC entry 5510 (class 1259 OID 18578)
+-- TOC entry 5540 (class 1259 OID 18578)
 -- Name: uq_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5081,7 +5579,7 @@ CREATE UNIQUE INDEX uq_users_email ON app.users USING btree (email) WHERE (email
 
 
 --
--- TOC entry 5511 (class 1259 OID 18577)
+-- TOC entry 5541 (class 1259 OID 18577)
 -- Name: uq_users_handle; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5089,7 +5587,7 @@ CREATE UNIQUE INDEX uq_users_handle ON app.users USING btree (handle);
 
 
 --
--- TOC entry 5512 (class 1259 OID 18777)
+-- TOC entry 5542 (class 1259 OID 18777)
 -- Name: uq_users_phone; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5097,7 +5595,7 @@ CREATE UNIQUE INDEX uq_users_phone ON app.users USING btree (phone) WHERE (phone
 
 
 --
--- TOC entry 5585 (class 1259 OID 18589)
+-- TOC entry 5615 (class 1259 OID 18589)
 -- Name: uq_wallet_owner; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5105,7 +5603,7 @@ CREATE UNIQUE INDEX uq_wallet_owner ON app.wallets USING btree (owner_user_id);
 
 
 --
--- TOC entry 5609 (class 1259 OID 18599)
+-- TOC entry 5640 (class 1259 OID 18599)
 -- Name: ux_chat_members_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -5113,7 +5611,7 @@ CREATE UNIQUE INDEX ux_chat_members_thread_user ON app.chat_members USING btree 
 
 
 --
--- TOC entry 5825 (class 2620 OID 18242)
+-- TOC entry 5876 (class 2620 OID 18242)
 -- Name: chat_members trg_dm_member_limit; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -5121,7 +5619,7 @@ CREATE TRIGGER trg_dm_member_limit BEFORE INSERT ON app.chat_members FOR EACH RO
 
 
 --
--- TOC entry 5826 (class 2620 OID 18736)
+-- TOC entry 5877 (class 2620 OID 18736)
 -- Name: posts trg_posts_set_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -5129,7 +5627,7 @@ CREATE TRIGGER trg_posts_set_updated_at BEFORE UPDATE OF title, content, tags, p
 
 
 --
--- TOC entry 5827 (class 2620 OID 18869)
+-- TOC entry 5878 (class 2620 OID 18869)
 -- Name: reviews trg_reviews_set_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -5137,7 +5635,7 @@ CREATE TRIGGER trg_reviews_set_updated_at BEFORE UPDATE ON app.reviews FOR EACH 
 
 
 --
--- TOC entry 5761 (class 2606 OID 19132)
+-- TOC entry 5806 (class 2606 OID 19132)
 -- Name: bookings bookings_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5146,7 +5644,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 5762 (class 2606 OID 17247)
+-- TOC entry 5807 (class 2606 OID 17247)
 -- Name: bookings bookings_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5155,7 +5653,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 5795 (class 2606 OID 18571)
+-- TOC entry 5840 (class 2606 OID 18571)
 -- Name: call_events call_events_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5164,7 +5662,25 @@ ALTER TABLE ONLY app.call_events
 
 
 --
--- TOC entry 5791 (class 2606 OID 18580)
+-- TOC entry 5871 (class 2606 OID 19162)
+-- Name: call_metrics call_metrics_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_metrics
+    ADD CONSTRAINT call_metrics_call_id_fkey FOREIGN KEY (call_id) REFERENCES app.call_sessions(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5872 (class 2606 OID 19178)
+-- Name: call_recordings call_recordings_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.call_recordings
+    ADD CONSTRAINT call_recordings_call_id_fkey FOREIGN KEY (call_id) REFERENCES app.call_sessions(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5836 (class 2606 OID 18580)
 -- Name: call_sessions call_sessions_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5173,7 +5689,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 5792 (class 2606 OID 18554)
+-- TOC entry 5837 (class 2606 OID 18554)
 -- Name: call_sessions call_sessions_callee_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5182,7 +5698,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 5793 (class 2606 OID 18549)
+-- TOC entry 5838 (class 2606 OID 18549)
 -- Name: call_sessions call_sessions_caller_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5191,7 +5707,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 5794 (class 2606 OID 18544)
+-- TOC entry 5839 (class 2606 OID 18544)
 -- Name: call_sessions call_sessions_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5200,7 +5716,16 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 5773 (class 2606 OID 17393)
+-- TOC entry 5870 (class 2606 OID 19147)
+-- Name: chat_attachments chat_attachments_message_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_attachments
+    ADD CONSTRAINT chat_attachments_message_id_fkey FOREIGN KEY (message_id) REFERENCES app.chat_messages(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5818 (class 2606 OID 17393)
 -- Name: chat_members chat_members_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5209,7 +5734,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 5774 (class 2606 OID 17398)
+-- TOC entry 5819 (class 2606 OID 17398)
 -- Name: chat_members chat_members_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5218,7 +5743,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 5775 (class 2606 OID 17418)
+-- TOC entry 5820 (class 2606 OID 17418)
 -- Name: chat_messages chat_messages_sender_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5227,7 +5752,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 5776 (class 2606 OID 17413)
+-- TOC entry 5821 (class 2606 OID 17413)
 -- Name: chat_messages chat_messages_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5236,7 +5761,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 5788 (class 2606 OID 18262)
+-- TOC entry 5833 (class 2606 OID 18262)
 -- Name: chat_read_state chat_read_state_last_read_message_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5245,7 +5770,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 5789 (class 2606 OID 18252)
+-- TOC entry 5834 (class 2606 OID 18252)
 -- Name: chat_read_state chat_read_state_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5254,7 +5779,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 5790 (class 2606 OID 18257)
+-- TOC entry 5835 (class 2606 OID 18257)
 -- Name: chat_read_state chat_read_state_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5263,7 +5788,34 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 5772 (class 2606 OID 17381)
+-- TOC entry 5873 (class 2606 OID 19206)
+-- Name: chat_thread_invitations chat_thread_invitations_invitee_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_thread_invitations
+    ADD CONSTRAINT chat_thread_invitations_invitee_id_fkey FOREIGN KEY (invitee_id) REFERENCES app.users(id);
+
+
+--
+-- TOC entry 5874 (class 2606 OID 19201)
+-- Name: chat_thread_invitations chat_thread_invitations_inviter_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_thread_invitations
+    ADD CONSTRAINT chat_thread_invitations_inviter_id_fkey FOREIGN KEY (inviter_id) REFERENCES app.users(id);
+
+
+--
+-- TOC entry 5875 (class 2606 OID 19196)
+-- Name: chat_thread_invitations chat_thread_invitations_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
+--
+
+ALTER TABLE ONLY app.chat_thread_invitations
+    ADD CONSTRAINT chat_thread_invitations_thread_id_fkey FOREIGN KEY (thread_id) REFERENCES app.chat_threads(id) ON DELETE CASCADE;
+
+
+--
+-- TOC entry 5817 (class 2606 OID 17381)
 -- Name: chat_threads chat_threads_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5272,7 +5824,7 @@ ALTER TABLE ONLY app.chat_threads
 
 
 --
--- TOC entry 5801 (class 2606 OID 18685)
+-- TOC entry 5846 (class 2606 OID 18685)
 -- Name: comment_reactions comment_reactions_comment_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5281,7 +5833,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 5802 (class 2606 OID 18690)
+-- TOC entry 5847 (class 2606 OID 18690)
 -- Name: comment_reactions comment_reactions_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5290,7 +5842,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 5780 (class 2606 OID 18743)
+-- TOC entry 5825 (class 2606 OID 18743)
 -- Name: comments comments_author_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5299,7 +5851,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5781 (class 2606 OID 17475)
+-- TOC entry 5826 (class 2606 OID 17475)
 -- Name: comments comments_author_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5308,7 +5860,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5782 (class 2606 OID 18748)
+-- TOC entry 5827 (class 2606 OID 18748)
 -- Name: comments comments_parent_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5317,7 +5869,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5783 (class 2606 OID 18738)
+-- TOC entry 5828 (class 2606 OID 18738)
 -- Name: comments comments_post_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5326,7 +5878,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5784 (class 2606 OID 17470)
+-- TOC entry 5829 (class 2606 OID 17470)
 -- Name: comments comments_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5335,7 +5887,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5787 (class 2606 OID 17523)
+-- TOC entry 5832 (class 2606 OID 17523)
 -- Name: consents consents_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5344,7 +5896,7 @@ ALTER TABLE ONLY app.consents
 
 
 --
--- TOC entry 5757 (class 2606 OID 17173)
+-- TOC entry 5802 (class 2606 OID 17173)
 -- Name: email_verifications email_verifications_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5353,7 +5905,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 5821 (class 2606 OID 19022)
+-- TOC entry 5866 (class 2606 OID 19022)
 -- Name: expert_audience expert_audience_audience_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5362,7 +5914,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 5822 (class 2606 OID 19017)
+-- TOC entry 5867 (class 2606 OID 19017)
 -- Name: expert_audience expert_audience_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5371,7 +5923,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 5760 (class 2606 OID 17226)
+-- TOC entry 5805 (class 2606 OID 17226)
 -- Name: expert_availabilities expert_availabilities_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5380,7 +5932,7 @@ ALTER TABLE ONLY app.expert_availabilities
 
 
 --
--- TOC entry 5817 (class 2606 OID 18953)
+-- TOC entry 5862 (class 2606 OID 18953)
 -- Name: expert_certifications expert_certifications_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5389,7 +5941,7 @@ ALTER TABLE ONLY app.expert_certifications
 
 
 --
--- TOC entry 5823 (class 2606 OID 19048)
+-- TOC entry 5868 (class 2606 OID 19048)
 -- Name: expert_domain expert_domain_domain_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5398,7 +5950,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 5824 (class 2606 OID 19043)
+-- TOC entry 5869 (class 2606 OID 19043)
 -- Name: expert_domain expert_domain_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5407,7 +5959,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 5816 (class 2606 OID 18939)
+-- TOC entry 5861 (class 2606 OID 18939)
 -- Name: expert_education expert_education_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5416,7 +5968,7 @@ ALTER TABLE ONLY app.expert_education
 
 
 --
--- TOC entry 5815 (class 2606 OID 18925)
+-- TOC entry 5860 (class 2606 OID 18925)
 -- Name: expert_experience expert_experience_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5425,7 +5977,7 @@ ALTER TABLE ONLY app.expert_experience
 
 
 --
--- TOC entry 5820 (class 2606 OID 18996)
+-- TOC entry 5865 (class 2606 OID 18996)
 -- Name: expert_media expert_media_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5434,7 +5986,7 @@ ALTER TABLE ONLY app.expert_media
 
 
 --
--- TOC entry 5818 (class 2606 OID 18966)
+-- TOC entry 5863 (class 2606 OID 18966)
 -- Name: expert_performance expert_performance_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5443,7 +5995,7 @@ ALTER TABLE ONLY app.expert_performance
 
 
 --
--- TOC entry 5758 (class 2606 OID 17193)
+-- TOC entry 5803 (class 2606 OID 17193)
 -- Name: expert_profiles expert_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5452,7 +6004,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 5813 (class 2606 OID 18906)
+-- TOC entry 5858 (class 2606 OID 18906)
 -- Name: expert_skills expert_skills_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5461,7 +6013,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 5814 (class 2606 OID 18911)
+-- TOC entry 5859 (class 2606 OID 18911)
 -- Name: expert_skills expert_skills_skill_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5470,7 +6022,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 5819 (class 2606 OID 18981)
+-- TOC entry 5864 (class 2606 OID 18981)
 -- Name: expert_status expert_status_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5479,7 +6031,7 @@ ALTER TABLE ONLY app.expert_status
 
 
 --
--- TOC entry 5796 (class 2606 OID 18609)
+-- TOC entry 5841 (class 2606 OID 18609)
 -- Name: user_follows fk_follow_from; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5488,7 +6040,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 5797 (class 2606 OID 18614)
+-- TOC entry 5842 (class 2606 OID 18614)
 -- Name: user_follows fk_follow_to; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5497,7 +6049,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 5811 (class 2606 OID 18850)
+-- TOC entry 5856 (class 2606 OID 18850)
 -- Name: payout_accounts fk_payout_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5506,7 +6058,7 @@ ALTER TABLE ONLY app.payout_accounts
 
 
 --
--- TOC entry 5807 (class 2606 OID 18815)
+-- TOC entry 5852 (class 2606 OID 18815)
 -- Name: reviews fk_review_booking; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5515,7 +6067,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 5808 (class 2606 OID 18810)
+-- TOC entry 5853 (class 2606 OID 18810)
 -- Name: reviews fk_review_expert; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5524,7 +6076,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 5809 (class 2606 OID 18805)
+-- TOC entry 5854 (class 2606 OID 18805)
 -- Name: reviews fk_review_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5533,7 +6085,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 5810 (class 2606 OID 18832)
+-- TOC entry 5855 (class 2606 OID 18832)
 -- Name: user_sessions fk_session_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5542,7 +6094,7 @@ ALTER TABLE ONLY app.user_sessions
 
 
 --
--- TOC entry 5759 (class 2606 OID 17210)
+-- TOC entry 5804 (class 2606 OID 17210)
 -- Name: listener_profiles listener_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5551,7 +6103,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 5786 (class 2606 OID 17508)
+-- TOC entry 5831 (class 2606 OID 17508)
 -- Name: moderation_actions moderation_actions_admin_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5560,7 +6112,7 @@ ALTER TABLE ONLY app.moderation_actions
 
 
 --
--- TOC entry 5812 (class 2606 OID 18883)
+-- TOC entry 5857 (class 2606 OID 18883)
 -- Name: oauth_users oauth_users_app_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5569,7 +6121,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 5765 (class 2606 OID 17293)
+-- TOC entry 5810 (class 2606 OID 17293)
 -- Name: payment_intents payment_intents_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5578,7 +6130,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5766 (class 2606 OID 17298)
+-- TOC entry 5811 (class 2606 OID 17298)
 -- Name: payment_intents payment_intents_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5587,7 +6139,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5767 (class 2606 OID 17314)
+-- TOC entry 5812 (class 2606 OID 17314)
 -- Name: payments payments_intent_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5596,7 +6148,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 5798 (class 2606 OID 18634)
+-- TOC entry 5843 (class 2606 OID 18634)
 -- Name: post_audience post_audience_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5605,7 +6157,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 5799 (class 2606 OID 18639)
+-- TOC entry 5844 (class 2606 OID 18639)
 -- Name: post_audience post_audience_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5614,7 +6166,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 5803 (class 2606 OID 18712)
+-- TOC entry 5848 (class 2606 OID 18712)
 -- Name: post_files post_files_file_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5623,7 +6175,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 5804 (class 2606 OID 18707)
+-- TOC entry 5849 (class 2606 OID 18707)
 -- Name: post_files post_files_post_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5632,7 +6184,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 5800 (class 2606 OID 18659)
+-- TOC entry 5845 (class 2606 OID 18659)
 -- Name: post_media post_media_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5641,7 +6193,7 @@ ALTER TABLE ONLY app.post_media
 
 
 --
--- TOC entry 5778 (class 2606 OID 17449)
+-- TOC entry 5823 (class 2606 OID 17449)
 -- Name: post_reactions post_reactions_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5650,7 +6202,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 5779 (class 2606 OID 17454)
+-- TOC entry 5824 (class 2606 OID 17454)
 -- Name: post_reactions post_reactions_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5659,7 +6211,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 5805 (class 2606 OID 18729)
+-- TOC entry 5850 (class 2606 OID 18729)
 -- Name: post_saves post_saves_post_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5668,7 +6220,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 5806 (class 2606 OID 18724)
+-- TOC entry 5851 (class 2606 OID 18724)
 -- Name: post_saves post_saves_user_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5677,7 +6229,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 5777 (class 2606 OID 17435)
+-- TOC entry 5822 (class 2606 OID 17435)
 -- Name: posts posts_author_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5686,7 +6238,7 @@ ALTER TABLE ONLY app.posts
 
 
 --
--- TOC entry 5785 (class 2606 OID 17491)
+-- TOC entry 5830 (class 2606 OID 17491)
 -- Name: reports reports_reporter_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5695,7 +6247,7 @@ ALTER TABLE ONLY app.reports
 
 
 --
--- TOC entry 5763 (class 2606 OID 17269)
+-- TOC entry 5808 (class 2606 OID 17269)
 -- Name: session_notes session_notes_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5704,7 +6256,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 5764 (class 2606 OID 17274)
+-- TOC entry 5809 (class 2606 OID 17274)
 -- Name: session_notes session_notes_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5713,7 +6265,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 5770 (class 2606 OID 17361)
+-- TOC entry 5815 (class 2606 OID 17361)
 -- Name: tips tips_from_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5722,7 +6274,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 5771 (class 2606 OID 17366)
+-- TOC entry 5816 (class 2606 OID 17366)
 -- Name: tips tips_to_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5731,7 +6283,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 5756 (class 2606 OID 17157)
+-- TOC entry 5801 (class 2606 OID 17157)
 -- Name: user_files user_files_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5740,7 +6292,7 @@ ALTER TABLE ONLY app.user_files
 
 
 --
--- TOC entry 5754 (class 2606 OID 17131)
+-- TOC entry 5799 (class 2606 OID 17131)
 -- Name: user_profiles user_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5749,7 +6301,7 @@ ALTER TABLE ONLY app.user_profiles
 
 
 --
--- TOC entry 5755 (class 2606 OID 17141)
+-- TOC entry 5800 (class 2606 OID 17141)
 -- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5758,7 +6310,7 @@ ALTER TABLE ONLY app.user_roles
 
 
 --
--- TOC entry 5769 (class 2606 OID 17345)
+-- TOC entry 5814 (class 2606 OID 17345)
 -- Name: wallet_ledger wallet_ledger_wallet_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5767,7 +6319,7 @@ ALTER TABLE ONLY app.wallet_ledger
 
 
 --
--- TOC entry 5768 (class 2606 OID 17329)
+-- TOC entry 5813 (class 2606 OID 17329)
 -- Name: wallets wallets_owner_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -5775,11 +6327,11 @@ ALTER TABLE ONLY app.wallets
     ADD CONSTRAINT wallets_owner_user_id_fkey FOREIGN KEY (owner_user_id) REFERENCES app.users(id) ON DELETE CASCADE;
 
 
--- Completed on 2025-11-24 13:51:06
+-- Completed on 2025-12-01 11:38:49
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict 7WYB5k6oJrOZLQN4VjzlhNsESTicDLKkAMv0RXuiIBSun60TiDyzkRa6b1KbNdM
+\unrestrict Wt6caIWIfyzS7H6Jl2X0cMlGXdS1lQC10WCp9BadOZbtHpeyN2z1NCkrwb8teZ1
 

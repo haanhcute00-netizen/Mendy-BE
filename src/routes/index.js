@@ -18,6 +18,7 @@ import payoutAccountsRouter from "../modules/payouts/payoutAccounts.routes.js";
 import banksRouter from "../modules/payouts/banks.routes.js";
 import payoutsRouter from "../modules/payouts/payouts.routes.js";
 import { router as expertsRouter, publicRouter as publicExpertsRouter } from "../modules/experts/experts.routes.js";
+import expertSearchRouter from "../modules/filter-search-expert/routes.js";
 import AI from "../AI/routes.js"
 
 
@@ -52,6 +53,14 @@ router.use("/experts", expertsRouter);
 
 // Public expert routes (no authentication required)
 router.use("/public/experts", publicExpertsRouter);
+
+// Expert Search module (public - no auth required)
+// GET /api/v1/expert-search/advanced - Advanced search with 30+ filters
+// GET /api/v1/expert-search/facets - Get filter options for UI
+// GET /api/v1/expert-search/quick-filters - Preset filters
+// GET /api/v1/expert-search/:expertId/full - Full expert details
+// GET /api/v1/expert-search/:expertId/similar - Similar experts
+router.use("/expert-search", expertSearchRouter);
 
 // 🧾 Fallback cho route không tồn tại
 router.use((req, res) => {

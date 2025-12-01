@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tìm Kiếm Chuyên Gia</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2)
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 340px 1fr;
+            gap: 20px
+        }
+
+        .filters {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            height: fit-content
+        }
+
+        .filter-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px
+        }
+
+        .filter-section:last-child {
+            border-bottom: none
+        }
+
+        .filter-title {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 12px;
+            font-size: 14px
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px;
+            margin-bottom: 10px
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea
+        }
+
+        .range-inputs {
+            display: flex;
+            gap: 10px
+        }
+
+        .range-inputs input {
+            width: 50%
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            padding: 8px 12px;
+            background: #f7fafc;
+            border-radius: 8px
+        }
+
+        .checkbox-label input {
+            width: auto;
+            margin: 0
+        }
+
+        .quick-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+
+        .quick-btn {
+            padding: 8px 14px;
+            border: 2px solid #667eea;
+            background: #fff;
+            color: #667eea;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s
+        }
+
+        .quick-btn:hover,
+        .quick-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: transparent
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            width: 100%
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4)
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+            width: 100%;
+            margin-top: 10px
+        }
+
+        .results {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2)
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px
+        }
+
+        .results-count {
+            color: #718096;
+            font-size: 14px;
+            font-weight: 500
+        }
+
+        .sort-select {
+            padding: 10px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 14px
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 14px;
+            color: #fff;
+            font-weight: 500
+        }
+
+        .tab.active {
+            background: #fff;
+            color: #667eea
+        }
+
+        .experts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px
+        }
+
+        .expert-card {
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            background: #fff
+        }
+
+        .expert-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+            transform: translateY(-4px)
+        }
+
+        .expert-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px
+        }
+
+        .expert-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 28px;
+            font-weight: 600;
+            flex-shrink: 0
+        }
+
+        .expert-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover
+        }
+
+        .expert-info h3 {
+            font-size: 18px;
+            color: #2d3748;
+            margin-bottom: 6px
+        }
+
+        .expert-status {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #718096
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%
+        }
+
+        .status-online {
+            background: #48bb78;
+            box-shadow: 0 0 8px rgba(72, 187, 120, 0.5)
+        }
+
+        .status-offline {
+            background: #a0aec0
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔍 Tìm Kiếm Chuyên Gia Tâm Lý</h1>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('search',this)">Tìm Kiếm Nâng Cao</button>
+            <button class="tab" onclick="switchTab('facets',this)">Thống Kê</button>
+            <button class="tab" onclick="switchTab('detail',this)">Chi Tiết Expert</button>
+        </div>
+        <div class="layout">
+            <div class="filters">
+                <div class="filter-section">
+                    <div class="filter-title">⚡ Bộ Lọc Nhanh</div>
+                    <div class="quick-filters">
+                        <button class="quick-btn" onclick="applyQuickFilter('top_rated')">Đánh Giá Cao</button>
+                        <button class="quick-btn" onclick="applyQuickFilter('online_now')">Đang Online</button>
+                        <button class="quick-btn" onclick="applyQuickFilter('budget_friendly')">Giá Rẻ</button>
+                        <button class="quick-btn" onclick="applyQuickFilter('premium')">Cao Cấp</button>
+                        <button class="quick-btn" onclick="applyQuickFilter('verified')">Đã Xác Minh</button>
+                        <button class="quick-btn" onclick="applyQuickFilter('new_experts')">Mới</button>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-title">🔤 Tìm Theo Từ Khóa</div>
+                    <input type="text" id="keyword" placeholder="Nhập tên, giới thiệu, chuyên môn...">
+                </div>
+                <div class="filter-section">
+                    <div class="filter-title">💰 Khoảng Giá (VNĐ)</div>
+                    <div class="range-inputs">
+                        <input type="number" id="minPrice" placeholder="Từ">
+                        <input type="number" id="maxPrice" placeholder="Đến">
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <div class="filter-title">⭐ Đánh Giá</div>
+                    <div class="range-inputs">
+                        <input type="number" id="minRating" placeholder="Tối thiểu (0-5)" min="0" max="5" step="0.5">
+                        <input type="number" id="maxRating" placeholder="Tối đa (0-5)" min="0" max="5" step="0.5">
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-title">🟢 Trạng Thái</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-label"><input type="checkbox" id="isOnline"> Chỉ Online</label>
+                    </div>
+                </div>
+                <div class="filter-section">
+                    <div class="filter-title">👤 Hồ Sơ</div>
+                    <select id="gender">
+                        <option value="">Tất cả giới tính</option>
+                        <option value="MALE">Nam</option>
+                        <option value="FEMALE">Nữ</option>
+                    </select>
+                    <select id="kycStatus">
+                        <option value="">Tất cả trạng thái KYC</option>
+                        <option value="VERIFIED">Đã xác minh</option>
+                        <option value="PENDING">Đang chờ</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="searchExperts()">🔍 Tìm Kiếm</button>
+                <button class="btn btn-secondary" onclick="resetFilters()">Xóa Bộ Lọc</button>
+            </div>
+            <div class="results">
+                <div class="results-header">
+                    <div class="results-count" id="resultsCount">0 chuyên gia được tìm thấy</div>
+                    <select class="sort-select" id="sortBy" onchange="searchExperts()">
+                        <option value="rating">Sắp xếp theo Đánh giá</option>
+                        <option value="price_low">Giá: Thấp đến Cao</option>
+                        <option value="price">Giá: Cao đến Thấp</option>
+                        <option value="sessions">Nhiều buổi tư vấn nhất</option>
+                        <option value="newest">Mới nhất</option>
+                    </select>
+                </div>
+                <div class="facets-panel" id="facetsPanel"
+                    style="display:none;background:#f7fafc;border-radius:12px;padding:16px;margin-bottom:20px;">
+                    <div style="font-size:14px;font-weight:600;margin-bottom:12px;color:#4a5568;">📊 Thống Kê</div>
+                    <div id="facetsContent"></div>
+                </div>
+                <div class="experts-grid" id="expertsGrid">
+                    <div style="text-align:center;padding:60px;color:#a0aec0;grid-column:1/-1;">
+                        <p>Nhấn "Tìm Kiếm" để bắt đầu</p>
+                    </div>
+                </div>
+                <div class="pagination" id="pagination"
+                    style="display:flex;justify-content:center;gap:8px;margin-top:25px;"></div>
+                <div style="margin-top:25px;background:#1a202c;border-radius:12px;padding:20px;">
+                    <h4 style="color:#fff;margin-bottom:12px;font-size:14px;">📋 Phản Hồi API</h4>
+                    <pre id="responseJson"
+                        style="background:#2d3748;color:#68d391;padding:16px;border-radius:8px;font-family:monospace;font-size:12px;max-height:300px;overflow:auto;white-space:pre-wrap;">// Kết quả sẽ hiển thị ở đây</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        .expert-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            color: #ed8936;
+            font-weight: 600;
+            margin-bottom: 8px
+        }
+
+        .expert-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #48bb78;
+            margin: 10px 0
+        }
+
+        .expert-specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 10px 0
+        }
+
+        .specialty-tag {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500
+        }
+
+        .expert-intro {
+            font-size: 14px;
+            color: #718096;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden
+        }
+
+        .expert-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+            color: #a0aec0;
+            padding: 10px 0;
+            border-top: 1px solid #e2e8f0
+        }
+
+        .expert-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px
+        }
+
+        .expert-actions .btn {
+            flex: 1;
+            padding: 10px;
+            font-size: 13px
+        }
+
+        .btn-outline {
+            background: #fff;
+            border: 2px solid #667eea;
+            color: #667eea
+        }
+
+        .btn-outline:hover {
+            background: #667eea;
+            color: #fff
+        }
+
+        .page-btn {
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            border-color: transparent
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed
+        }
+
+        .facet-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            padding: 6px 0;
+            color: #718096
+        }
+
+        .facet-count {
+            background: #667eea;
+            color: #fff;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 12px
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #a0aec0;
+            grid-column: 1/-1
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+    <script>
+        const API_BASE = 'http://localhost:4000/api/v1';
+        let currentPage = 1;
+
+        function switchTab(tab, el) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            el.classList.add('active');
+            if (tab === 'facets') loadFacets();
+            else if (tab === 'detail') {
+                const id = prompt('Nhập ID chuyên gia:');
+                if (id) loadExpertDetail(id);
+            }
+        }
+
+        function buildFilters() {
+            const f = {};
+            const get = id => document.getElementById(id)?.value;
+            const chk = id => document.getElementById(id)?.checked;
+            if (get('keyword')) f.keyword = get('keyword');
+            if (get('minPrice')) f.minPrice = get('minPrice');
+            if (get('maxPrice')) f.maxPrice = get('maxPrice');
+            if (get('minRating')) f.minRating = get('minRating');
+            if (get('maxRating')) f.maxRating = get('maxRating');
+            if (chk('isOnline')) f.isOnline = 'true';
+            if (get('gender')) f.gender = get('gender');
+            if (get('kycStatus')) f.kycStatus = get('kycStatus');
+            f.sortBy = get('sortBy');
+            f.page = currentPage;
+            f.limit = 12;
+            return f;
+        }
+
+        async function searchExperts() {
+            const filters = buildFilters();
+            const params = new URLSearchParams(filters);
+            const url = `${API_BASE}/expert-search/advanced?${params}`;
+            document.getElementById('expertsGrid').innerHTML = '<div class="loading"><div class="spinner"></div><p>Đang tìm kiếm...</p></div>';
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                document.getElementById('responseJson').textContent = JSON.stringify(data, null, 2);
+                if (data.success && data.data) {
+                    renderExperts(data.data.experts);
+                    renderPagination(data.data.pagination);
+                    document.getElementById('resultsCount').textContent = `${data.data.pagination.total} chuyên gia được tìm thấy`;
+                } else {
+                    document.getElementById('expertsGrid').innerHTML = `<div class="loading"><p>Lỗi: ${data.message || 'Không xác định'}</p></div>`;
+                }
+            } catch (err) {
+                document.getElementById('responseJson').textContent = `Lỗi: ${err.message}`;
+                document.getElementById('expertsGrid').innerHTML = `<div class="loading"><p>Lỗi: ${err.message}</p></div>`;
+            }
+        }
+    </script>
+    <script>
+
+        async function applyQuickFilter(filter) {
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            const url = `${API_BASE}/expert-search/quick-filters?filter=${filter}&limit=12`;
+            document.getElementById('expertsGrid').innerHTML = '<div class="loading"><div class="spinner"></div><p>Đang tải...</p></div>';
+            try {
+                const res = await fetch(url);
+                const data = await res.json();
+                document.getElementById('responseJson').textContent = JSON.stringify(data, null, 2);
+                if (data.success && data.data) {
+                    renderExperts(data.data.experts);
+                    renderPagination(data.data.pagination);
+                    const names = { top_rated: 'Đánh giá cao', online_now: 'Đang online', budget_friendly: 'Giá rẻ', premium: 'Cao cấp', verified: 'Đã xác minh', new_experts: 'Mới' };
+                    document.getElementById('resultsCount').textContent = `${data.data.pagination.total} chuyên gia (${names[filter] || filter})`;
+                }
+            } catch (err) {
+                document.getElementById('responseJson').textContent = `Lỗi: ${err.message}`;
+            }
+        }
+
+        async function loadFacets() {
+            try {
+                const res = await fetch(`${API_BASE}/expert-search/facets`);
+                const data = await res.json();
+                document.getElementById('responseJson').textContent = JSON.stringify(data, null, 2);
+                if (data.success && data.data) {
+                    document.getElementById('facetsPanel').style.display = 'block';
+                    let html = '';
+                    if (data.data.price_range) html += `<div class="facet-item"><span>Khoảng giá</span><span>${formatPrice(data.data.price_range.min)} - ${formatPrice(data.data.price_range.max)}</span></div>`;
+                    if (data.data.online_status) {
+                        html += `<div class="facet-item"><span>Đang online</span><span class="facet-count">${data.data.online_status.online || 0}</span></div>`;
+                        html += `<div class="facet-item"><span>Offline</span><span class="facet-count">${data.data.online_status.offline || 0}</span></div>`;
+                    }
+                    if (data.data.total_experts) html += `<div class="facet-item"><span>Tổng số chuyên gia</span><span class="facet-count">${data.data.total_experts}</span></div>`;
+                    document.getElementById('facetsContent').innerHTML = html;
+                }
+            } catch (err) {
+                document.getElementById('responseJson').textContent = `Lỗi: ${err.message}`;
+            }
+        }
+
+        async function loadExpertDetail(expertId) {
+            try {
+                const res = await fetch(`${API_BASE}/expert-search/${expertId}/full`);
+                const data = await res.json();
+                document.getElementById('responseJson').textContent = JSON.stringify(data, null, 2);
+                if (data.success && data.data) {
+                    const e = data.data;
+                    document.getElementById('expertsGrid').innerHTML = `
+        <div style="grid-column:1/-1;padding:30px;background:#f7fafc;border-radius:16px;">
+          <h2 style="color:#2d3748;margin-bottom:20px;">👤 ${e.display_name || 'Chuyên gia'}</h2>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;">
+            <div><strong>⭐ Đánh giá:</strong> ${e.rating_avg || 'N/A'}</div>
+            <div><strong>💰 Giá:</strong> ${e.price_formatted || formatPrice(e.price_per_session)}</div>
+            <div><strong>📊 Số buổi:</strong> ${e.total_sessions || 0}</div>
+          </div>
+          <p style="margin:20px 0;color:#718096;"><strong>📝 Giới thiệu:</strong> ${e.intro || 'Chưa có'}</p>
+          <p><strong>🎓 Kỹ năng:</strong> ${e.skills?.map(s => s.name).join(', ') || 'Chưa có'}</p>
+        </div>`;
+                }
+            } catch (err) {
+                document.getElementById('responseJson').textContent = `Lỗi: ${err.message}`;
+            }
+        }
+    </script>
+    <script>
+        function renderExperts(experts) {
+            if (!experts || experts.length === 0) {
+                document.getElementById('expertsGrid').innerHTML = '<div class="loading"><p>Không tìm thấy chuyên gia nào</p></div>';
+                return;
+            }
+            const html = experts.map(e => `
+    <div class="expert-card">
+      <div class="expert-header">
+        <div class="expert-avatar">${e.avatar_url ? `<img src="${e.avatar_url}" alt="">` : (e.display_name?.[0] || 'E')}</div>
+        <div class="expert-info">
+          <h3>${e.display_name || 'Chuyên gia'}</h3>
+          <div class="expert-status">
+            <span class="status-dot ${e.is_online ? 'status-online' : 'status-offline'}"></span>
+            ${e.is_online ? 'Đang online' : 'Offline'}
+          </div>
+        </div>
+      </div>
+      <div class="expert-rating">⭐ ${e.rating_avg || 'N/A'} (${e.review_count || 0} đánh giá)</div>
+      <div class="expert-price">${e.price_formatted || formatPrice(e.price_per_session)}</div>
+      <div class="expert-specialties">${(e.specialties || []).slice(0, 3).map(s => `<span class="specialty-tag">${s}</span>`).join('')}</div>
+      <div class="expert-intro">${e.intro || 'Chưa có giới thiệu'}</div>
+      <div class="expert-stats">
+        <span>📊 ${e.total_sessions || 0} buổi</span>
+        <span>✅ ${e.completion_rate || 0}%</span>
+      </div>
+      <div class="expert-actions">
+        <button class="btn btn-outline" onclick="loadExpertDetail(${e.expert_id})">Xem Chi Tiết</button>
+        <button class="btn btn-primary" onclick="loadSimilar(${e.expert_id})">Tương Tự</button>
+      </div>
+    </div>`).join('');
+            document.getElementById('expertsGrid').innerHTML = html;
+        }
+
+        async function loadSimilar(expertId) {
+            try {
+                const res = await fetch(`${API_BASE}/expert-search/${expertId}/similar?limit=5`);
+                const data = await res.json();
+                document.getElementById('responseJson').textContent = JSON.stringify(data, null, 2);
+                alert('Đã tải chuyên gia tương tự! Xem phần Phản Hồi API.');
+            } catch (err) { alert('Lỗi: ' + err.message); }
+        }
+
+        function renderPagination(p) {
+            if (!p || p.totalPages <= 1) { document.getElementById('pagination').innerHTML = ''; return; }
+            let html = `<button class="page-btn" onclick="goToPage(${p.page - 1})" ${p.page <= 1 ? 'disabled' : ''}>← Trước</button>`;
+            for (let i = 1; i <= Math.min(p.totalPages, 5); i++)html += `<button class="page-btn ${i === p.page ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            html += `<button class="page-btn" onclick="goToPage(${p.page + 1})" ${!p.hasNext ? 'disabled' : ''}>Sau →</button>`;
+            document.getElementById('pagination').innerHTML = html;
+        }
+
+        function goToPage(page) { currentPage = page; searchExperts(); }
+
+        function resetFilters() {
+            document.querySelectorAll('input').forEach(i => { if (i.type === 'checkbox') i.checked = false; else i.value = ''; });
+            document.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+            document.querySelectorAll('.quick-btn').forEach(b => b.classList.remove('active'));
+            currentPage = 1;
+        }
+
+        function formatPrice(price) {
+            if (!price) return 'Liên hệ';
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+        }
+    </script>
+</body>
+
+</html>
