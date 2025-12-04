@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Companion - Bảng Điều Khiển</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .tab {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .tab.active {
+            background: white;
+            color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+            font-size: 13px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            margin: 3px;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        button.success {
+            background: #28a745;
+        }
+
+        button.danger {
+            background: #dc3545;
+        }
+
+        .response {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .response pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 11px;
+        }
+
+        .auth-section {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .persona-card {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+
+        .persona-card:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .persona-card h3 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .persona-card .tone {
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+        }
+
+        .mood-btn {
+            padding: 15px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        .mood-btn.selected {
+            border: 3px solid #667eea;
+        }
+
+        .stat-box {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 5px;
+            flex: 1;
+            min-width: 80px;
+        }
+
+        .stat-box .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-box .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 AI Companion - Bảng Điều Khiển</h1>
+
+        <div class="auth-section">
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <label>🔐 Token xác thực:</label>
+                    <input type="text" id="token" placeholder="Dán JWT token vào đây">
+                </div>
+                <div style="flex: 1; min-width: 200px;">
+                    <label>🌐 Địa chỉ API:</label>
+                    <input type="text" id="baseUrl" value="http://localhost:3000/api/v1">
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('persona')">🎭 Nhân Cách</button>
+            <button class="tab" onclick="showTab('emotion')">💭 Cảm Xúc</button>
+            <button class="tab" onclick="showTab('mental')">🧠 Sức Khỏe</button>
+            <button class="tab" onclick="showTab('wellness')">🧘 Hoạt Động</button>
+            <button class="tab" onclick="showTab('schedule')">� Leịch Trình</button>
+            <button class="tab" onclick="showTab('sleep')">😴 Giấc Ngủ</button>
+            <button class="tab" onclick="showTab('checkin')">📋 Check-in</button>
+            <button class="tab" onclick="showTab('notifications')">🔔 Thông Báo</button>
+            <button class="tab" onclick="showTab('chat')">💬 Chat</button>
+            <button class="tab" onclick="showTab('admin')">👑 Admin</button>
+        </div>
+
+        <!-- TAB NHÂN CÁCH -->
+        <div id="persona" class="tab-content active">
+            <div class="grid">
+                <div class="card">
+                    <h2>🎭 Danh Sách Nhân Cách AI</h2>
+                    <button onclick="loadPersonas()">Tải danh sách</button>
+                    <div id="personasList"></div>
+                    <div class="response" id="personasResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>⚙️ Cài Đặt AI Của Tôi</h2>
+                    <button onclick="getSettings()">Xem cài đặt</button>
+                    <button onclick="updateSettings()" class="success">Lưu</button>
+                    <div class="form-group" style="margin-top:10px;">
+                        <label>ID Nhân cách:</label>
+                        <input type="number" id="settingsPersonaId">
+                    </div>
+                    <div class="form-group">
+                        <label>AI gọi bạn là:</label>
+                        <input type="text" id="customNickname" placeholder="Con yêu, Em ơi...">
+                    </div>
+                    <div class="form-group">
+                        <label>Bạn gọi AI là:</label>
+                        <input type="text" id="userNickname" placeholder="Mẹ, Anh yêu...">
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="notificationEnabled" checked> Bật thông báo</label>
+                        <label><input type="checkbox" id="morningCheckin" checked> Chào buổi sáng</label>
+                        <label><input type="checkbox" id="eveningCheckin" checked> Chào buổi tối</label>
+                        <label><input type="checkbox" id="randomMessages" checked> Tin nhắn ngẫu nhiên</label>
+                    </div>
+                    <div class="response" id="settingsResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>📝 Bộ Nhớ AI (Context)</h2>
+                    <button onclick="getContext()">Xem bộ nhớ</button>
+                    <button onclick="saveContext()" class="success">Lưu</button>
+                    <div class="form-group" style="margin-top:10px;">
+                        <label>Loại:</label>
+                        <select id="contextType">
+                            <option value="preference">Sở thích</option>
+                            <option value="memory">Kỷ niệm</option>
+                            <option value="topic">Chủ đề</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tên:</label>
+                        <input type="text" id="contextKey" placeholder="công việc, sở thích...">
+                    </div>
+                    <div class="form-group">
+                        <label>Giá trị:</label>
+                        <input type="text" id="contextValue" placeholder="lập trình viên, chơi game...">
+                    </div>
+                    <div class="response" id="contextResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CẢM XÚC -->
+        <div id="emotion" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>📊 Lịch Sử Cảm Xúc</h2>
+                    <div class="form-group">
+                        <label>Số ngày:</label>
+                        <input type="number" id="emotionDays" value="7" min="1" max="90">
+                    </div>
+                    <button onclick="getEmotionTimeline()">Xem timeline</button>
+                    <button onclick="getEmotionStats()">Xem thống kê</button>
+                    <div class="response" id="emotionResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>🧠 Trạng Thái Tinh Thần Hiện Tại</h2>
+                    <button onclick="getMentalState()">Xem trạng thái</button>
+                    <div id="mentalStateDisplay"></div>
+                    <div class="response" id="mentalStateResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB SỨC KHỎE TINH THẦN -->
+        <div id="mental" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>📋 Đánh Giá Sức Khỏe Tinh Thần</h2>
+                    <button onclick="createAssessment()">Tạo đánh giá mới</button>
+                    <button onclick="getLatestAssessment()">Xem gần nhất</button>
+                    <button onclick="getAssessmentHistory()">Lịch sử</button>
+                    <div class="response" id="assessmentResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>📈 Kết Quả Đánh Giá</h2>
+                    <div id="assessmentDisplay"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB HOẠT ĐỘNG -->
+        <div id="wellness" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>🧘 Ghi Nhận Hoạt Động Chăm Sóc</h2>
+                    <div class="form-group">
+                        <label>Loại hoạt động:</label>
+                        <select id="wellnessType">
+                            <option value="breathing">🌬️ Bài tập thở</option>
+                            <option value="meditation">🧘 Thiền</option>
+                            <option value="journaling">📝 Viết nhật ký</option>
+                            <option value="exercise">🏃 Tập thể dục</option>
+                            <option value="gratitude">🙏 Biết ơn</option>
+                            <option value="grounding">🌍 Grounding</option>
+                            <option value="affirmation">💪 Khẳng định</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian (phút):</label>
+                        <input type="number" id="wellnessDuration" value="5" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Tâm trạng trước:</label>
+                        <select id="moodBefore">
+                            <option value="">-- Chọn --</option>
+                            <option value="great">😄 Tuyệt vời</option>
+                            <option value="good">🙂 Tốt</option>
+                            <option value="okay">😐 Bình thường</option>
+                            <option value="bad">😔 Không tốt</option>
+                            <option value="terrible">😢 Rất tệ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tâm trạng sau:</label>
+                        <select id="moodAfter">
+                            <option value="">-- Chọn --</option>
+                            <option value="great">😄 Tuyệt vời</option>
+                            <option value="good">🙂 Tốt</option>
+                            <option value="okay">😐 Bình thường</option>
+                            <option value="bad">😔 Không tốt</option>
+                            <option value="terrible">😢 Rất tệ</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Hiệu quả (1-5):</label>
+                        <input type="number" id="wellnessRating" value="3" min="1" max="5">
+                    </div>
+                    <button onclick="logWellness()" class="success">Ghi nhận</button>
+                    <div class="response" id="wellnessLogResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>💡 Gợi Ý Hoạt Động</h2>
+                    <button onclick="getWellnessSuggestions()">Xem gợi ý</button>
+                    <button onclick="getWellnessHistory()">Lịch sử</button>
+                    <button onclick="getWellnessStats()">Thống kê</button>
+                    <div class="response" id="wellnessResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB LỊCH TRÌNH -->
+        <div id="schedule" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>� Tạo Lịch Mâới</h2>
+                    <div class="form-group">
+                        <label>Tiêu đề:</label>
+                        <input type="text" id="scheduleTitle" placeholder="Tên công việc...">
+                    </div>
+                    <div class="form-group">
+                        <label>Loại:</label>
+                        <select id="scheduleType">
+                            <option value="work">💼 Công việc</option>
+                            <option value="study">📚 Học tập</option>
+                            <option value="health">🏥 Sức khỏe</option>
+                            <option value="exercise">🏃 Tập luyện</option>
+                            <option value="medication">💊 Uống thuốc</option>
+                            <option value="meal">🍽️ Bữa ăn</option>
+                            <option value="appointment">📞 Cuộc hẹn</option>
+                            <option value="deadline">⏰ Deadline</option>
+                            <option value="reminder">🔔 Nhắc nhở</option>
+                            <option value="custom">📝 Khác</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian bắt đầu:</label>
+                        <input type="datetime-local" id="scheduleStartAt">
+                    </div>
+                    <div class="form-group">
+                        <label>Độ ưu tiên (1-5):</label>
+                        <input type="number" id="schedulePriority" value="2" min="1" max="5">
+                    </div>
+                    <button onclick="createSchedule()" class="success">Tạo lịch</button>
+                    <div class="response" id="scheduleCreateResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>📋 Lịch Của Tôi</h2>
+                    <button onclick="getTodaySchedules()">Hôm nay</button>
+                    <button onclick="getUpcomingSchedules()">Sắp tới</button>
+                    <button onclick="getAllSchedules()">Tất cả</button>
+                    <button onclick="getAISuggestions()" class="success">🤖 AI Gợi ý</button>
+                    <div class="response" id="scheduleListResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB GIẤC NGỦ -->
+        <div id="sleep" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>😴 Ghi Nhận Giấc Ngủ</h2>
+                    <div class="form-group">
+                        <label>Giờ đi ngủ:</label>
+                        <input type="datetime-local" id="sleepAt">
+                    </div>
+                    <div class="form-group">
+                        <label>Giờ thức dậy:</label>
+                        <input type="datetime-local" id="wakeAt">
+                    </div>
+                    <div class="form-group">
+                        <label>Chất lượng (1-5):</label>
+                        <input type="range" id="sleepQualityLog" min="1" max="5" value="3">
+                        <span id="sleepQualityLogValue">3</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Số lần thức giấc:</label>
+                        <input type="number" id="sleepInterruptions" value="0" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Yếu tố ảnh hưởng:</label>
+                        <label><input type="checkbox" value="caffeine"> Caffeine</label>
+                        <label><input type="checkbox" value="stress"> Stress</label>
+                        <label><input type="checkbox" value="screen_time"> Màn hình</label>
+                        <label><input type="checkbox" value="exercise"> Tập luyện</label>
+                    </div>
+                    <button onclick="logSleep()" class="success">Ghi nhận</button>
+                    <div class="response" id="sleepLogResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>📊 Phân Tích Giấc Ngủ</h2>
+                    <button onclick="getSleepHistory()">Lịch sử</button>
+                    <button onclick="getSleepAnalysis()">Phân tích</button>
+                    <div class="response" id="sleepAnalysisResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CHECK-IN -->
+        <div id="checkin" class="tab-content">
+            <div class="grid">
+                <div class="card full-width">
+                    <h2>📋 Check-in Tâm Trạng Hàng Ngày</h2>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <p style="margin-bottom: 10px; font-weight: bold; font-size: 18px;">Hôm nay bạn cảm thấy thế
+                            nào?</p>
+                        <button class="mood-btn" onclick="selectMood('great')">😄</button>
+                        <button class="mood-btn" onclick="selectMood('good')">🙂</button>
+                        <button class="mood-btn" onclick="selectMood('okay')">😐</button>
+                        <button class="mood-btn" onclick="selectMood('bad')">😔</button>
+                        <button class="mood-btn" onclick="selectMood('terrible')">😢</button>
+                        <p style="margin-top:5px; font-size:12px; color:#666;">Tuyệt vời - Tốt - Bình thường - Không tốt
+                            - Rất tệ</p>
+                    </div>
+                    <input type="hidden" id="selectedMood" value="">
+                    <div class="grid" style="margin-top: 20px;">
+                        <div class="form-group">
+                            <label>Mức năng lượng (1-5):</label>
+                            <input type="range" id="energyLevel" min="1" max="5" value="3">
+                            <span id="energyValue">3</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Mức stress (1-5):</label>
+                            <input type="range" id="stressLevel" min="1" max="5" value="3">
+                            <span id="stressValue">3</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Số giờ ngủ:</label>
+                            <input type="number" id="sleepHours" value="7" min="0" max="24" step="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Chất lượng giấc ngủ (1-5):</label>
+                            <input type="range" id="sleepQuality" min="1" max="5" value="3">
+                            <span id="sleepValue">3</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>3 điều bạn biết ơn hôm nay:</label>
+                        <input type="text" id="gratitude1" placeholder="1. ...">
+                        <input type="text" id="gratitude2" placeholder="2. ..." style="margin-top:5px;">
+                        <input type="text" id="gratitude3" placeholder="3. ..." style="margin-top:5px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Điều lo lắng chính hôm nay:</label>
+                        <textarea id="concerns" rows="2" placeholder="Bạn đang nghĩ gì?"></textarea>
+                    </div>
+                    <button onclick="submitCheckin()" class="success"
+                        style="width:100%; padding:15px; font-size:16px;">✅ Gửi Check-in</button>
+                </div>
+                <div class="card">
+                    <h2>📅 Lịch Sử Check-in</h2>
+                    <button onclick="getTodayCheckin()">Check-in hôm nay</button>
+                    <button onclick="getCheckinHistory()">Lịch sử 30 ngày</button>
+                    <div class="response" id="checkinResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB THÔNG BÁO -->
+        <div id="notifications" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>🔔 Thông Báo Của Tôi</h2>
+                    <button onclick="getNotifications()">Xem thông báo</button>
+                    <button onclick="scheduleRandom()" class="success">Lên lịch tin ngẫu nhiên</button>
+                    <div class="response" id="notifResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>📅 Lên Lịch Thông Báo</h2>
+                    <div class="form-group">
+                        <label>Loại:</label>
+                        <select id="notifType">
+                            <option value="reminder">Nhắc nhở</option>
+                            <option value="checkin">Check-in</option>
+                            <option value="random">Ngẫu nhiên</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung:</label>
+                        <textarea id="notifContent" rows="2" placeholder="Nhập nội dung thông báo..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian gửi:</label>
+                        <input type="datetime-local" id="notifScheduledAt">
+                    </div>
+                    <button onclick="scheduleNotification()">Lên lịch</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB TRÒ CHUYỆN -->
+        <div id="chat" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>💬 Trò Chuyện Với AI</h2>
+                    <div class="form-group">
+                        <label>Tin nhắn của bạn:</label>
+                        <textarea id="chatMessage" rows="3" placeholder="Nhập tin nhắn..."></textarea>
+                    </div>
+                    <button onclick="sendChat()" class="success" style="width:100%; padding:12px;">📤 Gửi tin
+                        nhắn</button>
+                    <div id="chatDisplay"
+                        style="margin-top:15px; max-height:350px; overflow-y:auto; border:1px solid #ddd; border-radius:8px; padding:10px; background:#fafafa;">
+                    </div>
+                </div>
+                <div class="card">
+                    <h2>📜 Lịch Sử Trò Chuyện</h2>
+                    <button onclick="loadChatHistory()">Tải lịch sử</button>
+                    <button onclick="clearChatHistory()" class="danger">Xóa lịch sử</button>
+                    <div class="form-group" style="margin-top:10px;">
+                        <label>Số tin nhắn:</label>
+                        <input type="number" id="chatHistoryLimit" value="50" min="10" max="200">
+                    </div>
+                    <div class="response" id="chatHistoryResponse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB QUẢN TRỊ -->
+        <div id="admin" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>👑 Quản Trị - Thông Báo</h2>
+                    <button onclick="adminScheduleMorning()">Lên lịch chào sáng</button>
+                    <button onclick="adminScheduleEvening()">Lên lịch chào tối</button>
+                    <button onclick="adminGetPending()">Xem đang chờ</button>
+                    <button onclick="adminCleanup()" class="danger">Dọn dẹp cũ</button>
+                    <div class="response" id="adminNotifResponse"></div>
+                </div>
+                <div class="card">
+                    <h2>🚨 Người Dùng Cần Hỗ Trợ</h2>
+                    <button onclick="adminGetUsersNeedingAttention()">Xem danh sách</button>
+                    <p style="margin-top:10px; font-size:12px; color:#666;">Hiển thị users có stress cao, vulnerability
+                        cao, hoặc nhiều ngày tiêu cực liên tiếp.</p>
+                    <div class="response" id="adminUsersResponse"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const getHeaders = () => ({
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${document.getElementById('token').value}`
+        });
+        const getBaseUrl = () => document.getElementById('baseUrl').value;
+        const showResponse = (id, data) => {
+            document.getElementById(id).innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+        };
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Nhân cách
+        async function loadPersonas() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/personas`);
+            const data = await res.json();
+            showResponse('personasResponse', data);
+            if (data.data) {
+                document.getElementById('personasList').innerHTML = data.data.map(p =>
+                    `<div class="persona-card" onclick="document.getElementById('settingsPersonaId').value=${p.id}">
+                        <h3>${p.display_name}</h3><span class="tone">${p.tone}</span> ID: ${p.id}
+                    </div>`
+                ).join('');
+            }
+        }
+
+        async function getSettings() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/settings`, { headers: getHeaders() });
+            const data = await res.json();
+            showResponse('settingsResponse', data);
+            if (data.data) {
+                const s = data.data;
+                document.getElementById('settingsPersonaId').value = s.persona_id || '';
+                document.getElementById('customNickname').value = s.custom_nickname || '';
+                document.getElementById('userNickname').value = s.user_nickname || '';
+                document.getElementById('notificationEnabled').checked = s.notification_enabled;
+                document.getElementById('morningCheckin').checked = s.morning_checkin;
+                document.getElementById('eveningCheckin').checked = s.evening_checkin;
+                document.getElementById('randomMessages').checked = s.random_messages;
+            }
+        }
+
+        async function updateSettings() {
+            const body = {
+                persona_id: parseInt(document.getElementById('settingsPersonaId').value) || null,
+                custom_nickname: document.getElementById('customNickname').value || null,
+                user_nickname: document.getElementById('userNickname').value || null,
+                notification_enabled: document.getElementById('notificationEnabled').checked,
+                morning_checkin: document.getElementById('morningCheckin').checked,
+                evening_checkin: document.getElementById('eveningCheckin').checked,
+                random_messages: document.getElementById('randomMessages').checked
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/settings`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('settingsResponse', await res.json());
+        }
+
+        async function getContext() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/context`, { headers: getHeaders() });
+            showResponse('contextResponse', await res.json());
+        }
+
+        async function saveContext() {
+            const body = {
+                context_type: document.getElementById('contextType').value,
+                key: document.getElementById('contextKey').value,
+                value: document.getElementById('contextValue').value,
+                importance: 3
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/context`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('contextResponse', await res.json());
+        }
+
+        // Cảm xúc
+        async function getEmotionTimeline() {
+            const days = document.getElementById('emotionDays').value;
+            const res = await fetch(`${getBaseUrl()}/ai-companion/emotion/timeline?days=${days}`, { headers: getHeaders() });
+            showResponse('emotionResponse', await res.json());
+        }
+
+        async function getEmotionStats() {
+            const days = document.getElementById('emotionDays').value;
+            const res = await fetch(`${getBaseUrl()}/ai-companion/emotion/stats?days=${days}`, { headers: getHeaders() });
+            showResponse('emotionResponse', await res.json());
+        }
+
+        async function getMentalState() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/mental-state`, { headers: getHeaders() });
+            const data = await res.json();
+            showResponse('mentalStateResponse', data);
+            if (data.data) {
+                const s = data.data;
+                document.getElementById('mentalStateDisplay').innerHTML = `
+                    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:10px;">
+                        <div class="stat-box"><div class="value">${s.current_mood || 'N/A'}</div><div class="label">Tâm trạng</div></div>
+                        <div class="stat-box"><div class="value">${s.stress_level || 0}/10</div><div class="label">Stress</div></div>
+                        <div class="stat-box"><div class="value">${s.anxiety_level || 0}/10</div><div class="label">Lo âu</div></div>
+                        <div class="stat-box"><div class="value">${s.energy_level || 5}/10</div><div class="label">Năng lượng</div></div>
+                    </div>
+                    <p style="margin-top:10px;color:#666;font-size:13px;">📝 ${(s.interpretation || []).join(' | ')}</p>
+                `;
+            }
+        }
+
+        // Đánh giá
+        async function createAssessment() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/assessment`, { method: 'POST', headers: getHeaders(), body: JSON.stringify({ type: 'manual' }) });
+            const data = await res.json();
+            showResponse('assessmentResponse', data);
+            displayAssessment(data.data);
+        }
+
+        async function getLatestAssessment() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/assessment/latest`, { headers: getHeaders() });
+            const data = await res.json();
+            showResponse('assessmentResponse', data);
+            displayAssessment(data.data);
+        }
+
+        async function getAssessmentHistory() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/assessment/history`, { headers: getHeaders() });
+            showResponse('assessmentResponse', await res.json());
+        }
+
+        function displayAssessment(a) {
+            if (!a) return;
+            const riskColors = { low: '#28a745', moderate: '#ffc107', high: '#fd7e14', critical: '#dc3545' };
+            const riskLabels = { low: 'Thấp', moderate: 'Trung bình', high: 'Cao', critical: 'Nghiêm trọng' };
+            document.getElementById('assessmentDisplay').innerHTML = `
+                <div style="padding:15px;background:${riskColors[a.risk_level] || '#ccc'};color:white;border-radius:8px;text-align:center;">
+                    <h3>Mức độ rủi ro: ${riskLabels[a.risk_level] || a.risk_level}</h3>
+                    <p>Điểm kiệt sức: ${a.burnout_score}/100</p>
+                </div>
+                <div style="margin-top:15px;">
+                    <h4>💡 Khuyến nghị:</h4>
+                    <ul>${(a.recommendations || []).map(r => `<li>${r.message}</li>`).join('')}</ul>
+                </div>
+            `;
+        }
+
+        // Hoạt động chăm sóc
+        async function logWellness() {
+            const body = {
+                activity_type: document.getElementById('wellnessType').value,
+                duration_minutes: parseInt(document.getElementById('wellnessDuration').value),
+                mood_before: document.getElementById('moodBefore').value || null,
+                mood_after: document.getElementById('moodAfter').value || null,
+                effectiveness_rating: parseInt(document.getElementById('wellnessRating').value)
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/wellness/log`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('wellnessLogResponse', await res.json());
+        }
+
+        async function getWellnessSuggestions() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/wellness/suggestions`, { headers: getHeaders() });
+            showResponse('wellnessResponse', await res.json());
+        }
+
+        async function getWellnessHistory() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/wellness/history`, { headers: getHeaders() });
+            showResponse('wellnessResponse', await res.json());
+        }
+
+        async function getWellnessStats() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/wellness/stats`, { headers: getHeaders() });
+            showResponse('wellnessResponse', await res.json());
+        }
+
+        // Check-in
+        function selectMood(mood) {
+            document.getElementById('selectedMood').value = mood;
+            document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+            event.target.classList.add('selected');
+        }
+
+        async function submitCheckin() {
+            const mood = document.getElementById('selectedMood').value;
+            if (!mood) { alert('Vui lòng chọn tâm trạng'); return; }
+            const gratitudes = [
+                document.getElementById('gratitude1').value,
+                document.getElementById('gratitude2').value,
+                document.getElementById('gratitude3').value
+            ].filter(g => g);
+            const body = {
+                mood,
+                mood_score: { great: 5, good: 4, okay: 3, bad: 2, terrible: 1 }[mood],
+                energy_level: parseInt(document.getElementById('energyLevel').value),
+                stress_level: parseInt(document.getElementById('stressLevel').value),
+                sleep_hours: parseFloat(document.getElementById('sleepHours').value),
+                sleep_quality: parseInt(document.getElementById('sleepQuality').value),
+                gratitude_notes: gratitudes,
+                concerns: document.getElementById('concerns').value || null
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/checkin`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            const data = await res.json();
+            showResponse('checkinResponse', data);
+            if (data.success) alert('✅ Check-in thành công!');
+        }
+
+        async function getTodayCheckin() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/checkin/today`, { headers: getHeaders() });
+            showResponse('checkinResponse', await res.json());
+        }
+
+        async function getCheckinHistory() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/checkin/history`, { headers: getHeaders() });
+            showResponse('checkinResponse', await res.json());
+        }
+
+        // Sliders
+        document.getElementById('energyLevel').oninput = e => document.getElementById('energyValue').textContent = e.target.value;
+        document.getElementById('stressLevel').oninput = e => document.getElementById('stressValue').textContent = e.target.value;
+        document.getElementById('sleepQuality').oninput = e => document.getElementById('sleepValue').textContent = e.target.value;
+
+        // Lịch trình
+        async function createSchedule() {
+            const body = {
+                title: document.getElementById('scheduleTitle').value,
+                schedule_type: document.getElementById('scheduleType').value,
+                start_at: new Date(document.getElementById('scheduleStartAt').value).toISOString(),
+                priority: parseInt(document.getElementById('schedulePriority').value)
+            };
+            if (!body.title) { alert('Vui lòng nhập tiêu đề'); return; }
+            const res = await fetch(`${getBaseUrl()}/ai-companion/schedule`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('scheduleCreateResponse', await res.json());
+        }
+
+        async function getTodaySchedules() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/schedule/today`, { headers: getHeaders() });
+            showResponse('scheduleListResponse', await res.json());
+        }
+
+        async function getUpcomingSchedules() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/schedule/upcoming`, { headers: getHeaders() });
+            showResponse('scheduleListResponse', await res.json());
+        }
+
+        async function getAllSchedules() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/schedule`, { headers: getHeaders() });
+            showResponse('scheduleListResponse', await res.json());
+        }
+
+        async function getAISuggestions() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/schedule/ai-suggest`, { headers: getHeaders() });
+            showResponse('scheduleListResponse', await res.json());
+        }
+
+        // Giấc ngủ
+        async function logSleep() {
+            const factors = [];
+            document.querySelectorAll('#sleep input[type="checkbox"]:checked').forEach(cb => factors.push(cb.value));
+            const body = {
+                sleep_at: document.getElementById('sleepAt').value ? new Date(document.getElementById('sleepAt').value).toISOString() : null,
+                wake_at: document.getElementById('wakeAt').value ? new Date(document.getElementById('wakeAt').value).toISOString() : null,
+                quality: parseInt(document.getElementById('sleepQualityLog').value),
+                interruptions: parseInt(document.getElementById('sleepInterruptions').value),
+                factors
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/sleep/log`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('sleepLogResponse', await res.json());
+        }
+
+        async function getSleepHistory() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/sleep/history`, { headers: getHeaders() });
+            showResponse('sleepAnalysisResponse', await res.json());
+        }
+
+        async function getSleepAnalysis() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/sleep/analysis`, { headers: getHeaders() });
+            showResponse('sleepAnalysisResponse', await res.json());
+        }
+
+        document.getElementById('sleepQualityLog').oninput = e => document.getElementById('sleepQualityLogValue').textContent = e.target.value;
+
+        // Thông báo
+        async function getNotifications() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications`, { headers: getHeaders() });
+            showResponse('notifResponse', await res.json());
+        }
+
+        async function scheduleNotification() {
+            const body = {
+                type: document.getElementById('notifType').value,
+                content: document.getElementById('notifContent').value,
+                scheduled_at: new Date(document.getElementById('notifScheduledAt').value).toISOString()
+            };
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/schedule`, { method: 'POST', headers: getHeaders(), body: JSON.stringify(body) });
+            showResponse('notifResponse', await res.json());
+        }
+
+        async function scheduleRandom() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/random`, { method: 'POST', headers: getHeaders() });
+            showResponse('notifResponse', await res.json());
+        }
+
+        // Trò chuyện
+        let chatMessages = [];
+
+        function renderChat() {
+            const display = document.getElementById('chatDisplay');
+            if (chatMessages.length === 0) {
+                display.innerHTML = '<p style="color:#999; text-align:center;">Chưa có tin nhắn. Hãy bắt đầu trò chuyện!</p>';
+                return;
+            }
+            display.innerHTML = chatMessages.map(m => `
+                <div style="margin:8px 0; padding:10px; border-radius:12px; max-width:85%; 
+                    ${m.role === 'user'
+                    ? 'background:#667eea; color:white; margin-left:auto; text-align:right;'
+                    : 'background:#e9ecef; color:#333;'}">
+                    <small style="opacity:0.7;">${m.role === 'user' ? '👤 Bạn' : '🤖 AI'}</small><br>
+                    ${m.content}
+                    ${m.created_at ? `<br><small style="opacity:0.5;">${new Date(m.created_at).toLocaleString('vi-VN')}</small>` : ''}
+                </div>
+            `).join('');
+            display.scrollTop = display.scrollHeight;
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('chatMessage');
+            const message = input.value.trim();
+            if (!message) { alert('Vui lòng nhập tin nhắn'); return; }
+
+            // Add user message to display immediately
+            chatMessages.push({ role: 'user', content: message });
+            renderChat();
+            input.value = '';
+
+            try {
+                const res = await fetch(`${getBaseUrl()}/ai/chat`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+
+                if (data.aiMessage) {
+                    chatMessages.push({ role: 'ai', content: data.aiMessage });
+                    renderChat();
+                }
+
+                // Show experts if any
+                if (data.suggestions?.experts?.length > 0) {
+                    const expertInfo = `\n\n💡 Gợi ý chuyên gia:\n${data.suggestions.experts.map(e => `• ${e.display_name}`).join('\n')}`;
+                    chatMessages.push({ role: 'ai', content: expertInfo });
+                    renderChat();
+                }
+            } catch (err) {
+                chatMessages.push({ role: 'ai', content: '❌ Lỗi: ' + err.message });
+                renderChat();
+            }
+        }
+
+        async function loadChatHistory() {
+            const limit = document.getElementById('chatHistoryLimit').value;
+            try {
+                const res = await fetch(`${getBaseUrl()}/ai/history?limit=${limit}`, { headers: getHeaders() });
+                const data = await res.json();
+                showResponse('chatHistoryResponse', data);
+
+                if (data.data) {
+                    chatMessages = data.data;
+                    renderChat();
+                }
+            } catch (err) {
+                showResponse('chatHistoryResponse', { error: err.message });
+            }
+        }
+
+        async function clearChatHistory() {
+            if (!confirm('Bạn có chắc muốn xóa toàn bộ lịch sử trò chuyện?')) return;
+            try {
+                const res = await fetch(`${getBaseUrl()}/ai/history`, { method: 'DELETE', headers: getHeaders() });
+                const data = await res.json();
+                showResponse('chatHistoryResponse', data);
+                chatMessages = [];
+                renderChat();
+            } catch (err) {
+                showResponse('chatHistoryResponse', { error: err.message });
+            }
+        }
+
+        // Quản trị
+        async function adminScheduleMorning() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/admin/schedule-morning`, { method: 'POST', headers: getHeaders() });
+            showResponse('adminNotifResponse', await res.json());
+        }
+
+        async function adminScheduleEvening() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/admin/schedule-evening`, { method: 'POST', headers: getHeaders() });
+            showResponse('adminNotifResponse', await res.json());
+        }
+
+        async function adminGetPending() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/admin/pending`, { headers: getHeaders() });
+            showResponse('adminNotifResponse', await res.json());
+        }
+
+        async function adminCleanup() {
+            if (!confirm('Bạn có chắc muốn xóa các thông báo cũ?')) return;
+            const res = await fetch(`${getBaseUrl()}/ai-companion/notifications/admin/cleanup`, { method: 'POST', headers: getHeaders() });
+            showResponse('adminNotifResponse', await res.json());
+        }
+
+        async function adminGetUsersNeedingAttention() {
+            const res = await fetch(`${getBaseUrl()}/ai-companion/admin/users-needing-attention`, { headers: getHeaders() });
+            showResponse('adminUsersResponse', await res.json());
+        }
+
+        // Khởi tạo
+        document.getElementById('notifScheduledAt').value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+        document.getElementById('scheduleStartAt').value = new Date(Date.now() + 3600000).toISOString().slice(0, 16);
+
+        // Set default sleep times
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        yesterday.setHours(23, 0, 0, 0);
+        document.getElementById('sleepAt').value = yesterday.toISOString().slice(0, 16);
+
+        const today = new Date();
+        today.setHours(7, 0, 0, 0);
+        document.getElementById('wakeAt').value = today.toISOString().slice(0, 16);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment & Booking Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .response {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-paid {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+
+        .flow-step .number {
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .flow-step .arrow {
+            color: #667eea;
+            margin: 0 10px;
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 3px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -3px;
+        }
+
+        .tab:hover {
+            color: #667eea;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>💳 Payment & Booking Test System</h1>
+
+        <!-- Authentication Card -->
+        <div class="card">
+            <h2>🔐 Authentication</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>JWT Token (Seeker):</label>
+                    <input type="text" id="seekerToken" placeholder="Paste seeker JWT token">
+                </div>
+                <div class="form-group">
+                    <label>JWT Token (Expert):</label>
+                    <input type="text" id="expertToken" placeholder="Paste expert JWT token">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>API Base URL:</label>
+                <input type="text" id="baseUrl" value="http://localhost:4000/api/v1">
+            </div>
+            <div class="info-box">
+                <strong>💡 Hướng dẫn:</strong> Bạn cần 2 tài khoản - 1 Seeker (người đặt) và 1 Expert (chuyên gia). Đăng
+                nhập cả 2 và paste token vào đây.
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active" onclick="showTab('flow')">📋 Luồng Thanh Toán</div>
+            <div class="tab" onclick="showTab('booking')">📅 Tạo Booking</div>
+            <div class="tab" onclick="showTab('payment')">💳 Thanh Toán MoMo</div>
+            <div class="tab" onclick="showTab('manage')">⚙️ Quản Lý Booking</div>
+            <div class="tab" onclick="showTab('wallet')">👛 Wallet & Fees</div>
+        </div>
+
+        <!-- Tab 1: Flow Diagram -->
+        <div id="flow" class="tab-content active">
+            <div class="card">
+                <h2>📋 Luồng Thanh Toán Booking</h2>
+                <div class="flow-diagram">
+                    <div class="flow-step">
+                        <span class="number">1</span>
+                        <strong>Seeker tạo Booking</strong>
+                        <span class="arrow">→</span>
+                        <span class="status-badge status-pending">PENDING</span>
+                    </div>
+                    <div class="flow-step">
+                        <span class="number">2</span>
+                        <strong>Hệ thống tạo Payment Intent</strong>
+                        <span class="arrow">→</span>
+                        <span>Trả về link MoMo</span>
+                    </div>
+                    <div class="flow-step">
+                        <span class="number">3</span>
+                        <strong>Seeker thanh toán qua MoMo</strong>
+                        <span class="arrow">→</span>
+                        <span>Scan QR / Click link</span>
+                    </div>
+                    <div class="flow-step">
+                        <span class="number">4</span>
+                        <strong>MoMo gọi IPN callback</strong>
+                        <span class="arrow">→</span>
+                        <span class="status-badge status-paid">PAID</span>
+                    </div>
+                    <div class="flow-step">
+                        <span class="number">5</span>
+                        <strong>Booking được xác nhận</strong>
+                        <span class="arrow">→</span>
+                        <span class="status-badge status-confirmed">CONFIRMED</span>
+                    </div>
+                    <div class="flow-step">
+                        <span class="number">6</span>
+                        <strong>Sau khi hoàn thành</strong>
+                        <span class="arrow">→</span>
+                        <span>Expert nhận 85% (trừ 15% platform fee)</span>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Lưu ý MoMo Test:</strong><br>
+                    - MoMo sandbox chỉ hoạt động với số điện thoại test<br>
+                    - Nếu không có MoMo sandbox, bạn có thể simulate IPN callback
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Create Booking -->
+        <div id="booking" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>📅 Bước 1: Tạo Booking</h2>
+                    <div class="form-group">
+                        <label>Expert ID:</label>
+                        <input type="number" id="expertId" placeholder="ID của expert">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ngày bắt đầu:</label>
+                            <input type="date" id="bookingDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Giờ bắt đầu:</label>
+                            <input type="time" id="bookingTime" value="10:00">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời lượng (phút):</label>
+                        <select id="duration">
+                            <option value="60">60 phút (1 giờ)</option>
+                            <option value="90">90 phút (1.5 giờ)</option>
+                            <option value="120">120 phút (2 giờ)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Kênh liên lạc:</label>
+                        <select id="channel">
+                            <option value="VIDEO">📹 Video Call</option>
+                            <option value="AUDIO">📞 Audio Call</option>
+                            <option value="CHAT">💬 Chat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Phương thức thanh toán:</label>
+                        <select id="paymentMethod">
+                            <option value="MOMO">MoMo</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="createBooking()">🛒 Tạo Booking & Thanh Toán</button>
+                    <button class="btn-info" onclick="createBookingOnly()">📝 Chỉ Tạo Booking (không thanh
+                        toán)</button>
+                    <div id="createBookingResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>📋 Danh sách Booking của tôi</h2>
+                    <div class="form-group">
+                        <label>Xem với vai trò:</label>
+                        <select id="viewAs">
+                            <option value="seeker">👤 Seeker (Người đặt)</option>
+                            <option value="expert">👨‍⚕️ Expert (Chuyên gia)</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" onclick="listMyBookings()">📋 Xem Booking</button>
+                    <div id="listBookingsResponse" class="response" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Payment -->
+        <div id="payment" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>💳 Bước 2: Thanh Toán MoMo</h2>
+                    <div class="info-box">
+                        <strong>📌 Sau khi tạo booking:</strong><br>
+                        1. Copy <code>payUrl</code> từ response<br>
+                        2. Mở link trong trình duyệt hoặc app MoMo<br>
+                        3. Hoàn tất thanh toán<br>
+                        4. MoMo sẽ tự động gọi IPN để cập nhật trạng thái
+                    </div>
+
+                    <div class="form-group">
+                        <label>Booking ID (để tạo lại link thanh toán):</label>
+                        <input type="number" id="paymentBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <button class="btn-primary" onclick="createPaymentLink()">🔗 Tạo Link Thanh Toán MoMo</button>
+                    <div id="paymentLinkResponse" class="response" style="display:none;"></div>
+
+                    <h3 style="margin-top: 20px;">🔗 Quick Actions</h3>
+                    <div class="form-group">
+                        <label>Pay URL (paste từ response):</label>
+                        <input type="text" id="payUrl" placeholder="https://test-payment.momo.vn/...">
+                    </div>
+                    <button class="btn-success" onclick="openPayUrl()">🚀 Mở Link Thanh Toán</button>
+                </div>
+
+                <div class="card">
+                    <h2>🔧 Simulate IPN (Test Only)</h2>
+                    <div class="warning-box">
+                        <strong>⚠️ Chỉ dùng cho testing!</strong><br>
+                        Trong production, MoMo sẽ tự động gọi IPN endpoint.
+                    </div>
+                    <div class="form-group">
+                        <label>Order ID (từ response tạo booking):</label>
+                        <input type="text" id="ipnOrderId" placeholder="BK123_1234567890">
+                    </div>
+                    <div class="form-group">
+                        <label>Result Code:</label>
+                        <select id="ipnResultCode">
+                            <option value="0">0 - Thành công</option>
+                            <option value="1001">1001 - Giao dịch thất bại</option>
+                            <option value="1005">1005 - Timeout</option>
+                        </select>
+                    </div>
+                    <button class="btn-warning" onclick="simulateIpn()">📤 Simulate IPN Callback</button>
+                    <div id="ipnResponse" class="response" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Manage Booking -->
+        <div id="manage" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>🔍 Chi tiết Booking</h2>
+                    <div class="form-group">
+                        <label>Booking ID:</label>
+                        <input type="number" id="detailBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <button class="btn-primary" onclick="getBookingDetails()">🔍 Xem Chi Tiết</button>
+                    <div id="bookingDetailsResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>✅ Expert Xác Nhận Booking</h2>
+                    <div class="info-box">
+                        Dùng token của Expert để xác nhận booking (nếu cần xác nhận thủ công)
+                    </div>
+                    <div class="form-group">
+                        <label>Booking ID:</label>
+                        <input type="number" id="confirmBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <button class="btn-success" onclick="confirmBooking()">✅ Xác Nhận (Expert)</button>
+                    <div id="confirmResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>❌ Hủy Booking</h2>
+                    <div class="warning-box">
+                        <strong>Chính sách hoàn tiền:</strong><br>
+                        - Hủy trước 24h: Hoàn 100%<br>
+                        - Hủy trong 24h: Hoàn 50%<br>
+                        - Đã bắt đầu: Không hoàn
+                    </div>
+                    <div class="form-group">
+                        <label>Booking ID:</label>
+                        <input type="number" id="cancelBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Lý do hủy:</label>
+                        <textarea id="cancelReason" rows="2" placeholder="Nhập lý do hủy..."></textarea>
+                    </div>
+                    <button class="btn-danger" onclick="cancelBooking()">❌ Hủy Booking</button>
+                    <div id="cancelResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>✔️ Hoàn Thành Booking</h2>
+                    <div class="info-box">
+                        Sau khi buổi tư vấn kết thúc, đánh dấu booking là hoàn thành.<br>
+                        Expert sẽ nhận tiền vào wallet (trừ 15% platform fee).
+                    </div>
+                    <div class="form-group">
+                        <label>Booking ID:</label>
+                        <input type="number" id="completeBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <button class="btn-success" onclick="completeBooking()">✔️ Hoàn Thành</button>
+                    <div id="completeResponse" class="response" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Wallet & Fees -->
+        <div id="wallet" class="tab-content">
+            <div class="grid">
+                <div class="card">
+                    <h2>👛 Wallet Balance</h2>
+                    <div class="info-box">
+                        Xem số dư ví của Expert sau khi booking hoàn thành.
+                    </div>
+                    <button class="btn-primary" onclick="getWalletBalance()">💰 Xem Số Dư Wallet</button>
+                    <div id="walletResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>📊 Platform Fee Calculator</h2>
+                    <div class="form-group">
+                        <label>Giá booking (VND):</label>
+                        <input type="number" id="calcPrice" value="100000" placeholder="100000">
+                    </div>
+                    <button class="btn-info" onclick="calculateFees()">🧮 Tính Phí</button>
+                    <div id="feeCalcResult" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>💸 Tính Hoàn Tiền</h2>
+                    <div class="form-group">
+                        <label>Booking ID:</label>
+                        <input type="number" id="refundCalcBookingId" placeholder="Nhập Booking ID">
+                    </div>
+                    <button class="btn-warning" onclick="calculateRefund()">💸 Tính Số Tiền Hoàn</button>
+                    <div id="refundCalcResponse" class="response" style="display:none;"></div>
+                </div>
+
+                <div class="card">
+                    <h2>📜 Lịch Sử Giao Dịch</h2>
+                    <button class="btn-primary" onclick="getTransactionHistory()">📜 Xem Lịch Sử</button>
+                    <div id="txHistoryResponse" class="response" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set default date to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        document.getElementById('bookingDate').valueAsDate = tomorrow;
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+
+        function getSeekerToken() {
+            return document.getElementById('seekerToken').value;
+        }
+
+        function getExpertToken() {
+            return document.getElementById('expertToken').value;
+        }
+
+        function showResponse(elementId, data) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.textContent = JSON.stringify(data, null, 2);
+        }
+
+        async function apiCall(method, endpoint, body = null, useExpertToken = false) {
+            const token = useExpertToken ? getExpertToken() : getSeekerToken();
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            };
+            if (body) options.body = JSON.stringify(body);
+
+            const res = await fetch(`${getBaseUrl()}${endpoint}`, options);
+            return await res.json();
+        }
+
+        // Create Booking with Payment
+        async function createBooking() {
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const duration = parseInt(document.getElementById('duration').value);
+
+            const startAt = new Date(`${date}T${time}`);
+            const endAt = new Date(startAt.getTime() + duration * 60000);
+
+            const data = await apiCall('POST', '/bookings', {
+                expert_id: parseInt(document.getElementById('expertId').value),
+                start_at: startAt.toISOString(),
+                end_at: endAt.toISOString(),
+                channel: document.getElementById('channel').value,
+                payment_method: document.getElementById('paymentMethod').value,
+                initiate_payment: true
+            });
+            showResponse('createBookingResponse', data);
+
+            // Auto-fill payment fields if successful
+            if (data.data?.payment?.payUrl) {
+                document.getElementById('payUrl').value = data.data.payment.payUrl;
+            }
+            if (data.data?.payment?.orderId) {
+                document.getElementById('ipnOrderId').value = data.data.payment.orderId;
+            }
+            if (data.data?.booking?.id) {
+                document.getElementById('paymentBookingId').value = data.data.booking.id;
+                document.getElementById('detailBookingId').value = data.data.booking.id;
+            }
+        }
+
+        // Create Booking without Payment
+        async function createBookingOnly() {
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const duration = parseInt(document.getElementById('duration').value);
+
+            const startAt = new Date(`${date}T${time}`);
+            const endAt = new Date(startAt.getTime() + duration * 60000);
+
+            const data = await apiCall('POST', '/bookings', {
+                expert_id: parseInt(document.getElementById('expertId').value),
+                start_at: startAt.toISOString(),
+                end_at: endAt.toISOString(),
+                channel: document.getElementById('channel').value,
+                initiate_payment: false
+            });
+            showResponse('createBookingResponse', data);
+        }
+
+        // List My Bookings
+        async function listMyBookings() {
+            const viewAs = document.getElementById('viewAs').value;
+            const useExpert = viewAs === 'expert';
+            const data = await apiCall('GET', `/bookings/mine?as=${viewAs}`, null, useExpert);
+            showResponse('listBookingsResponse', data);
+        }
+
+        // Create Payment Link
+        async function createPaymentLink() {
+            const bookingId = document.getElementById('paymentBookingId').value;
+            const data = await apiCall('POST', '/payments/momo/create', { booking_id: parseInt(bookingId) });
+            showResponse('paymentLinkResponse', data);
+
+            if (data.data?.payUrl) {
+                document.getElementById('payUrl').value = data.data.payUrl;
+            }
+            if (data.data?.orderId) {
+                document.getElementById('ipnOrderId').value = data.data.orderId;
+            }
+        }
+
+        // Open Pay URL
+        function openPayUrl() {
+            const url = document.getElementById('payUrl').value;
+            if (url) window.open(url, '_blank');
+            else alert('Vui lòng nhập Pay URL');
+        }
+
+        // Simulate IPN
+        async function simulateIpn() {
+            const orderId = document.getElementById('ipnOrderId').value;
+            const resultCode = document.getElementById('ipnResultCode').value;
+
+            // This simulates what MoMo would send
+            const ipnData = {
+                orderId: orderId,
+                resultCode: parseInt(resultCode),
+                transId: `TRANS_${Date.now()}`,
+                amount: "100000",
+                message: resultCode === "0" ? "Successful" : "Failed"
+            };
+
+            const res = await fetch(`${getBaseUrl()}/payments/momo/ipn`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(ipnData)
+            });
+            const data = await res.json();
+            showResponse('ipnResponse', { sent: ipnData, response: data });
+        }
+
+        // Get Booking Details
+        async function getBookingDetails() {
+            const bookingId = document.getElementById('detailBookingId').value;
+            const data = await apiCall('GET', `/bookings/${bookingId}`);
+            showResponse('bookingDetailsResponse', data);
+        }
+
+        // Confirm Booking (Expert)
+        async function confirmBooking() {
+            const bookingId = document.getElementById('confirmBookingId').value;
+            const data = await apiCall('PATCH', `/bookings/${bookingId}/confirm`, null, true);
+            showResponse('confirmResponse', data);
+        }
+
+        // Cancel Booking
+        async function cancelBooking() {
+            const bookingId = document.getElementById('cancelBookingId').value;
+            const reason = document.getElementById('cancelReason').value;
+            const data = await apiCall('PATCH', `/bookings/${bookingId}/cancel`, { reason });
+            showResponse('cancelResponse', data);
+        }
+
+        // Complete Booking
+        async function completeBooking() {
+            const bookingId = document.getElementById('completeBookingId').value;
+            const data = await apiCall('PATCH', `/bookings/${bookingId}/complete`);
+            showResponse('completeResponse', data);
+        }
+
+        // Get Wallet Balance (placeholder - need actual endpoint)
+        async function getWalletBalance() {
+            // This would need a wallet endpoint
+            showResponse('walletResponse', { message: 'Wallet endpoint cần được implement. Xem trong booking details -> fees -> expert_earning' });
+        }
+
+        // Calculate Fees (client-side)
+        function calculateFees() {
+            const price = parseFloat(document.getElementById('calcPrice').value);
+            const platformFeePercent = 15;
+            const platformFee = Math.round(price * platformFeePercent / 100);
+            const expertEarning = price - platformFee;
+
+            showResponse('feeCalcResult', {
+                gross_amount: price,
+                platform_fee_percent: platformFeePercent,
+                platform_fee: platformFee,
+                expert_earning: expertEarning,
+                note: 'Expert nhận ' + expertEarning.toLocaleString() + ' VND sau khi trừ phí'
+            });
+        }
+
+        // Calculate Refund
+        async function calculateRefund() {
+            const bookingId = document.getElementById('refundCalcBookingId').value;
+            const data = await apiCall('GET', `/refunds/calculate/${bookingId}`);
+            showResponse('refundCalcResponse', data);
+        }
+
+        // Get Transaction History (placeholder)
+        async function getTransactionHistory() {
+            const data = await apiCall('GET', '/refunds/mine');
+            showResponse('txHistoryResponse', data);
+        }
+    </script>
+</body>
+
+</html>

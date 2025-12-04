@@ -149,3 +149,32 @@ ${userMessage}
 🤖 BẠN CHỈ ĐƯỢC TRẢ VỀ JSON (không markdown, không giải thích):
 `;
 };
+
+// ========== BUILD PROMPT WITH PERSONA ==========
+export const buildPromptWithPersona = (conversationHistory, userMessage, personaPrompt = '') => {
+  let historyString = "";
+  if (conversationHistory && conversationHistory.length > 0) {
+    historyString = conversationHistory
+      .map(msg => `${msg.sender_id === 'ai' ? 'AI' : 'User'}: ${msg.content}`)
+      .join('\n') + '\n';
+  }
+
+  // If persona is provided, inject it into the prompt
+  const personaSection = personaPrompt ? `
+═══════════════════════════════════════
+${personaPrompt}
+═══════════════════════════════════════
+` : '';
+
+  return `
+${systemPrompt}
+${personaSection}
+📜 LỊCH SỬ TRÒ CHUYỆN GẦN ĐÂY:
+${historyString || "(Chưa có lịch sử)"}
+
+👤 NGƯỜI DÙNG VỪA NÓI:
+${userMessage}
+
+🤖 BẠN CHỈ ĐƯỢC TRẢ VỀ JSON (không markdown, không giải thích):
+`;
+};

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Advanced - Refund, Dispute, Recurring</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+
+        .section {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        button.danger {
+            background: #dc3545;
+        }
+
+        button.danger:hover {
+            background: #c82333;
+        }
+
+        button.success {
+            background: #28a745;
+        }
+
+        button.success:hover {
+            background: #218838;
+        }
+
+        button.warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        button.warning:hover {
+            background: #e0a800;
+        }
+
+        .response {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 15px;
+            border-radius: 4px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.completed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status.cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab.active {
+            border-bottom-color: #007bff;
+            color: #007bff;
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🔧 Booking Advanced Features</h1>
+
+    <div class="section">
+        <h2>🔐 Authentication</h2>
+        <div class="form-group">
+            <label>JWT Token:</label>
+            <input type="text" id="token" placeholder="Paste your JWT token here">
+        </div>
+        <div class="form-group">
+            <label>API Base URL:</label>
+            <input type="text" id="baseUrl" value="http://localhost:3000/api/v1">
+        </div>
+    </div>
+
+    <div class="tabs">
+        <div class="tab active" onclick="showTab('refunds')">💰 Refunds</div>
+        <div class="tab" onclick="showTab('disputes')">⚖️ Disputes</div>
+        <div class="tab" onclick="showTab('recurring')">🔄 Recurring</div>
+        <div class="tab" onclick="showTab('bookings')">📅 Bookings</div>
+    </div>
+
+    <!-- REFUNDS TAB -->
+    <div id="refunds" class="tab-content active">
+        <div class="grid">
+            <div class="section">
+                <h2>💰 Calculate Refund</h2>
+                <div class="form-group">
+                    <label>Booking ID:</label>
+                    <input type="number" id="refund_booking_id" placeholder="Enter booking ID">
+                </div>
+                <button onclick="calculateRefund()">Calculate Refund Amount</button>
+                <div id="refund_calc_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>📝 Request Refund</h2>
+                <div class="form-group">
+                    <label>Booking ID:</label>
+                    <input type="number" id="request_refund_booking_id" placeholder="Enter booking ID">
+                </div>
+                <div class="form-group">
+                    <label>Reason (min 10 chars):</label>
+                    <textarea id="refund_reason" rows="3" placeholder="Explain why you want a refund..."></textarea>
+                </div>
+                <button onclick="requestRefund()">Request Refund</button>
+                <div id="request_refund_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>📋 My Refunds</h2>
+                <button onclick="listMyRefunds()">Load My Refunds</button>
+                <div id="my_refunds_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>👨‍💼 Admin: Process Refund</h2>
+                <div class="form-group">
+                    <label>Refund ID:</label>
+                    <input type="number" id="process_refund_id" placeholder="Enter refund ID">
+                </div>
+                <div class="form-group">
+                    <label>Admin Note:</label>
+                    <textarea id="admin_refund_note" rows="2" placeholder="Optional admin note..."></textarea>
+                </div>
+                <button class="success" onclick="processRefund('APPROVE')">✅ Approve</button>
+                <button class="danger" onclick="processRefund('REJECT')">❌ Reject</button>
+                <div id="process_refund_response" class="response"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DISPUTES TAB -->
+    <div id="disputes" class="tab-content">
+        <div class="grid">
+            <div class="section">
+                <h2>⚖️ Raise Dispute</h2>
+                <div class="form-group">
+                    <label>Booking ID:</label>
+                    <input type="number" id="dispute_booking_id" placeholder="Enter booking ID">
+                </div>
+                <div class="form-group">
+                    <label>Reason:</label>
+                    <select id="dispute_reason">
+                        <option value="NO_SHOW_EXPERT">Expert didn't show up</option>
+                        <option value="NO_SHOW_SEEKER">Seeker didn't show up</option>
+                        <option value="POOR_QUALITY">Poor quality service</option>
+                        <option value="TECHNICAL_ISSUES">Technical issues</option>
+                        <option value="INAPPROPRIATE_BEHAVIOR">Inappropriate behavior</option>
+                        <option value="WRONG_EXPERTISE">Wrong expertise</option>
+                        <option value="TIME_DISPUTE">Time dispute</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Description (min 20 chars):</label>
+                    <textarea id="dispute_description" rows="4"
+                        placeholder="Describe the issue in detail..."></textarea>
+                </div>
+                <button class="warning" onclick="raiseDispute()">Raise Dispute</button>
+                <div id="raise_dispute_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>📋 My Disputes</h2>
+                <button onclick="listMyDisputes()">Load My Disputes</button>
+                <div id="my_disputes_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>💬 Add Message to Dispute</h2>
+                <div class="form-group">
+                    <label>Dispute ID:</label>
+                    <input type="number" id="dispute_msg_id" placeholder="Enter dispute ID">
+                </div>
+                <div class="form-group">
+                    <label>Message:</label>
+                    <textarea id="dispute_message" rows="3" placeholder="Your message..."></textarea>
+                </div>
+                <button onclick="addDisputeMessage()">Send Message</button>
+                <div id="dispute_msg_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>👨‍💼 Admin: Resolve Dispute</h2>
+                <div class="form-group">
+                    <label>Dispute ID:</label>
+                    <input type="number" id="resolve_dispute_id" placeholder="Enter dispute ID">
+                </div>
+                <div class="form-group">
+                    <label>Favored Party:</label>
+                    <select id="favored_party">
+                        <option value="SEEKER">Seeker (Full/Partial refund)</option>
+                        <option value="EXPERT">Expert (No refund)</option>
+                        <option value="PARTIAL">Partial (Split decision)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Refund Percent (0-100):</label>
+                    <input type="number" id="refund_percent" value="100" min="0" max="100">
+                </div>
+                <div class="form-group">
+                    <label>Resolution:</label>
+                    <textarea id="dispute_resolution" rows="3" placeholder="Explain the resolution..."></textarea>
+                </div>
+                <button class="success" onclick="resolveDispute()">Resolve Dispute</button>
+                <div id="resolve_dispute_response" class="response"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECURRING TAB -->
+    <div id="recurring" class="tab-content">
+        <div class="grid">
+            <div class="section">
+                <h2>🔄 Create Recurring Booking</h2>
+                <div class="form-group">
+                    <label>Expert ID:</label>
+                    <input type="number" id="recurring_expert_id" placeholder="Enter expert ID">
+                </div>
+                <div class="form-group">
+                    <label>Channel:</label>
+                    <select id="recurring_channel">
+                        <option value="VIDEO">Video Call</option>
+                        <option value="AUDIO">Audio Call</option>
+                        <option value="CHAT">Chat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Start Time (HH:MM):</label>
+                    <input type="time" id="recurring_start_time" value="10:00">
+                </div>
+                <div class="form-group">
+                    <label>Duration (minutes):</label>
+                    <select id="recurring_duration">
+                        <option value="60">60 minutes (1 hour)</option>
+                        <option value="90">90 minutes (1.5 hours)</option>
+                        <option value="120">120 minutes (2 hours)</option>
+                        <option value="180">180 minutes (3 hours)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Frequency:</label>
+                    <select id="recurring_frequency" onchange="updateFrequencyFields()">
+                        <option value="DAILY">Daily</option>
+                        <option value="WEEKLY">Weekly</option>
+                        <option value="BIWEEKLY">Bi-weekly</option>
+                        <option value="MONTHLY">Monthly</option>
+                    </select>
+                </div>
+                <div class="form-group" id="day_of_week_group" style="display:none;">
+                    <label>Day of Week:</label>
+                    <select id="recurring_day_of_week">
+                        <option value="0">Sunday</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tuesday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                    </select>
+                </div>
+                <div class="form-group" id="day_of_month_group" style="display:none;">
+                    <label>Day of Month (1-31):</label>
+                    <input type="number" id="recurring_day_of_month" min="1" max="31" value="1">
+                </div>
+                <div class="form-group">
+                    <label>Starts From:</label>
+                    <input type="date" id="recurring_starts_from">
+                </div>
+                <div class="form-group">
+                    <label>Ends At (optional):</label>
+                    <input type="date" id="recurring_ends_at">
+                </div>
+                <div class="form-group">
+                    <label>Total Sessions (optional, leave empty for unlimited):</label>
+                    <input type="number" id="recurring_total_sessions" placeholder="e.g., 10">
+                </div>
+                <button onclick="createRecurring()">Create Recurring Template</button>
+                <div id="create_recurring_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>📋 My Recurring Templates</h2>
+                <div class="form-group">
+                    <label>View as:</label>
+                    <select id="recurring_view_as">
+                        <option value="false">Seeker</option>
+                        <option value="true">Expert</option>
+                    </select>
+                </div>
+                <button onclick="listMyRecurring()">Load My Templates</button>
+                <div id="my_recurring_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>❌ Cancel Recurring Template</h2>
+                <div class="form-group">
+                    <label>Template ID:</label>
+                    <input type="number" id="cancel_template_id" placeholder="Enter template ID">
+                </div>
+                <button class="danger" onclick="cancelRecurring()">Cancel Template</button>
+                <div id="cancel_recurring_response" class="response"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOKINGS TAB -->
+    <div id="bookings" class="tab-content">
+        <div class="grid">
+            <div class="section">
+                <h2>📅 My Bookings</h2>
+                <div class="form-group">
+                    <label>View as:</label>
+                    <select id="bookings_view_as">
+                        <option value="seeker">Seeker</option>
+                        <option value="expert">Expert</option>
+                    </select>
+                </div>
+                <button onclick="listMyBookings()">Load My Bookings</button>
+                <div id="my_bookings_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>🔍 Booking Details</h2>
+                <div class="form-group">
+                    <label>Booking ID:</label>
+                    <input type="number" id="booking_detail_id" placeholder="Enter booking ID">
+                </div>
+                <button onclick="getBookingDetails()">Get Details</button>
+                <div id="booking_details_response" class="response"></div>
+            </div>
+
+            <div class="section">
+                <h2>❌ Cancel Booking (with Refund)</h2>
+                <div class="form-group">
+                    <label>Booking ID:</label>
+                    <input type="number" id="cancel_booking_id" placeholder="Enter booking ID">
+                </div>
+                <div class="form-group">
+                    <label>Reason:</label>
+                    <textarea id="cancel_reason" rows="2" placeholder="Reason for cancellation..."></textarea>
+                </div>
+                <button class="danger" onclick="cancelBooking()">Cancel Booking</button>
+                <div id="cancel_booking_response" class="response"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set default date
+        document.getElementById('recurring_starts_from').valueAsDate = new Date();
+
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.tab[onclick="showTab('${tabId}')"]`).classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function updateFrequencyFields() {
+            const freq = document.getElementById('recurring_frequency').value;
+            document.getElementById('day_of_week_group').style.display =
+                ['WEEKLY', 'BIWEEKLY'].includes(freq) ? 'block' : 'none';
+            document.getElementById('day_of_month_group').style.display =
+                freq === 'MONTHLY' ? 'block' : 'none';
+        }
+
+        function getHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.getElementById('token').value}`
+            };
+        }
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+
+        async function apiCall(method, endpoint, body = null, responseId) {
+            try {
+                const options = { method, headers: getHeaders() };
+                if (body) options.body = JSON.stringify(body);
+
+                const res = await fetch(`${getBaseUrl()}${endpoint}`, options);
+                const data = await res.json();
+                document.getElementById(responseId).textContent = JSON.stringify(data, null, 2);
+                return data;
+            } catch (err) {
+                document.getElementById(responseId).textContent = `Error: ${err.message}`;
+            }
+        }
+
+        // Refunds
+        async function calculateRefund() {
+            const bookingId = document.getElementById('refund_booking_id').value;
+            await apiCall('GET', `/refunds/calculate/${bookingId}`, null, 'refund_calc_response');
+        }
+
+        async function requestRefund() {
+            await apiCall('POST', '/refunds/request', {
+                booking_id: parseInt(document.getElementById('request_refund_booking_id').value),
+                reason: document.getElementById('refund_reason').value
+            }, 'request_refund_response');
+        }
+
+        async function listMyRefunds() {
+            await apiCall('GET', '/refunds/mine', null, 'my_refunds_response');
+        }
+
+        async function processRefund(action) {
+            const refundId = document.getElementById('process_refund_id').value;
+            await apiCall('POST', `/refunds/admin/${refundId}/process`, {
+                action,
+                admin_note: document.getElementById('admin_refund_note').value
+            }, 'process_refund_response');
+        }
+
+        // Disputes
+        async function raiseDispute() {
+            await apiCall('POST', '/disputes/raise', {
+                booking_id: parseInt(document.getElementById('dispute_booking_id').value),
+                reason: document.getElementById('dispute_reason').value,
+                description: document.getElementById('dispute_description').value
+            }, 'raise_dispute_response');
+        }
+
+        async function listMyDisputes() {
+            await apiCall('GET', '/disputes/mine', null, 'my_disputes_response');
+        }
+
+        async function addDisputeMessage() {
+            const disputeId = document.getElementById('dispute_msg_id').value;
+            await apiCall('POST', `/disputes/${disputeId}/message`, {
+                message: document.getElementById('dispute_message').value
+            }, 'dispute_msg_response');
+        }
+
+        async function resolveDispute() {
+            const disputeId = document.getElementById('resolve_dispute_id').value;
+            await apiCall('POST', `/disputes/admin/${disputeId}/resolve`, {
+                favored_party: document.getElementById('favored_party').value,
+                refund_percent: parseInt(document.getElementById('refund_percent').value),
+                resolution: document.getElementById('dispute_resolution').value
+            }, 'resolve_dispute_response');
+        }
+
+        // Recurring
+        async function createRecurring() {
+            const freq = document.getElementById('recurring_frequency').value;
+            const body = {
+                expert_id: parseInt(document.getElementById('recurring_expert_id').value),
+                channel: document.getElementById('recurring_channel').value,
+                start_time: document.getElementById('recurring_start_time').value,
+                duration_minutes: parseInt(document.getElementById('recurring_duration').value),
+                frequency: freq,
+                starts_from: document.getElementById('recurring_starts_from').value
+            };
+
+            if (['WEEKLY', 'BIWEEKLY'].includes(freq)) {
+                body.day_of_week = parseInt(document.getElementById('recurring_day_of_week').value);
+            }
+            if (freq === 'MONTHLY') {
+                body.day_of_month = parseInt(document.getElementById('recurring_day_of_month').value);
+            }
+
+            const endsAt = document.getElementById('recurring_ends_at').value;
+            if (endsAt) body.ends_at = endsAt;
+
+            const totalSessions = document.getElementById('recurring_total_sessions').value;
+            if (totalSessions) body.total_sessions = parseInt(totalSessions);
+
+            await apiCall('POST', '/recurring', body, 'create_recurring_response');
+        }
+
+        async function listMyRecurring() {
+            const asExpert = document.getElementById('recurring_view_as').value;
+            await apiCall('GET', `/recurring/mine?as_expert=${asExpert}`, null, 'my_recurring_response');
+        }
+
+        async function cancelRecurring() {
+            const templateId = document.getElementById('cancel_template_id').value;
+            await apiCall('DELETE', `/recurring/${templateId}`, null, 'cancel_recurring_response');
+        }
+
+        // Bookings
+        async function listMyBookings() {
+            const as = document.getElementById('bookings_view_as').value;
+            await apiCall('GET', `/bookings/mine?as=${as}`, null, 'my_bookings_response');
+        }
+
+        async function getBookingDetails() {
+            const bookingId = document.getElementById('booking_detail_id').value;
+            await apiCall('GET', `/bookings/${bookingId}`, null, 'booking_details_response');
+        }
+
+        async function cancelBooking() {
+            const bookingId = document.getElementById('cancel_booking_id').value;
+            await apiCall('PATCH', `/bookings/${bookingId}/cancel`, {
+                reason: document.getElementById('cancel_reason').value
+            }, 'cancel_booking_response');
+        }
+    </script>
+</body>
+
+</html>

@@ -284,6 +284,98 @@
             "deleted": "Xóa tài khoản rút tiền thành công"
         }
     },
+    "refunds": {
+        "calculate": {
+            "success": "Đã tính số tiền hoàn lại"
+        },
+        "request": {
+            "success": "Gửi yêu cầu hoàn tiền thành công"
+        },
+        "list": {
+            "success": "Lấy danh sách hoàn tiền thành công"
+        },
+        "admin": {
+            "list": {
+                "success": "Lấy tất cả yêu cầu hoàn tiền"
+            },
+            "approve": {
+                "success": "Đã duyệt và xử lý hoàn tiền"
+            },
+            "reject": {
+                "success": "Đã từ chối yêu cầu hoàn tiền"
+            }
+        },
+        "errors": {
+            "bookingIdRequired": "Mã booking là bắt buộc",
+            "reasonRequired": "Lý do phải có ít nhất 10 ký tự",
+            "invalidAction": "Hành động không hợp lệ. Phải là APPROVE hoặc REJECT"
+        }
+    },
+    "disputes": {
+        "raise": {
+            "success": "Tạo khiếu nại thành công"
+        },
+        "get": {
+            "success": "Lấy chi tiết khiếu nại thành công"
+        },
+        "message": {
+            "success": "Đã thêm tin nhắn vào khiếu nại"
+        },
+        "list": {
+            "success": "Lấy danh sách khiếu nại thành công"
+        },
+        "admin": {
+            "list": {
+                "success": "Lấy tất cả khiếu nại"
+            },
+            "assign": {
+                "success": "Đã phân công xử lý khiếu nại"
+            },
+            "resolve": {
+                "success": "Đã giải quyết khiếu nại"
+            },
+            "escalate": {
+                "success": "Đã chuyển khiếu nại lên cấp cao hơn"
+            }
+        },
+        "errors": {
+            "bookingIdRequired": "Mã booking là bắt buộc",
+            "reasonRequired": "Lý do là bắt buộc",
+            "descriptionRequired": "Mô tả là bắt buộc",
+            "messageRequired": "Tin nhắn là bắt buộc",
+            "resolutionRequired": "Kết quả giải quyết là bắt buộc",
+            "invalidFavoredParty": "Bên được ưu tiên phải là SEEKER, EXPERT hoặc PARTIAL"
+        }
+    },
+    "recurring": {
+        "create": {
+            "success": "Tạo lịch đặt định kỳ thành công"
+        },
+        "get": {
+            "success": "Lấy chi tiết lịch định kỳ thành công"
+        },
+        "update": {
+            "success": "Cập nhật lịch định kỳ thành công"
+        },
+        "cancel": {
+            "success": "Hủy lịch định kỳ thành công"
+        },
+        "list": {
+            "success": "Lấy danh sách lịch định kỳ thành công"
+        },
+        "admin": {
+            "process": {
+                "success": "Đã xử lý các booking định kỳ"
+            }
+        },
+        "errors": {
+            "expertIdRequired": "Mã chuyên gia là bắt buộc",
+            "startTimeRequired": "Thời gian bắt đầu là bắt buộc",
+            "durationRequired": "Thời lượng là bắt buộc",
+            "frequencyRequired": "Tần suất là bắt buộc",
+            "startsFromRequired": "Ngày bắt đầu là bắt buộc"
+        }
+    },
     "email": {
         "otp": {
             "sent": "Đã gửi mã OTP",

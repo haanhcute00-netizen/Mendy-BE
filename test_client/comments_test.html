@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Comments</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f2f5;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #1877f2;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            background: #1877f2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 5px 5px 5px 0;
+        }
+
+        button:hover {
+            background: #166fe5;
+        }
+
+        .btn-success {
+            background: #42b72a;
+        }
+
+        .btn-danger {
+            background: #fa3e3e;
+        }
+
+        .btn-warning {
+            background: #f7b928;
+            color: #333;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        #result {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+
+        .comment-item {
+            border: 1px solid #e4e6eb;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 8px 0;
+            background: #f7f8fa;
+        }
+
+        .comment-item.reply {
+            margin-left: 40px;
+            border-left: 3px solid #1877f2;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .comment-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #e4e6eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #050505;
+        }
+
+        .comment-time {
+            color: #65676b;
+            font-size: 12px;
+        }
+
+        .comment-content {
+            color: #050505;
+            line-height: 1.4;
+        }
+
+        .comment-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .comment-actions span {
+            color: #65676b;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .comment-actions span:hover {
+            text-decoration: underline;
+        }
+
+        .reaction-btn {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background: white;
+        }
+
+        .reaction-btn:hover {
+            background: #f0f2f5;
+        }
+
+        .reaction-btn.active {
+            background: #e7f3ff;
+            border-color: #1877f2;
+        }
+
+        .inline-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .inline-form input {
+            flex: 1;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 10px 0;
+        }
+
+        .checkbox-label input {
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>💬 Test Comments Module</h1>
+
+    <!-- Login -->
+    <div class="card">
+        <h2>1. Đăng nhập</h2>
+        <label>Handle</label>
+        <input type="text" id="loginHandle" value="seeker1" placeholder="Handle">
+        <label>Password</label>
+        <input type="text" id="loginPassword" value="123456">
+        <button onclick="login()">Đăng nhập</button>
+        <div id="loginStatus" class="status"></div>
+    </div>
+
+    <!-- Add Comment -->
+    <div class="card">
+        <h2>2. Thêm Comment</h2>
+        <label>Post ID</label>
+        <input type="number" id="postId" value="6" placeholder="ID bài viết">
+        <label>Nội dung</label>
+        <textarea id="commentContent" placeholder="Viết bình luận...">Đây là comment test! 🎉</textarea>
+        <label>Reply to Comment ID (optional)</label>
+        <input type="number" id="parentId" placeholder="Để trống nếu không reply">
+        <div class="checkbox-label">
+            <input type="checkbox" id="anonymous" checked>
+            <label for="anonymous">Bình luận ẩn danh</label>
+        </div>
+        <button onclick="addComment()" class="btn-success">💬 Gửi Comment</button>
+    </div>
+
+    <!-- List Comments -->
+    <div class="card">
+        <h2>3. Danh sách Comments</h2>
+        <div class="inline-form">
+            <input type="number" id="listPostId" value="6" placeholder="Post ID">
+            <button onclick="listComments()">📋 Lấy Comments</button>
+        </div>
+        <div id="commentsContainer"></div>
+    </div>
+
+    <!-- Update/Delete Comment -->
+    <div class="card">
+        <h2>4. Sửa/Xóa Comment</h2>
+        <label>Comment ID</label>
+        <input type="number" id="editCommentId" placeholder="ID comment cần sửa/xóa">
+        <label>Nội dung mới</label>
+        <textarea id="editContent" placeholder="Nội dung mới..."></textarea>
+        <button onclick="updateComment()">✏️ Cập nhật</button>
+        <button onclick="deleteComment()" class="btn-danger">🗑️ Xóa</button>
+    </div>
+
+    <!-- Reactions -->
+    <div class="card">
+        <h2>5. Reactions</h2>
+        <label>Comment ID</label>
+        <input type="number" id="reactCommentId" placeholder="ID comment">
+        <div style="margin-top: 10px;">
+            <button class="reaction-btn" onclick="reactComment('LIKE')">👍 Like</button>
+            <button class="reaction-btn" onclick="reactComment('LOVE')">❤️ Love</button>
+            <button class="reaction-btn" onclick="reactComment('HAHA')">😂 Haha</button>
+            <button class="reaction-btn" onclick="reactComment('WOW')">😮 Wow</button>
+            <button class="reaction-btn" onclick="reactComment('SAD')">😢 Sad</button>
+            <button class="reaction-btn" onclick="reactComment('ANGRY')">😠 Angry</button>
+            <button class="reaction-btn btn-danger" onclick="unreactComment()">❌ Bỏ react</button>
+        </div>
+    </div>
+
+    <!-- Result -->
+    <div class="card">
+        <h2>📋 Response Log</h2>
+        <pre id="result">Chưa có request nào...</pre>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:4000/api/v1';
+        let token = localStorage.getItem('token') || '';
+
+        function log(data) {
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showStatus(id, msg, isSuccess) {
+            const el = document.getElementById(id);
+            el.textContent = msg;
+            el.className = 'status ' + (isSuccess ? 'success' : 'error');
+        }
+
+        async function login() {
+            const handle = document.getElementById('loginHandle').value;
+            const password = document.getElementById('loginPassword').value;
+            try {
+                const res = await fetch(`${BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ handle, password })
+                });
+                const data = await res.json();
+                log(data);
+                if (data.data?.access_token) {
+                    token = data.data.access_token;
+                    localStorage.setItem('token', token);
+                    showStatus('loginStatus', '✅ Đăng nhập thành công! User: ' + data.data.user?.handle, true);
+                } else {
+                    showStatus('loginStatus', '❌ ' + (data.message || 'Thất bại'), false);
+                }
+            } catch (err) {
+                log({ error: err.message });
+                showStatus('loginStatus', '❌ Lỗi: ' + err.message, false);
+            }
+        }
+
+        async function addComment() {
+            if (!token) return alert('Đăng nhập trước!');
+            const postId = document.getElementById('postId').value;
+            const content = document.getElementById('commentContent').value;
+            const parentId = document.getElementById('parentId').value;
+            const anonymous = document.getElementById('anonymous').checked;
+
+            // Build request body - only include parent_id if it has a valid value
+            const body = {
+                post_id: postId,
+                content,
+                anonymous
+            };
+            if (parentId && parentId.trim() !== '') {
+                body.parent_id = parseInt(parentId);
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                log(data);
+                if (data.success) {
+                    alert('✅ Comment đã được thêm!');
+                    document.getElementById('parentId').value = ''; // Clear parent_id
+                    listComments();
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        async function listComments() {
+            if (!token) return alert('Đăng nhập trước!');
+            const postId = document.getElementById('listPostId').value;
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments?post_id=${postId}&limit=50`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                log(data);
+
+                if (data.success && data.data) {
+                    renderComments(data.data);
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        function renderComments(comments) {
+            const container = document.getElementById('commentsContainer');
+            if (!comments.length) {
+                container.innerHTML = '<p style="color:#65676b;">Chưa có comment nào.</p>';
+                return;
+            }
+
+            // Group by parent
+            const rootComments = comments.filter(c => !c.parent_id);
+            const replies = comments.filter(c => c.parent_id);
+
+            let html = '';
+            rootComments.forEach(c => {
+                html += renderComment(c);
+                // Find replies
+                replies.filter(r => r.parent_id === c.id).forEach(r => {
+                    html += renderComment(r, true);
+                });
+            });
+
+            container.innerHTML = html;
+        }
+
+        function renderComment(c, isReply = false) {
+            const avatar = c.avatar_url
+                ? `<img src="${c.avatar_url}" style="width:100%;height:100%;border-radius:50%;">`
+                : (c.is_anonymous ? '👤' : c.display_name?.charAt(0) || '?');
+            const name = c.is_anonymous ? 'Ẩn danh' : (c.display_name || c.handle);
+            const time = new Date(c.created_at).toLocaleString('vi-VN');
+            const edited = c.edited ? ' (đã chỉnh sửa)' : '';
+            const ownerBadge = c.is_owner ? '<span style="background:#e7f3ff;color:#1877f2;padding:2px 6px;border-radius:4px;font-size:11px;margin-left:5px;">Bạn</span>' : '';
+
+            return `
+                <div class="comment-item ${isReply ? 'reply' : ''}">
+                    <div class="comment-header">
+                        <div class="comment-avatar">${avatar}</div>
+                        <div>
+                            <span class="comment-author">${name}</span>${ownerBadge}
+                            <div class="comment-time">${time}${edited}</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">${c.content}</div>
+                    <div class="comment-actions">
+                        <span onclick="document.getElementById('reactCommentId').value='${c.id}'">👍 ${c.reaction_count || 0}</span>
+                        <span onclick="document.getElementById('parentId').value='${c.id}';document.getElementById('commentContent').focus();">Trả lời</span>
+                        ${c.is_owner ? `<span onclick="document.getElementById('editCommentId').value='${c.id}';document.getElementById('editContent').value='${c.content}';">Chỉnh sửa</span>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function updateComment() {
+            if (!token) return alert('Đăng nhập trước!');
+            const id = document.getElementById('editCommentId').value;
+            const content = document.getElementById('editContent').value;
+            if (!id) return alert('Nhập Comment ID!');
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments/${id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ content })
+                });
+                const data = await res.json();
+                log(data);
+                if (data.success) {
+                    alert('✅ Đã cập nhật!');
+                    listComments();
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        async function deleteComment() {
+            if (!token) return alert('Đăng nhập trước!');
+            const id = document.getElementById('editCommentId').value;
+            if (!id) return alert('Nhập Comment ID!');
+            if (!confirm('Xác nhận xóa comment?')) return;
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                log(data);
+                if (data.success) {
+                    alert('✅ Đã xóa!');
+                    listComments();
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        async function reactComment(kind) {
+            if (!token) return alert('Đăng nhập trước!');
+            const id = document.getElementById('reactCommentId').value;
+            if (!id) return alert('Nhập Comment ID!');
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments/${id}/react`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ kind })
+                });
+                const data = await res.json();
+                log(data);
+                if (data.success) listComments();
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        async function unreactComment() {
+            if (!token) return alert('Đăng nhập trước!');
+            const id = document.getElementById('reactCommentId').value;
+            if (!id) return alert('Nhập Comment ID!');
+
+            try {
+                const res = await fetch(`${BASE_URL}/comments/${id}/react`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                log(data);
+                if (data.success) listComments();
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        // Auto-check token
+        if (token) showStatus('loginStatus', '✅ Đã có token từ session trước', true);
+    </script>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin API Test</title>
+    <title>Admin API Test Panel</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,9 +13,10 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             padding: 20px;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
         }
 
         .container {
@@ -26,105 +27,162 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            color: #333;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
             gap: 15px;
         }
 
         .card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
         .card h3 {
-            margin-bottom: 10px;
-            color: #2196F3;
-            font-size: 14px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 8px;
+            margin-bottom: 12px;
+            color: #5c6bc0;
+            font-size: 15px;
+            border-bottom: 2px solid #e8eaf6;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card h3::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 2px;
         }
 
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .form-group label {
             display: block;
             font-size: 12px;
             color: #666;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
+            font-weight: 500;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
             font-size: 13px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input.error {
+            border-color: #f44336;
         }
 
         .btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 13px;
-            margin-right: 5px;
-            margin-top: 5px;
+            font-weight: 600;
+            margin-right: 6px;
+            margin-top: 6px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-primary {
-            background: #2196F3;
-            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transform: translateY(-1px);
         }
 
         .btn-success {
-            background: #4CAF50;
-            color: white;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: #fff;
+        }
+
+        .btn-success:hover {
+            box-shadow: 0 4px 15px rgba(56, 239, 125, 0.4);
         }
 
         .btn-danger {
-            background: #f44336;
-            color: white;
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 4px 15px rgba(244, 92, 67, 0.4);
         }
 
         .btn-warning {
-            background: #ff9800;
-            color: white;
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: #fff;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .btn-warning:hover {
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
         }
 
         .response {
             background: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            padding: 10px;
-            margin-top: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 12px;
             font-size: 12px;
-            max-height: 200px;
+            max-height: 220px;
             overflow: auto;
         }
 
         .response pre {
             white-space: pre-wrap;
             word-wrap: break-word;
+            font-family: 'Consolas', monospace;
         }
 
         .status {
-            padding: 3px 8px;
-            border-radius: 3px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 11px;
+            font-weight: 600;
         }
 
         .status.success {
@@ -137,22 +195,32 @@
             color: #c62828;
         }
 
-        .login-section {
+        .status.loading {
             background: #e3f2fd;
-            padding: 15px;
-            border-radius: 8px;
+            color: #1565c0;
+        }
+
+        .login-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
             margin-bottom: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         }
 
         .login-section h2 {
-            font-size: 16px;
-            margin-bottom: 10px;
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .inline-form {
             display: flex;
-            gap: 10px;
-            align-items: end;
+            gap: 12px;
+            align-items: flex-end;
             flex-wrap: wrap;
         }
 
@@ -163,59 +231,130 @@
         #tokenDisplay {
             font-size: 11px;
             word-break: break-all;
-            background: #fff;
-            padding: 8px;
-            border-radius: 4px;
-            margin-top: 10px;
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border-left: 4px solid #667eea;
         }
 
         .tabs {
             display: flex;
-            gap: 5px;
-            margin-bottom: 15px;
+            gap: 6px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px;
+            border-radius: 12px;
         }
 
         .tab {
-            padding: 8px 16px;
-            background: #ddd;
+            padding: 10px 20px;
+            background: #e0e0e0;
             border: none;
             cursor: pointer;
-            border-radius: 4px 4px 0 0;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            background: #d0d0d0;
         }
 
         .tab.active {
-            background: #2196F3;
-            color: white;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .tab-content {
             display: none;
+            animation: fadeIn 0.3s ease;
         }
 
         .tab-content.active {
             display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: 500;
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, #eb3349, #f45c43);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .badge-info {
+            background: #e3f2fd;
+            color: #1565c0;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Admin API Test Panel</h1>
+        <h1>🛡️ Admin API Test Panel</h1>
 
         <!-- Login Section -->
         <div class="login-section">
-            <h2>Dang nhap Admin</h2>
+            <h2>🔐 Đăng nhập Admin</h2>
             <div class="inline-form">
                 <div class="form-group">
                     <label>Handle</label>
-                    <input type="text" id="loginHandle" value="admin1" style="width:150px">
+                    <input type="text" id="loginHandle" value="admin1" style="width:150px" placeholder="admin handle">
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" id="loginPassword" value="admin123" style="width:150px">
+                    <input type="password" id="loginPassword" value="admin123" style="width:150px"
+                        placeholder="password">
                 </div>
-                <button class="btn btn-primary" onclick="login()">Dang nhap</button>
+                <button class="btn btn-primary" onclick="login()" id="loginBtn">🚀 Đăng nhập</button>
                 <span id="loginStatus"></span>
             </div>
             <div id="tokenDisplay" style="display:none"></div>
@@ -223,18 +362,16 @@
 
         <!-- Tabs -->
         <div class="tabs">
-            <button class="tab active" onclick="showTab('dashboard')">Dashboard</button>
-            <button class="tab" onclick="showTab('users')">Users</button>
-            <button class="tab" onclick="showTab('experts')">Experts</button>
-            <button class="tab" onclick="showTab('bookings')">Bookings</button>
-            <button class="tab" onclick="showTab('posts')">Posts</button>
-            <button class="tab" onclick="showTab('comments')">Comments</button>
-            <button class="tab" onclick="showTab('reports')">Reports</button>
-            <button class="tab" onclick="showTab('payouts')">Payouts</button>
-            <button class="tab" onclick="showTab('transactions')">Transactions</button>
-            <button class="tab" onclick="showTab('content')">Content</button>
-            <button class="tab" onclick="showTab('settings')">Settings</button>
-            <button class="tab" onclick="showTab('audit')">Audit</button>
+            <button class="tab active" onclick="showTab('dashboard')">📊 Dashboard</button>
+            <button class="tab" onclick="showTab('users')">👥 Users</button>
+            <button class="tab" onclick="showTab('experts')">🎓 Experts</button>
+            <button class="tab" onclick="showTab('bookings')">📅 Bookings</button>
+            <button class="tab" onclick="showTab('posts')">📝 Posts</button>
+            <button class="tab" onclick="showTab('comments')">💬 Comments</button>
+            <button class="tab" onclick="showTab('reports')">🚨 Reports</button>
+            <button class="tab" onclick="showTab('payouts')">💰 Payouts</button>
+            <button class="tab" onclick="showTab('transactions')">💳 Transactions</button>
+            <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
         </div>
 
         <!-- Dashboard Tab -->
@@ -242,26 +379,26 @@
             <div class="grid">
                 <div class="card">
                     <h3>Dashboard Overview</h3>
-                    <button class="btn btn-primary" onclick="getDashboard()">Basic Dashboard</button>
-                    <button class="btn btn-success" onclick="getEnhancedDashboard()">Enhanced Dashboard</button>
+                    <button class="btn btn-primary" onclick="getDashboard()">📊 Basic Dashboard</button>
+                    <button class="btn btn-success" onclick="getEnhancedDashboard()">📈 Enhanced Dashboard</button>
                     <div class="response" id="dashboardResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Booking Analytics</h3>
                     <div class="form-group">
-                        <label>So ngay</label>
-                        <input type="number" id="bookingDays" value="30">
+                        <label>Số ngày</label>
+                        <input type="number" id="bookingDays" value="30" min="1" max="365">
                     </div>
-                    <button class="btn btn-primary" onclick="getBookingAnalytics()">Lay Analytics</button>
+                    <button class="btn btn-primary" onclick="getBookingAnalytics()">📅 Lấy Analytics</button>
                     <div class="response" id="bookingAnalyticsResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Revenue Analytics</h3>
                     <div class="form-group">
-                        <label>So ngay</label>
-                        <input type="number" id="revenueDays" value="30">
+                        <label>Số ngày</label>
+                        <input type="number" id="revenueDays" value="30" min="1" max="365">
                     </div>
-                    <button class="btn btn-primary" onclick="getRevenueAnalytics()">Lay Analytics</button>
+                    <button class="btn btn-primary" onclick="getRevenueAnalytics()">💵 Lấy Analytics</button>
                     <div class="response" id="revenueAnalyticsResponse"></div>
                 </div>
             </div>
@@ -271,16 +408,16 @@
         <div id="users" class="tab-content">
             <div class="grid">
                 <div class="card">
-                    <h3>Danh sach Users</h3>
+                    <h3>Danh sách Users</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="usersLimit" value="10" style="width:80px">
+                            <input type="number" id="usersLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Role</label>
                             <select id="usersRole" style="width:100px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="ADMIN">ADMIN</option>
                                 <option value="EXPERT">EXPERT</option>
                                 <option value="SEEKER">SEEKER</option>
@@ -289,7 +426,7 @@
                         <div class="form-group">
                             <label>Status</label>
                             <select id="usersStatus" style="width:100px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="ACTIVE">ACTIVE</option>
                                 <option value="SUSPENDED">SUSPENDED</option>
                             </select>
@@ -299,100 +436,105 @@
                             <input type="text" id="usersSearch" placeholder="handle/email" style="width:120px">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getUsers()">Lay danh sach</button>
-                    <button class="btn btn-success" onclick="getUsersWithCount()">Lay voi Total</button>
+                    <button class="btn btn-primary" onclick="getUsers()">📋 Lấy danh sách</button>
+                    <button class="btn btn-success" onclick="getUsersWithCount()">📊 Lấy với Total</button>
                     <div class="response" id="usersResponse"></div>
                 </div>
                 <div class="card">
-                    <h3>Chi tiet User</h3>
+                    <h3>Chi tiết User</h3>
                     <div class="form-group">
-                        <label>User ID</label>
-                        <input type="number" id="userDetailId" value="1">
+                        <label>User ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="userDetailId" value="1" min="1" required>
                     </div>
-                    <button class="btn btn-primary" onclick="getUserById()">Xem chi tiet</button>
+                    <button class="btn btn-primary" onclick="getUserById()">🔍 Xem chi tiết</button>
                     <div class="response" id="userDetailResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Suspend / Activate User</h3>
                     <div class="form-group">
-                        <label>User ID</label>
-                        <input type="number" id="suspendUserId" value="5">
+                        <label>User ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="suspendUserId" value="5" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="suspendReason" value="Vi pham quy dinh">
+                        <label>Lý do</label>
+                        <input type="text" id="suspendReason" value="Vi phạm quy định" placeholder="Nhập lý do...">
                     </div>
-                    <button class="btn btn-warning" onclick="suspendUser()">Suspend</button>
-                    <button class="btn btn-success" onclick="activateUser()">Activate</button>
+                    <button class="btn btn-warning" onclick="suspendUser()">⏸️ Suspend</button>
+                    <button class="btn btn-success" onclick="activateUser()">▶️ Activate</button>
                     <div class="response" id="suspendResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Ban User</h3>
                     <div class="form-group">
-                        <label>User ID</label>
-                        <input type="number" id="banUserId" value="14">
+                        <label>User ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="banUserId" value="14" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="banReason" value="Spam va lua dao">
+                        <label>Lý do <span style="color:#f44336">*</span></label>
+                        <input type="text" id="banReason" value="Spam và lừa đảo" placeholder="Nhập lý do ban..."
+                            required>
                     </div>
-                    <button class="btn btn-danger" onclick="banUser()">Ban User</button>
+                    <button class="btn btn-danger" onclick="banUser()">🚫 Ban User</button>
                     <div class="response" id="banResponse"></div>
                 </div>
             </div>
         </div>
-
-        <!-- Experts Tab -->
+        button>
+    </div>div></div>
+    </option></label></option>label></div>button>div></h3>label>div>button></button>div>button>""
+    < !-- Experts Tab -->
         <div id="experts" class="tab-content">
             <div class="grid">
                 <div class="card">
-                    <h3>Danh sach Experts</h3>
+                    <h3>Danh sách Experts</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="expertsLimit" value="10" style="width:80px">
+                            <input type="number" id="expertsLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>KYC Status</label>
                             <select id="expertsKycStatus" style="width:120px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="PENDING">PENDING</option>
                                 <option value="VERIFIED">VERIFIED</option>
                                 <option value="REJECTED">REJECTED</option>
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getExperts()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getExperts()">📋 Lấy danh sách</button>
                     <div class="response" id="expertsResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Approve KYC</h3>
                     <div class="form-group">
-                        <label>Expert ID (user_id)</label>
-                        <input type="number" id="approveExpertId" value="17">
+                        <label>Expert ID (user_id) <span style="color:#f44336">*</span></label>
+                        <input type="number" id="approveExpertId" value="17" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ghi chu</label>
-                        <input type="text" id="approveNotes" value="Da xac minh day du">
+                        <label>Ghi chú</label>
+                        <input type="text" id="approveNotes" value="Đã xác minh đầy đủ" placeholder="Ghi chú...">
                     </div>
-                    <button class="btn btn-success" onclick="approveKYC()">Approve KYC</button>
+                    <button class="btn btn-success" onclick="approveKYC()">✅ Approve KYC</button>
                     <div class="response" id="approveResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Reject KYC</h3>
                     <div class="form-group">
-                        <label>Expert ID (user_id)</label>
-                        <input type="number" id="rejectExpertId" value="18">
+                        <label>Expert ID (user_id) <span style="color:#f44336">*</span></label>
+                        <input type="number" id="rejectExpertId" value="18" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="rejectReason" value="Thieu giay to">
+                        <label>Lý do <span style="color:#f44336">*</span></label>
+                        <input type="text" id="rejectReason" value="Thiếu giấy tờ" placeholder="Lý do từ chối..."
+                            required>
                     </div>
                     <div class="form-group">
-                        <label>Ghi chu</label>
-                        <input type="text" id="rejectNotes" value="Vui long upload CMND/CCCD">
+                        <label>Ghi chú</label>
+                        <input type="text" id="rejectNotes" value="Vui lòng upload CMND/CCCD"
+                            placeholder="Ghi chú thêm...">
                     </div>
-                    <button class="btn btn-danger" onclick="rejectKYC()">Reject KYC</button>
+                    <button class="btn btn-danger" onclick="rejectKYC()">❌ Reject KYC</button>
                     <div class="response" id="rejectResponse"></div>
                 </div>
             </div>
@@ -402,16 +544,16 @@
         <div id="bookings" class="tab-content">
             <div class="grid">
                 <div class="card">
-                    <h3>Danh sach Bookings</h3>
+                    <h3>Danh sách Bookings</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="bookingsLimit" value="10" style="width:80px">
+                            <input type="number" id="bookingsLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Status</label>
                             <select id="bookingsStatus" style="width:120px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="PENDING">PENDING</option>
                                 <option value="CONFIRMED">CONFIRMED</option>
                                 <option value="COMPLETED">COMPLETED</option>
@@ -420,20 +562,21 @@
                         </div>
                         <div class="form-group">
                             <label>Expert ID</label>
-                            <input type="number" id="bookingsExpertId" placeholder="Optional" style="width:80px">
+                            <input type="number" id="bookingsExpertId" placeholder="Optional" style="width:80px"
+                                min="1">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getBookings()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getBookings()">📋 Lấy danh sách</button>
                     <div class="response" id="bookingsResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Update Booking Status</h3>
                     <div class="form-group">
-                        <label>Booking ID</label>
-                        <input type="number" id="updateBookingId" value="1">
+                        <label>Booking ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="updateBookingId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Status moi</label>
+                        <label>Status mới</label>
                         <select id="updateBookingStatus">
                             <option value="PENDING">PENDING</option>
                             <option value="CONFIRMED">CONFIRMED</option>
@@ -442,10 +585,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="updateBookingReason" value="Admin cap nhat">
+                        <label>Lý do</label>
+                        <input type="text" id="updateBookingReason" value="Admin cập nhật"
+                            placeholder="Lý do cập nhật...">
                     </div>
-                    <button class="btn btn-warning" onclick="updateBookingStatusAdmin()">Cap nhat Status</button>
+                    <button class="btn btn-warning" onclick="updateBookingStatusAdmin()">🔄 Cập nhật Status</button>
                     <div class="response" id="updateBookingResponse"></div>
                 </div>
             </div>
@@ -455,123 +599,127 @@
         <div id="posts" class="tab-content">
             <div class="grid">
                 <div class="card">
-                    <h3>Danh sach Posts</h3>
+                    <h3>Danh sách Posts</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="postsLimit" value="10" style="width:80px">
+                            <input type="number" id="postsLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Privacy</label>
                             <select id="postsPrivacy" style="width:100px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="PUBLIC">PUBLIC</option>
                                 <option value="FRIENDS">FRIENDS</option>
                                 <option value="ONLY_ME">ONLY_ME</option>
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getPostsList()">Lay danh sach</button>
-                    <button class="btn btn-success" onclick="getPostsWithCount()">Lay voi Total</button>
+                    <button class="btn btn-primary" onclick="getPostsList()">📋 Lấy danh sách</button>
+                    <button class="btn btn-success" onclick="getPostsWithCount()">📊 Lấy với Total</button>
                     <div class="response" id="postsListResponse"></div>
                 </div>
                 <div class="card">
-                    <h3>Chi tiet & Scan Post</h3>
+                    <h3>Chi tiết & Scan Post</h3>
                     <div class="form-group">
-                        <label>Post ID</label>
-                        <input type="number" id="postDetailId" value="1">
+                        <label>Post ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="postDetailId" value="1" min="1" required>
                     </div>
-                    <button class="btn btn-primary" onclick="getPostDetail()">Xem chi tiet</button>
-                    <button class="btn btn-warning" onclick="scanSinglePost()">Scan Post</button>
+                    <button class="btn btn-primary" onclick="getPostDetail()">🔍 Xem chi tiết</button>
+                    <button class="btn btn-warning" onclick="scanSinglePost()">🔎 Scan Post</button>
                     <div class="response" id="postDetailResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Scan All Posts</h3>
                     <div class="form-group">
-                        <label>So luong scan</label>
-                        <input type="number" id="scanLimit" value="20">
+                        <label>Số lượng scan</label>
+                        <input type="number" id="scanLimit" value="20" min="1" max="100">
                     </div>
-                    <button class="btn btn-warning" onclick="scanAllPostsForViolations()">Scan tat ca</button>
+                    <button class="btn btn-warning" onclick="scanAllPostsForViolations()">🔍 Scan tất cả</button>
                     <div class="response" id="scanAllResponse" style="max-height:300px"></div>
                 </div>
                 <div class="card">
                     <h3>Flagged Posts</h3>
-                    <button class="btn btn-primary" onclick="getFlaggedPostsList()">Lay Flagged Posts</button>
+                    <button class="btn btn-danger" onclick="getFlaggedPostsList()">🚩 Lấy Flagged Posts</button>
                     <div class="response" id="flaggedPostsResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Hide Post</h3>
                     <div class="form-group">
-                        <label>Post ID</label>
-                        <input type="number" id="hidePostId" value="1">
+                        <label>Post ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="hidePostId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="hidePostReason" value="Noi dung vi pham">
+                        <label>Lý do <span style="color:#f44336">*</span></label>
+                        <input type="text" id="hidePostReason" value="Nội dung vi phạm" placeholder="Lý do ẩn..."
+                            required>
                     </div>
-                    <button class="btn btn-warning" onclick="hidePostAdmin()">Hide Post</button>
+                    <button class="btn btn-warning" onclick="hidePostAdmin()">👁️‍🗨️ Hide Post</button>
                     <div class="response" id="hidePostResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Delete Post</h3>
                     <div class="form-group">
-                        <label>Post ID</label>
-                        <input type="number" id="deletePostId" value="1">
+                        <label>Post ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="deletePostId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="deletePostReason" value="Scam/Lua dao">
+                        <label>Lý do <span style="color:#f44336">*</span></label>
+                        <input type="text" id="deletePostReason" value="Scam/Lừa đảo" placeholder="Lý do xóa..."
+                            required>
                     </div>
-                    <button class="btn btn-danger" onclick="deletePostAdmin()">Delete Post</button>
+                    <button class="btn btn-danger" onclick="deletePostAdmin()">🗑️ Delete Post</button>
                     <div class="response" id="deletePostResponse"></div>
                 </div>
             </div>
         </div>
+        select>
 
         <!-- Comments Tab -->
         <div id="comments" class="tab-content">
             <div class="grid">
                 <div class="card">
-                    <h3>Danh sach Comments</h3>
+                    <h3>Danh sách Comments</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="commentsLimit" value="10" style="width:80px">
+                            <input type="number" id="commentsLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Post ID</label>
-                            <input type="number" id="commentsPostId" placeholder="Optional" style="width:80px">
+                            <input type="number" id="commentsPostId" placeholder="Optional" style="width:80px" min="1">
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getCommentsList()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getCommentsList()">📋 Lấy danh sách</button>
                     <div class="response" id="commentsListResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Flagged Comments</h3>
-                    <button class="btn btn-warning" onclick="getFlaggedCommentsList()">Lay Flagged Comments</button>
+                    <button class="btn btn-danger" onclick="getFlaggedCommentsList()">🚩 Lấy Flagged Comments</button>
                     <div class="response" id="flaggedCommentsResponse"></div>
                 </div>
                 <div class="card">
-                    <h3>Chi tiet & Scan Comment</h3>
+                    <h3>Chi tiết & Scan Comment</h3>
                     <div class="form-group">
-                        <label>Comment ID</label>
-                        <input type="number" id="commentDetailId" value="1">
+                        <label>Comment ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="commentDetailId" value="1" min="1" required>
                     </div>
-                    <button class="btn btn-primary" onclick="getCommentDetail()">Xem chi tiet</button>
-                    <button class="btn btn-warning" onclick="scanSingleComment()">Scan Comment</button>
+                    <button class="btn btn-primary" onclick="getCommentDetail()">🔍 Xem chi tiết</button>
+                    <button class="btn btn-warning" onclick="scanSingleComment()">🔎 Scan Comment</button>
                     <div class="response" id="commentDetailResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Delete Comment</h3>
                     <div class="form-group">
-                        <label>Comment ID</label>
-                        <input type="number" id="deleteCommentId" value="1">
+                        <label>Comment ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="deleteCommentId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="deleteCommentReason" value="Vi pham quy dinh">
+                        <label>Lý do <span style="color:#f44336">*</span></label>
+                        <input type="text" id="deleteCommentReason" value="Vi phạm quy định" placeholder="Lý do xóa..."
+                            required>
                     </div>
-                    <button class="btn btn-danger" onclick="deleteCommentAdmin()">Delete Comment</button>
+                    <button class="btn btn-danger" onclick="deleteCommentAdmin()">🗑️ Delete Comment</button>
                     <div class="response" id="deleteCommentResponse"></div>
                 </div>
             </div>
@@ -582,20 +730,20 @@
             <div class="grid">
                 <div class="card">
                     <h3>Report Statistics</h3>
-                    <button class="btn btn-primary" onclick="getReportStats()">Lay Stats</button>
+                    <button class="btn btn-primary" onclick="getReportStats()">📊 Lấy Stats</button>
                     <div class="response" id="reportStatsResponse"></div>
                 </div>
                 <div class="card">
-                    <h3>Danh sach Reports</h3>
+                    <h3>Danh sách Reports</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="reportsListLimit" value="10" style="width:80px">
+                            <input type="number" id="reportsListLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Status</label>
                             <select id="reportsListStatus" style="width:120px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="PENDING">PENDING</option>
                                 <option value="IN_REVIEW">IN_REVIEW</option>
                                 <option value="RESOLVED">RESOLVED</option>
@@ -605,30 +753,30 @@
                         <div class="form-group">
                             <label>Target Type</label>
                             <select id="reportsListTargetType" style="width:100px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="POST">POST</option>
                                 <option value="COMMENT">COMMENT</option>
                                 <option value="USER">USER</option>
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getReportsList()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getReportsList()">📋 Lấy danh sách</button>
                     <div class="response" id="reportsListResponse" style="max-height:300px"></div>
                 </div>
                 <div class="card">
-                    <h3>Chi tiet Report</h3>
+                    <h3>Chi tiết Report</h3>
                     <div class="form-group">
-                        <label>Report ID</label>
-                        <input type="number" id="reportDetailId" value="1">
+                        <label>Report ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="reportDetailId" value="1" min="1" required>
                     </div>
-                    <button class="btn btn-primary" onclick="getReportDetail()">Xem chi tiet</button>
+                    <button class="btn btn-primary" onclick="getReportDetail()">🔍 Xem chi tiết</button>
                     <div class="response" id="reportDetailResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Resolve Report</h3>
                     <div class="form-group">
-                        <label>Report ID</label>
-                        <input type="number" id="resolveReportId" value="1">
+                        <label>Report ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="resolveReportId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
                         <label>Status</label>
@@ -648,11 +796,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Ghi chu</label>
-                        <input type="text" id="resolveReportNote" value="Da xu ly">
+                        <label>Ghi chú</label>
+                        <input type="text" id="resolveReportNote" value="Đã xử lý" placeholder="Ghi chú xử lý...">
                     </div>
-                    <button class="btn btn-success" onclick="resolveReportAdmin()">Resolve</button>
-                    <button class="btn btn-warning" onclick="dismissReportAdmin()">Dismiss</button>
+                    <button class="btn btn-success" onclick="resolveReportAdmin()">✅ Resolve</button>
+                    <button class="btn btn-warning" onclick="dismissReportAdmin()">❌ Dismiss</button>
                     <div class="response" id="resolveReportResponse"></div>
                 </div>
             </div>
@@ -663,50 +811,50 @@
             <div class="grid">
                 <div class="card">
                     <h3>Payout Statistics</h3>
-                    <button class="btn btn-primary" onclick="getPayoutStats()">Lay Stats</button>
+                    <button class="btn btn-primary" onclick="getPayoutStats()">📊 Lấy Stats</button>
                     <div class="response" id="payoutStatsResponse"></div>
                 </div>
                 <div class="card">
-                    <h3>Danh sach Payouts</h3>
+                    <h3>Danh sách Payouts</h3>
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="payoutsLimit" value="10" style="width:80px">
+                            <input type="number" id="payoutsLimit" value="10" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>Status</label>
                             <select id="payoutsStatus" style="width:120px">
-                                <option value="">Tat ca</option>
+                                <option value="">Tất cả</option>
                                 <option value="PENDING">PENDING</option>
                                 <option value="APPROVED">APPROVED</option>
                                 <option value="REJECTED">REJECTED</option>
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getPayoutsList()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getPayoutsList()">📋 Lấy danh sách</button>
                     <div class="response" id="payoutsListResponse" style="max-height:300px"></div>
                 </div>
                 <div class="card">
-                    <h3>Chi tiet Payout</h3>
+                    <h3>Chi tiết Payout</h3>
                     <div class="form-group">
-                        <label>Payout ID</label>
-                        <input type="number" id="payoutDetailId" value="1">
+                        <label>Payout ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="payoutDetailId" value="1" min="1" required>
                     </div>
-                    <button class="btn btn-primary" onclick="getPayoutDetail()">Xem chi tiet</button>
+                    <button class="btn btn-primary" onclick="getPayoutDetail()">🔍 Xem chi tiết</button>
                     <div class="response" id="payoutDetailResponse"></div>
                 </div>
                 <div class="card">
                     <h3>Approve / Reject Payout</h3>
                     <div class="form-group">
-                        <label>Payout ID</label>
-                        <input type="number" id="actionPayoutId" value="1">
+                        <label>Payout ID <span style="color:#f44336">*</span></label>
+                        <input type="number" id="actionPayoutId" value="1" min="1" required>
                     </div>
                     <div class="form-group">
-                        <label>Ghi chu</label>
-                        <input type="text" id="actionPayoutNote" value="Da xu ly">
+                        <label>Ghi chú</label>
+                        <input type="text" id="actionPayoutNote" value="Đã xử lý" placeholder="Ghi chú...">
                     </div>
-                    <button class="btn btn-success" onclick="approvePayoutAdmin()">Approve</button>
-                    <button class="btn btn-danger" onclick="rejectPayoutAdmin()">Reject</button>
+                    <button class="btn btn-success" onclick="approvePayoutAdmin()">✅ Approve</button>
+                    <button class="btn btn-danger" onclick="rejectPayoutAdmin()">❌ Reject</button>
                     <div class="response" id="actionPayoutResponse"></div>
                 </div>
             </div>
@@ -720,89 +868,28 @@
                     <div class="inline-form">
                         <div class="form-group">
                             <label>Limit</label>
-                            <input type="number" id="transactionsLimit" value="20" style="width:80px">
+                            <input type="number" id="transactionsLimit" value="20" min="1" max="100" style="width:80px">
                         </div>
                         <div class="form-group">
                             <label>User ID</label>
-                            <input type="number" id="transactionsUserId" placeholder="Optional" style="width:80px">
+                            <input type="number" id="transactionsUserId" placeholder="Optional" style="width:80px"
+                                min="1">
                         </div>
                         <div class="form-group">
                             <label>Type</label>
                             <select id="transactionsType" style="width:120px">
-                                <option value="">Tat ca</option>
-                                <option value="CREDIT">CREDIT</option>
-                                <option value="DEBIT">DEBIT</option>
+                                <option value="">Tất cả</option>
+                                <option value="TOPUP">TOPUP</option>
+                                <option value="WITHDRAW">WITHDRAW</option>
+                                <option value="EARN">EARN</option>
+                                <option value="SPEND">SPEND</option>
+                                <option value="REFUND">REFUND</option>
+                                <option value="PAYOUT">PAYOUT</option>
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-primary" onclick="getTransactionsList()">Lay danh sach</button>
+                    <button class="btn btn-primary" onclick="getTransactionsList()">📋 Lấy danh sách</button>
                     <div class="response" id="transactionsResponse" style="max-height:400px"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content Tab -->
-        <div id="content" class="tab-content">
-            <div class="grid">
-                <div class="card">
-                    <h3>Reported Content (Legacy)</h3>
-                    <div class="inline-form">
-                        <div class="form-group">
-                            <label>Limit</label>
-                            <input type="number" id="reportsLimit" value="10" style="width:80px">
-                        </div>
-                        <div class="form-group">
-                            <label>Target Type</label>
-                            <select id="reportsTargetType" style="width:120px">
-                                <option value="">Tat ca</option>
-                                <option value="POST">POST</option>
-                                <option value="COMMENT">COMMENT</option>
-                                <option value="USER">USER</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="getReports()">Lay Reports</button>
-                    <div class="response" id="reportsResponse"></div>
-                </div>
-                <div class="card">
-                    <h3>Hide Content</h3>
-                    <div class="form-group">
-                        <label>Target Type</label>
-                        <select id="hideTargetType">
-                            <option value="POST">POST</option>
-                            <option value="COMMENT">COMMENT</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Target ID</label>
-                        <input type="number" id="hideTargetId" value="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="hideReason" value="Vi pham noi quy">
-                    </div>
-                    <button class="btn btn-warning" onclick="hideContent()">Hide Content</button>
-                    <div class="response" id="hideResponse"></div>
-                </div>
-                <div class="card">
-                    <h3>Delete Content</h3>
-                    <div class="form-group">
-                        <label>Target Type</label>
-                        <select id="deleteTargetType">
-                            <option value="POST">POST</option>
-                            <option value="COMMENT">COMMENT</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Target ID</label>
-                        <input type="number" id="deleteTargetId" value="1">
-                    </div>
-                    <div class="form-group">
-                        <label>Ly do</label>
-                        <input type="text" id="deleteReason" value="Noi dung vi pham nghiem trong">
-                    </div>
-                    <button class="btn btn-danger" onclick="deleteContent()">Delete Content</button>
-                    <div class="response" id="deleteResponse"></div>
                 </div>
             </div>
         </div>
@@ -812,7 +899,7 @@
             <div class="grid">
                 <div class="card">
                     <h3>System Settings</h3>
-                    <button class="btn btn-primary" onclick="getSettings()">Lay Settings</button>
+                    <button class="btn btn-primary" onclick="getSettings()">⚙️ Lấy Settings</button>
                     <div class="response" id="settingsResponse"></div>
                 </div>
                 <div class="card">
@@ -822,558 +909,408 @@
                         <textarea id="updateSettings"
                             rows="4">{"maintenance_mode": false, "max_upload_size": 10485760}</textarea>
                     </div>
-                    <button class="btn btn-success" onclick="updateSettings()">Cap nhat Settings</button>
+                    <button class="btn btn-success" onclick="updateSettings()">💾 Cập nhật Settings</button>
                     <div class="response" id="updateSettingsResponse"></div>
                 </div>
             </div>
         </div>
-
-        <!-- Audit Tab -->
-        <div id="audit" class="tab-content">
-            <div class="grid">
-                <div class="card" style="grid-column: span 2;">
-                    <h3>Audit Logs</h3>
-                    <div class="inline-form">
-                        <div class="form-group">
-                            <label>Limit</label>
-                            <input type="number" id="auditLimit" value="20" style="width:80px">
-                        </div>
-                        <div class="form-group">
-                            <label>User ID</label>
-                            <input type="number" id="auditUserId" placeholder="Optional" style="width:80px">
-                        </div>
-                        <div class="form-group">
-                            <label>Action</label>
-                            <select id="auditAction" style="width:180px">
-                                <option value="">Tat ca</option>
-                                <option value="DASHBOARD_VIEWED">DASHBOARD_VIEWED</option>
-                                <option value="USERS_LIST_VIEWED">USERS_LIST_VIEWED</option>
-                                <option value="USER_SUSPENDED">USER_SUSPENDED</option>
-                                <option value="USER_ACTIVATED">USER_ACTIVATED</option>
-                                <option value="EXPERT_KYC_APPROVED">EXPERT_KYC_APPROVED</option>
-                                <option value="EXPERT_KYC_REJECTED">EXPERT_KYC_REJECTED</option>
-                                <option value="BOOKING_STATUS_UPDATED">BOOKING_STATUS_UPDATED</option>
-                                <option value="POST_HIDDEN">POST_HIDDEN</option>
-                                <option value="POST_DELETED">POST_DELETED</option>
-                                <option value="COMMENT_DELETED">COMMENT_DELETED</option>
-                                <option value="REPORT_RESOLVED">REPORT_RESOLVED</option>
-                            </select>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary" onclick="getAuditLogs()">Lay Audit Logs</button>
-                    <div class="response" id="auditResponse" style="max-height:400px"></div>
-                </div>
-            </div>
         </div>
-    </div>
-    <scr ipt>
-        const BASE_URL = 'http://localhost:4000/api/v1';
-        let token = '';
+        ""
+        <sc ript>
+            const BASE_URL = 'http://localhost:4000/api/v1';
+            let token = '';
 
-        function showTab(tabId) {
-        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        event.target.classList.add('active');
-        }
+            // ============================================
+            // UTILITY FUNCTIONS
+            // ============================================
+            function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            }
 
-        async function apiCall(endpoint, method = 'GET', body = null) {
-        const options = { method, headers: { 'Content-Type': 'application/json' } };
-        if (token) options.headers['Authorization'] = 'Bearer ' + token;
-        if (body) options.body = JSON.stringify(body);
-        const res = await fetch(BASE_URL + endpoint, options);
-        return res.json();
-        }
+            function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+            }
 
-        function showResponse(elementId, data, isError) {
-        const el = document.getElementById(elementId);
-        const status = isError ? '<span class="status error">Error</span>' : '<span
-            class="status success">Success</span>';
-        el.innerHTML = status + '
-        <pre>' + JSON.stringify(data, null, 2) + '</pre>';
-        }
+            function validateRequired(fields) {
+            let valid = true;
+            fields.forEach(({ id, name }) => {
+            const el = document.getElementById(id);
+            const value = el.value.trim();
+            if (!value) {
+            el.classList.add('error');
+            showToast(`${name} là bắt buộc!`, 'error');
+            valid = false;
+            } else {
+            el.classList.remove('error');
+            }
+            });
+            return valid;
+            }
 
-        // ============================================
-        // AUTH
-        // ============================================
-        async function login() {
-        const handle = document.getElementById('loginHandle').value;
-        const password = document.getElementById('loginPassword').value;
-        try {
-        const data = await apiCall('/auth/login', 'POST', { handle, password });
-        if (data.success) {
-        token = data.data.access_token;
-        document.getElementById('loginStatus').innerHTML = '<span class="status success">Dang nhap thanh cong!</span>';
-        document.getElementById('tokenDisplay').style.display = 'block';
-        document.getElementById('tokenDisplay').textContent = 'Token: ' + token.substring(0, 50) + '...';
-        } else {
-        document.getElementById('loginStatus').innerHTML = '<span class="status error">' + data.message + '</span>';
-        }
-        } catch (e) {
-        document.getElementById('loginStatus').innerHTML = '<span class="status error">' + e.message + '</span>';
-        }
-        }
+            async function apiCall(endpoint, method = 'GET', body = null) {
+            const options = {
+            method,
+            headers: { 'Content-Type': 'application/json' }
+            };
+            if (token) options.headers['Authorization'] = 'Bearer ' + token;
+            if (body && (method === 'POST' || method === 'PUT' || method === 'PATCH' || method === 'DELETE')) {
+            options.body = JSON.stringify(body);
+            }
 
-        // ============================================
-        // DASHBOARD
-        // ============================================
-        async function getDashboard() {
-        try {
-        const data = await apiCall('/admin/dashboard');
-        showResponse('dashboardResponse', data, !data.success);
-        } catch (e) { showResponse('dashboardResponse', { error: e.message }, true); }
-        }
+            try {
+            const res = await fetch(BASE_URL + endpoint, options);
+            return await res.json();
+            } catch (error) {
+            return { success: false, message: error.message };
+            }
+            }
 
-        async function getEnhancedDashboard() {
-        try {
-        const data = await apiCall('/admin/dashboard/enhanced');
-        showResponse('dashboardResponse', data, !data.success);
-        } catch (e) { showResponse('dashboardResponse', { error: e.message }, true); }
-        }
+            function showResponse(elementId, data, isError = false) {
+            const el = document.getElementById(elementId);
+            const statusClass = isError ? 'error' : 'success';
+            const statusText = isError ? '❌ Error' : '✅ Success';
+            el.innerHTML = `<span class="status ${statusClass}">${statusText}</span>
+            <pre>${JSON.stringify(data, null, 2)}</pre>`;
+            }
 
-        async function getBookingAnalytics() {
-        const days = document.getElementById('bookingDays').value;
-        try {
-        const data = await apiCall('/admin/analytics/bookings?days=' + days);
-        showResponse('bookingAnalyticsResponse', data, !data.success);
-        } catch (e) { showResponse('bookingAnalyticsResponse', { error: e.message }, true); }
-        }
+            function setLoading(elementId, loading = true) {
+            const el = document.getElementById(elementId);
+            if (loading) {
+            el.innerHTML = '<span class="status loading">⏳ Loading...</span>';
+            }
+            }
 
-        async function getRevenueAnalytics() {
-        const days = document.getElementById('revenueDays').value;
-        try {
-        const data = await apiCall('/admin/analytics/revenue?days=' + days);
-        showResponse('revenueAnalyticsResponse', data, !data.success);
-        } catch (e) { showResponse('revenueAnalyticsResponse', { error: e.message }, true); }
-        }
+            // ============================================
+            // AUTH
+            // ============================================
+            async function login() {
+            const handle = document.getElementById('loginHandle').value.trim();
+            const password = document.getElementById('loginPassword').value;
 
-        // ============================================
-        // USERS
-        // ============================================
-        async function getUsers() {
-        const limit = document.getElementById('usersLimit').value;
-        const role = document.getElementById('usersRole').value;
-        const status = document.getElementById('usersStatus').value;
-        let url = '/admin/users?limit=' + limit;
-        if (role) url += '&role=' + role;
-        if (status) url += '&status=' + status;
-        try {
-        const data = await apiCall(url);
-        showResponse('usersResponse', data, !data.success);
-        } catch (e) { showResponse('usersResponse', { error: e.message }, true); }
-        }
+            if (!handle || !password) {
+            showToast('Vui lòng nhập handle và password!', 'error');
+            return;
+            }
 
-        async function getUsersWithCount() {
-        const limit = document.getElementById('usersLimit').value;
-        const role = document.getElementById('usersRole').value;
-        const status = document.getElementById('usersStatus').value;
-        const search = document.getElementById('usersSearch').value;
-        let url = '/admin/users/list?limit=' + limit;
-        if (role) url += '&role=' + role;
-        if (status) url += '&status=' + status;
-        if (search) url += '&search=' + encodeURIComponent(search);
-        try {
-        const data = await apiCall(url);
-        showResponse('usersResponse', data, !data.success);
-        } catch (e) { showResponse('usersResponse', { error: e.message }, true); }
-        }
+            document.getElementById('loginBtn').disabled = true;
+            document.getElementById('loginStatus').innerHTML = '<span class="status loading">⏳ Đang đăng
+                nhập...</span>';
 
-        async function getUserById() {
-        const userId = document.getElementById('userDetailId').value;
-        try {
-        const data = await apiCall('/admin/users/' + userId);
-        showResponse('userDetailResponse', data, !data.success);
-        } catch (e) { showResponse('userDetailResponse', { error: e.message }, true); }
-        }
+            try {
+            const data = await apiCall('/auth/login', 'POST', { handle, password });
+            if (data.success) {
+            token = data.data.access_token;
+            document.getElementById('loginStatus').innerHTML = '<span class="status success">✅ Đăng nhập thành
+                công!</span>';
+            document.getElementById('tokenDisplay').style.display = 'block';
+            document.getElementById('tokenDisplay').textContent = '🔑 Token: ' + token.substring(0, 50) + '...';
+            showToast('Đăng nhập thành công!', 'success');
+            } else {
+            document.getElementById('loginStatus').innerHTML = `<span class="status error">❌ ${data.message}</span>`;
+            showToast(data.message || 'Đăng nhập thất bại!', 'error');
+            }
+            } catch (e) {
+            document.getElementById('loginStatus').innerHTML = `<span class="status error">❌ ${e.message}</span>`;
+            showToast('Lỗi kết nối server!', 'error');
+            }
 
-        async function suspendUser() {
-        const userId = document.getElementById('suspendUserId').value;
-        const reason = document.getElementById('suspendReason').value;
-        try {
-        const data = await apiCall('/admin/users/' + userId + '/suspend', 'PATCH', { reason });
-        showResponse('suspendResponse', data, !data.success);
-        } catch (e) { showResponse('suspendResponse', { error: e.message }, true); }
-        }
+            document.getElementById('loginBtn').disabled = false;
+            }
 
-        async function activateUser() {
-        const userId = document.getElementById('suspendUserId').value;
-        try {
-        const data = await apiCall('/admin/users/' + userId + '/activate', 'PATCH');
-        showResponse('suspendResponse', data, !data.success);
-        } catch (e) { showResponse('suspendResponse', { error: e.message }, true); }
-        }
+            // ============================================
+            // DASHBOARD
+            // ============================================
+            async function getDashboard() {
+            setLoading('dashboardResponse');
+            const data = await apiCall('/admin/dashboard');
+            showResponse('dashboardResponse', data, !data.success);
+            }
 
-        async function banUser() {
-        const userId = document.getElementById('banUserId').value;
-        const reason = document.getElementById('banReason').value;
-        try {
-        const data = await apiCall('/admin/users/' + userId + '/ban', 'POST', { reason });
-        showResponse('banResponse', data, !data.success);
-        } catch (e) { showResponse('banResponse', { error: e.message }, true); }
-        }
+            async function getEnhancedDashboard() {
+            setLoading('dashboardResponse');
+            const data = await apiCall('/admin/dashboard/enhanced');
+            showResponse('dashboardResponse', data, !data.success);
+            }
 
-        // ============================================
-        // EXPERTS
-        // ============================================
-        async function getExperts() {
-        const limit = document.getElementById('expertsLimit').value;
-        const kycStatus = document.getElementById('expertsKycStatus').value;
-        let url = '/admin/experts?limit=' + limit;
-        if (kycStatus) url += '&kycStatus=' + kycStatus;
-        try {
-        const data = await apiCall(url);
-        showResponse('expertsResponse', data, !data.success);
-        } catch (e) { showResponse('expertsResponse', { error: e.message }, true); }
-        }
+            async function getBookingAnalytics() {
+            const days = document.getElementById('bookingDays').value || 30;
+            setLoading('bookingAnalyticsResponse');
+            const data = await apiCall(`/admin/analytics/bookings?days=${days}`);
+            showResponse('bookingAnalyticsResponse', data, !data.success);
+            }
 
-        async function approveKYC() {
-        const expertId = document.getElementById('approveExpertId').value;
-        const notes = document.getElementById('approveNotes').value;
-        try {
-        const data = await apiCall('/admin/experts/' + expertId + '/kyc/approve', 'PATCH', { notes });
-        showResponse('approveResponse', data, !data.success);
-        } catch (e) { showResponse('approveResponse', { error: e.message }, true); }
-        }
+            async function getRevenueAnalytics() {
+            const days = document.getElementById('revenueDays').value || 30;
+            setLoading('revenueAnalyticsResponse');
+            const data = await apiCall(`/admin/analytics/revenue?days=${days}`);
+            showResponse('revenueAnalyticsResponse', data, !data.success);
+            }
 
-        async function rejectKYC() {
-        const expertId = document.getElementById('rejectExpertId').value;
-        const reason = document.getElementById('rejectReason').value;
-        const notes = document.getElementById('rejectNotes').value;
-        try {
-        const data = await apiCall('/admin/experts/' + expertId + '/kyc/reject', 'PATCH', { reason, notes });
-        showResponse('rejectResponse', data, !data.success);
-        } catch (e) { showResponse('rejectResponse', { error: e.message }, true); }
-        }
+            // ============================================
+            // USERS
+            // ============================================
+            async function getUsers() {
+            const limit = document.getElementById('usersLimit').value || 10;
+            const role = document.getElementById('usersRole').value;
+            const status = document.getElementById('usersStatus').value;
+            let url = `/admin/users?limit=${limit}`;
+            if (role) url += `&role=${role}`;
+            if (status) url += `&status=${status}`;
+            setLoading('usersResponse');
+            const data = await apiCall(url);
+            showResponse('usersResponse', data, !data.success);
+            }
 
-        // ============================================
-        // BOOKINGS
-        // ============================================
-        async function getBookings() {
-        const limit = document.getElementById('bookingsLimit').value;
-        const status = document.getElementById('bookingsStatus').value;
-        const expertId = document.getElementById('bookingsExpertId').value;
-        let url = '/admin/bookings?limit=' + limit;
-        if (status) url += '&status=' + status;
-        if (expertId) url += '&expertId=' + expertId;
-        try {
-        const data = await apiCall(url);
-        showResponse('bookingsResponse', data, !data.success);
-        } catch (e) { showResponse('bookingsResponse', { error: e.message }, true); }
-        }
+            async function getUsersWithCount() {
+            const limit = document.getElementById('usersLimit').value || 10;
+            const role = document.getElementById('usersRole').value;
+            const status = document.getElementById('usersStatus').value;
+            const search = document.getElementById('usersSearch').value;
+            let url = `/admin/users/list?limit=${limit}`;
+            if (role) url += `&role=${role}`;
+            if (status) url += `&status=${status}`;
+            if (search) url += `&search=${encodeURIComponent(search)}`;
+            setLoading('usersResponse');
+            const data = await apiCall(url);
+            showResponse('usersResponse', data, !data.success);
+            }
 
-        async function updateBookingStatusAdmin() {
-        const bookingId = document.getElementById('updateBookingId').value;
-        const status = document.getElementById('updateBookingStatus').value;
-        const reason = document.getElementById('updateBookingReason').value;
-        try {
-        const data = await apiCall('/admin/bookings/' + bookingId + '/status', 'PATCH', { status, reason });
-        showResponse('updateBookingResponse', data, !data.success);
-        } catch (e) { showResponse('updateBookingResponse', { error: e.message }, true); }
-        }
-        //
-        ============================================
-        // POSTS
-        // ============================================
-        async function getPostsList() {
-        const limit = document.getElementById('postsLimit').value;
-        const privacy = document.getElementById('postsPrivacy').value;
-        let url = '/admin/posts?limit=' + limit;
-        if (privacy) url += '&privacy=' + privacy;
-        try {
-        const data = await apiCall(url);
-        showResponse('postsListResponse', data, !data.success);
-        } catch (e) { showResponse('postsListResponse', { error: e.message }, true); }
-        }
+            async function getUserById() {
+            if (!validateRequired([{ id: 'userDetailId', name: 'User ID' }])) return;
+            const userId = document.getElementById('userDetailId').value;
+            setLoading('userDetailResponse');
+            const data = await apiCall(`/admin/users/${userId}`);
+            showResponse('userDetailResponse', data, !data.success);
+            }
 
-        async function getPostsWithCount() {
-        const limit = document.getElementById('postsLimit').value;
-        const privacy = document.getElementById('postsPrivacy').value;
-        let url = '/admin/posts/list?limit=' + limit;
-        if (privacy) url += '&privacy=' + privacy;
-        try {
-        const data = await apiCall(url);
-        showResponse('postsListResponse', data, !data.success);
-        } catch (e) { showResponse('postsListResponse', { error: e.message }, true); }
-        }
+            async function suspendUser() {
+            if (!validateRequired([{ id: 'suspendUserId', name: 'User ID' }])) return;
+            const userId = document.getElementById('suspendUserId').value;
+            const reason = document.getElementById('suspendReason').value || 'Vi phạm quy định';
+            setLoading('suspendResponse');
+            const data = await apiCall(`/admin/users/${userId}/suspend`, 'PATCH', { reason });
+            showResponse('suspendResponse', data, !data.success);
+            if (data.success) showToast('User đã bị suspend!', 'success');
+            }
 
-        async function getPostDetail() {
-        const postId = document.getElementById('postDetailId').value;
-        try {
-        const data = await apiCall('/admin/posts/' + postId);
-        showResponse('postDetailResponse', data, !data.success);
-        } catch (e) { showResponse('postDetailResponse', { error: e.message }, true); }
-        }
+            async function activateUser() {
+            if (!validateRequired([{ id: 'suspendUserId', name: 'User ID' }])) return;
+            const userId = document.getElementById('suspendUserId').value;
+            setLoading('suspendResponse');
+            const data = await apiCall(`/admin/users/${userId}/activate`, 'PATCH');
+            showResponse('suspendResponse', data, !data.success);
+            if (data.success) showToast('User đã được activate!', 'success');
+            }
 
-        async function scanSinglePost() {
-        const postId = document.getElementById('postDetailId').value;
-        try {
-        const data = await apiCall('/admin/posts/' + postId + '/scan');
-        showResponse('postDetailResponse', data, !data.success);
-        } catch (e) { showResponse('postDetailResponse', { error: e.message }, true); }
-        }
+            async function banUser() {
+            if (!validateRequired([
+            { id: 'banUserId', name: 'User ID' },
+            { id: 'banReason', name: 'Lý do' }
+            ])) return;
+            const userId = document.getElementById('banUserId').value;
+            const reason = document.getElementById('banReason').value;
+            setLoading('banResponse');
+            const data = await apiCall(`/admin/users/${userId}/ban`, 'POST', { reason });
+            showResponse('banResponse', data, !data.success);
+            if (data.success) showToast('User đã bị ban!', 'success');
+            }
+            </script>
+            <scri pt>
+                // ============================================
+                // EXPERTS
+                // ============================================
+                async function getExperts() {
+                const limit = document.getElementById('expertsLimit').value || 10;
+                const kycStatus = document.getElementById('expertsKycStatus').value;
+                let url = `/admin/experts?limit=${limit}`;
+                if (kycStatus) url += `&kycStatus=${kycStatus}`;
+                setLoading('expertsResponse');
+                const data = await apiCall(url);
+                showResponse('expertsResponse', data, !data.success);
+                }
 
-        async function scanAllPostsForViolations() {
-        const limit = document.getElementById('scanLimit').value;
-        try {
-        const data = await apiCall('/admin/posts/scan?limit=' + limit);
-        showResponse('scanAllResponse', data, !data.success);
-        } catch (e) { showResponse('scanAllResponse', { error: e.message }, true); }
-        }
+                async function approveKYC() {
+                if (!validateRequired([{ id: 'approveExpertId', name: 'Expert ID' }])) return;
+                const expertId = document.getElementById('approveExpertId').value;
+                const notes = document.getElementById('approveNotes').value || '';
+                setLoading('approveResponse');
+                const data = await apiCall(`/admin/experts/${expertId}/kyc/approve`, 'PATCH', { notes });
+                showResponse('approveResponse', data, !data.success);
+                if (data.success) showToast('KYC đã được approve!', 'success');
+                }
 
-        async function getFlaggedPostsList() {
-        try {
-        const data = await apiCall('/admin/posts/flagged');
-        showResponse('flaggedPostsResponse', data, !data.success);
-        } catch (e) { showResponse('flaggedPostsResponse', { error: e.message }, true); }
-        }
+                async function rejectKYC() {
+                if (!validateRequired([
+                { id: 'rejectExpertId', name: 'Expert ID' },
+                { id: 'rejectReason', name: 'Lý do' }
+                ])) return;
+                const expertId = document.getElementById('rejectExpertId').value;
+                const reason = document.getElementById('rejectReason').value;
+                const notes = document.getElementById('rejectNotes').value || '';
+                setLoading('rejectResponse');
+                const data = await apiCall(`/admin/experts/${expertId}/kyc/reject`, 'PATCH', { reason, notes });
+                showResponse('rejectResponse', data, !data.success);
+                if (data.success) showToast('KYC đã bị reject!', 'success');
+                }
 
-        async function hidePostAdmin() {
-        const postId = document.getElementById('hidePostId').value;
-        const reason = document.getElementById('hidePostReason').value;
-        try {
-        const data = await apiCall('/admin/posts/' + postId + '/hide', 'POST', { reason });
-        showResponse('hidePostResponse', data, !data.success);
-        } catch (e) { showResponse('hidePostResponse', { error: e.message }, true); }
-        }
+                // ============================================
+                // BOOKINGS
+                // ============================================
+                async function getBookings() {
+                const limit = document.getElementById('bookingsLimit').value || 10;
+                const status = document.getElementById('bookingsStatus').value;
+                const expertId = document.getElementById('bookingsExpertId').value;
+                let url = `/admin/bookings?limit=${limit}`;
+                if (status) url += `&status=${status}`;
+                if (expertId) url += `&expertId=${expertId}`;
+                setLoading('bookingsResponse');
+                const data = await apiCall(url);
+                showResponse('bookingsResponse', data, !data.success);
+                }
 
-        async function deletePostAdmin() {
-        const postId = document.getElementById('deletePostId').value;
-        const reason = document.getElementById('deletePostReason').value;
-        try {
-        const data = await apiCall('/admin/posts/' + postId, 'DELETE', { reason });
-        showResponse('deletePostResponse', data, !data.success);
-        } catch (e) { showResponse('deletePostResponse', { error: e.message }, true); }
-        }
+                async function updateBookingStatusAdmin() {
+                if (!validateRequired([{ id: 'updateBookingId', name: 'Booking ID' }])) return;
+                const bookingId = document.getElementById('updateBookingId').value;
+                const status = document.getElementById('updateBookingStatus').value;
+                const reason = document.getElementById('updateBookingReason').value || 'Admin cập nhật';
+                setLoading('updateBookingResponse');
+                const data = await apiCall(`/admin/bookings/${bookingId}/status`, 'PATCH', { status, reason });
+                showResponse('updateBookingResponse', data, !data.success);
+                if (data.success) showToast('Booking status đã được cập nhật!', 'success');
+                }
 
-        // ============================================
-        // COMMENTS
-        // ============================================
-        async function getCommentsList() {
-        const limit = document.getElementById('commentsLimit').value;
-        const postId = document.getElementById('commentsPostId').value;
-        let url = '/admin/comments?limit=' + limit;
-        if (postId) url += '&postId=' + postId;
-        try {
-        const data = await apiCall(url);
-        showResponse('commentsListResponse', data, !data.success);
-        } catch (e) { showResponse('commentsListResponse', { error: e.message }, true); }
-        }
+                // ============================================
+                // POSTS
+                // ============================================
+                async function getPostsList() {
+                const limit = document.getElementById('postsLimit').value || 10;
+                const privacy = document.getElementById('postsPrivacy').value;
+                let url = `/admin/posts?limit=${limit}`;
+                if (privacy) url += `&privacy=${privacy}`;
+                setLoading('postsListResponse');
+                const data = await apiCall(url);
+                showResponse('postsListResponse', data, !data.success);
+                }
 
-        async function getFlaggedCommentsList() {
-        try {
-        const data = await apiCall('/admin/comments/flagged');
-        showResponse('flaggedCommentsResponse', data, !data.success);
-        } catch (e) { showResponse('flaggedCommentsResponse', { error: e.message }, true); }
-        }
+                async function getPostsWithCount() {
+                const limit = document.getElementById('postsLimit').value || 10;
+                const privacy = document.getElementById('postsPrivacy').value;
+                let url = `/admin/posts/list?limit=${limit}`;
+                if (privacy) url += `&privacy=${privacy}`;
+                setLoading('postsListResponse');
+                const data = await apiCall(url);
+                showResponse('postsListResponse', data, !data.success);
+                }
 
-        async function getCommentDetail() {
-        const commentId = document.getElementById('commentDetailId').value;
-        try {
-        const data = await apiCall('/admin/comments/' + commentId);
-        showResponse('commentDetailResponse', data, !data.success);
-        } catch (e) { showResponse('commentDetailResponse', { error: e.message }, true); }
-        }
+                async function getPostDetail() {
+                if (!validateRequired([{ id: 'postDetailId', name: 'Post ID' }])) return;
+                const postId = document.getElementById('postDetailId').value;
+                setLoading('postDetailResponse');
+                const data = await apiCall(`/admin/posts/${postId}`);
+                showResponse('postDetailResponse', data, !data.success);
+                }
 
-        async function scanSingleComment() {
-        const commentId = document.getElementById('commentDetailId').value;
-        try {
-        const data = await apiCall('/admin/comments/' + commentId + '/scan');
-        showResponse('commentDetailResponse', data, !data.success);
-        } catch (e) { showResponse('commentDetailResponse', { error: e.message }, true); }
-        }
+                async function scanSinglePost() {
+                if (!validateRequired([{ id: 'postDetailId', name: 'Post ID' }])) return;
+                const postId = document.getElementById('postDetailId').value;
+                setLoading('postDetailResponse');
+                const data = await apiCall(`/admin/posts/${postId}/scan`);
+                showResponse('postDetailResponse', data, !data.success);
+                }
 
-        async function deleteCommentAdmin() {
-        const commentId = document.getElementById('deleteCommentId').value;
-        const reason = document.getElementById('deleteCommentReason').value;
-        try {
-        const data = await apiCall('/admin/comments/' + commentId, 'DELETE', { reason });
-        showResponse('deleteCommentResponse', data, !data.success);
-        } catch (e) { showResponse('deleteCommentResponse', { error: e.message }, true); }
-        }
+                async function scanAllPostsForViolations() {
+                const limit = document.getElementById('scanLimit').value || 20;
+                setLoading('scanAllResponse');
+                const data = await apiCall(`/admin/posts/scan?limit=${limit}`);
+                showResponse('scanAllResponse', data, !data.success);
+                }
 
-        // ============================================
-        // REPORTS
-        // ============================================
-        async function getReportStats() {
-        try {
-        const data = await apiCall('/admin/reports/stats');
-        showResponse('reportStatsResponse', data, !data.success);
-        } catch (e) { showResponse('reportStatsResponse', { error: e.message }, true); }
-        }
+                async function getFlaggedPostsList() {
+                setLoading('flaggedPostsResponse');
+                const data = await apiCall('/admin/posts/flagged');
+                showResponse('flaggedPostsResponse', data, !data.success);
+                }
 
-        async function getReportsList() {
-        const limit = document.getElementById('reportsListLimit').value;
-        const status = document.getElementById('reportsListStatus').value;
-        const targetType = document.getElementById('reportsListTargetType').value;
-        let url = '/admin/reports?limit=' + limit;
-        if (status) url += '&status=' + status;
-        if (targetType) url += '&targetType=' + targetType;
-        try {
-        const data = await apiCall(url);
-        showResponse('reportsListResponse', data, !data.success);
-        } catch (e) { showResponse('reportsListResponse', { error: e.message }, true); }
-        }
+                async function hidePostAdmin() {
+                if (!validateRequired([
+                { id: 'hidePostId', name: 'Post ID' },
+                { id: 'hidePostReason', name: 'Lý do' }
+                ])) return;
+                const postId = document.getElementById('hidePostId').value;
+                const reason = document.getElementById('hidePostReason').value;
+                setLoading('hidePostResponse');
+                const data = await apiCall(`/admin/posts/${postId}/hide`, 'POST', { reason });
+                showResponse('hidePostResponse', data, !data.success);
+                if (data.success) showToast('Post đã được ẩn!', 'success');
+                }
 
-        async function getReportDetail() {
-        const reportId = document.getElementById('reportDetailId').value;
-        try {
-        const data = await apiCall('/admin/reports/' + reportId);
-        showResponse('reportDetailResponse', data, !data.success);
-        } catch (e) { showResponse('reportDetailResponse', { error: e.message }, true); }
-        }
+                async function deletePostAdmin() {
+                if (!validateRequired([
+                { id: 'deletePostId', name: 'Post ID' },
+                { id: 'deletePostReason', name: 'Lý do' }
+                ])) return;
+                if (!confirm('Bạn có chắc muốn xóa post này?')) return;
+                const postId = document.getElementById('deletePostId').value;
+                const reason = document.getElementById('deletePostReason').value;
+                setLoading('deletePostResponse');
+                const data = await apiCall(`/admin/posts/${postId}`, 'DELETE', { reason });
+                showResponse('deletePostResponse', data, !data.success);
+                if (data.success) showToast('Post đã bị xóa!', 'success');
+                }
 
-        async function resolveReportAdmin() {
-        const reportId = document.getElementById('resolveReportId').value;
-        const status = document.getElementById('resolveReportStatus').value;
-        const actionTaken = document.getElementById('resolveReportAction').value;
-        const resolutionNote = document.getElementById('resolveReportNote').value;
-        try {
-        const data = await apiCall('/admin/reports/' + reportId + '/resolve', 'PATCH', { status, actionTaken,
-        resolutionNote });
-        showResponse('resolveReportResponse', data, !data.success);
-        } catch (e) { showResponse('resolveReportResponse', { error: e.message }, true); }
-        }
+                // ============================================
+                // COMMENTS
+                // ============================================
+                async function getCommentsList() {
+                const limit = document.getElementById('commentsLimit').value || 10;
+                const postId = document.getElementById('commentsPostId').value;
+                let url = `/admin/comments?limit=${limit}`;
+                if (postId) url += `&postId=${postId}`;
+                setLoading('commentsListResponse');
+                const data = await apiCall(url);
+                showResponse('commentsListResponse', data, !data.success);
+                }
 
-        async function dismissReportAdmin() {
-        const reportId = document.getElementById('resolveReportId').value;
-        const resolutionNote = document.getElementById('resolveReportNote').value;
-        try {
-        const data = await apiCall('/admin/reports/' + reportId + '/dismiss', 'PATCH', { resolutionNote });
-        showResponse('resolveReportResponse', data, !data.success);
-        } catch (e) { showResponse('resolveReportResponse', { error: e.message }, true); }
-        }
+                async function getFlaggedCommentsList() {
+                setLoading('flaggedCommentsResponse');
+                const data = await apiCall('/admin/comments/flagged');
+                showResponse('flaggedCommentsResponse', data, !data.success);
+                }
 
-        // ============================================
-        // PAYOUTS
-        // ============================================
-        async function getPayoutStats() {
-        try {
-        const data = await apiCall('/admin/payouts/stats');
-        showResponse('payoutStatsResponse', data, !data.success);
-        } catch (e) { showResponse('payoutStatsResponse', { error: e.message }, true); }
-        }
+                async function getCommentDetail() {
+                if (!validateRequired([{ id: 'commentDetailId', name: 'Comment ID' }])) return;
+                const commentId = document.getElementById('commentDetailId').value;
+                setLoading('commentDetailResponse');
+                const data = await apiCall(`/admin/comments/${commentId}`);
+                showResponse('commentDetailResponse', data, !data.success);
+                }
 
-        async function getPayoutsList() {
-        const limit = document.getElementById('payoutsLimit').value;
-        const status = document.getElementById('payoutsStatus').value;
-        let url = '/admin/payouts?limit=' + limit;
-        if (status) url += '&status=' + status;
-        try {
-        const data = await apiCall(url);
-        showResponse('payoutsListResponse', data, !data.success);
-        } catch (e) { showResponse('payoutsListResponse', { error: e.message }, true); }
-        }
+                async function scanSingleComment() {
+                if (!validateRequired([{ id: 'commentDetailId', name: 'Comment ID' }])) return;
+                const commentId = document.getElementById('commentDetailId').value;
+                setLoading('commentDetailResponse');
+                const data = await apiCall(`/admin/comments/${commentId}/scan`);
+                showResponse('commentDetailResponse', data, !data.success);
+                }
 
-        async function getPayoutDetail() {
-        const payoutId = document.getElementById('payoutDetailId').value;
-        try {
-        const data = await apiCall('/admin/payouts/' + payoutId);
-        showResponse('payoutDetailResponse', data, !data.success);
-        } catch (e) { showResponse('payoutDetailResponse', { error: e.message }, true); }
-        }
-
-        async function approvePayoutAdmin() {
-        const payoutId = document.getElementById('actionPayoutId').value;
-        const note = document.getElementById('actionPayoutNote').value;
-        try {
-        const data = await apiCall('/payouts/admin/' + payoutId + '/approve', 'POST', { note });
-        showResponse('actionPayoutResponse', data, !data.success);
-        } catch (e) { showResponse('actionPayoutResponse', { error: e.message }, true); }
-        }
-
-        async function rejectPayoutAdmin() {
-        const payoutId = document.getElementById('actionPayoutId').value;
-        const note = document.getElementById('actionPayoutNote').value;
-        try {
-        const data = await apiCall('/payouts/admin/' + payoutId + '/reject', 'POST', { note });
-        showResponse('actionPayoutResponse', data, !data.success);
-        } catch (e) { showResponse('actionPayoutResponse', { error: e.message }, true); }
-        }
-
-        // ============================================
-        // TRANSACTIONS
-        // ============================================
-        async function getTransactionsList() {
-        const limit = document.getElementById('transactionsLimit').value;
-        const userId = document.getElementById('transactionsUserId').value;
-        const type = document.getElementById('transactionsType').value;
-        let url = '/admin/transactions?limit=' + limit;
-        if (userId) url += '&userId=' + userId;
-        if (type) url += '&type=' + type;
-        try {
-        const data = await apiCall(url);
-        showResponse('transactionsResponse', data, !data.success);
-        } catch (e) { showResponse('transactionsResponse', { error: e.message }, true); }
-        }
-
-        // ============================================
-        // CONTENT (Legacy)
-        // ============================================
-        async function getReports() {
-        const limit = document.getElementById('reportsLimit').value;
-        const targetType = document.getElementById('reportsTargetType').value;
-        let url = '/admin/content/reports?limit=' + limit;
-        if (targetType) url += '&targetType=' + targetType;
-        try {
-        const data = await apiCall(url);
-        showResponse('reportsResponse', data, !data.success);
-        } catch (e) { showResponse('reportsResponse', { error: e.message }, true); }
-        }
-
-        async function hideContent() {
-        const targetType = document.getElementById('hideTargetType').value;
-        const targetId = document.getElementById('hideTargetId').value;
-        const reason = document.getElementById('hideReason').value;
-        try {
-        const data = await apiCall('/admin/content/' + targetType + '/' + targetId + '/hide', 'POST', { reason });
-        showResponse('hideResponse', data, !data.success);
-        } catch (e) { showResponse('hideResponse', { error: e.message }, true); }
-        }
-
-        async function deleteContent() {
-        const targetType = document.getElementById('deleteTargetType').value;
-        const targetId = document.getElementById('deleteTargetId').value;
-        const reason = document.getElementById('deleteReason').value;
-        try {
-        const data = await apiCall('/admin/content/' + targetType + '/' + targetId + '/delete', 'POST', { reason });
-        showResponse('deleteResponse', data, !data.success);
-        } catch (e) { showResponse('deleteResponse', { error: e.message }, true); }
-        }
-
-        // ============================================
-        // SETTINGS
-        // ============================================
-        async function getSettings() {
-        try {
-        const data = await apiCall('/admin/settings');
-        showResponse('settingsResponse', data, !data.success);
-        } catch (e) { showResponse('settingsResponse', { error: e.message }, true); }
-        }
-
-        async function updateSettings() {
-        try {
-        const settings = JSON.parse(document.getElementById('updateSettings').value);
-        const data = await apiCall('/admin/settings', 'PUT', { settings });
-        showResponse('updateSettingsResponse', data, !data.success);
-        } catch (e) { showResponse('updateSettingsResponse', { error: e.message }, true); }
-        }
-
-        // ============================================
-        // AUDIT
-        // ============================================
-        async function getAuditLogs() {
-        const limit = document.getElementById('auditLimit').value;
-        const userId = document.getElementById('auditUserId').value;
-        const action = document.getElementById('auditAction').value;
-        let url = '/admin/audit/logs?limit=' + limit;
-        if (userId) url += '&userId=' + userId;
-        if (action) url += '&action=' + action;
-        try {
-        const data = await apiCall(url);
-        showResponse('auditResponse', data, !data.success);
-        } catch (e) { showResponse('auditResponse', { error: e.message }, true); }
-        }
-        </script>
-</body>
-
-</html>
+                async function deleteCommentAdmin() {
+                if (!validateRequired([
+                { id: 'deleteCommentId', name: 'Comment ID' },
+                { id: 'deleteCommentReason', name: 'Lý do' }
+                ])) return;
+                if (!confirm('Bạn có chắc muốn xóa comment này?')) return;
+                const commentId = document.getElementById('deleteCommentId').value;
+                const reason = document.getElementById('deleteCommentReason').value;
+                setLoading('deleteCommentResponse');
+                const data = await apiCall(`/admin/comments/${commentId}`, 'DELETE', { reason });
+                showResponse('deleteCommentResponse', data, !data.success);
+                if (data.success) showToast('Comment đã bị xóa!', 'success');
+                }
+                </script>

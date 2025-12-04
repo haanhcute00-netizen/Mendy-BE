@@ -284,6 +284,98 @@
             "deleted": "Payout account deleted successfully"
         }
     },
+    "refunds": {
+        "calculate": {
+            "success": "Refund amount calculated"
+        },
+        "request": {
+            "success": "Refund request submitted successfully"
+        },
+        "list": {
+            "success": "Refunds retrieved successfully"
+        },
+        "admin": {
+            "list": {
+                "success": "All refunds retrieved"
+            },
+            "approve": {
+                "success": "Refund approved and processed"
+            },
+            "reject": {
+                "success": "Refund rejected"
+            }
+        },
+        "errors": {
+            "bookingIdRequired": "Booking ID is required",
+            "reasonRequired": "Reason must be at least 10 characters",
+            "invalidAction": "Invalid action. Must be APPROVE or REJECT"
+        }
+    },
+    "disputes": {
+        "raise": {
+            "success": "Dispute raised successfully"
+        },
+        "get": {
+            "success": "Dispute details retrieved"
+        },
+        "message": {
+            "success": "Message added to dispute"
+        },
+        "list": {
+            "success": "Disputes retrieved successfully"
+        },
+        "admin": {
+            "list": {
+                "success": "All disputes retrieved"
+            },
+            "assign": {
+                "success": "Dispute assigned successfully"
+            },
+            "resolve": {
+                "success": "Dispute resolved successfully"
+            },
+            "escalate": {
+                "success": "Dispute escalated"
+            }
+        },
+        "errors": {
+            "bookingIdRequired": "Booking ID is required",
+            "reasonRequired": "Reason is required",
+            "descriptionRequired": "Description is required",
+            "messageRequired": "Message is required",
+            "resolutionRequired": "Resolution is required",
+            "invalidFavoredParty": "Favored party must be SEEKER, EXPERT, or PARTIAL"
+        }
+    },
+    "recurring": {
+        "create": {
+            "success": "Recurring booking template created"
+        },
+        "get": {
+            "success": "Recurring template details retrieved"
+        },
+        "update": {
+            "success": "Recurring template updated"
+        },
+        "cancel": {
+            "success": "Recurring template cancelled"
+        },
+        "list": {
+            "success": "Recurring templates retrieved"
+        },
+        "admin": {
+            "process": {
+                "success": "Recurring bookings processed"
+            }
+        },
+        "errors": {
+            "expertIdRequired": "Expert ID is required",
+            "startTimeRequired": "Start time is required",
+            "durationRequired": "Duration is required",
+            "frequencyRequired": "Frequency is required",
+            "startsFromRequired": "Start date is required"
+        }
+    },
     "email": {
         "otp": {
             "sent": "OTP sent",

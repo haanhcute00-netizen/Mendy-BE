@@ -1,9 +1,14 @@
 import { query } from "../../config/db.js";
 
 export async function follow({ me, userId }) {
+    // Prevent self-follow
+    if (Number(me) === Number(userId)) {
+        return { followed: false, error: "Cannot follow yourself" };
+    }
+
     await query(
         `INSERT INTO app.user_follows (follower_id, followee_id)
-     VALUES ($1,$2) ON CONFLICT DO NOTHING`,
+         VALUES ($1, $2) ON CONFLICT DO NOTHING`,
         [me, userId]
     );
     return { followed: true };

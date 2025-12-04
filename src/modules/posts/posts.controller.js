@@ -2,16 +2,32 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { created, success, failure, paginated } from "../../utils/response.js";
 import * as PostsService from "../posts/posts.service.js";
 
-// Nếu bạn upload file trước vào app.user_files -> client sẽ gửi mảng file_id
+// Tạo bài viết với hỗ trợ upload ảnh/video
 export const create = asyncHandler(async (req, res) => {
     const me = req.user.id;
     const { title, content, privacy, file_ids } = req.body;
+
+    // Parse file_ids nếu là string (từ form-data)
+    let fileIds;
+    if (file_ids) {
+        if (typeof file_ids === 'string') {
+            try {
+                fileIds = JSON.parse(file_ids).map(Number);
+            } catch {
+                fileIds = file_ids.split(',').map(Number).filter(n => !isNaN(n));
+            }
+        } else if (Array.isArray(file_ids)) {
+            fileIds = file_ids.map(Number);
+        }
+    }
+
     const p = await PostsService.create({
         me,
         title,
         content,
         privacy,
-        fileIds: Array.isArray(file_ids) ? file_ids.map(Number) : undefined
+        fileIds,
+        files: req.files || [] // Multer files
     });
     return created(res, "Post created successfully", p);
 });

@@ -1,6 +1,59 @@
 
 import { query } from '../config/db.js';
 
+// ========== AI CHAT HISTORY ==========
+
+export const saveAIChatMessage = async (userId, role, content, options = {}) => {
+    const sql = `
+        INSERT INTO app.ai_chat_history 
+            (user_id, role, content, emotion_detected, keywords, persona_id, metadata)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        RETURNING *
+    `;
+    const values = [
+        userId,
+        role,
+        content,
+        options.emotion || null,
+        options.keywords || [],
+        options.persona_id || null,
+        options.metadata || {}
+    ];
+    const result = await query(sql, values);
+    return result.rows[0];
+};
+
+export const getAIChatHistory = async (userId, limit = 50) => {
+    const sql = `
+        SELECT id, role, content, emotion_detected, keywords, created_at
+        FROM app.ai_chat_history
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+        LIMIT $2
+    `;
+    const result = await query(sql, [userId, limit]);
+    return result.rows.reverse(); // Oldest first
+};
+
+export const getRecentAIChatForPrompt = async (userId, limit = 10) => {
+    const sql = `
+        SELECT role, content
+        FROM app.ai_chat_history
+        WHERE user_id = $1
+        ORDER BY created_at DESC
+        LIMIT $2
+    `;
+    const result = await query(sql, [userId, limit]);
+    return result.rows.reverse();
+};
+
+export const clearAIChatHistory = async (userId) => {
+    const sql = `DELETE FROM app.ai_chat_history WHERE user_id = $1`;
+    const result = await query(sql, [userId]);
+    return result.rowCount;
+};
+
+// ========== LEGACY CHAT HISTORY (from chat_messages) ==========
 
 export const getRecentChatHistory = async (userId) => {
     const sql = `
@@ -19,10 +72,10 @@ export const getRecentChatHistory = async (userId) => {
         ORDER BY created_at DESC
         LIMIT 10;
     `;
-    
-    
+
+
     const values = [userId];
-    
+
     const result = await query(sql, values);
     return result.rows.reverse();
 };
@@ -54,9 +107,9 @@ export const findExpertsByKeywords = async (keywords) => {
             es.active_score DESC
         LIMIT 5;
     `;
-    
+
     const values = [keywords];
-    
+
 
     const result = await query(sql, values);
     return result.rows;
