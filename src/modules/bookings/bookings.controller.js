@@ -2,7 +2,7 @@
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { created, success, paginated, failure, notFound, forbidden } from "../../utils/response.js";
 import * as BookingsService from "../bookings/bookings.service.js";
-import { bookWithPayment } from "../bookings/bookingPayment.service.js";
+import { bookWithPayment, cancelBookingWithPayment, getBookingWithPayment } from "../bookings/bookingPayment.service.js";
 import { query } from "../../config/db.js";
 
 export const book = asyncHandler(async (req, res) => {

@@ -1,5 +1,53 @@
 import { query } from "../../config/db.js";
 
+// ========== POST MEDIA ==========
+export async function insertPostMedia({ postId, kind, url, width, height, durationMs, originalName, publicId }) {
+    const { rows } = await query(
+        `INSERT INTO app.post_media (post_id, kind, url, width, height, duration_ms, original_name, public_id)
+         VALUES ($1, $2::app.media_kind, $3, $4, $5, $6, $7, $8)
+         RETURNING id, post_id, kind, url, width, height, duration_ms, original_name, public_id, created_at`,
+        [postId, kind, url, width || null, height || null, durationMs || null, originalName || null, publicId || null]
+    );
+    return rows[0];
+}
+
+export async function insertMultipleMedia(postId, mediaList = []) {
+    if (!mediaList.length) return [];
+    const results = [];
+    for (const m of mediaList) {
+        const row = await insertPostMedia({
+            postId,
+            kind: m.kind,
+            url: m.url,
+            width: m.width,
+            height: m.height,
+            durationMs: m.duration_ms
+        });
+        results.push(row);
+    }
+    return results;
+}
+
+export async function listPostMedia(postId) {
+    const { rows } = await query(
+        `SELECT id, kind, url, width, height, duration_ms, original_name, public_id, created_at
+         FROM app.post_media
+         WHERE post_id = $1
+         ORDER BY created_at ASC`,
+        [postId]
+    );
+    return rows;
+}
+
+export async function deletePostMedia(postId) {
+    const { rowCount } = await query(
+        `DELETE FROM app.post_media WHERE post_id = $1`,
+        [postId]
+    );
+    return rowCount;
+}
+
+// ========== POSTS ==========
 export async function createPost({ authorId, title, content, privacy }) {
     const { rows } = await query(
         `INSERT INTO app.posts (author_id, title, content, privacy)
@@ -55,7 +103,7 @@ export async function attachFiles(postId, fileIds = []) {
 
 export async function listPostFiles(postId) {
     const { rows } = await query(
-        `SELECT pf.file_id, uf.url, uf.mime_type, uf.size_bytes
+        `SELECT pf.file_id, uf.file_url as url, uf.mime_type, uf.byte_size as size_bytes
        FROM app.post_files pf
        JOIN app.user_files uf ON uf.id=pf.file_id
       WHERE pf.post_id=$1
@@ -66,15 +114,15 @@ export async function listPostFiles(postId) {
 }
 
 export async function reactPost({ postId, userId, reaction }) {
-  const { rows } = await query(
-    `INSERT INTO app.post_reactions (post_id, user_id, reaction)
+    const { rows } = await query(
+        `INSERT INTO app.post_reactions (post_id, user_id, reaction)
      VALUES ($1,$2,$3::app.reaction_kind)
      ON CONFLICT (post_id, user_id)
      DO UPDATE SET reaction=EXCLUDED.reaction, created_at=now()
      RETURNING post_id, user_id, reaction, created_at`,
-    [postId, userId, reaction]
-  );
-  return rows[0];
+        [postId, userId, reaction]
+    );
+    return rows[0];
 }
 
 
@@ -107,11 +155,13 @@ export async function unsavePost({ postId, userId }) {
 
 export async function getPostDetail(postId) {
     const { rows } = await query(
-        `SELECT p.*, u.handle, up.display_name
-       FROM app.posts p
-       JOIN app.users u ON u.id=p.author_id
-       LEFT JOIN app.user_profiles up ON up.user_id=u.id
-      WHERE p.id=$1`,
+        `SELECT p.*, u.handle, up.display_name, up.avatar_url,
+                (SELECT COUNT(*) FROM app.post_reactions pr WHERE pr.post_id = p.id) as reaction_count,
+                (SELECT COUNT(*) FROM app.comments c WHERE c.post_id = p.id) as comment_count
+         FROM app.posts p
+         JOIN app.users u ON u.id=p.author_id
+         LEFT JOIN app.user_profiles up ON up.user_id=u.id
+         WHERE p.id=$1`,
         [postId]
     );
     return rows[0];

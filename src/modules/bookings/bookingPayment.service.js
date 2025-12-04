@@ -2,6 +2,7 @@
 import * as Bookings from "../bookings/bookings.repo.js";
 import * as Payments from "../payments/payments.repo.js";
 import * as WalletsRepo from "../wallets/wallets.repo.js";
+import * as PlatformRepo from "../platform/platform.repo.js";
 import { getClient } from "../../config/db.js";
 import { EventEmitter } from "events";
 
@@ -105,24 +106,43 @@ export class BookingStateMachine {
     // Transition to COMPLETED
     const result = await this.transition(bookingId, 'COMPLETED');
 
-    // Credit expert wallet
+    // Credit expert wallet with platform fee deduction
+    const client = await getClient();
     try {
+      await client.query('BEGIN');
+
       const price = Number(booking.price);
       if (price > 0) {
-        // Calculate net amount (e.g. minus platform fee if any)
-        // For now, 100% to expert. Platform fee logic can be added here.
-        const netAmount = price;
+        // Calculate platform fee
+        const feeBreakdown = await PlatformRepo.calculateFees(price);
 
+        // Store fee breakdown
+        await PlatformRepo.createBookingFee({
+          bookingId,
+          grossAmount: feeBreakdown.grossAmount,
+          platformFee: feeBreakdown.platformFee,
+          platformFeePercent: feeBreakdown.platformFeePercent,
+          expertEarning: feeBreakdown.expertEarning
+        }, client);
+
+        // Credit expert with net amount (after platform fee)
         await WalletsRepo.creditWallet({
           userId: booking.expert_id,
-          amount: netAmount,
+          amount: feeBreakdown.expertEarning,
           refType: 'BOOKING',
           refId: bookingId,
-          description: `Payment for booking #${bookingId}`
-        }, await getClient());
+          description: `Payment for booking #${bookingId} (after ${feeBreakdown.platformFeePercent}% platform fee)`
+        }, client);
+
+        console.log(`Booking ${bookingId} completed: Gross=${price}, PlatformFee=${feeBreakdown.platformFee}, ExpertEarning=${feeBreakdown.expertEarning}`);
       }
+
+      await client.query('COMMIT');
     } catch (err) {
+      await client.query('ROLLBACK');
       console.error(`Failed to credit wallet for booking ${bookingId}:`, err);
+    } finally {
+      client.release();
     }
 
     return result;
@@ -520,4 +540,143 @@ export async function bookWithPayment({ me, expertId, startAt, endAt, channel = 
     channel,
     paymentMethod
   });
+}
+
+// Cancel booking with automatic refund calculation
+export async function cancelBookingWithPayment(bookingId, userId, reason = '') {
+  const booking = await Bookings.getBookingById(bookingId);
+  if (!booking) {
+    throw Object.assign(new Error("Booking not found"), { status: 404 });
+  }
+
+  // Check access
+  if (![Number(booking.user_id), Number(booking.expert_id)].includes(Number(userId))) {
+    throw Object.assign(new Error("Access denied"), { status: 403 });
+  }
+
+  // Check if booking can be cancelled
+  if (['CANCELLED', 'COMPLETED'].includes(booking.status)) {
+    throw Object.assign(new Error("Booking cannot be cancelled"), { status: 400 });
+  }
+
+  const isSeeker = Number(booking.user_id) === Number(userId);
+  const paymentIntent = await Payments.getIntentByBookingId(bookingId);
+
+  const client = await getClient();
+  try {
+    await client.query('BEGIN');
+
+    // Cancel the booking
+    await Bookings.updateStatusWithClient({ id: bookingId, status: 'CANCELLED', client });
+
+    let refundInfo = null;
+
+    // If payment was made, calculate and process refund
+    if (paymentIntent && paymentIntent.status === 'PAID') {
+      const settings = await PlatformRepo.getSettings();
+      const refundPolicyHours = parseInt(settings.refund_policy_hours || 24);
+      const partialRefundPercent = parseInt(settings.partial_refund_percent || 50);
+
+      const now = new Date();
+      const bookingStart = new Date(booking.start_at);
+      const hoursUntilBooking = (bookingStart - now) / (1000 * 60 * 60);
+
+      const paidAmount = Number(paymentIntent.amount);
+      let refundAmount = 0;
+      let refundType = 'NONE';
+
+      if (isSeeker) {
+        // Seeker cancellation - apply refund policy
+        if (hoursUntilBooking >= refundPolicyHours) {
+          refundAmount = paidAmount;
+          refundType = 'FULL';
+        } else if (hoursUntilBooking > 0) {
+          refundAmount = Math.round(paidAmount * partialRefundPercent / 100);
+          refundType = 'PARTIAL';
+        }
+      } else {
+        // Expert cancellation - full refund to seeker
+        refundAmount = paidAmount;
+        refundType = 'FULL';
+      }
+
+      if (refundAmount > 0) {
+        // Import refunds repo dynamically to avoid circular dependency
+        const RefundsRepo = await import('../refunds/refunds.repo.js');
+
+        // Create refund record
+        const refund = await RefundsRepo.createRefund({
+          bookingId,
+          paymentIntentId: paymentIntent.id,
+          userId: booking.user_id, // Refund goes to seeker
+          amount: refundAmount,
+          platformFeeRefunded: 0,
+          reason: reason || (isSeeker ? 'Seeker cancelled booking' : 'Expert cancelled booking')
+        }, client);
+
+        // Credit refund to seeker's wallet
+        await WalletsRepo.creditWallet({
+          userId: booking.user_id,
+          amount: refundAmount,
+          refType: 'REFUND',
+          refId: refund.id,
+          description: `Refund for cancelled booking #${bookingId}`
+        }, client);
+
+        // Auto-approve refund
+        await client.query(
+          `UPDATE app.refunds SET status = 'COMPLETED', processed_at = now() WHERE id = $1`,
+          [refund.id]
+        );
+
+        refundInfo = {
+          refundId: refund.id,
+          refundType,
+          refundAmount,
+          originalAmount: paidAmount
+        };
+      }
+    }
+
+    await client.query('COMMIT');
+
+    return {
+      booking: { ...booking, status: 'CANCELLED' },
+      refund: refundInfo,
+      cancelledBy: isSeeker ? 'SEEKER' : 'EXPERT'
+    };
+
+  } catch (error) {
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    client.release();
+  }
+}
+
+// Get booking details with payment and fee information
+export async function getBookingWithPayment(bookingId, userId) {
+  const booking = await Bookings.getBookingById(bookingId);
+  if (!booking) {
+    throw Object.assign(new Error("Booking not found"), { status: 404 });
+  }
+
+  // Check access
+  if (![Number(booking.user_id), Number(booking.expert_id)].includes(Number(userId))) {
+    throw Object.assign(new Error("Access denied"), { status: 403 });
+  }
+
+  const paymentIntent = await Payments.getIntentByBookingId(bookingId);
+  const bookingFee = await PlatformRepo.getBookingFee(bookingId);
+
+  // Get refund if exists
+  const RefundsRepo = await import('../refunds/refunds.repo.js');
+  const refund = await RefundsRepo.getRefundByBookingId(bookingId);
+
+  return {
+    booking,
+    payment: paymentIntent,
+    fees: bookingFee,
+    refund
+  };
 }

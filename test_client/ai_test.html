@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat & Smart Match Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-right: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+
+        .btn-clear {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Chat UI */
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #f8f9fa;
+            margin-bottom: 15px;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .chat-message.ai .chat-bubble {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 4px;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-container input {
+            flex: 1;
+        }
+
+        /* Expert cards */
+        .expert-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .expert-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .expert-card h4 {
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .expert-card .rating {
+            color: #f5a623;
+        }
+
+        .expert-card .price {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .expert-card .specialties {
+            font-size: 12px;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        /* Keywords */
+        .keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .keyword {
+            background: #e7f3ff;
+            color: #2196F3;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .keyword:hover {
+            background: #2196F3;
+            color: white;
+        }
+
+        /* Response */
+        .response {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🤖 AI Chat & Smart Match Test</h1>
+
+        <!-- Auth -->
+        <div class="card">
+            <h2>🔐 Authentication</h2>
+            <div class="form-group">
+                <label>JWT Token:</label>
+                <input type="text" id="token" placeholder="Paste your JWT token here">
+            </div>
+            <div class="form-group">
+                <label>API Base URL:</label>
+                <input type="text" id="baseUrl" value="http://localhost:4000/api/v1">
+            </div>
+        </div>
+
+        <div class="grid">
+            <!-- AI Chat -->
+            <div class="card">
+                <h2>💬 AI Chat (Tư vấn tâm lý)</h2>
+                <div class="info-box">
+                    <strong>Cách hoạt động:</strong><br>
+                    1. Bạn nhập tin nhắn mô tả vấn đề<br>
+                    2. AI phân tích và trả lời tư vấn<br>
+                    3. AI tự động gợi ý expert phù hợp dựa trên keywords
+                </div>
+
+                <div class="chat-container" id="chatContainer">
+                    <div class="chat-message ai">
+                        <div class="chat-bubble">
+                            Xin chào! Mình là trợ lý AI của Healing. Bạn đang gặp vấn đề gì cần tư vấn?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-input-container">
+                    <input type="text" id="chatInput" placeholder="Nhập tin nhắn..."
+                        onkeypress="if(event.key==='Enter') sendChat()">
+                    <button class="btn-primary" onclick="sendChat()">Gửi</button>
+                </div>
+
+                <div class="loading" id="chatLoading">
+                    <div class="spinner"></div>
+                    <span>AI đang suy nghĩ...</span>
+                </div>
+
+                <div id="suggestedExperts"></div>
+
+                <button class="btn-clear" onclick="clearChat()" style="margin-top: 15px;">🗑️ Xóa chat</button>
+            </div>
+
+            <!-- Smart Match -->
+            <div class="card">
+                <h2>🎯 Smart Match (Tìm Expert theo Keywords)</h2>
+                <div class="info-box">
+                    <strong>Cách hoạt động:</strong><br>
+                    Nhập các từ khóa liên quan đến vấn đề, hệ thống sẽ tìm expert phù hợp nhất.
+                </div>
+
+                <div class="form-group">
+                    <label>Keywords (phân cách bằng dấu phẩy):</label>
+                    <input type="text" id="keywords" placeholder="trầm cảm, lo âu, stress, mất ngủ">
+                </div>
+
+                <div class="keywords" id="suggestedKeywords">
+                    <span class="keyword" onclick="addKeyword('trầm cảm')">trầm cảm</span>
+                    <span class="keyword" onclick="addKeyword('lo âu')">lo âu</span>
+                    <span class="keyword" onclick="addKeyword('stress')">stress</span>
+                    <span class="keyword" onclick="addKeyword('mất ngủ')">mất ngủ</span>
+                    <span class="keyword" onclick="addKeyword('tình cảm')">tình cảm</span>
+                    <span class="keyword" onclick="addKeyword('gia đình')">gia đình</span>
+                    <span class="keyword" onclick="addKeyword('công việc')">công việc</span>
+                    <span class="keyword" onclick="addKeyword('tự ti')">tự ti</span>
+                </div>
+
+                <button class="btn-success" onclick="smartMatch()" style="margin-top: 15px;">🔍 Tìm Expert</button>
+
+                <div class="loading" id="matchLoading">
+                    <div class="spinner"></div>
+                    <span>Đang tìm kiếm...</span>
+                </div>
+
+                <div id="matchedExperts"></div>
+
+                <h3 style="margin-top: 20px;">📋 Raw Response</h3>
+                <button class="btn-clear" onclick="toggleResponse('matchResponse')">Toggle JSON</button>
+                <div id="matchResponse" class="response"></div>
+            </div>
+        </div>
+
+        <!-- Test Scenarios -->
+        <div class="card">
+            <h2>🧪 Test Scenarios</h2>
+            <p style="margin-bottom: 15px;">Click để test nhanh các kịch bản:</p>
+
+            <button class="btn-primary"
+                onclick="testScenario('Tôi cảm thấy rất buồn và không muốn làm gì cả, đã mấy tuần rồi')">
+                😢 Trầm cảm
+            </button>
+            <button class="btn-primary"
+                onclick="testScenario('Tôi hay lo lắng quá mức về mọi thứ, tim đập nhanh, khó thở')">
+                😰 Lo âu
+            </button>
+            <button class="btn-primary"
+                onclick="testScenario('Công việc quá áp lực, tôi không ngủ được và hay cáu gắt')">
+                😤 Stress công việc
+            </button>
+            <button class="btn-primary"
+                onclick="testScenario('Tôi và người yêu hay cãi nhau, không biết có nên chia tay không')">
+                💔 Tình cảm
+            </button>
+            <button class="btn-primary"
+                onclick="testScenario('Con tôi 15 tuổi hay cáu gắt và không muốn nói chuyện với bố mẹ')">
+                👨‍👩‍👧 Gia đình
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function getHeaders() {
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${document.getElementById('token').value}`
+            };
+        }
+
+        function getBaseUrl() {
+            return document.getElementById('baseUrl').value;
+        }
+
+        // Chat functions
+        function addChatMessage(message, isUser = false) {
+            const container = document.getElementById('chatContainer');
+            const div = document.createElement('div');
+            div.className = `chat-message ${isUser ? 'user' : 'ai'}`;
+            div.innerHTML = `<div class="chat-bubble">${message}</div>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showExperts(experts, containerId) {
+            const container = document.getElementById(containerId);
+            if (!experts || experts.length === 0) {
+                container.innerHTML = '<p style="color: #666; margin-top: 15px;">Không tìm thấy expert phù hợp</p>';
+                return;
+            }
+
+            let html = '<div class="expert-list">';
+            experts.forEach(expert => {
+                html += `
+                    <div class="expert-card">
+                        <h4>${expert.display_name || expert.name || 'Expert'}</h4>
+                        <div class="rating">⭐ ${expert.rating_avg || 'N/A'}</div>
+                        <div class="price">${formatPrice(expert.price_per_session)} VND/buổi</div>
+                        <div class="specialties">${(expert.specialties || []).join(', ')}</div>
+                        ${expert.is_online ? '<span style="color: green;">🟢 Online</span>' : '<span style="color: gray;">⚫ Offline</span>'}
+                    </div>
+                `;
+            });
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        function formatPrice(price) {
+            return price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '0';
+        }
+
+        async function sendChat() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addChatMessage(message, true);
+            input.value = '';
+
+            document.getElementById('chatLoading').classList.add('show');
+
+            try {
+                const res = await fetch(`${getBaseUrl()}/ai/chat`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ message })
+                });
+                const data = await res.json();
+
+                document.getElementById('chatLoading').classList.remove('show');
+
+                if (data.aiMessage) {
+                    addChatMessage(data.aiMessage);
+                }
+
+                if (data.suggestions?.experts?.length > 0) {
+                    showExperts(data.suggestions.experts, 'suggestedExperts');
+
+                    // Show matched keywords
+                    if (data.suggestions.keywords?.length > 0) {
+                        const keywordsHtml = data.suggestions.keywords.map(k =>
+                            `<span class="keyword">${k}</span>`
+                        ).join('');
+                        document.getElementById('suggestedExperts').innerHTML =
+                            `<p style="margin-top: 15px;"><strong>Keywords detected:</strong></p>
+                             <div class="keywords">${keywordsHtml}</div>` +
+                            document.getElementById('suggestedExperts').innerHTML;
+                    }
+                }
+
+            } catch (err) {
+                document.getElementById('chatLoading').classList.remove('show');
+                addChatMessage('❌ Lỗi: ' + err.message);
+            }
+        }
+
+        function clearChat() {
+            document.getElementById('chatContainer').innerHTML = `
+                <div class="chat-message ai">
+                    <div class="chat-bubble">
+                        Xin chào! Mình là trợ lý AI của Healing. Bạn đang gặp vấn đề gì cần tư vấn?
+                    </div>
+                </div>
+            `;
+            document.getElementById('suggestedExperts').innerHTML = '';
+        }
+
+        // Smart Match functions
+        function addKeyword(keyword) {
+            const input = document.getElementById('keywords');
+            const current = input.value.trim();
+            if (current) {
+                if (!current.includes(keyword)) {
+                    input.value = current + ', ' + keyword;
+                }
+            } else {
+                input.value = keyword;
+            }
+        }
+
+        async function smartMatch() {
+            const keywordsStr = document.getElementById('keywords').value;
+            const keywords = keywordsStr.split(',').map(k => k.trim()).filter(k => k);
+
+            if (keywords.length === 0) {
+                alert('Vui lòng nhập ít nhất 1 keyword');
+                return;
+            }
+
+            document.getElementById('matchLoading').classList.add('show');
+
+            try {
+                const res = await fetch(`${getBaseUrl()}/ai/smart-match`, {
+                    method: 'POST',
+                    headers: getHeaders(),
+                    body: JSON.stringify({ keywords })
+                });
+                const data = await res.json();
+
+                document.getElementById('matchLoading').classList.remove('show');
+                document.getElementById('matchResponse').textContent = JSON.stringify(data, null, 2);
+
+                if (data.experts) {
+                    showExperts(data.experts, 'matchedExperts');
+                }
+
+            } catch (err) {
+                document.getElementById('matchLoading').classList.remove('show');
+                document.getElementById('matchResponse').textContent = 'Error: ' + err.message;
+            }
+        }
+
+        function toggleResponse(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Test scenarios
+        function testScenario(message) {
+            document.getElementById('chatInput').value = message;
+            sendChat();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,40 +1,62 @@
-import { buildPrompt } from "./prompt.js";
-import { getRecentChatHistory, findExpertsByKeywords } from "./database.js";
+import { buildPrompt, buildPromptWithPersona } from "./prompt.js";
+import { getRecentAIChatForPrompt, saveAIChatMessage, getAIChatHistory, clearAIChatHistory } from "./database.js";
 import { findExpertsByKeywordsSmart } from "./database/expert.js";
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import * as personaService from "../modules/ai-companion/persona/persona.service.js";
+import * as emotionService from "../modules/ai-companion/emotion/emotion.service.js";
 
 import dotenv from "dotenv";
 dotenv.config();
 
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+// Khởi tạo Gemini với thư viện chính thức
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+// Sử dụng model gemini-2.0-flash (hoặc gemini-pro nếu không có)
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export const handleChat = async (userId, userMessage) => {
     try {
-        const conversationHistory = await getRecentChatHistory(userId);
-        const prompt = buildPrompt(conversationHistory, userMessage);
+        // Get recent AI chat history for context
+        const conversationHistory = await getRecentAIChatForPrompt(userId, 10);
 
-        const GEMINI_URL =
-            "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent";
+        // Save user message to history
+        let personaId = null;
 
-        const response = await fetch(`${GEMINI_URL}?key=${GEMINI_API_KEY}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                contents: [
+        // Get user's persona settings
+        let personaPrompt = '';
+        try {
+            const settings = await personaService.getUserSettings(userId);
+            if (settings?.persona_id) {
+                personaId = settings.persona_id;
+                const userContext = await personaService.getUserContext(userId);
+                personaPrompt = personaService.buildPersonaPrompt(
                     {
-                        parts: [{ text: prompt }],
+                        display_name: settings.persona_display_name,
+                        tone: settings.persona_tone,
+                        description: settings.persona_name,
+                        emotion_pattern: settings.emotion_pattern,
+                        signature_messages: settings.signature_messages
                     },
-                ],
-            }),
-        });
+                    settings,
+                    userContext
+                );
+            }
+        } catch (err) {
+            console.log("Persona loading skipped:", err.message);
+        }
 
-        const data = await response.json();
+        // Save user message
+        await saveAIChatMessage(userId, 'user', userMessage, { persona_id: personaId });
+
+        const prompt = buildPromptWithPersona(conversationHistory, userMessage, personaPrompt);
+
+        // Sử dụng thư viện @google/generative-ai thay vì fetch API
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const aiRaw = response.text();
 
         console.log("===== RAW GEMINI RESPONSE =====");
-        console.log(JSON.stringify(data, null, 2));
+        console.log(aiRaw);
         console.log("================================");
-
-        const aiRaw =
-            data?.candidates?.[0]?.content?.parts?.[0]?.text ?? null;
 
         if (!aiRaw) {
             return {
@@ -85,7 +107,25 @@ export const handleChat = async (userId, userMessage) => {
 
 
         // ==============================
-        // 3. Trả response
+        // 3. Detect and log emotion (async, non-blocking)
+        // ==============================
+        try {
+            emotionService.detectAndLogEmotion(userId, userMessage, 'chat', { useAI: false })
+                .catch(err => console.log("Emotion logging failed:", err.message));
+        } catch (err) {
+            console.log("Emotion detection skipped:", err.message);
+        }
+
+        // ==============================
+        // 4. Save AI response to history
+        // ==============================
+        await saveAIChatMessage(userId, 'ai', aiMessage, {
+            persona_id: personaId,
+            keywords: matchedKeywords
+        });
+
+        // ==============================
+        // 5. Trả response
         // ==============================
         return {
             aiMessage,

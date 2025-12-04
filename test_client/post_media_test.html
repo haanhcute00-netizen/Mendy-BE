@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Post với Media</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            padding: 10px 0;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: #2196F3;
+        }
+
+        .btn-danger {
+            background: #f44336;
+        }
+
+        #result {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            white-space: pre-wrap;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .preview-item {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .preview-item img,
+        .preview-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-item .remove {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .status {
+            padding: 8px 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+
+        .status.success {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status.error {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .post-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+
+        .post-card .author {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .post-card .content {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        .post-card .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .post-card .media-grid img,
+        .post-card .media-grid video {
+            width: 100%;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🖼️ Test Post với Media Upload</h1>
+
+    <!-- Login Section -->
+    <div class="card">
+        <h2>1. Đăng nhập</h2>
+        <label>Handle (username)</label>
+        <input type="text" id="loginEmail" value="seeker1" placeholder="Handle (username)">
+        <label>Password</label>
+        <input type="text" id="loginPassword" value="123456" placeholder="Mật khẩu">
+        <button onclick="login()">Đăng nhập</button>
+        <div id="loginStatus" class="status" style="display:none;"></div>
+    </div>
+
+    <!-- Create Post Section -->
+    <div class="card">
+        <h2>2. Tạo bài viết với ảnh/video</h2>
+        <label>Nội dung</label>
+        <textarea id="postContent" placeholder="Viết gì đó...">Đây là bài test upload ảnh! 📸</textarea>
+
+        <label>Quyền riêng tư</label>
+        <select id="postPrivacy">
+            <option value="PUBLIC">🌍 Công khai</option>
+            <option value="FRIENDS">👥 Bạn bè</option>
+            <option value="ONLY_ME">🔒 Chỉ mình tôi</option>
+        </select>
+
+        <label>Chọn ảnh/video (tối đa 10 ảnh + 1 video)</label>
+        <input type="file" id="mediaFiles" multiple accept="image/*,video/*" onchange="previewFiles()">
+        <div id="previewContainer" class="preview-container"></div>
+
+        <button onclick="createPost()" id="btnCreate">📤 Đăng bài</button>
+    </div>
+
+    <!-- View Post Section -->
+    <div class="card">
+        <h2>3. Xem chi tiết bài viết</h2>
+        <label>Post ID</label>
+        <input type="text" id="postId" placeholder="Nhập ID bài viết">
+        <button onclick="getPostDetail()" class="btn-secondary">🔍 Xem chi tiết</button>
+        <div id="postDetail"></div>
+    </div>
+
+    <!-- Feed Section -->
+    <div class="card">
+        <h2>4. Home Feed</h2>
+        <button onclick="getFeed()" class="btn-secondary">📰 Lấy Feed</button>
+        <div id="feedContainer"></div>
+    </div>
+
+    <!-- Result -->
+    <div class="card">
+        <h2>📋 Response Log</h2>
+        <pre id="result">Chưa có request nào...</pre>
+    </div>
+
+    <script>
+        const BASE_URL = 'http://localhost:4000/api/v1';
+        let token = localStorage.getItem('token') || '';
+
+        function log(data) {
+            document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        }
+
+        function showStatus(elementId, message, isSuccess) {
+            const el = document.getElementById(elementId);
+            el.style.display = 'block';
+            el.className = 'status ' + (isSuccess ? 'success' : 'error');
+            el.textContent = message;
+        }
+
+        async function login() {
+            const handle = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const res = await fetch(`${BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ handle, password })
+                });
+                const data = await res.json();
+                log(data);
+
+                if (data.data?.access_token) {
+                    token = data.data.access_token;
+                    localStorage.setItem('token', token);
+                    showStatus('loginStatus', '✅ Đăng nhập thành công! User: ' + (data.data.user?.handle || ''), true);
+                } else {
+                    showStatus('loginStatus', '❌ ' + (data.message || 'Đăng nhập thất bại'), false);
+                }
+            } catch (err) {
+                log({ error: err.message });
+                showStatus('loginStatus', '❌ Lỗi kết nối: ' + err.message, false);
+            }
+        }
+
+        function previewFiles() {
+            const container = document.getElementById('previewContainer');
+            const files = document.getElementById('mediaFiles').files;
+            container.innerHTML = '';
+
+            Array.from(files).forEach((file, index) => {
+                const div = document.createElement('div');
+                div.className = 'preview-item';
+
+                if (file.type.startsWith('image/')) {
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    div.appendChild(img);
+                } else if (file.type.startsWith('video/')) {
+                    const video = document.createElement('video');
+                    video.src = URL.createObjectURL(file);
+                    video.muted = true;
+                    div.appendChild(video);
+                }
+
+                container.appendChild(div);
+            });
+        }
+
+        async function createPost() {
+            if (!token) {
+                alert('Vui lòng đăng nhập trước!');
+                return;
+            }
+
+            const btn = document.getElementById('btnCreate');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"></span>Đang upload...';
+
+            const content = document.getElementById('postContent').value;
+            const privacy = document.getElementById('postPrivacy').value;
+            const files = document.getElementById('mediaFiles').files;
+
+            const formData = new FormData();
+            formData.append('content', content);
+            formData.append('privacy', privacy);
+
+            // Append all media files
+            Array.from(files).forEach(file => {
+                formData.append('media', file);
+            });
+
+            try {
+                const res = await fetch(`${BASE_URL}/posts`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                const data = await res.json();
+                log(data);
+
+                if (data.success) {
+                    alert('✅ Đăng bài thành công!');
+                    document.getElementById('postId').value = data.data.id;
+                    document.getElementById('mediaFiles').value = '';
+                    document.getElementById('previewContainer').innerHTML = '';
+                }
+            } catch (err) {
+                log({ error: err.message });
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '📤 Đăng bài';
+            }
+        }
+
+        async function getPostDetail() {
+            if (!token) {
+                alert('Vui lòng đăng nhập trước!');
+                return;
+            }
+
+            const postId = document.getElementById('postId').value;
+            if (!postId) {
+                alert('Vui lòng nhập Post ID!');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/posts/${postId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                log(data);
+
+                if (data.success) {
+                    renderPost(data.data, 'postDetail');
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        async function getFeed() {
+            if (!token) {
+                alert('Vui lòng đăng nhập trước!');
+                return;
+            }
+
+            try {
+                const res = await fetch(`${BASE_URL}/posts/feed?limit=10`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await res.json();
+                log(data);
+
+                if (data.success && data.data) {
+                    const container = document.getElementById('feedContainer');
+                    container.innerHTML = '';
+                    data.data.forEach(post => {
+                        const div = document.createElement('div');
+                        div.id = `feed-post-${post.id}`;
+                        container.appendChild(div);
+                        renderPost(post, `feed-post-${post.id}`);
+                    });
+                }
+            } catch (err) {
+                log({ error: err.message });
+            }
+        }
+
+        function renderPost(post, containerId) {
+            const container = document.getElementById(containerId);
+            let mediaHtml = '';
+
+            // Render media
+            if (post.media && post.media.length > 0) {
+                mediaHtml = '<div class="media-grid">';
+                post.media.forEach(m => {
+                    if (m.kind === 'IMAGE') {
+                        mediaHtml += `<img src="${m.url}" alt="Post image" onclick="window.open('${m.url}')">`;
+                    } else if (m.kind === 'VIDEO') {
+                        mediaHtml += `<video src="${m.url}" controls></video>`;
+                    }
+                });
+                mediaHtml += '</div>';
+            }
+
+            container.innerHTML = `
+                <div class="post-card">
+                    <div class="author">👤 ${post.display_name || post.handle || 'Anonymous'}</div>
+                    <div class="content">${post.content || ''}</div>
+                    ${mediaHtml}
+                    <div style="margin-top:10px;color:#888;font-size:12px;">
+                        ❤️ ${post.reaction_count || 0} reactions · 
+                        💬 ${post.comment_count || 0} comments · 
+                        🔒 ${post.privacy} · 
+                        📅 ${new Date(post.created_at).toLocaleString('vi-VN')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Auto-login if token exists
+        if (token) {
+            showStatus('loginStatus', '✅ Đã có token từ session trước', true);
+        }
+    </script>
+</body>
+
+</html>

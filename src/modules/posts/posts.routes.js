@@ -1,6 +1,7 @@
 import { Router } from "express";
 import rateLimit from "express-rate-limit";
 import { auth } from "../../middlewares/auth.js";
+import upload from "../../config/multer.js";
 import {
   create, update, remove, detail, timeline, feed,
   react, unreact, save, unsave
@@ -14,7 +15,8 @@ r.use(auth);
 r.get("/feed", feed);
 r.get("/timeline", timeline); // ?user_id=...
 
-r.post("/", limiter, create);              // body: content, privacy, file_ids[]
+// Hỗ trợ upload tối đa 10 ảnh + 1 video
+r.post("/", limiter, upload.array("media", 11), create);  // body: content, privacy, file_ids[], media[]
 r.patch("/:id", limiter, update);
 r.delete("/:id", limiter, remove);
 r.get("/:id", detail);
