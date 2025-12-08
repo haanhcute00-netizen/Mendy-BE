@@ -2,8 +2,11 @@ import { buildPrompt, buildPromptWithPersona } from "./prompt.js";
 import { getRecentAIChatForPrompt, saveAIChatMessage, getAIChatHistory, clearAIChatHistory } from "./database.js";
 import { findExpertsByKeywordsSmart } from "./database/expert.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import * as personaService from "../modules/ai-companion/persona/persona.service.js";
-import * as emotionService from "../modules/ai-companion/emotion/emotion.service.js";
+import * as personaService from "./companion/persona/persona.service.js";
+import * as emotionService from "./companion/emotion/emotion.service.js";
+import { logChatInteraction, logGeminiRequest, logGeminiResponse, logGeminiError } from "./aiLogger.js";
+import { checkGeminiRateLimit, recordGeminiRequest } from "./rateLimiter.js";
+import { v4 as uuidv4 } from 'uuid';
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -14,12 +17,29 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export const handleChat = async (userId, userMessage) => {
+    const startTime = Date.now();
+    const requestId = uuidv4();
+
     try {
+        // Check rate limit before processing
+        const rateLimitCheck = await checkGeminiRateLimit(userId, 'chat');
+        if (!rateLimitCheck.allowed) {
+            return {
+                aiMessage: rateLimitCheck.reason === 'user_daily_limit'
+                    ? "Bạn đã đạt giới hạn sử dụng AI trong ngày. Vui lòng thử lại vào ngày mai nhé!"
+                    : "Mình đang bận một chút, bạn thử lại sau vài giây nhé!",
+                suggestions: { experts: [] },
+                rateLimited: true,
+                retryAfter: rateLimitCheck.retryAfter
+            };
+        }
+
         // Get recent AI chat history for context
         const conversationHistory = await getRecentAIChatForPrompt(userId, 10);
 
         // Save user message to history
         let personaId = null;
+        let relationshipLevel = 1;
 
         // Get user's persona settings
         let personaPrompt = '';
@@ -27,6 +47,7 @@ export const handleChat = async (userId, userMessage) => {
             const settings = await personaService.getUserSettings(userId);
             if (settings?.persona_id) {
                 personaId = settings.persona_id;
+                relationshipLevel = settings.relationship_level || 1;
                 const userContext = await personaService.getUserContext(userId);
                 personaPrompt = personaService.buildPersonaPrompt(
                     {
@@ -49,10 +70,23 @@ export const handleChat = async (userId, userMessage) => {
 
         const prompt = buildPromptWithPersona(conversationHistory, userMessage, personaPrompt);
 
+        // Log Gemini request
+        logGeminiRequest(requestId, { prompt_length: prompt.length, model: 'gemini-2.5-flash' });
+
+        // Record rate limit
+        recordGeminiRequest(userId, 'chat');
+
         // Sử dụng thư viện @google/generative-ai thay vì fetch API
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const aiRaw = response.text();
+
+        // Log Gemini response
+        logGeminiResponse(requestId, {
+            response_length: aiRaw?.length || 0,
+            duration_ms: Date.now() - startTime,
+            success: true
+        });
 
         console.log("===== RAW GEMINI RESPONSE =====");
         console.log(aiRaw);
@@ -125,20 +159,37 @@ export const handleChat = async (userId, userMessage) => {
         });
 
         // ==============================
-        // 5. Trả response
+        // 5. Log interaction and return response
         // ==============================
+        const duration = Date.now() - startTime;
+        logChatInteraction(userId, {
+            userMessage,
+            aiResponse: aiMessage,
+            keywords: matchedKeywords,
+            personaId,
+            duration
+        });
+
         return {
             aiMessage,
             suggestions: {
                 experts,
                 keywords: matchedKeywords
+            },
+            meta: {
+                duration,
+                relationshipLevel
             }
         };
 
-
-
     } catch (error) {
         console.error("Error in AI Core Service:", error);
+
+        // Log error
+        logGeminiError(requestId, {
+            error,
+            prompt_preview: userMessage
+        });
 
         return {
             aiMessage:

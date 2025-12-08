@@ -59,6 +59,75 @@ import {
   getTransactions
 } from "./admin.controller.js";
 
+// Import extended admin controllers
+import {
+  // Payout approval/rejection
+  approvePayoutByAdmin,
+  rejectPayoutByAdmin,
+  // Refund management
+  getRefundsWithCount,
+  getRefundStats,
+  getRefundByIdAdmin,
+  approveRefundByAdmin,
+  rejectRefundByAdmin,
+  // Dispute management
+  getDisputesWithCount,
+  getDisputeStats,
+  getDisputeByIdAdmin,
+  getDisputeMessagesAdmin,
+  assignDisputeAdmin,
+  addDisputeMessageAdmin,
+  resolveDisputeByAdmin,
+  // Review management
+  getReviewsWithCount,
+  getReviewStats,
+  getReviewByIdAdmin,
+  hideReviewByAdmin,
+  deleteReviewByAdmin,
+  // Chat management
+  getChatThreads,
+  getChatThreadByIdAdmin,
+  getChatMessagesAdmin,
+  deleteChatMessageAdmin,
+  getChatStats,
+  // Call management
+  getCallSessionsWithCount,
+  getCallSessionByIdAdmin,
+  getCallStats,
+  // Wallet management
+  getWalletsWithCount,
+  getWalletByUserIdAdmin,
+  adjustWalletByAdmin,
+  getWalletStats,
+  // Skills & Domains
+  getSkillsAdmin,
+  createSkillAdmin,
+  updateSkillAdmin,
+  deleteSkillAdmin,
+  getDomainsAdmin,
+  createDomainAdmin,
+  updateDomainAdmin,
+  deleteDomainAdmin,
+  // Recurring bookings
+  getRecurringBookingsAdmin,
+  cancelRecurringBookingAdmin,
+  // User management - update & delete
+  updateUserByAdmin,
+  deleteUserByAdmin
+} from "./admin.extended.controller.js";
+
+// Import analytics controllers
+import {
+  getComprehensiveDashboard,
+  getTimeSeriesAnalytics,
+  getTopPerformers,
+  getRevenueBreakdown,
+  getUserGrowthAnalytics,
+  getBookingAnalyticsDetailed,
+  getRealTimeMetrics,
+  getComparisonAnalytics
+} from "./admin.analytics.controller.js";
+
 const router = Router();
 
 // Apply admin middleware to all routes
@@ -76,14 +145,28 @@ router.use(adminLimiter);
 
 // Dashboard analytics routes
 router.get("/dashboard", getDashboard);
-router.get("/dashboard/enhanced", getEnhancedDashboard);  // NEW: Enhanced dashboard with payout stats
+router.get("/dashboard/enhanced", getEnhancedDashboard);
+router.get("/dashboard/comprehensive", getComprehensiveDashboard);  // NEW: Full dashboard with all metrics
 router.get("/analytics/bookings", getBookingAnalytics);
 router.get("/analytics/revenue", getRevenueAnalytics);
+
+// ============================================
+// ENHANCED ANALYTICS ROUTES (NEW)
+// ============================================
+router.get("/analytics/time-series", getTimeSeriesAnalytics);      // Time series data (users, bookings, revenue, posts, reports)
+router.get("/analytics/top-performers", getTopPerformers);         // Top experts, seekers, content creators
+router.get("/analytics/revenue-breakdown", getRevenueBreakdown);   // Revenue by method, specialty, channel
+router.get("/analytics/user-growth", getUserGrowthAnalytics);      // User growth & retention
+router.get("/analytics/bookings-detailed", getBookingAnalyticsDetailed);  // Detailed booking analytics
+router.get("/analytics/realtime", getRealTimeMetrics);             // Real-time metrics (last 24h, 1h, 15m)
+router.get("/analytics/comparison", getComparisonAnalytics);       // Period comparison (day/week/month)
 
 // User management routes
 router.get("/users", getUsers);
 router.get("/users/list", getUsersWithCount);  // NEW: With total count for pagination
 router.get("/users/:userId", getUserById);
+router.put("/users/:userId", updateUserByAdmin);       // UPDATE user info
+router.delete("/users/:userId", deleteUserByAdmin);    // DELETE user (soft/hard)
 router.patch("/users/:userId/suspend", suspendUser);
 router.patch("/users/:userId/activate", activateUser);
 router.post("/users/:userId/ban", banUser);
@@ -139,7 +222,83 @@ router.delete("/comments/:commentId", deleteCommentByAdmin);     // Delete comme
 router.get("/payouts", getPayoutsWithCount);           // List payouts with total count
 router.get("/payouts/stats", getPayoutStats);          // Payout statistics
 router.get("/payouts/:payoutId", getPayoutById);       // Get payout details
-// Note: Approve/Reject payouts are in /api/v1/payouts/admin/* routes
+router.post("/payouts/:payoutId/approve", approvePayoutByAdmin);  // Approve payout
+router.post("/payouts/:payoutId/reject", rejectPayoutByAdmin);    // Reject payout
+
+// ============================================
+// REFUND MANAGEMENT ROUTES (NEW - Priority 1)
+// ============================================
+router.get("/refunds", getRefundsWithCount);           // List refunds with total count
+router.get("/refunds/stats", getRefundStats);          // Refund statistics
+router.get("/refunds/:refundId", getRefundByIdAdmin);  // Get refund details
+router.post("/refunds/:refundId/approve", approveRefundByAdmin);  // Approve refund
+router.post("/refunds/:refundId/reject", rejectRefundByAdmin);    // Reject refund
+
+// ============================================
+// DISPUTE MANAGEMENT ROUTES (NEW - Priority 1)
+// ============================================
+router.get("/disputes", getDisputesWithCount);         // List disputes with total count
+router.get("/disputes/stats", getDisputeStats);        // Dispute statistics
+router.get("/disputes/:disputeId", getDisputeByIdAdmin);          // Get dispute details
+router.get("/disputes/:disputeId/messages", getDisputeMessagesAdmin);  // Get dispute messages
+router.patch("/disputes/:disputeId/assign", assignDisputeAdmin);  // Assign dispute to admin
+router.post("/disputes/:disputeId/message", addDisputeMessageAdmin);  // Add admin message
+router.patch("/disputes/:disputeId/resolve", resolveDisputeByAdmin);  // Resolve dispute
+
+// ============================================
+// REVIEW MANAGEMENT ROUTES (NEW - Priority 2)
+// ============================================
+router.get("/reviews", getReviewsWithCount);           // List reviews with total count
+router.get("/reviews/stats", getReviewStats);          // Review statistics
+router.get("/reviews/:reviewId", getReviewByIdAdmin);  // Get review details
+router.post("/reviews/:reviewId/hide", hideReviewByAdmin);        // Hide review
+router.delete("/reviews/:reviewId", deleteReviewByAdmin);         // Delete review
+
+// ============================================
+// CHAT MANAGEMENT ROUTES (NEW - Priority 2)
+// ============================================
+router.get("/chat/threads", getChatThreads);           // List chat threads
+router.get("/chat/stats", getChatStats);               // Chat statistics
+router.get("/chat/threads/:threadId", getChatThreadByIdAdmin);    // Get thread details
+router.get("/chat/threads/:threadId/messages", getChatMessagesAdmin);  // Get thread messages
+router.delete("/chat/messages/:messageId", deleteChatMessageAdmin);    // Delete message
+
+// ============================================
+// CALL MANAGEMENT ROUTES (NEW - Priority 2)
+// ============================================
+router.get("/calls", getCallSessionsWithCount);        // List call sessions
+router.get("/calls/stats", getCallStats);              // Call statistics
+router.get("/calls/:callId", getCallSessionByIdAdmin); // Get call details
+
+// ============================================
+// WALLET MANAGEMENT ROUTES (NEW - Priority 3)
+// ============================================
+router.get("/wallets", getWalletsWithCount);           // List all wallets
+router.get("/wallets/stats", getWalletStats);          // Wallet statistics
+router.get("/wallets/:userId", getWalletByUserIdAdmin);            // Get user wallet details
+router.post("/wallets/:userId/adjust", adjustWalletByAdmin);       // Manual wallet adjustment
+
+// ============================================
+// SKILLS MANAGEMENT ROUTES (NEW - Priority 3)
+// ============================================
+router.get("/skills", getSkillsAdmin);                 // List all skills
+router.post("/skills", createSkillAdmin);              // Create skill
+router.put("/skills/:skillId", updateSkillAdmin);      // Update skill
+router.delete("/skills/:skillId", deleteSkillAdmin);   // Delete skill
+
+// ============================================
+// DOMAINS MANAGEMENT ROUTES (NEW - Priority 3)
+// ============================================
+router.get("/domains", getDomainsAdmin);               // List all domains
+router.post("/domains", createDomainAdmin);            // Create domain
+router.put("/domains/:domainId", updateDomainAdmin);   // Update domain
+router.delete("/domains/:domainId", deleteDomainAdmin);// Delete domain
+
+// ============================================
+// RECURRING BOOKING MANAGEMENT ROUTES (NEW - Priority 3)
+// ============================================
+router.get("/recurring", getRecurringBookingsAdmin);   // List recurring bookings
+router.post("/recurring/:templateId/cancel", cancelRecurringBookingAdmin);  // Cancel recurring
 
 // ============================================
 // TRANSACTION HISTORY ROUTES (NEW)

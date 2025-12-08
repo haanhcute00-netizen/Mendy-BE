@@ -29,7 +29,7 @@ export async function getAllUsers({ limit = 50, offset = 0, status, role } = {})
      ${whereClause}
      GROUP BY u.id, up.display_name, up.avatar_url
      ORDER BY u.created_at DESC
-     LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
 
@@ -65,6 +65,119 @@ export async function updateUserStatus(userId, status, adminId) {
   return rows[0];
 }
 
+// Update user info by admin
+export async function updateUserByAdmin(userId, updates, adminId) {
+  const allowedFields = ['email', 'phone', 'handle', 'role_primary'];
+  const setClauses = [];
+  const params = [userId];
+  let paramIndex = 2;
+
+  for (const [key, value] of Object.entries(updates)) {
+    if (allowedFields.includes(key) && value !== undefined) {
+      setClauses.push(`${key} = $${paramIndex++}`);
+      params.push(value);
+    }
+  }
+
+  if (setClauses.length === 0) {
+    return null;
+  }
+
+  setClauses.push('updated_at = now()');
+
+  const { rows } = await query(
+    `UPDATE app.users SET ${setClauses.join(', ')} WHERE id = $1 RETURNING *`,
+    params
+  );
+
+  if (rows[0]) {
+    await query(
+      `INSERT INTO app.audit_logs (user_id, action, resource, resource_id, meta, created_at) VALUES ($1, $2, $3, $4, $5::jsonb, now())`,
+      [adminId, "USER_UPDATED", "USER", userId, JSON.stringify({ updates })]
+    );
+  }
+
+  return rows[0];
+}
+
+// Update user profile by admin
+export async function updateUserProfileByAdmin(userId, updates, adminId) {
+  const allowedFields = ['display_name', 'bio', 'gender', 'year_of_birth', 'avatar_url'];
+  const setClauses = [];
+  const params = [userId];
+  let paramIndex = 2;
+
+  for (const [key, value] of Object.entries(updates)) {
+    if (allowedFields.includes(key) && value !== undefined) {
+      setClauses.push(`${key} = $${paramIndex++}`);
+      params.push(value);
+    }
+  }
+
+  if (setClauses.length === 0) {
+    return null;
+  }
+
+  const { rows } = await query(
+    `UPDATE app.user_profiles SET ${setClauses.join(', ')} WHERE user_id = $1 RETURNING *`,
+    params
+  );
+
+  if (rows[0]) {
+    await query(
+      `INSERT INTO app.audit_logs (user_id, action, resource, resource_id, meta, created_at) VALUES ($1, $2, $3, $4, $5::jsonb, now())`,
+      [adminId, "USER_PROFILE_UPDATED", "USER", userId, JSON.stringify({ updates })]
+    );
+  }
+
+  return rows[0];
+}
+
+// Delete user by admin (soft delete - change status to DELETED)
+export async function deleteUserByAdmin(userId, adminId, reason) {
+  // Get user info before delete
+  const { rows: userRows } = await query(`SELECT * FROM app.users WHERE id = $1`, [userId]);
+  if (userRows.length === 0) return null;
+
+  // Soft delete - change status to DELETED
+  const { rows } = await query(
+    `UPDATE app.users SET status = 'DELETED', updated_at = now() WHERE id = $1 RETURNING id, status, updated_at`,
+    [userId]
+  );
+
+  // Log the deletion
+  await query(
+    `INSERT INTO app.audit_logs (user_id, action, resource, resource_id, meta, created_at) VALUES ($1, $2, $3, $4, $5::jsonb, now())`,
+    [adminId, "USER_DELETED", "USER", userId, JSON.stringify({ reason, user_email: userRows[0].email, user_handle: userRows[0].handle })]
+  );
+
+  return rows[0];
+}
+
+// Hard delete user (permanently remove - use with caution)
+export async function hardDeleteUserByAdmin(userId, adminId, reason) {
+  // Get user info before delete
+  const { rows: userRows } = await query(`SELECT * FROM app.users WHERE id = $1`, [userId]);
+  if (userRows.length === 0) return null;
+
+  // Delete related data first (cascade)
+  await query(`DELETE FROM app.user_profiles WHERE user_id = $1`, [userId]);
+  await query(`DELETE FROM app.wallets WHERE owner_user_id = $1`, [userId]);
+  await query(`DELETE FROM app.expert_profiles WHERE user_id = $1`, [userId]);
+  await query(`DELETE FROM app.listener_profiles WHERE user_id = $1`, [userId]);
+
+  // Delete user
+  await query(`DELETE FROM app.users WHERE id = $1`, [userId]);
+
+  // Log the deletion
+  await query(
+    `INSERT INTO app.audit_logs (user_id, action, resource, resource_id, meta, created_at) VALUES ($1, $2, $3, $4, $5::jsonb, now())`,
+    [adminId, "USER_HARD_DELETED", "USER", userId, JSON.stringify({ reason, user_email: userRows[0].email, user_handle: userRows[0].handle })]
+  );
+
+  return userRows[0];
+}
+
 
 // Content moderation
 export async function getReportedContent({ limit = 50, offset = 0, status, targetType } = {}) {
@@ -91,7 +204,7 @@ export async function getReportedContent({ limit = 50, offset = 0, status, targe
      LEFT JOIN app.posts target_post ON r.target_type = 'POST' AND r.target_id = target_post.id
      LEFT JOIN app.comments target_comment ON r.target_type = 'COMMENT' AND r.target_id = target_comment.id
      LEFT JOIN app.users target_user ON r.target_type = 'USER' AND r.target_id = target_user.id
-     ${whereClause} ORDER BY r.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY r.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return rows;
@@ -169,7 +282,7 @@ export async function getAllPosts({ limit = 50, offset = 0, authorId, privacy } 
             (SELECT COUNT(*) FROM app.comments c WHERE c.post_id = p.id) as comment_count
      FROM app.posts p JOIN app.users u ON p.author_id = u.id
      LEFT JOIN app.user_profiles up ON u.id = up.user_id
-     ${whereClause} ORDER BY p.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY p.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return rows;
@@ -274,7 +387,7 @@ export async function getUsersWithCount({ limit = 50, offset = 0, status, role, 
      FROM app.users u LEFT JOIN app.user_profiles up ON u.id = up.user_id
      LEFT JOIN app.bookings b ON u.id = b.user_id LEFT JOIN app.posts p ON u.id = p.author_id
      ${whereClause} GROUP BY u.id, up.display_name, up.avatar_url ORDER BY u.created_at DESC
-     LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
@@ -304,7 +417,7 @@ export async function getPostsWithCount({ limit = 50, offset = 0, authorId, priv
             (SELECT COUNT(*) FROM app.post_reactions pr WHERE pr.post_id = p.id) as reaction_count,
             (SELECT COUNT(*) FROM app.comments c WHERE c.post_id = p.id) as comment_count
      FROM app.posts p JOIN app.users u ON p.author_id = u.id LEFT JOIN app.user_profiles up ON u.id = up.user_id
-     ${whereClause} ORDER BY p.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY p.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
@@ -339,7 +452,7 @@ export async function getReportsWithCount({ limit = 50, offset = 0, status, targ
      LEFT JOIN app.comments target_comment ON r.target_type = 'COMMENT' AND r.target_id = target_comment.id
      LEFT JOIN app.users target_user ON r.target_type = 'USER' AND r.target_id = target_user.id
      LEFT JOIN app.users resolver ON r.resolved_by = resolver.id
-     ${whereClause} ORDER BY r.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY r.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
@@ -412,13 +525,13 @@ export async function getPayoutsWithCount({ limit = 50, offset = 0, status, user
 
   const { rows } = await query(
     `SELECT pr.*, u.handle as user_handle, up.display_name as user_name,
-            pa.bank_name, pa.account_number, pa.account_holder_name as account_holder,
+            pa.bank_name, pa.account_number, pa.account_holder,
             w.balance as current_wallet_balance
      FROM app.payout_requests pr JOIN app.users u ON pr.user_id = u.id
      LEFT JOIN app.user_profiles up ON u.id = up.user_id
      LEFT JOIN app.payout_accounts pa ON pr.payout_account_id = pa.id
      LEFT JOIN app.wallets w ON pr.user_id = w.owner_user_id
-     ${whereClause} ORDER BY pr.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY pr.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
@@ -427,7 +540,7 @@ export async function getPayoutsWithCount({ limit = 50, offset = 0, status, user
 export async function getPayoutById(payoutId) {
   const { rows } = await query(
     `SELECT pr.*, u.handle as user_handle, u.email as user_email, up.display_name as user_name,
-            pa.bank_name, pa.account_number, pa.account_holder_name as account_holder,
+            pa.bank_name, pa.account_number, pa.account_holder,
             w.balance as current_wallet_balance
      FROM app.payout_requests pr JOIN app.users u ON pr.user_id = u.id
      LEFT JOIN app.user_profiles up ON u.id = up.user_id
@@ -479,7 +592,7 @@ export async function getCommentsWithCount({ limit = 50, offset = 0, postId, aut
             (SELECT COUNT(*) FROM app.reports r WHERE r.target_type = 'COMMENT' AND r.target_id = c.id) as report_count
      FROM app.comments c JOIN app.users u ON c.author_id = u.id
      LEFT JOIN app.user_profiles up ON u.id = up.user_id LEFT JOIN app.posts p ON c.post_id = p.id
-     ${whereClause} ORDER BY c.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY c.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
@@ -535,18 +648,18 @@ export async function getTransactionsWithCount({ limit = 50, offset = 0, userId,
     params.push(userId);
   }
   if (type) {
-    whereClause += ` AND wt.type = $${paramIndex++}`;
+    whereClause += ` AND wt.tx_type = $${paramIndex++}`;
     params.push(type);
   }
 
-  const countResult = await query(`SELECT COUNT(*) as total FROM app.wallet_transactions wt ${whereClause}`, params);
+  const countResult = await query(`SELECT COUNT(*) as total FROM app.wallet_ledger wt ${whereClause}`, params);
   const total = parseInt(countResult.rows[0].total);
 
   const { rows } = await query(
     `SELECT wt.*, w.owner_user_id, u.handle as user_handle, up.display_name as user_name
-     FROM app.wallet_transactions wt JOIN app.wallets w ON wt.wallet_id = w.id
+     FROM app.wallet_ledger wt JOIN app.wallets w ON wt.wallet_id = w.id
      JOIN app.users u ON w.owner_user_id = u.id LEFT JOIN app.user_profiles up ON u.id = up.user_id
-     ${whereClause} ORDER BY wt.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex}`,
+     ${whereClause} ORDER BY wt.created_at DESC LIMIT $${paramIndex++} OFFSET $${paramIndex++}`,
     [...params, limit, offset]
   );
   return { data: rows, total };
