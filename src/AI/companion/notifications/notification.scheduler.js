@@ -1,15 +1,20 @@
 // =============================================
 // AI COMPANION - NOTIFICATION SCHEDULER
-// Cron jobs for automated notifications
+// Cron jobs for automated notifications using node-cron
 // =============================================
 
+import cron from 'node-cron';
 import * as notificationService from './notification.service.js';
 import { logger } from '../../../utils/logger.js';
 
-let schedulerInterval = null;
-let morningJobInterval = null;
-let eveningJobInterval = null;
-let cleanupJobInterval = null;
+// Store cron jobs for cleanup
+const cronJobs = {
+    pendingProcessor: null,
+    morningCheckin: null,
+    eveningCheckin: null,
+    cleanup: null,
+    proactiveMessages: null
+};
 
 // ========== NOTIFICATION SENDER ==========
 
@@ -18,6 +23,7 @@ let notificationSender = null;
 
 export const setNotificationSender = (sender) => {
     notificationSender = sender;
+    logger.info('Notification sender configured');
 };
 
 const sendNotification = async (notification) => {
@@ -123,66 +129,85 @@ const cleanupOldNotifications = async () => {
 // ========== SCHEDULER CONTROL ==========
 
 export const startScheduler = () => {
-    logger.info('Starting AI Companion notification scheduler...');
+    logger.info('Starting AI Companion notification scheduler with node-cron...');
 
     // Process pending notifications every minute
-    schedulerInterval = setInterval(processPendingNotifications, 60 * 1000);
+    // Cron: "* * * * *" = every minute
+    cronJobs.pendingProcessor = cron.schedule('* * * * *', processPendingNotifications, {
+        scheduled: true,
+        timezone: 'Asia/Ho_Chi_Minh'
+    });
 
     // Schedule morning check-ins at 6:00 AM daily
-    // Using setInterval for simplicity - in production, use node-cron
-    morningJobInterval = setInterval(() => {
-        const now = new Date();
-        if (now.getHours() === 6 && now.getMinutes() === 0) {
-            scheduleMorningCheckins();
-        }
-    }, 60 * 1000);
+    // Cron: "0 6 * * *" = at 06:00 every day
+    cronJobs.morningCheckin = cron.schedule('0 6 * * *', scheduleMorningCheckins, {
+        scheduled: true,
+        timezone: 'Asia/Ho_Chi_Minh'
+    });
 
     // Schedule evening check-ins at 9:00 PM daily
-    eveningJobInterval = setInterval(() => {
-        const now = new Date();
-        if (now.getHours() === 21 && now.getMinutes() === 0) {
-            scheduleEveningCheckins();
-        }
-    }, 60 * 1000);
+    // Cron: "0 21 * * *" = at 21:00 every day
+    cronJobs.eveningCheckin = cron.schedule('0 21 * * *', scheduleEveningCheckins, {
+        scheduled: true,
+        timezone: 'Asia/Ho_Chi_Minh'
+    });
 
     // Cleanup old notifications at 3:00 AM daily
-    cleanupJobInterval = setInterval(() => {
-        const now = new Date();
-        if (now.getHours() === 3 && now.getMinutes() === 0) {
-            cleanupOldNotifications();
+    // Cron: "0 3 * * *" = at 03:00 every day
+    cronJobs.cleanup = cron.schedule('0 3 * * *', cleanupOldNotifications, {
+        scheduled: true,
+        timezone: 'Asia/Ho_Chi_Minh'
+    });
+
+    // Process proactive messages every 30 minutes
+    // Cron: "*/30 * * * *" = every 30 minutes
+    cronJobs.proactiveMessages = cron.schedule('*/30 * * * *', async () => {
+        try {
+            // Import dynamically to avoid circular dependency
+            const scheduleService = await import('../schedule/schedule.service.js');
+            await scheduleService.processProactiveMessages?.();
+        } catch (error) {
+            logger.error('Error processing proactive messages:', error);
         }
-    }, 60 * 1000);
+    }, {
+        scheduled: true,
+        timezone: 'Asia/Ho_Chi_Minh'
+    });
 
     // Run initial scheduling
     scheduleMorningCheckins();
     scheduleEveningCheckins();
 
-    logger.info('AI Companion notification scheduler started');
+    logger.info('AI Companion notification scheduler started with node-cron');
+    logger.info('Scheduled jobs: pending (1min), morning (6AM), evening (9PM), cleanup (3AM), proactive (30min)');
 };
 
 export const stopScheduler = () => {
-    if (schedulerInterval) {
-        clearInterval(schedulerInterval);
-        schedulerInterval = null;
-    }
-    if (morningJobInterval) {
-        clearInterval(morningJobInterval);
-        morningJobInterval = null;
-    }
-    if (eveningJobInterval) {
-        clearInterval(eveningJobInterval);
-        eveningJobInterval = null;
-    }
-    if (cleanupJobInterval) {
-        clearInterval(cleanupJobInterval);
-        cleanupJobInterval = null;
-    }
+    Object.entries(cronJobs).forEach(([name, job]) => {
+        if (job) {
+            job.stop();
+            cronJobs[name] = null;
+            logger.info(`Stopped cron job: ${name}`);
+        }
+    });
     logger.info('AI Companion notification scheduler stopped');
 };
 
-// ========== MANUAL TRIGGERS (for testing) ==========
+// ========== MANUAL TRIGGERS (for testing/admin) ==========
 
 export const triggerMorningCheckins = scheduleMorningCheckins;
 export const triggerEveningCheckins = scheduleEveningCheckins;
 export const triggerProcessPending = processPendingNotifications;
 export const triggerCleanup = cleanupOldNotifications;
+
+// ========== SCHEDULER STATUS ==========
+
+export const getSchedulerStatus = () => {
+    return {
+        running: Object.values(cronJobs).some(job => job !== null),
+        jobs: Object.entries(cronJobs).map(([name, job]) => ({
+            name,
+            active: job !== null
+        }))
+    };
+};

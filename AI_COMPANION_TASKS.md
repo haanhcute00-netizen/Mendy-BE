@@ -149,22 +149,22 @@
 ## 🔧 TASKS CHUNG (Xuyên suốt)
 
 ### Cập nhật AI Core
-- [ ] Refactor `aiCore.js` để support persona context
-- [ ] Thêm emotion detection vào response flow
-- [ ] Cập nhật `prompt.js` với dynamic persona prompts
-- [ ] Thêm relationship level vào prompt context
+- [x] Refactor `aiCore.js` để support persona context
+- [x] Thêm emotion detection vào response flow
+- [x] Cập nhật `prompt.js` với dynamic persona prompts
+- [x] Thêm relationship level vào prompt context
 
 ### Infrastructure
-- [ ] Cài đặt `node-cron` cho scheduled tasks
+- [x] Cài đặt `node-cron` cho scheduled tasks
 - [ ] Setup Redis/Bull queue cho notifications (optional, khi scale)
-- [ ] Logging system cho AI interactions
-- [ ] Rate limiting cho Gemini API calls
+- [x] Logging system cho AI interactions (`src/AI/aiLogger.js`)
+- [x] Rate limiting cho Gemini API calls (`src/AI/rateLimiter.js`)
 
 ### Testing
-- [ ] Unit tests cho persona service
-- [ ] Unit tests cho emotion analyzer
-- [ ] Integration tests cho notification flow
-- [ ] Test client HTML cho AI Companion features
+- [x] Unit tests cho persona service (`src/AI/companion/__tests__/persona.service.test.js`)
+- [x] Unit tests cho emotion analyzer (`src/AI/companion/__tests__/emotion.analyzer.test.js`)
+- [x] Integration tests cho notification flow (`src/AI/companion/__tests__/notification.scheduler.test.js`)
+- [x] Test client HTML cho AI Companion features (`test_client/ai_companion_test.html`)
 
 ### Documentation
 - [ ] API documentation (Swagger/OpenAPI)

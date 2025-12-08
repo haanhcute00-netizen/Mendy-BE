@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kịch bản: Đăng nhập → Đặt lịch → Thanh toán</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .flow-steps {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step-indicator {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .step-indicator.active {
+            background: #4CAF50;
+            transform: scale(1.1);
+        }
+
+        .step-indicator.completed {
+            background: #2196F3;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 .icon {
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-success {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .btn-warning {
+            background: #ff9800;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .expert-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .expert-card:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+        }
+
+        .expert-card.selected {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+
+        .expert-card h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .expert-card .rating {
+            color: #ff9800;
+        }
+
+        .expert-card .price {
+            color: #4CAF50;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .expert-card .specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .expert-card .specialty {
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .time-slot {
+            padding: 10px;
+            text-align: center;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-slot:hover {
+            border-color: #667eea;
+        }
+
+        .time-slot.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .time-slot.unavailable {
+            background: #f5f5f5;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        .log-box {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        .log-entry.error {
+            color: #ff6b6b;
+        }
+
+        .log-entry.success {
+            color: #69db7c;
+        }
+
+        .log-entry.info {
+            color: #74c0fc;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .status-confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-paid {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .payment-method {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .payment-method:hover {
+            border-color: #667eea;
+        }
+
+        .payment-method.selected {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+        }
+
+        .payment-method img {
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🏥 Healing App - Kịch bản đặt lịch tư vấn</h1>
+
+        <!-- Flow Steps -->
+        <div class="flow-steps">
+            <div class="step-indicator active" data-step="1">1. Đăng nhập</div>
+            <div class="step-indicator" data-step="2">2. Chọn Expert</div>
+            <div class="step-indicator" data-step="3">3. Chọn thời gian</div>
+            <div class="step-indicator" data-step="4">4. Xác nhận</div>
+            <div class="step-indicator" data-step="5">5. Thanh toán</div>
+            <div class="step-indicator" data-step="6">6. Hoàn tất</div>
+        </div>
+
+        <!-- Step 1: Login -->
+        <div class="card step-content" id="step1">
+            <h2><span class="icon">🔐</span> Bước 1: Đăng nhập</h2>
+            <div class="grid">
+                <div>
+                    <div class="form-group">
+                        <label>Email hoặc Handle</label>
+                        <input type="text" id="loginEmail" value="seeker1" placeholder="email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Mật khẩu</label>
+                        <input type="password" id="loginPassword" value="123456" placeholder="Nhập mật khẩu">
+                    </div>
+                    <button class="btn btn-primary" onclick="login()">Đăng nhập</button>
+                    <button class="btn btn-warning" style="margin-left: 10px;" onclick="registerNew()">Đăng ký
+                        mới</button>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 10px;">Tài khoản test:</h3>
+                    <div style="background: #f5f5f5; padding: 15px; border-radius: 8px;">
+                        <p><strong>Seeker:</strong> seeker1 / 123456</p>
+                        <p><strong>Expert:</strong> expert1 / 123456</p>
+                        <p><strong>Admin:</strong> admin / 123456</p>
+                    </div>
+                </div>
+            </div>
+            <div id="loginResult" class="alert hidden" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Step 2: Choose Expert -->
+        <div class="card step-content hidden" id="step2">
+            <h2><span class="icon">👨‍⚕️</span> Bước 2: Chọn chuyên gia</h2>
+            <div class="form-group">
+                <label>Tìm kiếm theo chuyên môn</label>
+                <input type="text" id="searchSpecialty" placeholder="VD: anxiety, depression, stress..."
+                    onkeyup="searchExperts()">
+            </div>
+            <div id="expertsList" class="grid"></div>
+            <button class="btn btn-primary" onclick="goToStep(3)" id="btnSelectExpert" disabled>Tiếp tục →</button>
+        </div>
+
+        <!-- Step 3: Choose Time -->
+        <div class="card step-content hidden" id="step3">
+            <h2><span class="icon">📅</span> Bước 3: Chọn thời gian</h2>
+            <div class="grid">
+                <div>
+                    <div class="form-group">
+                        <label>Chọn ngày</label>
+                        <input type="date" id="bookingDate" onchange="loadTimeSlots()">
+                    </div>
+                    <div class="form-group">
+                        <label>Kênh tư vấn</label>
+                        <select id="bookingChannel">
+                            <option value="VIDEO">📹 Video Call</option>
+                            <option value="AUDIO">📞 Audio Call</option>
+                            <option value="CHAT">💬 Chat</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label>Chọn khung giờ:</label>
+                    <div id="timeSlots" class="time-slots"></div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-warning" onclick="goToStep(2)">← Quay lại</button>
+                <button class="btn btn-primary" onclick="goToStep(4)" id="btnSelectTime" disabled
+                    style="margin-left: 10px;">Tiếp tục →</button>
+            </div>
+        </div>
+
+        <!-- Step 4: Confirm Booking -->
+        <div class="card step-content hidden" id="step4">
+            <h2><span class="icon">✅</span> Bước 4: Xác nhận đặt lịch</h2>
+            <div class="grid">
+                <div>
+                    <h3 style="margin-bottom: 15px;">Thông tin đặt lịch</h3>
+                    <div id="bookingSummary"></div>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 15px;">Chi phí</h3>
+                    <div class="summary-item"><span>Phí tư vấn:</span><span id="summaryPrice">0 VND</span></div>
+                    <div class="summary-item"><span>Phí nền tảng (15%):</span><span id="summaryFee">0 VND</span></div>
+                    <div class="summary-item"><span>Tổng cộng:</span><span id="summaryTotal">0 VND</span></div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-warning" onclick="goToStep(3)">← Quay lại</button>
+                <button class="btn btn-success" onclick="createBooking()" style="margin-left: 10px;">Xác nhận & Tạo
+                    booking</button>
+            </div>
+            <div id="bookingResult" class="alert hidden" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Step 5: Payment -->
+        <div class="card step-content hidden" id="step5">
+            <h2><span class="icon">💳</span> Bước 5: Thanh toán</h2>
+            <div id="paymentInfo"></div>
+            <h3 style="margin: 20px 0 15px;">Chọn phương thức thanh toán:</h3>
+            <div class="payment-methods">
+                <div class="payment-method selected" data-method="MOMO" onclick="selectPaymentMethod('MOMO')">
+                    <div style="font-size: 40px;">📱</div>
+                    <div><strong>MoMo</strong></div>
+                    <div style="font-size: 12px; color: #666;">Ví điện tử</div>
+                </div>
+                <div class="payment-method" data-method="WALLET" onclick="selectPaymentMethod('WALLET')">
+                    <div style="font-size: 40px;">💰</div>
+                    <div><strong>Ví Healing</strong></div>
+                    <div style="font-size: 12px; color: #666;">Số dư: <span id="walletBalance">0</span> VND</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-warning" onclick="goToStep(4)">← Quay lại</button>
+                <button class="btn btn-success" onclick="processPayment()" style="margin-left: 10px;" id="btnPay">Thanh
+                    toán ngay</button>
+            </div>
+            <div id="paymentResult" class="alert hidden" style="margin-top: 15px;"></div>
+        </div>
+
+        <!-- Step 6: Complete -->
+        <div class="card step-content hidden" id="step6">
+            <h2><span class="icon">🎉</span> Bước 6: Hoàn tất!</h2>
+            <div class="alert alert-success">
+                <h3>Đặt lịch thành công!</h3>
+                <p>Cảm ơn bạn đã sử dụng dịch vụ Healing App.</p>
+            </div>
+            <div id="finalBookingInfo"></div>
+            <div style="margin-top: 20px;">
+                <button class="btn btn-primary" onclick="viewMyBookings()">Xem lịch hẹn của tôi</button>
+                <button class="btn btn-success" onclick="resetFlow()" style="margin-left: 10px;">Đặt lịch mới</button>
+            </div>
+        </div>
+
+        <!-- Log Box -->
+        <div class="card">
+            <h2><span class="icon">📋</span> API Logs</h2>
+            <div class="log-box" id="logBox"></div>
+            <button class="btn btn-danger" onclick="clearLogs()" style="margin-top: 10px;">Xóa logs</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:4000/api/v1';
+        let accessToken = '';
+        let currentUser = null;
+        let selectedExpert = null;
+        let selectedDate = null;
+        let selectedTime = null;
+        let selectedChannel = 'VIDEO';
+        let currentBooking = null;
+        let paymentMethod = 'MOMO';
+
+        // Utility functions
+        function log(message, type = 'info') {
+            const logBox = document.getElementById('logBox');
+            const time = new Date().toLocaleTimeString();
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            entry.innerHTML = `<strong>[${time}]</strong> ${message}`;
+            logBox.insertBefore(entry, logBox.firstChild);
+        }
+
+        function clearLogs() {
+            document.getElementById('logBox').innerHTML = '';
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN').format(amount) + ' VND';
+        }
+
+        function showAlert(elementId, message, type) {
+            const el = document.getElementById(elementId);
+            el.className = `alert alert-${type}`;
+            el.innerHTML = message;
+            el.classList.remove('hidden');
+        }
+
+        async function apiCall(method, endpoint, data = null) {
+            const options = {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    ...(accessToken && { 'Authorization': `Bearer ${accessToken}` })
+                }
+            };
+            if (data) options.body = JSON.stringify(data);
+
+            log(`📤 ${method} ${endpoint}`, 'info');
+            if (data) log(`Request: ${JSON.stringify(data).substring(0, 200)}...`, 'info');
+
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, options);
+                const result = await response.json();
+
+                if (response.ok) {
+                    log(`✅ Response: ${JSON.stringify(result).substring(0, 300)}...`, 'success');
+                } else {
+                    log(`❌ Error: ${result.message || JSON.stringify(result)}`, 'error');
+                }
+                return { ok: response.ok, data: result };
+            } catch (error) {
+                log(`❌ Network Error: ${error.message}`, 'error');
+                return { ok: false, data: { message: error.message } };
+            }
+        }
+
+        function goToStep(step) {
+            document.querySelectorAll('.step-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`step${step}`).classList.remove('hidden');
+
+            document.querySelectorAll('.step-indicator').forEach(el => {
+                const s = parseInt(el.dataset.step);
+                el.classList.remove('active', 'completed');
+                if (s < step) el.classList.add('completed');
+                if (s === step) el.classList.add('active');
+            });
+
+            if (step === 4) updateBookingSummary();
+            if (step === 5) preparePayment();
+        }
+
+        // Step 1: Login
+        async function login() {
+            const handle = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            // API login dùng "handle" không phải "email"
+            const result = await apiCall('POST', '/auth/login', { handle, password });
+
+            if (result.ok && result.data.data) {
+                accessToken = result.data.data.access_token;
+                currentUser = result.data.data.user;
+                showAlert('loginResult', `✅ Đăng nhập thành công! Xin chào <strong>${currentUser.handle}</strong>`, 'success');
+
+                setTimeout(() => {
+                    loadExperts();
+                    goToStep(2);
+                }, 1000);
+            } else {
+                const errorMsg = result.data.message || 'Đăng nhập thất bại';
+                if (errorMsg.includes('Invalid handle')) {
+                    showAlert('loginResult', `❌ Tài khoản "${handle}" không tồn tại. Hãy đăng ký mới hoặc dùng tài khoản test.`, 'error');
+                } else if (errorMsg.includes('Invalid password')) {
+                    showAlert('loginResult', `❌ Mật khẩu không đúng.`, 'error');
+                } else {
+                    showAlert('loginResult', `❌ ${errorMsg}`, 'error');
+                }
+            }
+        }
+
+        async function registerNew() {
+            const handle = 'user_' + Date.now();
+            const email = handle + '@test.com';
+            const password = '123456';
+
+            const result = await apiCall('POST', '/auth/register', {
+                handle,
+                email,
+                password,
+                role: 'SEEKER'
+            });
+
+            if (result.ok) {
+                document.getElementById('loginEmail').value = handle;
+                document.getElementById('loginPassword').value = password;
+                showAlert('loginResult', `✅ Đăng ký thành công! Handle: <strong>${handle}</strong>. Hãy đăng nhập.`, 'success');
+            } else {
+                showAlert('loginResult', `❌ Đăng ký thất bại: ${result.data.message}`, 'error');
+            }
+        }
+
+        // Step 2: Load and Select Expert
+        async function loadExperts() {
+            const result = await apiCall('GET', '/experts?limit=20');
+
+            if (result.ok && result.data.data) {
+                const experts = result.data.data;
+                renderExperts(experts);
+            }
+        }
+
+        async function searchExperts() {
+            const keyword = document.getElementById('searchSpecialty').value;
+            // Dùng expert-search/advanced endpoint
+            let endpoint = '/experts?limit=20';
+            if (keyword) {
+                endpoint = `/expert-search/advanced?keyword=${encodeURIComponent(keyword)}&limit=20`;
+            }
+            const result = await apiCall('GET', endpoint);
+
+            if (result.ok && result.data.data) {
+                const experts = result.data.data.experts || result.data.data;
+                renderExperts(Array.isArray(experts) ? experts : []);
+            } else {
+                // Fallback nếu search thất bại
+                loadExperts();
+            }
+        }
+
+        function renderExperts(experts) {
+            const container = document.getElementById('expertsList');
+            container.innerHTML = experts.map(expert => `
+                <div class="expert-card" data-id="${expert.user_id || expert.id}" onclick="selectExpert(${expert.user_id || expert.id}, this)">
+                    <h3>${expert.display_name || expert.handle || 'Expert'}</h3>
+                    <div class="rating">⭐ ${expert.rating_avg || '4.5'} / 5</div>
+                    <div class="price">${formatCurrency(expert.price_per_session || 300000)}</div>
+                    <div class="specialties">
+                        ${(expert.specialties || ['Tâm lý']).map(s => `<span class="specialty">${s}</span>`).join('')}
+                    </div>
+                    <p style="margin-top: 10px; color: #666; font-size: 13px;">${expert.intro || 'Chuyên gia tư vấn tâm lý'}</p>
+                </div>
+            `).join('');
+        }
+
+        function selectExpert(expertId, element) {
+            document.querySelectorAll('.expert-card').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+
+            selectedExpert = {
+                id: expertId,
+                name: element.querySelector('h3').textContent,
+                price: parseInt(element.querySelector('.price').textContent.replace(/[^\d]/g, ''))
+            };
+
+            document.getElementById('btnSelectExpert').disabled = false;
+            log(`Đã chọn expert: ${selectedExpert.name} (ID: ${expertId})`, 'info');
+        }
+
+        // Step 3: Choose Time
+        function loadTimeSlots() {
+            selectedDate = document.getElementById('bookingDate').value;
+            if (!selectedDate) return;
+
+            const container = document.getElementById('timeSlots');
+            const slots = [];
+
+            // Generate time slots from 8:00 to 20:00
+            for (let hour = 8; hour <= 20; hour++) {
+                const time = `${hour.toString().padStart(2, '0')}:00`;
+                const isAvailable = Math.random() > 0.3; // Random availability for demo
+                slots.push({ time, available: isAvailable });
+            }
+
+            container.innerHTML = slots.map(slot => `
+                <div class="time-slot ${slot.available ? '' : 'unavailable'}" 
+                     data-time="${slot.time}"
+                     onclick="${slot.available ? `selectTimeSlot('${slot.time}', this)` : ''}">
+                    ${slot.time}
+                </div>
+            `).join('');
+        }
+
+        function selectTimeSlot(time, element) {
+            document.querySelectorAll('.time-slot').forEach(el => el.classList.remove('selected'));
+            element.classList.add('selected');
+            selectedTime = time;
+            document.getElementById('btnSelectTime').disabled = false;
+            log(`Đã chọn thời gian: ${selectedDate} ${time}`, 'info');
+        }
+
+        // Step 4: Booking Summary
+        function updateBookingSummary() {
+            selectedChannel = document.getElementById('bookingChannel').value;
+            const price = selectedExpert.price;
+            const fee = Math.round(price * 0.15);
+            const total = price + fee;
+
+            document.getElementById('bookingSummary').innerHTML = `
+                <div class="summary-item"><span>Chuyên gia:</span><span>${selectedExpert.name}</span></div>
+                <div class="summary-item"><span>Ngày:</span><span>${selectedDate}</span></div>
+                <div class="summary-item"><span>Giờ:</span><span>${selectedTime}</span></div>
+                <div class="summary-item"><span>Kênh:</span><span>${selectedChannel}</span></div>
+                <div class="summary-item"><span>Thời lượng:</span><span>60 phút</span></div>
+            `;
+
+            document.getElementById('summaryPrice').textContent = formatCurrency(price);
+            document.getElementById('summaryFee').textContent = formatCurrency(fee);
+            document.getElementById('summaryTotal').textContent = formatCurrency(total);
+        }
+
+        // Create Booking
+        async function createBooking() {
+            const startAt = new Date(`${selectedDate}T${selectedTime}:00`);
+            const endAt = new Date(startAt.getTime() + 60 * 60 * 1000); // +1 hour
+
+            // API dùng snake_case: expert_id, start_at, end_at
+            const bookingData = {
+                expert_id: selectedExpert.id,
+                start_at: startAt.toISOString(),
+                end_at: endAt.toISOString(),
+                channel: selectedChannel
+            };
+
+            log(`Tạo booking với data: ${JSON.stringify(bookingData)}`, 'info');
+            const result = await apiCall('POST', '/bookings', bookingData);
+
+            if (result.ok && result.data.data) {
+                // Response có thể là { booking: {...} } hoặc trực tiếp booking object
+                const bookingData = result.data.data.booking || result.data.data;
+                currentBooking = {
+                    id: bookingData.id || bookingData.booking_id,
+                    status: bookingData.status,
+                    price: parseFloat(bookingData.price) || selectedExpert.price,
+                    channel: bookingData.channel
+                };
+                log(`Booking created: ${JSON.stringify(currentBooking)}`, 'success');
+                showAlert('bookingResult', `✅ Tạo booking thành công! ID: <strong>${currentBooking.id}</strong>`, 'success');
+
+                setTimeout(() => goToStep(5), 1500);
+            } else {
+                showAlert('bookingResult', `❌ Tạo booking thất bại: ${result.data.message}`, 'error');
+            }
+        }
+
+        // Step 5: Payment
+        async function preparePayment() {
+            // Load wallet balance
+            const walletResult = await apiCall('GET', '/wallets/me');
+            if (walletResult.ok && walletResult.data.data) {
+                document.getElementById('walletBalance').textContent =
+                    new Intl.NumberFormat('vi-VN').format(walletResult.data.data.balance || 0);
+            }
+
+            // Show booking info
+            document.getElementById('paymentInfo').innerHTML = `
+                <div class="alert alert-info">
+                    <strong>Booking #${currentBooking.id}</strong><br>
+                    Trạng thái: <span class="status-badge status-pending">${currentBooking.status}</span><br>
+                    Số tiền: <strong>${formatCurrency(currentBooking.price)}</strong>
+                </div>
+            `;
+        }
+
+        function selectPaymentMethod(method) {
+            paymentMethod = method;
+            document.querySelectorAll('.payment-method').forEach(el => {
+                el.classList.toggle('selected', el.dataset.method === method);
+            });
+            log(`Đã chọn phương thức thanh toán: ${method}`, 'info');
+        }
+
+        async function processPayment() {
+            document.getElementById('btnPay').disabled = true;
+            document.getElementById('btnPay').textContent = 'Đang xử lý...';
+
+            if (paymentMethod === 'MOMO') {
+                // Create MoMo payment - API cần booking_id (snake_case)
+                const result = await apiCall('POST', '/payments/momo/create', {
+                    booking_id: parseInt(currentBooking.id)
+                });
+
+                if (result.ok && result.data.data) {
+                    const paymentData = result.data.data;
+                    showAlert('paymentResult', `
+                        ✅ Đã tạo yêu cầu thanh toán MoMo!<br>
+                        <strong>Payment ID:</strong> ${paymentData.id || paymentData.orderId}<br>
+                        ${paymentData.payUrl ? `<a href="${paymentData.payUrl}" target="_blank" class="btn btn-success" style="margin-top: 10px; display: inline-block;">Mở MoMo để thanh toán</a>` : ''}
+                    `, 'success');
+
+                    // Simulate payment success after 3 seconds (for demo)
+                    setTimeout(async () => {
+                        log('Giả lập thanh toán thành công...', 'info');
+                        await simulatePaymentSuccess();
+                    }, 3000);
+                } else {
+                    showAlert('paymentResult', `❌ Tạo thanh toán thất bại: ${result.data.message}`, 'error');
+                    document.getElementById('btnPay').disabled = false;
+                    document.getElementById('btnPay').textContent = 'Thanh toán ngay';
+                }
+            } else if (paymentMethod === 'WALLET') {
+                // Pay with wallet
+                const result = await apiCall('POST', '/payments/wallet/pay', {
+                    bookingId: currentBooking.id
+                });
+
+                if (result.ok) {
+                    showAlert('paymentResult', '✅ Thanh toán bằng ví thành công!', 'success');
+                    setTimeout(() => completeBooking(), 1500);
+                } else {
+                    showAlert('paymentResult', `❌ Thanh toán thất bại: ${result.data.message}`, 'error');
+                    document.getElementById('btnPay').disabled = false;
+                    document.getElementById('btnPay').textContent = 'Thanh toán ngay';
+                }
+            }
+        }
+
+        async function simulatePaymentSuccess() {
+            // In real scenario, this would be triggered by MoMo callback
+            // For demo, we'll just update the booking status
+            showAlert('paymentResult', '✅ Thanh toán MoMo thành công! (Giả lập)', 'success');
+            await completeBooking();
+        }
+
+        async function completeBooking() {
+            // Refresh booking status
+            const result = await apiCall('GET', `/bookings/${currentBooking.id}`);
+            if (result.ok && result.data.data) {
+                currentBooking = result.data.data;
+            }
+
+            // Show final info
+            document.getElementById('finalBookingInfo').innerHTML = `
+                <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 15px;">📋 Chi tiết lịch hẹn</h3>
+                    <div class="summary-item"><span>Mã booking:</span><span>#${currentBooking.id}</span></div>
+                    <div class="summary-item"><span>Chuyên gia:</span><span>${selectedExpert.name}</span></div>
+                    <div class="summary-item"><span>Thời gian:</span><span>${selectedDate} ${selectedTime}</span></div>
+                    <div class="summary-item"><span>Kênh:</span><span>${currentBooking.channel}</span></div>
+                    <div class="summary-item"><span>Trạng thái:</span><span class="status-badge status-confirmed">${currentBooking.status}</span></div>
+                    <div class="summary-item"><span>Số tiền:</span><span>${formatCurrency(currentBooking.price)}</span></div>
+                </div>
+            `;
+
+            goToStep(6);
+        }
+
+        async function viewMyBookings() {
+            const result = await apiCall('GET', '/bookings/me');
+            if (result.ok && result.data.data) {
+                log(`Danh sách booking: ${JSON.stringify(result.data.data)}`, 'success');
+                alert(`Bạn có ${result.data.data.length} lịch hẹn. Xem chi tiết trong console log.`);
+            }
+        }
+
+        function resetFlow() {
+            selectedExpert = null;
+            selectedDate = null;
+            selectedTime = null;
+            currentBooking = null;
+
+            document.getElementById('btnSelectExpert').disabled = true;
+            document.getElementById('btnSelectTime').disabled = true;
+            document.getElementById('btnPay').disabled = false;
+            document.getElementById('btnPay').textContent = 'Thanh toán ngay';
+
+            document.querySelectorAll('.alert').forEach(el => el.classList.add('hidden'));
+
+            loadExperts();
+            goToStep(2);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('bookingDate').value = tomorrow.toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = tomorrow.toISOString().split('T')[0];
+
+            log('🚀 Ứng dụng đã sẵn sàng!', 'success');
+        });
+    </script>
+</body>
+
+</html>
