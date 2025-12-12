@@ -1,14 +1,22 @@
 import pg from "pg";
 const { Pool } = pg;
 
+// Debug: Log DATABASE_URL (masked)
+const dbUrl = process.env.DATABASE_URL;
+if (dbUrl) {
+  console.log("📦 DATABASE_URL loaded:", dbUrl.substring(0, 30) + "...");
+} else {
+  console.error("❌ DATABASE_URL is not defined!");
+}
+
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
-  max: 20, // Maximum number of clients in the pool
-  idleTimeoutMillis: 30000, // Close idle clients after 30 seconds
-  connectionTimeoutMillis: 2000, // Return an error after 2 seconds if connection could not be established
-  // ssl: {
-  //   rejectUnauthorized: false, 
-  // }
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 10000, // Tăng lên 10 giây cho Neon cold start
+  ssl: {
+    rejectUnauthorized: false,
+  }
 });
 
 export async function query(text, params) {
