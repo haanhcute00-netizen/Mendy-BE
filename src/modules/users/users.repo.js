@@ -10,6 +10,17 @@ export async function createUserWithHandle({ handle, passwordHash }) {
   return rows[0];
 }
 
+// NEW: Create user with email support
+export async function createUser({ handle, email, passwordHash }) {
+  const { rows } = await query(
+    `INSERT INTO app.users (handle, email, password_hash)
+     VALUES ($1, $2, $3)
+     RETURNING id, handle, email, role_primary, status, created_at`,
+    [handle, email || null, passwordHash]
+  );
+  return rows[0];
+}
+
 export const findAppUserById = async (id) => {
   const result = await query(
     `SELECT * FROM app.users WHERE id = $1`,
@@ -20,10 +31,33 @@ export const findAppUserById = async (id) => {
 
 export async function getByHandle(handle) {
   const { rows } = await query(
-    `SELECT id, handle, password_hash, role_primary, is_email_verified, email
+    `SELECT id, handle, password_hash, role_primary, is_email_verified, email, status
      FROM app.users
      WHERE handle = $1`,
     [handle]
+  );
+  return rows[0];
+}
+
+// NEW: Get user by email
+export async function getByEmail(email) {
+  const { rows } = await query(
+    `SELECT id, handle, email, password_hash, role_primary, is_email_verified, status
+     FROM app.users
+     WHERE LOWER(email) = LOWER($1)`,
+    [email]
+  );
+  return rows[0];
+}
+
+// NEW: Get user by email OR handle (for flexible login)
+export async function getByEmailOrHandle(identifier) {
+  const { rows } = await query(
+    `SELECT id, handle, email, password_hash, role_primary, is_email_verified, status
+     FROM app.users
+     WHERE LOWER(email) = LOWER($1) OR handle = $1
+     LIMIT 1`,
+    [identifier]
   );
   return rows[0];
 }

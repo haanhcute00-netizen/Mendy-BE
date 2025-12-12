@@ -23,16 +23,29 @@ export const saveAIChatMessage = async (userId, role, content, options = {}) => 
     return result.rows[0];
 };
 
-export const getAIChatHistory = async (userId, limit = 50) => {
+// Task 14: Add pagination support for chat history
+export const getAIChatHistory = async (userId, limit = 50, offset = 0) => {
+    // Get total count
+    const countSql = `SELECT COUNT(*) as total FROM app.ai_chat_history WHERE user_id = $1`;
+    const countResult = await query(countSql, [userId]);
+    const total = parseInt(countResult.rows[0]?.total || 0);
+
     const sql = `
         SELECT id, role, content, emotion_detected, keywords, created_at
         FROM app.ai_chat_history
         WHERE user_id = $1
         ORDER BY created_at DESC
-        LIMIT $2
+        LIMIT $2 OFFSET $3
     `;
-    const result = await query(sql, [userId, limit]);
-    return result.rows.reverse(); // Oldest first
+    const result = await query(sql, [userId, limit, offset]);
+
+    return {
+        messages: result.rows.reverse(), // Oldest first
+        total,
+        limit,
+        offset,
+        hasMore: offset + result.rows.length < total
+    };
 };
 
 export const getRecentAIChatForPrompt = async (userId, limit = 10) => {

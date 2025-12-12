@@ -143,16 +143,9 @@ export function normalizeKeywords(aiKeywords) {
 export async function findExpertsByKeywordsSmart(aiKeywords) {
   const normalized = normalizeKeywords(aiKeywords);
 
+  // Task 9: Handle case when no keywords or no experts found
   if (normalized.length === 0) {
-    // fallback: đề xuất chuyên gia top rating
-    const fallback = await query(`
-      SELECT ep.id, ep.price_per_session, ep.rating_avg, up.display_name, up.avatar_url
-      FROM app.expert_profiles ep
-      JOIN app.user_profiles up ON ep.user_id = up.user_id
-      ORDER BY ep.rating_avg DESC
-      LIMIT 5;
-    `);
-    return { experts: fallback.rows, matchedKeywords: [] };
+    return getFallbackExperts('no_keywords');
   }
 
   const sql = `
@@ -167,5 +160,34 @@ export async function findExpertsByKeywordsSmart(aiKeywords) {
   `;
   const result = await query(sql, [normalized]);
 
-  return { experts: result.rows, matchedKeywords: normalized };
+  // Task 9: Fallback if no experts found for keywords
+  if (result.rows.length === 0) {
+    return getFallbackExperts('no_match', normalized);
+  }
+
+  return { experts: result.rows, matchedKeywords: normalized, fallback: false };
+}
+
+// Task 9: Fallback expert function
+async function getFallbackExperts(reason, attemptedKeywords = []) {
+  const fallbackSql = `
+    SELECT ep.id, ep.price_per_session, ep.rating_avg, 
+           up.display_name, up.avatar_url, ep.intro
+    FROM app.expert_profiles ep
+    JOIN app.user_profiles up ON ep.user_id = up.user_id
+    WHERE ep.rating_avg IS NOT NULL
+    ORDER BY ep.rating_avg DESC NULLS LAST
+    LIMIT 5;
+  `;
+  const fallback = await query(fallbackSql);
+
+  return {
+    experts: fallback.rows,
+    matchedKeywords: attemptedKeywords,
+    fallback: true,
+    fallback_reason: reason,
+    message: reason === 'no_match'
+      ? 'Không tìm thấy chuyên gia phù hợp với từ khóa, đây là các chuyên gia được đánh giá cao.'
+      : 'Đây là các chuyên gia được đánh giá cao mà bạn có thể tham khảo.'
+  };
 }

@@ -5,18 +5,23 @@ import { z } from "zod";
 export const userSchemas = {
   register: z.object({
     handle: z.string().min(3).max(20).regex(/^[a-zA-Z0-9_]+$/, "Handle can only contain letters, numbers, and underscores"),
-    password: z.string().min(8).max(100, "Password must be less than 100 characters"),
-    email: z.string().email().optional().or(z.literal("")),
-    phone: z.string().regex(/^[0-9+]{10,15}$/).optional().or(z.literal(""))
-  }).refine(data => data.email || data.phone, {
-    message: "Either email or phone is required",
-    path: ["email"]
+    email: z.string().email("Invalid email format").optional(), // Phase 1: optional
+    password: z.string().min(8).max(100, "Password must be less than 100 characters")
   }),
 
   login: z.object({
-    handle: z.string().min(1, "Handle is required"),
+    // Accept either identifier, email, or handle for flexibility
+    identifier: z.string().min(1).optional(),
+    email: z.string().email().optional(),
+    handle: z.string().min(1).optional(),
     password: z.string().min(1, "Password is required")
-  }),
+  }).refine(
+    data => data.identifier || data.email || data.handle,
+    {
+      message: "Email, handle, or identifier is required",
+      path: ["identifier"]
+    }
+  ),
 
   refresh: z.object({
     token: z.string().min(1, "Refresh token is required")

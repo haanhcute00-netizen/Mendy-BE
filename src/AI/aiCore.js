@@ -1,26 +1,82 @@
 import { buildPrompt, buildPromptWithPersona } from "./prompt.js";
 import { getRecentAIChatForPrompt, saveAIChatMessage, getAIChatHistory, clearAIChatHistory } from "./database.js";
 import { findExpertsByKeywordsSmart } from "./database/expert.js";
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import * as personaService from "./companion/persona/persona.service.js";
 import * as emotionService from "./companion/emotion/emotion.service.js";
 import { logChatInteraction, logGeminiRequest, logGeminiResponse, logGeminiError } from "./aiLogger.js";
 import { checkGeminiRateLimit, recordGeminiRequest } from "./rateLimiter.js";
 import { v4 as uuidv4 } from 'uuid';
+import { createChildLogger } from "../utils/logger.js";
+// Task 5: Use shared AI config
+import { getGeminiModel, GEMINI_MODEL, AI_LIMITS } from "./config.js";
 
-import dotenv from "dotenv";
-dotenv.config();
+// Create logger for AI Core
+const logger = createChildLogger({ module: 'ai-core' });
 
-// Khởi tạo Gemini với thư viện chính thức
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-// Sử dụng model gemini-2.0-flash (hoặc gemini-pro nếu không có)
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+// Task 5: Use shared Gemini model
+const getModel = () => getGeminiModel();
+
+// ========== INPUT VALIDATION (Task 1) ==========
+const MAX_MESSAGE_LENGTH = AI_LIMITS.MAX_MESSAGE_LENGTH;
+
+const validateChatInput = (userId, userMessage) => {
+    // Validate userId
+    if (userId === undefined || userId === null) {
+        return { valid: false, error: 'userId is required' };
+    }
+    if (typeof userId !== 'number' || userId <= 0 || !Number.isInteger(userId)) {
+        return { valid: false, error: 'userId must be a positive integer' };
+    }
+
+    // Validate userMessage
+    if (!userMessage) {
+        return { valid: false, error: 'userMessage is required' };
+    }
+    if (typeof userMessage !== 'string') {
+        return { valid: false, error: 'userMessage must be a string' };
+    }
+
+    // Trim and check empty
+    const trimmed = userMessage.trim();
+    if (trimmed.length === 0) {
+        return { valid: false, error: 'userMessage cannot be empty' };
+    }
+
+    // Check max length
+    if (trimmed.length > MAX_MESSAGE_LENGTH) {
+        return { valid: false, error: `userMessage exceeds maximum length of ${MAX_MESSAGE_LENGTH} characters` };
+    }
+
+    return { valid: true, sanitizedMessage: trimmed };
+};
+
+const sanitizeInput = (text) => {
+    // Remove potential injection patterns
+    return text
+        .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '') // Remove control characters
+        .trim();
+};
+
+// Task 5: Removed - now using shared config from ./config.js
 
 export const handleChat = async (userId, userMessage) => {
     const startTime = Date.now();
     const requestId = uuidv4();
 
     try {
+        // Task 1: Validate input
+        const validation = validateChatInput(userId, userMessage);
+        if (!validation.valid) {
+            return {
+                aiMessage: "Xin lỗi, tin nhắn không hợp lệ. Vui lòng thử lại.",
+                suggestions: { experts: [] },
+                error: validation.error
+            };
+        }
+
+        // Sanitize the message
+        userMessage = sanitizeInput(validation.sanitizedMessage);
+
         // Check rate limit before processing
         const rateLimitCheck = await checkGeminiRateLimit(userId, 'chat');
         if (!rateLimitCheck.allowed) {
@@ -62,7 +118,8 @@ export const handleChat = async (userId, userMessage) => {
                 );
             }
         } catch (err) {
-            console.log("Persona loading skipped:", err.message);
+            // Task 2: Use logger instead of console.log
+            logger.debug("Persona loading skipped:", err.message);
         }
 
         // Save user message
@@ -70,13 +127,22 @@ export const handleChat = async (userId, userMessage) => {
 
         const prompt = buildPromptWithPersona(conversationHistory, userMessage, personaPrompt);
 
-        // Log Gemini request
-        logGeminiRequest(requestId, { prompt_length: prompt.length, model: 'gemini-2.5-flash' });
+        // Log Gemini request - Task 5: Use shared model name
+        logGeminiRequest(requestId, { prompt_length: prompt.length, model: GEMINI_MODEL });
 
         // Record rate limit
-        recordGeminiRequest(userId, 'chat');
+        await recordGeminiRequest(userId, 'chat');
 
-        // Sử dụng thư viện @google/generative-ai thay vì fetch API
+        // Task 5: Use shared Gemini model
+        const model = getModel();
+        if (!model) {
+            logger.error("Gemini model not available");
+            return {
+                aiMessage: "Xin lỗi, hệ thống AI đang bảo trì. Vui lòng thử lại sau.",
+                suggestions: { experts: [] },
+            };
+        }
+
         const result = await model.generateContent(prompt);
         const response = await result.response;
         const aiRaw = response.text();
@@ -88,9 +154,11 @@ export const handleChat = async (userId, userMessage) => {
             success: true
         });
 
-        console.log("===== RAW GEMINI RESPONSE =====");
-        console.log(aiRaw);
-        console.log("================================");
+        // Task 2: Replace console.log with logger.debug (only in development)
+        if (process.env.NODE_ENV !== 'production') {
+            const logPreview = aiRaw?.substring(0, 500) || '';
+            logger.debug(`Gemini response preview: ${logPreview}${aiRaw?.length > 500 ? '...[truncated]' : ''}`);
+        }
 
         if (!aiRaw) {
             return {
@@ -115,8 +183,11 @@ export const handleChat = async (userId, userMessage) => {
         try {
             aiJSON = JSON.parse(clean);
         } catch (err) {
-            console.log("❌ JSON parse error - CLEAN FAILED");
-            console.log("AI RAW CLEANED:", clean);
+            // Task 2: Use logger instead of console.log
+            logger.warn("JSON parse error - CLEAN FAILED", {
+                preview: clean.substring(0, 200),
+                requestId
+            });
             return {
                 aiMessage: aiRaw,
                 suggestions: { experts: [] },
@@ -143,11 +214,12 @@ export const handleChat = async (userId, userMessage) => {
         // ==============================
         // 3. Detect and log emotion (async, non-blocking)
         // ==============================
+        // Task 2: Use logger instead of console.log
         try {
             emotionService.detectAndLogEmotion(userId, userMessage, 'chat', { useAI: false })
-                .catch(err => console.log("Emotion logging failed:", err.message));
+                .catch(err => logger.debug("Emotion logging failed:", err.message));
         } catch (err) {
-            console.log("Emotion detection skipped:", err.message);
+            logger.debug("Emotion detection skipped:", err.message);
         }
 
         // ==============================
@@ -183,7 +255,8 @@ export const handleChat = async (userId, userMessage) => {
         };
 
     } catch (error) {
-        console.error("Error in AI Core Service:", error);
+        // Task 2: Use logger instead of console.error
+        logger.error("Error in AI Core Service:", { error: error.message, stack: error.stack });
 
         // Log error
         logGeminiError(requestId, {

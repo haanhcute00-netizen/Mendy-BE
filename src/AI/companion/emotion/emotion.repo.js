@@ -346,3 +346,86 @@ export const getUserPatterns = async (userId) => {
     const result = await query(sql, [userId]);
     return result.rows;
 };
+
+
+// ========== CRISIS ALERTS (Task 3) ==========
+
+export const createCrisisAlert = async (userId, alert) => {
+    const sql = `
+        INSERT INTO app.crisis_alerts (
+            user_id, alert_type, severity, trigger_text, 
+            emotion_data, status, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, NOW())
+        RETURNING *
+    `;
+    const values = [
+        userId,
+        alert.alert_type || 'needs_support',
+        alert.severity || 'moderate',
+        alert.trigger_text || null,
+        JSON.stringify(alert.emotion_data || {}),
+        alert.status || 'pending'
+    ];
+
+    try {
+        const result = await query(sql, values);
+        return result.rows[0];
+    } catch (err) {
+        // Table might not exist yet, log and continue
+        console.error('Crisis alert table may not exist:', err.message);
+        return null;
+    }
+};
+
+export const getCrisisAlerts = async (userId, status = null, limit = 20) => {
+    let sql = `
+        SELECT * FROM app.crisis_alerts
+        WHERE user_id = $1
+    `;
+    const values = [userId];
+
+    if (status) {
+        sql += ` AND status = $2`;
+        values.push(status);
+    }
+
+    sql += ` ORDER BY created_at DESC LIMIT $${values.length + 1}`;
+    values.push(limit);
+
+    const result = await query(sql, values);
+    return result.rows;
+};
+
+export const updateCrisisAlertStatus = async (alertId, status, resolvedBy = null, notes = null) => {
+    const sql = `
+        UPDATE app.crisis_alerts
+        SET status = $2, 
+            resolved_by = $3, 
+            resolved_at = CASE WHEN $2 = 'resolved' THEN NOW() ELSE NULL END,
+            resolution_notes = $4,
+            updated_at = NOW()
+        WHERE id = $1
+        RETURNING *
+    `;
+    const result = await query(sql, [alertId, status, resolvedBy, notes]);
+    return result.rows[0];
+};
+
+export const getPendingCrisisAlerts = async () => {
+    const sql = `
+        SELECT ca.*, u.full_name, u.email
+        FROM app.crisis_alerts ca
+        JOIN app.users u ON ca.user_id = u.id
+        WHERE ca.status = 'pending'
+        ORDER BY 
+            CASE ca.severity 
+                WHEN 'critical' THEN 1 
+                WHEN 'high' THEN 2 
+                WHEN 'moderate' THEN 3 
+                ELSE 4 
+            END,
+            ca.created_at ASC
+    `;
+    const result = await query(sql);
+    return result.rows;
+};

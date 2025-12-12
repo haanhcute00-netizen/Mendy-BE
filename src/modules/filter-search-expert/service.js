@@ -1,11 +1,21 @@
-// src/modules/experts/experts.search.service.js
+// src/modules/filter-search-expert/service.js
 // Advanced Expert Search Service
 import * as SearchRepo from "./repo.js";
+import { cache } from "../../utils/cache.js";
+import { logger } from "../../utils/logger.js";
+
+// Cache keys and TTL
+const FACETS_CACHE_KEY = 'expert_search_facets';
+const FACETS_CACHE_TTL = 300000; // 5 minutes in milliseconds
 
 /**
  * Advanced search experts with comprehensive filters
+ * @param {Object} filters - Search filters
+ * @returns {Promise<Object>} Search results with pagination
  */
 export async function advancedSearch(filters) {
+    const startTime = Date.now();
+
     try {
         // Normalize and validate filters
         const normalizedFilters = normalizeFilters(filters);
@@ -18,44 +28,93 @@ export async function advancedSearch(filters) {
             ...expert,
             // Compute availability status text
             availability_status: getAvailabilityStatus(expert),
-            // Format price for display
+            // Format price for display (returns null if no price, let frontend handle i18n)
             price_formatted: formatPrice(expert.price_per_session),
             // Compute experience level
             experience_level: getExperienceLevel(expert)
         }));
 
+        // Log search metrics
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'expert_search',
+            filters: sanitizeFiltersForLog(normalizedFilters),
+            resultCount: result.experts.length,
+            totalCount: result.pagination.total,
+            duration: `${duration}ms`
+        });
+
         return result;
     } catch (error) {
+        logger.error({
+            type: 'expert_search_error',
+            error: error.message,
+            filters: sanitizeFiltersForLog(filters)
+        });
         throw error;
     }
 }
 
 /**
- * Get search facets for filter UI
+ * Get search facets for filter UI (cached)
+ * @returns {Promise<Object>} Facets data
  */
 export async function getSearchFacets() {
     try {
-        return await SearchRepo.getSearchFacets();
+        // Try cache first
+        const cached = cache.get(FACETS_CACHE_KEY);
+        if (cached) {
+            logger.debug({ type: 'cache_hit', key: FACETS_CACHE_KEY });
+            return cached;
+        }
+
+        // Fetch from DB
+        const facets = await SearchRepo.getSearchFacets();
+
+        // Cache result
+        cache.set(FACETS_CACHE_KEY, facets, FACETS_CACHE_TTL);
+        logger.debug({ type: 'cache_set', key: FACETS_CACHE_KEY, ttl: FACETS_CACHE_TTL });
+
+        return facets;
     } catch (error) {
+        logger.error({
+            type: 'facets_error',
+            error: error.message
+        });
         throw error;
     }
+}
+
+/**
+ * Invalidate facets cache (call when expert data changes)
+ */
+export function invalidateFacetsCache() {
+    cache.delete(FACETS_CACHE_KEY);
+    logger.debug({ type: 'cache_invalidate', key: FACETS_CACHE_KEY });
 }
 
 /**
  * Get expert full details
+ * @param {number} expertId - Expert ID
+ * @returns {Promise<Object>} Expert details with all related data
  */
 export async function getExpertFullDetails(expertId) {
+    const startTime = Date.now();
+
     try {
         const expert = await SearchRepo.getExpertFullDetails(expertId);
 
         if (!expert) {
-            throw Object.assign(new Error("Expert not found"), { status: 404 });
+            const error = new Error("Expert not found");
+            error.status = 404;
+            error.code = 'SEARCH_EXPERT_NOT_FOUND';
+            throw error;
         }
 
         // Get similar experts
         const similarExperts = await SearchRepo.getSimilarExperts(expertId, 5);
 
-        return {
+        const result = {
             ...expert,
             similar_experts: similarExperts,
             // Computed fields
@@ -64,18 +123,49 @@ export async function getExpertFullDetails(expertId) {
             experience_level: getExperienceLevel(expert),
             total_experience_years: calculateTotalExperience(expert.experience)
         };
+
+        // Log request
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'expert_details',
+            expertId,
+            duration: `${duration}ms`
+        });
+
+        return result;
     } catch (error) {
+        logger.error({
+            type: 'expert_details_error',
+            expertId,
+            error: error.message
+        });
         throw error;
     }
 }
 
 /**
  * Get similar experts
+ * @param {number} expertId - Expert ID
+ * @param {number} limit - Max results
+ * @returns {Promise<Array>} Similar experts
  */
 export async function getSimilarExperts(expertId, limit = 5) {
     try {
-        return await SearchRepo.getSimilarExperts(expertId, limit);
+        const results = await SearchRepo.getSimilarExperts(expertId, limit);
+
+        logger.info({
+            type: 'similar_experts',
+            expertId,
+            resultCount: results.length
+        });
+
+        return results;
     } catch (error) {
+        logger.error({
+            type: 'similar_experts_error',
+            expertId,
+            error: error.message
+        });
         throw error;
     }
 }
@@ -162,12 +252,39 @@ function getAvailabilityStatus(expert) {
     return 'offline';
 }
 
-function formatPrice(price) {
-    if (!price) return 'Liên hệ';
-    return new Intl.NumberFormat('vi-VN', {
-        style: 'currency',
-        currency: 'VND'
-    }).format(price);
+/**
+ * Format price for display
+ * Returns null if no price (let frontend handle i18n/localization)
+ * @param {number|null} price - Price value
+ * @param {string} locale - Locale for formatting (default: vi-VN)
+ * @param {string} currency - Currency code (default: VND)
+ * @returns {string|null} Formatted price or null
+ */
+function formatPrice(price, locale = 'vi-VN', currency = 'VND') {
+    if (!price && price !== 0) return null;
+    try {
+        return new Intl.NumberFormat(locale, {
+            style: 'currency',
+            currency: currency
+        }).format(price);
+    } catch {
+        return price.toString();
+    }
+}
+
+/**
+ * Sanitize filters for logging (remove sensitive data)
+ * @param {Object} filters
+ * @returns {Object}
+ */
+function sanitizeFiltersForLog(filters) {
+    if (!filters) return {};
+    return {
+        ...filters,
+        keyword: filters.keyword ? '[REDACTED]' : undefined,
+        certificationKeyword: filters.certificationKeyword ? '[REDACTED]' : undefined,
+        educationKeyword: filters.educationKeyword ? '[REDACTED]' : undefined
+    };
 }
 
 function getExperienceLevel(expert) {

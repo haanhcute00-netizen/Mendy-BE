@@ -6,9 +6,64 @@ import * as scheduleRepo from './schedule.repo.js';
 import * as emotionRepo from '../emotion/emotion.repo.js';
 import * as personaRepo from '../persona/persona.repo.js';
 
+// ========== SCHEDULE VALIDATION (Task 12) ==========
+
+const VALID_SCHEDULE_TYPES = ['sleep', 'wellness', 'health', 'work', 'personal', 'custom', 'reminder'];
+const MAX_TITLE_LENGTH = 200;
+
+const validateScheduleData = (data) => {
+    const errors = [];
+
+    // Validate title (required, max 200 chars)
+    if (!data.title || typeof data.title !== 'string') {
+        errors.push('title is required and must be a string');
+    } else if (data.title.trim().length === 0) {
+        errors.push('title cannot be empty');
+    } else if (data.title.length > MAX_TITLE_LENGTH) {
+        errors.push(`title exceeds maximum length of ${MAX_TITLE_LENGTH} characters`);
+    }
+
+    // Validate schedule_type (enum)
+    if (data.schedule_type && !VALID_SCHEDULE_TYPES.includes(data.schedule_type)) {
+        errors.push(`schedule_type must be one of: ${VALID_SCHEDULE_TYPES.join(', ')}`);
+    }
+
+    // Validate start_at (valid date, not in past for new schedules)
+    if (data.start_at) {
+        const startDate = new Date(data.start_at);
+        if (isNaN(startDate.getTime())) {
+            errors.push('start_at must be a valid date');
+        } else if (data._isNew && startDate < new Date()) {
+            errors.push('start_at cannot be in the past');
+        }
+    }
+
+    // Validate priority (1-5)
+    if (data.priority !== undefined) {
+        const priority = parseInt(data.priority);
+        if (isNaN(priority) || priority < 1 || priority > 5) {
+            errors.push('priority must be between 1 and 5');
+        }
+    }
+
+    return {
+        valid: errors.length === 0,
+        errors
+    };
+};
+
 // ========== SCHEDULE MANAGEMENT ==========
 
 export const createSchedule = async (userId, scheduleData) => {
+    // Task 12: Validate schedule data
+    const validation = validateScheduleData({ ...scheduleData, _isNew: true });
+    if (!validation.valid) {
+        throw { status: 400, message: 'Invalid schedule data', errors: validation.errors };
+    }
+
+    // Sanitize title
+    scheduleData.title = scheduleData.title.trim().substring(0, MAX_TITLE_LENGTH);
+
     return await scheduleRepo.createSchedule(userId, scheduleData);
 };
 
@@ -25,6 +80,19 @@ export const getUpcomingSchedules = async (userId, hours = 24) => {
 };
 
 export const updateSchedule = async (scheduleId, userId, updates) => {
+    // Task 12: Validate updates
+    if (Object.keys(updates).length > 0) {
+        const validation = validateScheduleData({ ...updates, _isNew: false });
+        if (!validation.valid) {
+            throw { status: 400, message: 'Invalid schedule data', errors: validation.errors };
+        }
+
+        // Sanitize title if provided
+        if (updates.title) {
+            updates.title = updates.title.trim().substring(0, MAX_TITLE_LENGTH);
+        }
+    }
+
     return await scheduleRepo.updateSchedule(scheduleId, userId, updates);
 };
 

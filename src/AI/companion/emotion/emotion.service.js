@@ -4,6 +4,66 @@
 
 import * as emotionRepo from './emotion.repo.js';
 import * as analyzer from './emotion.analyzer.js';
+import { logCrisisDetected } from '../../aiLogger.js';
+import { createChildLogger } from '../../../utils/logger.js';
+
+const logger = createChildLogger({ module: 'emotion-service' });
+
+// ========== CRISIS DETECTION HANDLER (Task 3) ==========
+
+const handleCrisisDetection = async (userId, text, analysis) => {
+    try {
+        // 1. Log using proper logger
+        logger.warn(`Crisis detected for user ${userId}`, {
+            is_crisis: analysis.is_crisis,
+            needs_support: analysis.needs_support,
+            emotion: analysis.emotion,
+            intensity: analysis.intensity
+        });
+
+        // 2. Log crisis to tracking system
+        logCrisisDetected(userId, {
+            text: text,
+            indicators: {
+                emotion: analysis.emotion,
+                intensity: analysis.intensity,
+                is_crisis: analysis.is_crisis,
+                needs_support: analysis.needs_support,
+                secondary_emotions: analysis.secondary_emotions
+            }
+        });
+
+        // 3. Create alert record in database
+        await emotionRepo.createCrisisAlert(userId, {
+            alert_type: analysis.is_crisis ? 'crisis' : 'needs_support',
+            severity: analysis.is_crisis ? 'critical' : 'moderate',
+            trigger_text: text.substring(0, 500),
+            emotion_data: {
+                emotion: analysis.emotion,
+                intensity: analysis.intensity,
+                indicators: analysis.indicators
+            },
+            status: 'pending'
+        });
+
+        // 4. Notify admin if critical
+        if (analysis.is_crisis) {
+            logger.error(`🚨 CRITICAL: User ${userId} in crisis - immediate attention needed`, {
+                userId,
+                emotion: analysis.emotion,
+                text_preview: text.substring(0, 100)
+            });
+            // TODO: Implement admin notification (email/push/webhook)
+            // await notifyAdminCrisis(userId, analysis);
+        }
+
+    } catch (err) {
+        logger.error('Failed to handle crisis detection', {
+            userId,
+            error: err.message
+        });
+    }
+};
 
 // ========== EMOTION LOGGING ==========
 
@@ -33,10 +93,10 @@ export const detectAndLogEmotion = async (userId, text, source = 'chat', options
     // Update mental state based on emotion
     await updateMentalStateFromEmotion(userId, analysis);
 
-    // Check if needs immediate attention
+    // Task 3: Proper crisis detection handling
     if (analysis.is_crisis || analysis.needs_support) {
-        // Could trigger alert here
-        console.warn(`⚠️ User ${userId} needs support - Crisis: ${analysis.is_crisis}`);
+        // Log crisis using proper logger
+        await handleCrisisDetection(userId, text, analysis);
     }
 
     return {
@@ -391,9 +451,57 @@ export const suggestWellnessActivity = async (userId) => {
     return suggestions.slice(0, 3); // Return top 3 suggestions
 };
 
+// ========== CHECKIN VALIDATION (Task 13) ==========
+
+const VALID_MOODS = ['happy', 'excited', 'neutral', 'tired', 'anxious', 'stressed', 'sad', 'angry'];
+
+const validateCheckinData = (checkin) => {
+    const errors = [];
+
+    // Validate mood (enum)
+    if (!checkin.mood || !VALID_MOODS.includes(checkin.mood)) {
+        errors.push(`mood must be one of: ${VALID_MOODS.join(', ')}`);
+    }
+
+    // Validate mood_score (1-5)
+    if (checkin.mood_score !== undefined) {
+        const score = parseFloat(checkin.mood_score);
+        if (isNaN(score) || score < 1 || score > 5) {
+            errors.push('mood_score must be between 1 and 5');
+        }
+    }
+
+    // Validate stress_level (0-10)
+    if (checkin.stress_level !== undefined) {
+        const level = parseInt(checkin.stress_level);
+        if (isNaN(level) || level < 0 || level > 10) {
+            errors.push('stress_level must be between 0 and 10');
+        }
+    }
+
+    // Validate energy_level (0-10)
+    if (checkin.energy_level !== undefined) {
+        const level = parseInt(checkin.energy_level);
+        if (isNaN(level) || level < 0 || level > 10) {
+            errors.push('energy_level must be between 0 and 10');
+        }
+    }
+
+    return {
+        valid: errors.length === 0,
+        errors
+    };
+};
+
 // ========== DAILY CHECKIN ==========
 
 export const submitDailyCheckin = async (userId, checkin) => {
+    // Task 13: Validate checkin data
+    const validation = validateCheckinData(checkin);
+    if (!validation.valid) {
+        throw { status: 400, message: 'Invalid checkin data', errors: validation.errors };
+    }
+
     const result = await emotionRepo.createDailyCheckin(userId, checkin);
 
     // Also log as emotion
