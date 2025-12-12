@@ -3,10 +3,13 @@
 // Phân tích cảm xúc từ text sử dụng Gemini
 // =============================================
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { getGeminiModel, AI_LIMITS } from "../../config.js";
+import { createChildLogger } from "../../../utils/logger.js";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const logger = createChildLogger({ module: 'emotion-analyzer' });
+
+// Task 5: Use shared Gemini model
+const getModel = () => getGeminiModel();
 
 // ========== EMOTION KEYWORDS (Fallback) ==========
 
@@ -84,12 +87,43 @@ CHỈ TRẢ VỀ JSON, KHÔNG GIẢI THÍCH.
 Text cần phân tích:
 `;
 
+// Task 7: Add timeout for Gemini API calls
+const withTimeout = (promise, ms) => {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Gemini API timeout')), ms)
+        )
+    ]);
+};
+
 export const analyzeEmotionAI = async (text) => {
     try {
-        const prompt = EMOTION_ANALYSIS_PROMPT + `"${text}"`;
-        const result = await model.generateContent(prompt);
+        const model = getModel();
+        if (!model) {
+            logger.warn('Gemini model not available, using fallback');
+            return { ...analyzeEmotionSimple(text), source: 'fallback', fallback_reason: 'model_unavailable' };
+        }
+
+        // Task 11: Limit input text length
+        const limitedText = text.substring(0, AI_LIMITS.MAX_EMOTION_TEXT);
+
+        const prompt = EMOTION_ANALYSIS_PROMPT + `"${limitedText}"`;
+
+        // Task 7: Add timeout (default 5000ms)
+        const result = await withTimeout(
+            model.generateContent(prompt),
+            AI_LIMITS.GEMINI_TIMEOUT_MS || 5000
+        );
+
         const response = result.response;
         const aiRaw = response.text();
+
+        // Task 11: Validate response not empty
+        if (!aiRaw || aiRaw.trim().length === 0) {
+            logger.warn('Empty response from Gemini', { text_preview: text.substring(0, 50) });
+            return { ...analyzeEmotionSimple(text), source: 'fallback', fallback_reason: 'empty_response' };
+        }
 
         // Clean and parse JSON
         let clean = aiRaw.trim()
@@ -110,11 +144,16 @@ export const analyzeEmotionAI = async (text) => {
             source: 'ai'
         };
     } catch (error) {
-        console.error('AI emotion analysis failed, using fallback:', error.message);
+        // Task 11: Log warning with context
+        logger.warn('AI emotion analysis failed, using fallback', {
+            error: error.message,
+            text_preview: text.substring(0, 50)
+        });
         // Fallback to simple analysis
         return {
             ...analyzeEmotionSimple(text),
-            source: 'fallback'
+            source: 'fallback',
+            fallback_reason: error.message
         };
     }
 };

@@ -116,6 +116,46 @@ export const generateRandomMessage = (personaName, customNickname = null) => {
     return getTemplate(RANDOM_TEMPLATES, personaName, customNickname);
 };
 
+// ========== TIMEZONE HELPER (Task 8) ==========
+
+const getScheduledTimeForUser = (hour, minute, userTimezone = 'Asia/Ho_Chi_Minh') => {
+    const now = new Date();
+
+    // Create date in user's timezone
+    const formatter = new Intl.DateTimeFormat('en-US', {
+        timeZone: userTimezone,
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    });
+
+    // Get current date parts in user's timezone
+    const parts = formatter.formatToParts(now);
+    const dateParts = {};
+    parts.forEach(p => { dateParts[p.type] = p.value; });
+
+    // Create target time in user's timezone
+    const targetDate = new Date(
+        `${dateParts.year}-${dateParts.month}-${dateParts.day}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`
+    );
+
+    // Convert to UTC for storage
+    const userOffset = getTimezoneOffset(userTimezone);
+    const utcTime = new Date(targetDate.getTime() - userOffset * 60 * 1000);
+
+    return utcTime;
+};
+
+const getTimezoneOffset = (timezone) => {
+    const now = new Date();
+    const utcDate = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+    const tzDate = new Date(now.toLocaleString('en-US', { timeZone: timezone }));
+    return (tzDate - utcDate) / 60000; // offset in minutes
+};
+
 // ========== SCHEDULING ==========
 
 export const scheduleNotification = async (userId, type, content, scheduledAt, metadata = {}) => {
@@ -142,11 +182,11 @@ export const scheduleMorningCheckins = async () => {
 
         const content = generateMorningMessage(user.persona_name, user.custom_nickname);
 
-        // Schedule for 7:00 AM in user's timezone (simplified - using fixed time)
-        const scheduledAt = new Date();
-        scheduledAt.setHours(7, 0, 0, 0);
+        // Task 8: Use user's timezone (default to Vietnam)
+        const userTimezone = user.timezone || 'Asia/Ho_Chi_Minh';
+        const scheduledAt = getScheduledTimeForUser(7, 0, userTimezone);
 
-        // If already past 7 AM, skip
+        // If already past scheduled time, skip
         if (scheduledAt < new Date()) continue;
 
         notifications.push({
@@ -155,7 +195,7 @@ export const scheduleMorningCheckins = async () => {
             type: 'morning',
             content,
             scheduled_at: scheduledAt,
-            metadata: {}
+            metadata: { timezone: userTimezone }
         });
     }
 
@@ -175,9 +215,9 @@ export const scheduleEveningCheckins = async () => {
 
         const content = generateEveningMessage(user.persona_name, user.custom_nickname);
 
-        // Schedule for 10:00 PM
-        const scheduledAt = new Date();
-        scheduledAt.setHours(22, 0, 0, 0);
+        // Task 8: Use user's timezone
+        const userTimezone = user.timezone || 'Asia/Ho_Chi_Minh';
+        const scheduledAt = getScheduledTimeForUser(22, 0, userTimezone);
 
         if (scheduledAt < new Date()) continue;
 
@@ -187,7 +227,7 @@ export const scheduleEveningCheckins = async () => {
             type: 'evening',
             content,
             scheduled_at: scheduledAt,
-            metadata: {}
+            metadata: { timezone: userTimezone }
         });
     }
 

@@ -2,12 +2,12 @@
 -- PostgreSQL database dump
 --
 
-\restrict gklijQ4bsubrABeH6bSEcDjwhkUQKEqHOGSpX8PWHZOcKZLMoZga2ilxchYA3NZ
+\restrict VhPIZbc7rND5aDgZxZkrL3IU5DSoBMs95cbsLgooefYm5xF6JdIfWddGvvRljv9
 
 -- Dumped from database version 17.6
 -- Dumped by pg_dump version 17.6
 
--- Started on 2025-12-08 11:18:09
+-- Started on 2025-12-09 21:10:13
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -40,7 +40,7 @@ CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
 
 
 --
--- TOC entry 6667 (class 0 OID 0)
+-- TOC entry 6689 (class 0 OID 0)
 -- Dependencies: 3
 -- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
 --
@@ -57,7 +57,7 @@ CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
 
 
 --
--- TOC entry 6668 (class 0 OID 0)
+-- TOC entry 6690 (class 0 OID 0)
 -- Dependencies: 2
 -- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
 --
@@ -66,7 +66,7 @@ COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings
 
 
 --
--- TOC entry 1248 (class 1247 OID 17034)
+-- TOC entry 1249 (class 1247 OID 17034)
 -- Name: booking_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -82,7 +82,7 @@ CREATE TYPE app.booking_status AS ENUM (
 ALTER TYPE app.booking_status OWNER TO postgres;
 
 --
--- TOC entry 1467 (class 1247 OID 19276)
+-- TOC entry 1468 (class 1247 OID 19276)
 -- Name: dispute_reason; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -101,7 +101,7 @@ CREATE TYPE app.dispute_reason AS ENUM (
 ALTER TYPE app.dispute_reason OWNER TO postgres;
 
 --
--- TOC entry 1464 (class 1247 OID 19260)
+-- TOC entry 1465 (class 1247 OID 19260)
 -- Name: dispute_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -119,7 +119,7 @@ CREATE TYPE app.dispute_status AS ENUM (
 ALTER TYPE app.dispute_status OWNER TO postgres;
 
 --
--- TOC entry 1260 (class 1247 OID 17084)
+-- TOC entry 1261 (class 1247 OID 17084)
 -- Name: gender; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -134,7 +134,7 @@ CREATE TYPE app.gender AS ENUM (
 ALTER TYPE app.gender OWNER TO postgres;
 
 --
--- TOC entry 1371 (class 1247 OID 18645)
+-- TOC entry 1372 (class 1247 OID 18645)
 -- Name: media_kind; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -147,7 +147,7 @@ CREATE TYPE app.media_kind AS ENUM (
 ALTER TYPE app.media_kind OWNER TO postgres;
 
 --
--- TOC entry 1251 (class 1247 OID 17046)
+-- TOC entry 1252 (class 1247 OID 17046)
 -- Name: payment_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -165,7 +165,7 @@ CREATE TYPE app.payment_status AS ENUM (
 ALTER TYPE app.payment_status OWNER TO postgres;
 
 --
--- TOC entry 1365 (class 1247 OID 18620)
+-- TOC entry 1366 (class 1247 OID 18620)
 -- Name: post_privacy; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -180,7 +180,7 @@ CREATE TYPE app.post_privacy AS ENUM (
 ALTER TYPE app.post_privacy OWNER TO postgres;
 
 --
--- TOC entry 1377 (class 1247 OID 18665)
+-- TOC entry 1378 (class 1247 OID 18665)
 -- Name: reaction_kind; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -198,7 +198,7 @@ CREATE TYPE app.reaction_kind AS ENUM (
 ALTER TYPE app.reaction_kind OWNER TO postgres;
 
 --
--- TOC entry 1470 (class 1247 OID 19294)
+-- TOC entry 1471 (class 1247 OID 19294)
 -- Name: recurring_frequency; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -213,7 +213,7 @@ CREATE TYPE app.recurring_frequency AS ENUM (
 ALTER TYPE app.recurring_frequency OWNER TO postgres;
 
 --
--- TOC entry 1461 (class 1247 OID 19247)
+-- TOC entry 1462 (class 1247 OID 19247)
 -- Name: refund_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -230,7 +230,7 @@ CREATE TYPE app.refund_status AS ENUM (
 ALTER TYPE app.refund_status OWNER TO postgres;
 
 --
--- TOC entry 1257 (class 1247 OID 17072)
+-- TOC entry 1258 (class 1247 OID 17072)
 -- Name: report_reason; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -246,7 +246,7 @@ CREATE TYPE app.report_reason AS ENUM (
 ALTER TYPE app.report_reason OWNER TO postgres;
 
 --
--- TOC entry 1263 (class 1247 OID 17094)
+-- TOC entry 1264 (class 1247 OID 17094)
 -- Name: user_file_type; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -260,7 +260,7 @@ CREATE TYPE app.user_file_type AS ENUM (
 ALTER TYPE app.user_file_type OWNER TO postgres;
 
 --
--- TOC entry 1242 (class 1247 OID 17016)
+-- TOC entry 1243 (class 1247 OID 17016)
 -- Name: user_role; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -275,7 +275,7 @@ CREATE TYPE app.user_role AS ENUM (
 ALTER TYPE app.user_role OWNER TO postgres;
 
 --
--- TOC entry 1245 (class 1247 OID 17026)
+-- TOC entry 1246 (class 1247 OID 17026)
 -- Name: user_status; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -289,7 +289,7 @@ CREATE TYPE app.user_status AS ENUM (
 ALTER TYPE app.user_status OWNER TO postgres;
 
 --
--- TOC entry 1254 (class 1247 OID 17058)
+-- TOC entry 1255 (class 1247 OID 17058)
 -- Name: wallet_tx_type; Type: TYPE; Schema: app; Owner: postgres
 --
 
@@ -308,7 +308,7 @@ CREATE TYPE app.wallet_tx_type AS ENUM (
 ALTER TYPE app.wallet_tx_type OWNER TO postgres;
 
 --
--- TOC entry 1389 (class 1247 OID 18757)
+-- TOC entry 1390 (class 1247 OID 18757)
 -- Name: booking_status; Type: TYPE; Schema: public; Owner: postgres
 --
 
@@ -367,7 +367,7 @@ $$;
 ALTER FUNCTION app.fn_ai_touch_updated_at() OWNER TO postgres;
 
 --
--- TOC entry 587 (class 1255 OID 19469)
+-- TOC entry 588 (class 1255 OID 19469)
 -- Name: fn_disputes_touch_updated_at(); Type: FUNCTION; Schema: app; Owner: postgres
 --
 
@@ -456,7 +456,7 @@ $$;
 ALTER FUNCTION app.update_comment_report_count() OWNER TO postgres;
 
 --
--- TOC entry 569 (class 1255 OID 19242)
+-- TOC entry 570 (class 1255 OID 19242)
 -- Name: update_post_report_count(); Type: FUNCTION; Schema: app; Owner: postgres
 --
 
@@ -475,6 +475,34 @@ $$;
 
 
 ALTER FUNCTION app.update_post_report_count() OWNER TO postgres;
+
+--
+-- TOC entry 558 (class 1255 OID 20099)
+-- Name: validate_email_format(); Type: FUNCTION; Schema: app; Owner: postgres
+--
+
+CREATE FUNCTION app.validate_email_format() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $_$
+BEGIN
+    IF NEW.email IS NOT NULL AND NEW.email !~ '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$' THEN
+        RAISE EXCEPTION 'Invalid email format: %', NEW.email;
+    END IF;
+    RETURN NEW;
+END;
+$_$;
+
+
+ALTER FUNCTION app.validate_email_format() OWNER TO postgres;
+
+--
+-- TOC entry 6691 (class 0 OID 0)
+-- Dependencies: 558
+-- Name: FUNCTION validate_email_format(); Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON FUNCTION app.validate_email_format() IS 'Validate email format before insert/update';
+
 
 SET default_tablespace = '';
 
@@ -517,7 +545,7 @@ CREATE SEQUENCE app.ai_chat_history_id_seq
 ALTER SEQUENCE app.ai_chat_history_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6669 (class 0 OID 0)
+-- TOC entry 6692 (class 0 OID 0)
 -- Dependencies: 353
 -- Name: ai_chat_history_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -561,7 +589,7 @@ CREATE SEQUENCE app.ai_conversation_context_id_seq
 ALTER SEQUENCE app.ai_conversation_context_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6670 (class 0 OID 0)
+-- TOC entry 6693 (class 0 OID 0)
 -- Dependencies: 338
 -- Name: ai_conversation_context_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -608,7 +636,7 @@ CREATE SEQUENCE app.ai_personas_id_seq
 ALTER SEQUENCE app.ai_personas_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6671 (class 0 OID 0)
+-- TOC entry 6694 (class 0 OID 0)
 -- Dependencies: 333
 -- Name: ai_personas_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -654,7 +682,7 @@ CREATE SEQUENCE app.ai_scheduled_notifications_id_seq
 ALTER SEQUENCE app.ai_scheduled_notifications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6672 (class 0 OID 0)
+-- TOC entry 6695 (class 0 OID 0)
 -- Dependencies: 336
 -- Name: ai_scheduled_notifications_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -699,7 +727,7 @@ CREATE SEQUENCE app.ai_suggestions_id_seq
 ALTER SEQUENCE app.ai_suggestions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6673 (class 0 OID 0)
+-- TOC entry 6696 (class 0 OID 0)
 -- Dependencies: 364
 -- Name: ai_suggestions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -736,7 +764,7 @@ CREATE SEQUENCE app.audience_id_seq
 ALTER SEQUENCE app.audience_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6674 (class 0 OID 0)
+-- TOC entry 6697 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: audience_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -780,7 +808,7 @@ CREATE SEQUENCE app.audit_logs_id_seq
 ALTER SEQUENCE app.audit_logs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6675 (class 0 OID 0)
+-- TOC entry 6698 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: audit_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -825,7 +853,7 @@ CREATE SEQUENCE app.behavior_patterns_id_seq
 ALTER SEQUENCE app.behavior_patterns_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6676 (class 0 OID 0)
+-- TOC entry 6699 (class 0 OID 0)
 -- Dependencies: 360
 -- Name: behavior_patterns_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -909,7 +937,7 @@ CREATE SEQUENCE app.bookings_id_seq
 ALTER SEQUENCE app.bookings_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6677 (class 0 OID 0)
+-- TOC entry 6700 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: bookings_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -950,7 +978,7 @@ CREATE SEQUENCE app.call_events_id_seq
 ALTER SEQUENCE app.call_events_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6678 (class 0 OID 0)
+-- TOC entry 6701 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: call_events_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -992,7 +1020,7 @@ CREATE SEQUENCE app.call_metrics_id_seq
 ALTER SEQUENCE app.call_metrics_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6679 (class 0 OID 0)
+-- TOC entry 6702 (class 0 OID 0)
 -- Dependencies: 312
 -- Name: call_metrics_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1034,7 +1062,7 @@ CREATE SEQUENCE app.call_recordings_id_seq
 ALTER SEQUENCE app.call_recordings_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6680 (class 0 OID 0)
+-- TOC entry 6703 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: call_recordings_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1083,7 +1111,7 @@ CREATE SEQUENCE app.call_sessions_id_seq
 ALTER SEQUENCE app.call_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6681 (class 0 OID 0)
+-- TOC entry 6704 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: call_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1126,7 +1154,7 @@ CREATE SEQUENCE app.chat_attachments_id_seq
 ALTER SEQUENCE app.chat_attachments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6682 (class 0 OID 0)
+-- TOC entry 6705 (class 0 OID 0)
 -- Dependencies: 310
 -- Name: chat_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1183,7 +1211,7 @@ CREATE SEQUENCE app.chat_messages_id_seq
 ALTER SEQUENCE app.chat_messages_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6683 (class 0 OID 0)
+-- TOC entry 6706 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: chat_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1241,7 +1269,7 @@ CREATE SEQUENCE app.chat_thread_invitations_id_seq
 ALTER SEQUENCE app.chat_thread_invitations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6684 (class 0 OID 0)
+-- TOC entry 6707 (class 0 OID 0)
 -- Dependencies: 316
 -- Name: chat_thread_invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1283,7 +1311,7 @@ CREATE SEQUENCE app.chat_threads_id_seq
 ALTER SEQUENCE app.chat_threads_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6685 (class 0 OID 0)
+-- TOC entry 6708 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: chat_threads_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1349,7 +1377,7 @@ CREATE SEQUENCE app.comments_id_seq
 ALTER SEQUENCE app.comments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6686 (class 0 OID 0)
+-- TOC entry 6709 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: comments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1388,7 +1416,7 @@ CREATE SEQUENCE app.consents_id_seq
 ALTER SEQUENCE app.consents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6687 (class 0 OID 0)
+-- TOC entry 6710 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: consents_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1440,7 +1468,7 @@ CREATE SEQUENCE app.daily_mood_checkins_id_seq
 ALTER SEQUENCE app.daily_mood_checkins_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6688 (class 0 OID 0)
+-- TOC entry 6711 (class 0 OID 0)
 -- Dependencies: 347
 -- Name: daily_mood_checkins_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1551,7 +1579,7 @@ CREATE SEQUENCE app.domains_id_seq
 ALTER SEQUENCE app.domains_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6689 (class 0 OID 0)
+-- TOC entry 6712 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: domains_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1593,7 +1621,7 @@ CREATE SEQUENCE app.email_verifications_id_seq
 ALTER SEQUENCE app.email_verifications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6690 (class 0 OID 0)
+-- TOC entry 6713 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: email_verifications_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1638,7 +1666,7 @@ CREATE SEQUENCE app.emotion_logs_id_seq
 ALTER SEQUENCE app.emotion_logs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6691 (class 0 OID 0)
+-- TOC entry 6714 (class 0 OID 0)
 -- Dependencies: 340
 -- Name: emotion_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1682,7 +1710,7 @@ CREATE SEQUENCE app.emotion_patterns_id_seq
 ALTER SEQUENCE app.emotion_patterns_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6692 (class 0 OID 0)
+-- TOC entry 6715 (class 0 OID 0)
 -- Dependencies: 349
 -- Name: emotion_patterns_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1737,7 +1765,7 @@ CREATE SEQUENCE app.expert_availabilities_id_seq
 ALTER SEQUENCE app.expert_availabilities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6693 (class 0 OID 0)
+-- TOC entry 6716 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: expert_availabilities_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1779,7 +1807,7 @@ CREATE SEQUENCE app.expert_certifications_id_seq
 ALTER SEQUENCE app.expert_certifications_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6694 (class 0 OID 0)
+-- TOC entry 6717 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: expert_certifications_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1833,7 +1861,7 @@ CREATE SEQUENCE app.expert_education_id_seq
 ALTER SEQUENCE app.expert_education_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6695 (class 0 OID 0)
+-- TOC entry 6718 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: expert_education_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1876,7 +1904,7 @@ CREATE SEQUENCE app.expert_experience_id_seq
 ALTER SEQUENCE app.expert_experience_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6696 (class 0 OID 0)
+-- TOC entry 6719 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: expert_experience_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1918,7 +1946,7 @@ CREATE SEQUENCE app.expert_media_id_seq
 ALTER SEQUENCE app.expert_media_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6697 (class 0 OID 0)
+-- TOC entry 6720 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: expert_media_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -1983,7 +2011,7 @@ CREATE SEQUENCE app.expert_profiles_id_seq
 ALTER SEQUENCE app.expert_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6698 (class 0 OID 0)
+-- TOC entry 6721 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: expert_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2052,7 +2080,7 @@ CREATE SEQUENCE app.listener_profiles_id_seq
 ALTER SEQUENCE app.listener_profiles_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6699 (class 0 OID 0)
+-- TOC entry 6722 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: listener_profiles_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2106,7 +2134,7 @@ CREATE SEQUENCE app.mental_health_assessments_id_seq
 ALTER SEQUENCE app.mental_health_assessments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6700 (class 0 OID 0)
+-- TOC entry 6723 (class 0 OID 0)
 -- Dependencies: 343
 -- Name: mental_health_assessments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2150,7 +2178,7 @@ CREATE SEQUENCE app.moderation_actions_id_seq
 ALTER SEQUENCE app.moderation_actions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6701 (class 0 OID 0)
+-- TOC entry 6724 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: moderation_actions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2192,7 +2220,7 @@ CREATE SEQUENCE app.oauth_users_id_seq
 ALTER SEQUENCE app.oauth_users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6702 (class 0 OID 0)
+-- TOC entry 6725 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: oauth_users_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2239,7 +2267,7 @@ CREATE SEQUENCE app.payment_intents_id_seq
 ALTER SEQUENCE app.payment_intents_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6703 (class 0 OID 0)
+-- TOC entry 6726 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: payment_intents_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2279,7 +2307,7 @@ CREATE SEQUENCE app.payments_id_seq
 ALTER SEQUENCE app.payments_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6704 (class 0 OID 0)
+-- TOC entry 6727 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: payments_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2322,7 +2350,7 @@ CREATE SEQUENCE app.payout_accounts_id_seq
 ALTER SEQUENCE app.payout_accounts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6705 (class 0 OID 0)
+-- TOC entry 6728 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: payout_accounts_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2449,7 +2477,7 @@ CREATE TABLE app.post_media (
 ALTER TABLE app.post_media OWNER TO postgres;
 
 --
--- TOC entry 6706 (class 0 OID 0)
+-- TOC entry 6729 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: COLUMN post_media.original_name; Type: COMMENT; Schema: app; Owner: postgres
 --
@@ -2458,7 +2486,7 @@ COMMENT ON COLUMN app.post_media.original_name IS 'Original filename from user u
 
 
 --
--- TOC entry 6707 (class 0 OID 0)
+-- TOC entry 6730 (class 0 OID 0)
 -- Dependencies: 274
 -- Name: COLUMN post_media.public_id; Type: COMMENT; Schema: app; Owner: postgres
 --
@@ -2482,7 +2510,7 @@ CREATE SEQUENCE app.post_media_id_seq
 ALTER SEQUENCE app.post_media_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6708 (class 0 OID 0)
+-- TOC entry 6731 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: post_media_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2556,7 +2584,7 @@ CREATE SEQUENCE app.posts_id_seq
 ALTER SEQUENCE app.posts_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6709 (class 0 OID 0)
+-- TOC entry 6732 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: posts_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2605,7 +2633,7 @@ CREATE SEQUENCE app.proactive_messages_id_seq
 ALTER SEQUENCE app.proactive_messages_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6710 (class 0 OID 0)
+-- TOC entry 6733 (class 0 OID 0)
 -- Dependencies: 362
 -- Name: proactive_messages_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2793,7 +2821,7 @@ CREATE SEQUENCE app.reports_id_seq
 ALTER SEQUENCE app.reports_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6711 (class 0 OID 0)
+-- TOC entry 6734 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: reports_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2841,7 +2869,7 @@ CREATE SEQUENCE app.reviews_id_seq
 ALTER SEQUENCE app.reviews_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6712 (class 0 OID 0)
+-- TOC entry 6735 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: reviews_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2881,7 +2909,7 @@ CREATE SEQUENCE app.schema_migrations_id_seq
 ALTER SEQUENCE app.schema_migrations_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6713 (class 0 OID 0)
+-- TOC entry 6736 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: schema_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2921,7 +2949,7 @@ CREATE SEQUENCE app.session_notes_id_seq
 ALTER SEQUENCE app.session_notes_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6714 (class 0 OID 0)
+-- TOC entry 6737 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: session_notes_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -2960,7 +2988,7 @@ CREATE SEQUENCE app.skills_id_seq
 ALTER SEQUENCE app.skills_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6715 (class 0 OID 0)
+-- TOC entry 6738 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: skills_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3008,7 +3036,7 @@ CREATE SEQUENCE app.sleep_logs_id_seq
 ALTER SEQUENCE app.sleep_logs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6716 (class 0 OID 0)
+-- TOC entry 6739 (class 0 OID 0)
 -- Dependencies: 358
 -- Name: sleep_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3050,7 +3078,7 @@ CREATE SEQUENCE app.tips_id_seq
 ALTER SEQUENCE app.tips_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6717 (class 0 OID 0)
+-- TOC entry 6740 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: tips_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3091,7 +3119,7 @@ CREATE SEQUENCE app.user_activity_logs_id_seq
 ALTER SEQUENCE app.user_activity_logs_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6718 (class 0 OID 0)
+-- TOC entry 6741 (class 0 OID 0)
 -- Dependencies: 366
 -- Name: user_activity_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3175,7 +3203,7 @@ CREATE SEQUENCE app.user_files_id_seq
 ALTER SEQUENCE app.user_files_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6719 (class 0 OID 0)
+-- TOC entry 6742 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: user_files_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3305,7 +3333,7 @@ CREATE SEQUENCE app.user_schedules_id_seq
 ALTER SEQUENCE app.user_schedules_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6720 (class 0 OID 0)
+-- TOC entry 6743 (class 0 OID 0)
 -- Dependencies: 356
 -- Name: user_schedules_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3348,7 +3376,7 @@ CREATE SEQUENCE app.user_sessions_id_seq
 ALTER SEQUENCE app.user_sessions_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6721 (class 0 OID 0)
+-- TOC entry 6744 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: user_sessions_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3394,7 +3422,7 @@ CREATE SEQUENCE app.users_id_seq
 ALTER SEQUENCE app.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6722 (class 0 OID 0)
+-- TOC entry 6745 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3572,7 +3600,7 @@ CREATE SEQUENCE app.wallet_ledger_id_seq
 ALTER SEQUENCE app.wallet_ledger_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6723 (class 0 OID 0)
+-- TOC entry 6746 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: wallet_ledger_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3610,7 +3638,7 @@ CREATE SEQUENCE app.wallets_id_seq
 ALTER SEQUENCE app.wallets_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6724 (class 0 OID 0)
+-- TOC entry 6747 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: wallets_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3659,7 +3687,7 @@ CREATE SEQUENCE app.wellness_activities_id_seq
 ALTER SEQUENCE app.wellness_activities_id_seq OWNER TO postgres;
 
 --
--- TOC entry 6725 (class 0 OID 0)
+-- TOC entry 6748 (class 0 OID 0)
 -- Dependencies: 345
 -- Name: wellness_activities_id_seq; Type: SEQUENCE OWNED BY; Schema: app; Owner: postgres
 --
@@ -3668,7 +3696,7 @@ ALTER SEQUENCE app.wellness_activities_id_seq OWNED BY app.wellness_activities.i
 
 
 --
--- TOC entry 5763 (class 2604 OID 19899)
+-- TOC entry 5764 (class 2604 OID 19899)
 -- Name: ai_chat_history id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3676,7 +3704,7 @@ ALTER TABLE ONLY app.ai_chat_history ALTER COLUMN id SET DEFAULT nextval('app.ai
 
 
 --
--- TOC entry 5722 (class 2604 OID 19585)
+-- TOC entry 5723 (class 2604 OID 19585)
 -- Name: ai_conversation_context id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3684,7 +3712,7 @@ ALTER TABLE ONLY app.ai_conversation_context ALTER COLUMN id SET DEFAULT nextval
 
 
 --
--- TOC entry 5701 (class 2604 OID 19517)
+-- TOC entry 5702 (class 2604 OID 19517)
 -- Name: ai_personas id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3692,7 +3720,7 @@ ALTER TABLE ONLY app.ai_personas ALTER COLUMN id SET DEFAULT nextval('app.ai_per
 
 
 --
--- TOC entry 5718 (class 2604 OID 19562)
+-- TOC entry 5719 (class 2604 OID 19562)
 -- Name: ai_scheduled_notifications id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3700,7 +3728,7 @@ ALTER TABLE ONLY app.ai_scheduled_notifications ALTER COLUMN id SET DEFAULT next
 
 
 --
--- TOC entry 5790 (class 2604 OID 20015)
+-- TOC entry 5791 (class 2604 OID 20015)
 -- Name: ai_suggestions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3708,7 +3736,7 @@ ALTER TABLE ONLY app.ai_suggestions ALTER COLUMN id SET DEFAULT nextval('app.ai_
 
 
 --
--- TOC entry 5666 (class 2604 OID 19005)
+-- TOC entry 5667 (class 2604 OID 19005)
 -- Name: audience id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3716,7 +3744,7 @@ ALTER TABLE ONLY app.audience ALTER COLUMN id SET DEFAULT nextval('app.audience_
 
 
 --
--- TOC entry 5627 (class 2604 OID 17532)
+-- TOC entry 5628 (class 2604 OID 17532)
 -- Name: audit_logs id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3724,7 +3752,7 @@ ALTER TABLE ONLY app.audit_logs ALTER COLUMN id SET DEFAULT nextval('app.audit_l
 
 
 --
--- TOC entry 5779 (class 2604 OID 19971)
+-- TOC entry 5780 (class 2604 OID 19971)
 -- Name: behavior_patterns id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3732,7 +3760,7 @@ ALTER TABLE ONLY app.behavior_patterns ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5584 (class 2604 OID 17235)
+-- TOC entry 5585 (class 2604 OID 17235)
 -- Name: bookings id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3740,7 +3768,7 @@ ALTER TABLE ONLY app.bookings ALTER COLUMN id SET DEFAULT nextval('app.bookings_
 
 
 --
--- TOC entry 5632 (class 2604 OID 18565)
+-- TOC entry 5633 (class 2604 OID 18565)
 -- Name: call_events id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3748,7 +3776,7 @@ ALTER TABLE ONLY app.call_events ALTER COLUMN id SET DEFAULT nextval('app.call_e
 
 
 --
--- TOC entry 5675 (class 2604 OID 19158)
+-- TOC entry 5676 (class 2604 OID 19158)
 -- Name: call_metrics id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3756,7 +3784,7 @@ ALTER TABLE ONLY app.call_metrics ALTER COLUMN id SET DEFAULT nextval('app.call_
 
 
 --
--- TOC entry 5677 (class 2604 OID 19172)
+-- TOC entry 5678 (class 2604 OID 19172)
 -- Name: call_recordings id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3764,7 +3792,7 @@ ALTER TABLE ONLY app.call_recordings ALTER COLUMN id SET DEFAULT nextval('app.ca
 
 
 --
--- TOC entry 5630 (class 2604 OID 18536)
+-- TOC entry 5631 (class 2604 OID 18536)
 -- Name: call_sessions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3772,7 +3800,7 @@ ALTER TABLE ONLY app.call_sessions ALTER COLUMN id SET DEFAULT nextval('app.call
 
 
 --
--- TOC entry 5673 (class 2604 OID 19141)
+-- TOC entry 5674 (class 2604 OID 19141)
 -- Name: chat_attachments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3780,7 +3808,7 @@ ALTER TABLE ONLY app.chat_attachments ALTER COLUMN id SET DEFAULT nextval('app.c
 
 
 --
--- TOC entry 5605 (class 2604 OID 17407)
+-- TOC entry 5606 (class 2604 OID 17407)
 -- Name: chat_messages id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3788,7 +3816,7 @@ ALTER TABLE ONLY app.chat_messages ALTER COLUMN id SET DEFAULT nextval('app.chat
 
 
 --
--- TOC entry 5679 (class 2604 OID 19188)
+-- TOC entry 5680 (class 2604 OID 19188)
 -- Name: chat_thread_invitations id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3796,7 +3824,7 @@ ALTER TABLE ONLY app.chat_thread_invitations ALTER COLUMN id SET DEFAULT nextval
 
 
 --
--- TOC entry 5602 (class 2604 OID 17375)
+-- TOC entry 5603 (class 2604 OID 17375)
 -- Name: chat_threads id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3804,7 +3832,7 @@ ALTER TABLE ONLY app.chat_threads ALTER COLUMN id SET DEFAULT nextval('app.chat_
 
 
 --
--- TOC entry 5614 (class 2604 OID 17463)
+-- TOC entry 5615 (class 2604 OID 17463)
 -- Name: comments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3812,7 +3840,7 @@ ALTER TABLE ONLY app.comments ALTER COLUMN id SET DEFAULT nextval('app.comments_
 
 
 --
--- TOC entry 5625 (class 2604 OID 17517)
+-- TOC entry 5626 (class 2604 OID 17517)
 -- Name: consents id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3820,7 +3848,7 @@ ALTER TABLE ONLY app.consents ALTER COLUMN id SET DEFAULT nextval('app.consents_
 
 
 --
--- TOC entry 5755 (class 2604 OID 19834)
+-- TOC entry 5756 (class 2604 OID 19834)
 -- Name: daily_mood_checkins id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3828,7 +3856,7 @@ ALTER TABLE ONLY app.daily_mood_checkins ALTER COLUMN id SET DEFAULT nextval('ap
 
 
 --
--- TOC entry 5667 (class 2604 OID 19031)
+-- TOC entry 5668 (class 2604 OID 19031)
 -- Name: domains id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3836,7 +3864,7 @@ ALTER TABLE ONLY app.domains ALTER COLUMN id SET DEFAULT nextval('app.domains_id
 
 
 --
--- TOC entry 5575 (class 2604 OID 17166)
+-- TOC entry 5576 (class 2604 OID 17166)
 -- Name: email_verifications id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3844,7 +3872,7 @@ ALTER TABLE ONLY app.email_verifications ALTER COLUMN id SET DEFAULT nextval('ap
 
 
 --
--- TOC entry 5726 (class 2604 OID 19746)
+-- TOC entry 5727 (class 2604 OID 19746)
 -- Name: emotion_logs id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3852,7 +3880,7 @@ ALTER TABLE ONLY app.emotion_logs ALTER COLUMN id SET DEFAULT nextval('app.emoti
 
 
 --
--- TOC entry 5758 (class 2604 OID 19856)
+-- TOC entry 5759 (class 2604 OID 19856)
 -- Name: emotion_patterns id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3860,7 +3888,7 @@ ALTER TABLE ONLY app.emotion_patterns ALTER COLUMN id SET DEFAULT nextval('app.e
 
 
 --
--- TOC entry 5582 (class 2604 OID 17219)
+-- TOC entry 5583 (class 2604 OID 17219)
 -- Name: expert_availabilities id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3868,7 +3896,7 @@ ALTER TABLE ONLY app.expert_availabilities ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 5657 (class 2604 OID 18948)
+-- TOC entry 5658 (class 2604 OID 18948)
 -- Name: expert_certifications id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3876,7 +3904,7 @@ ALTER TABLE ONLY app.expert_certifications ALTER COLUMN id SET DEFAULT nextval('
 
 
 --
--- TOC entry 5656 (class 2604 OID 18934)
+-- TOC entry 5657 (class 2604 OID 18934)
 -- Name: expert_education id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3884,7 +3912,7 @@ ALTER TABLE ONLY app.expert_education ALTER COLUMN id SET DEFAULT nextval('app.e
 
 
 --
--- TOC entry 5655 (class 2604 OID 18920)
+-- TOC entry 5656 (class 2604 OID 18920)
 -- Name: expert_experience id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3892,7 +3920,7 @@ ALTER TABLE ONLY app.expert_experience ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5664 (class 2604 OID 18990)
+-- TOC entry 5665 (class 2604 OID 18990)
 -- Name: expert_media id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3900,7 +3928,7 @@ ALTER TABLE ONLY app.expert_media ALTER COLUMN id SET DEFAULT nextval('app.exper
 
 
 --
--- TOC entry 5578 (class 2604 OID 17183)
+-- TOC entry 5579 (class 2604 OID 17183)
 -- Name: expert_profiles id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3908,7 +3936,7 @@ ALTER TABLE ONLY app.expert_profiles ALTER COLUMN id SET DEFAULT nextval('app.ex
 
 
 --
--- TOC entry 5580 (class 2604 OID 17202)
+-- TOC entry 5581 (class 2604 OID 17202)
 -- Name: listener_profiles id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3916,7 +3944,7 @@ ALTER TABLE ONLY app.listener_profiles ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5742 (class 2604 OID 19790)
+-- TOC entry 5743 (class 2604 OID 19790)
 -- Name: mental_health_assessments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3924,7 +3952,7 @@ ALTER TABLE ONLY app.mental_health_assessments ALTER COLUMN id SET DEFAULT nextv
 
 
 --
--- TOC entry 5623 (class 2604 OID 17500)
+-- TOC entry 5624 (class 2604 OID 17500)
 -- Name: moderation_actions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3932,7 +3960,7 @@ ALTER TABLE ONLY app.moderation_actions ALTER COLUMN id SET DEFAULT nextval('app
 
 
 --
--- TOC entry 5651 (class 2604 OID 18875)
+-- TOC entry 5652 (class 2604 OID 18875)
 -- Name: oauth_users id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3940,7 +3968,7 @@ ALTER TABLE ONLY app.oauth_users ALTER COLUMN id SET DEFAULT nextval('app.oauth_
 
 
 --
--- TOC entry 5591 (class 2604 OID 17283)
+-- TOC entry 5592 (class 2604 OID 17283)
 -- Name: payment_intents id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3948,7 +3976,7 @@ ALTER TABLE ONLY app.payment_intents ALTER COLUMN id SET DEFAULT nextval('app.pa
 
 
 --
--- TOC entry 5595 (class 2604 OID 17307)
+-- TOC entry 5596 (class 2604 OID 17307)
 -- Name: payments id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3956,7 +3984,7 @@ ALTER TABLE ONLY app.payments ALTER COLUMN id SET DEFAULT nextval('app.payments_
 
 
 --
--- TOC entry 5648 (class 2604 OID 18843)
+-- TOC entry 5649 (class 2604 OID 18843)
 -- Name: payout_accounts id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3964,7 +3992,7 @@ ALTER TABLE ONLY app.payout_accounts ALTER COLUMN id SET DEFAULT nextval('app.pa
 
 
 --
--- TOC entry 5635 (class 2604 OID 18653)
+-- TOC entry 5636 (class 2604 OID 18653)
 -- Name: post_media id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3972,7 +4000,7 @@ ALTER TABLE ONLY app.post_media ALTER COLUMN id SET DEFAULT nextval('app.post_me
 
 
 --
--- TOC entry 5607 (class 2604 OID 17427)
+-- TOC entry 5608 (class 2604 OID 17427)
 -- Name: posts id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3980,7 +4008,7 @@ ALTER TABLE ONLY app.posts ALTER COLUMN id SET DEFAULT nextval('app.posts_id_seq
 
 
 --
--- TOC entry 5785 (class 2604 OID 19992)
+-- TOC entry 5786 (class 2604 OID 19992)
 -- Name: proactive_messages id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3988,7 +4016,7 @@ ALTER TABLE ONLY app.proactive_messages ALTER COLUMN id SET DEFAULT nextval('app
 
 
 --
--- TOC entry 5620 (class 2604 OID 17484)
+-- TOC entry 5621 (class 2604 OID 17484)
 -- Name: reports id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -3996,7 +4024,7 @@ ALTER TABLE ONLY app.reports ALTER COLUMN id SET DEFAULT nextval('app.reports_id
 
 
 --
--- TOC entry 5641 (class 2604 OID 18798)
+-- TOC entry 5642 (class 2604 OID 18798)
 -- Name: reviews id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4004,7 +4032,7 @@ ALTER TABLE ONLY app.reviews ALTER COLUMN id SET DEFAULT nextval('app.reviews_id
 
 
 --
--- TOC entry 5671 (class 2604 OID 19074)
+-- TOC entry 5672 (class 2604 OID 19074)
 -- Name: schema_migrations id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4012,7 +4040,7 @@ ALTER TABLE ONLY app.schema_migrations ALTER COLUMN id SET DEFAULT nextval('app.
 
 
 --
--- TOC entry 5589 (class 2604 OID 17261)
+-- TOC entry 5590 (class 2604 OID 17261)
 -- Name: session_notes id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4020,7 +4048,7 @@ ALTER TABLE ONLY app.session_notes ALTER COLUMN id SET DEFAULT nextval('app.sess
 
 
 --
--- TOC entry 5653 (class 2604 OID 18893)
+-- TOC entry 5654 (class 2604 OID 18893)
 -- Name: skills id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4028,7 +4056,7 @@ ALTER TABLE ONLY app.skills ALTER COLUMN id SET DEFAULT nextval('app.skills_id_s
 
 
 --
--- TOC entry 5775 (class 2604 OID 19951)
+-- TOC entry 5776 (class 2604 OID 19951)
 -- Name: sleep_logs id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4036,7 +4064,7 @@ ALTER TABLE ONLY app.sleep_logs ALTER COLUMN id SET DEFAULT nextval('app.sleep_l
 
 
 --
--- TOC entry 5600 (class 2604 OID 17354)
+-- TOC entry 5601 (class 2604 OID 17354)
 -- Name: tips id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4044,7 +4072,7 @@ ALTER TABLE ONLY app.tips ALTER COLUMN id SET DEFAULT nextval('app.tips_id_seq':
 
 
 --
--- TOC entry 5792 (class 2604 OID 20030)
+-- TOC entry 5793 (class 2604 OID 20030)
 -- Name: user_activity_logs id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4052,7 +4080,7 @@ ALTER TABLE ONLY app.user_activity_logs ALTER COLUMN id SET DEFAULT nextval('app
 
 
 --
--- TOC entry 5573 (class 2604 OID 17150)
+-- TOC entry 5574 (class 2604 OID 17150)
 -- Name: user_files id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4060,7 +4088,7 @@ ALTER TABLE ONLY app.user_files ALTER COLUMN id SET DEFAULT nextval('app.user_fi
 
 
 --
--- TOC entry 5766 (class 2604 OID 19927)
+-- TOC entry 5767 (class 2604 OID 19927)
 -- Name: user_schedules id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4068,7 +4096,7 @@ ALTER TABLE ONLY app.user_schedules ALTER COLUMN id SET DEFAULT nextval('app.use
 
 
 --
--- TOC entry 5645 (class 2604 OID 18825)
+-- TOC entry 5646 (class 2604 OID 18825)
 -- Name: user_sessions id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4076,7 +4104,7 @@ ALTER TABLE ONLY app.user_sessions ALTER COLUMN id SET DEFAULT nextval('app.user
 
 
 --
--- TOC entry 5564 (class 2604 OID 17105)
+-- TOC entry 5565 (class 2604 OID 17105)
 -- Name: users id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4084,7 +4112,7 @@ ALTER TABLE ONLY app.users ALTER COLUMN id SET DEFAULT nextval('app.users_id_seq
 
 
 --
--- TOC entry 5598 (class 2604 OID 17338)
+-- TOC entry 5599 (class 2604 OID 17338)
 -- Name: wallet_ledger id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4092,7 +4120,7 @@ ALTER TABLE ONLY app.wallet_ledger ALTER COLUMN id SET DEFAULT nextval('app.wall
 
 
 --
--- TOC entry 5596 (class 2604 OID 17323)
+-- TOC entry 5597 (class 2604 OID 17323)
 -- Name: wallets id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4100,7 +4128,7 @@ ALTER TABLE ONLY app.wallets ALTER COLUMN id SET DEFAULT nextval('app.wallets_id
 
 
 --
--- TOC entry 5750 (class 2604 OID 19815)
+-- TOC entry 5751 (class 2604 OID 19815)
 -- Name: wellness_activities id; Type: DEFAULT; Schema: app; Owner: postgres
 --
 
@@ -4108,7 +4136,7 @@ ALTER TABLE ONLY app.wellness_activities ALTER COLUMN id SET DEFAULT nextval('ap
 
 
 --
--- TOC entry 6649 (class 0 OID 19896)
+-- TOC entry 6671 (class 0 OID 19896)
 -- Dependencies: 354
 -- Data for Name: ai_chat_history; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4128,7 +4156,7 @@ COPY app.ai_chat_history (id, user_id, role, content, emotion_detected, keywords
 
 
 --
--- TOC entry 6636 (class 0 OID 19582)
+-- TOC entry 6658 (class 0 OID 19582)
 -- Dependencies: 339
 -- Data for Name: ai_conversation_context; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4140,7 +4168,7 @@ COPY app.ai_conversation_context (id, user_id, context_type, context_key, contex
 
 
 --
--- TOC entry 6631 (class 0 OID 19514)
+-- TOC entry 6653 (class 0 OID 19514)
 -- Dependencies: 334
 -- Data for Name: ai_personas; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4155,7 +4183,7 @@ COPY app.ai_personas (id, name, display_name, tone, emotion_pattern, behavior_ru
 
 
 --
--- TOC entry 6634 (class 0 OID 19559)
+-- TOC entry 6656 (class 0 OID 19559)
 -- Dependencies: 337
 -- Data for Name: ai_scheduled_notifications; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4167,7 +4195,7 @@ COPY app.ai_scheduled_notifications (id, user_id, persona_id, type, content, sch
 
 
 --
--- TOC entry 6659 (class 0 OID 20012)
+-- TOC entry 6681 (class 0 OID 20012)
 -- Dependencies: 365
 -- Data for Name: ai_suggestions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4177,7 +4205,7 @@ COPY app.ai_suggestions (id, user_id, suggestion_type, suggestion_content, reaso
 
 
 --
--- TOC entry 6598 (class 0 OID 19002)
+-- TOC entry 6620 (class 0 OID 19002)
 -- Dependencies: 301
 -- Data for Name: audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4187,7 +4215,7 @@ COPY app.audience (id, name) FROM stdin;
 
 
 --
--- TOC entry 6562 (class 0 OID 17529)
+-- TOC entry 6584 (class 0 OID 17529)
 -- Dependencies: 265
 -- Data for Name: audit_logs; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4394,6 +4422,7 @@ COPY app.audit_logs (id, user_id, action, resource, resource_id, ip_addr, user_a
 199	2	CALL_SESSION_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:34:56.465363+07	{}
 200	2	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:35:13.945152+07	{}
 201	2	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:35:33.117562+07	{"filters": {"limit": 20, "dateTo": "", "offset": 0, "status": "", "userId": null, "dateFrom": "", "expertId": null}}
+232	2	FLAGGED_POSTS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:17.474922+07	{"count": 0}
 202	2	USERS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:36:04.887879+07	{"filters": {"role": "", "limit": 20, "offset": 0, "search": "", "status": ""}}
 203	2	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:36:08.512002+07	{"filters": {"limit": 20, "offset": 0, "status": "", "kycStatus": ""}}
 204	2	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 16:36:11.014281+07	{}
@@ -4420,11 +4449,22 @@ COPY app.audit_logs (id, user_id, action, resource, resource_id, ip_addr, user_a
 225	2	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-05 17:26:26.029834+07	{"filters": {"limit": 20, "dateTo": "", "offset": 0, "status": "", "userId": null, "dateFrom": "", "expertId": null}}
 226	2	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:12:42.158646+07	{}
 227	2	COMPREHENSIVE_DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:12:46.275006+07	{}
+228	2	USERS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:12.042775+07	{"filters": {"role": "", "limit": 20, "offset": 0, "search": "", "status": ""}}
+229	2	EXPERTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:13.170182+07	{"filters": {"limit": 20, "offset": 0, "status": "", "kycStatus": ""}}
+230	2	BOOKINGS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:14.194587+07	{"filters": {"limit": 20, "dateTo": "", "offset": 0, "status": "", "userId": null, "dateFrom": "", "expertId": null}}
+231	2	REPORTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:16.179995+07	{"filters": {"limit": 20, "offset": 0, "status": "", "targetType": ""}}
+233	2	POSTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:17.499178+07	{"filters": {"limit": 20, "offset": 0, "authorId": null}}
+234	2	COMMENTS_LIST_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:19.784122+07	{"filters": {"limit": 20, "offset": 0, "postId": null, "authorId": null}}
+235	2	FLAGGED_COMMENTS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:19.784509+07	{"count": 0}
+236	2	CHAT_THREADS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:29.525177+07	{"type": "", "limit": "20", "offset": "0"}
+237	2	CALL_SESSIONS_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 11:19:32.686337+07	{"kind": "", "limit": "20", "offset": "0", "status": ""}
+238	2	DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 12:30:48.88956+07	{}
+239	2	COMPREHENSIVE_DASHBOARD_VIEWED	\N	\N	::1	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	2025-12-08 12:30:52.44361+07	{}
 \.
 
 
 --
--- TOC entry 6655 (class 0 OID 19968)
+-- TOC entry 6677 (class 0 OID 19968)
 -- Dependencies: 361
 -- Data for Name: behavior_patterns; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4434,7 +4474,7 @@ COPY app.behavior_patterns (id, user_id, pattern_type, pattern_name, pattern_dat
 
 
 --
--- TOC entry 6626 (class 0 OID 19450)
+-- TOC entry 6648 (class 0 OID 19450)
 -- Dependencies: 329
 -- Data for Name: booking_fees; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4444,7 +4484,7 @@ COPY app.booking_fees (id, booking_id, gross_amount, platform_fee, platform_fee_
 
 
 --
--- TOC entry 6532 (class 0 OID 17232)
+-- TOC entry 6554 (class 0 OID 17232)
 -- Dependencies: 235
 -- Data for Name: bookings; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4474,7 +4514,7 @@ COPY app.bookings (id, user_id, expert_id, start_at, end_at, channel, price, sta
 
 
 --
--- TOC entry 6567 (class 0 OID 18562)
+-- TOC entry 6589 (class 0 OID 18562)
 -- Dependencies: 270
 -- Data for Name: call_events; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4605,7 +4645,7 @@ COPY app.call_events (id, call_id, at, type, by_user, payload) FROM stdin;
 
 
 --
--- TOC entry 6610 (class 0 OID 19155)
+-- TOC entry 6632 (class 0 OID 19155)
 -- Dependencies: 313
 -- Data for Name: call_metrics; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4615,7 +4655,7 @@ COPY app.call_metrics (id, call_id, "timestamp", rtt_ms, packet_loss, jitter_ms)
 
 
 --
--- TOC entry 6612 (class 0 OID 19169)
+-- TOC entry 6634 (class 0 OID 19169)
 -- Dependencies: 315
 -- Data for Name: call_recordings; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4625,7 +4665,7 @@ COPY app.call_recordings (id, call_id, url, mime_type, size_bytes, created_at) F
 
 
 --
--- TOC entry 6565 (class 0 OID 18533)
+-- TOC entry 6587 (class 0 OID 18533)
 -- Dependencies: 268
 -- Data for Name: call_sessions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4686,7 +4726,7 @@ COPY app.call_sessions (id, thread_id, caller_id, callee_id, kind, status, start
 
 
 --
--- TOC entry 6608 (class 0 OID 19138)
+-- TOC entry 6630 (class 0 OID 19138)
 -- Dependencies: 311
 -- Data for Name: chat_attachments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4696,7 +4736,7 @@ COPY app.chat_attachments (id, message_id, file_name, mime_type, url, size_bytes
 
 
 --
--- TOC entry 6547 (class 0 OID 17386)
+-- TOC entry 6569 (class 0 OID 17386)
 -- Dependencies: 250
 -- Data for Name: chat_members; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4716,7 +4756,7 @@ COPY app.chat_members (thread_id, user_id, role_in_thread, joined_at) FROM stdin
 
 
 --
--- TOC entry 6549 (class 0 OID 17404)
+-- TOC entry 6571 (class 0 OID 17404)
 -- Dependencies: 252
 -- Data for Name: chat_messages; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4729,7 +4769,7 @@ COPY app.chat_messages (id, thread_id, sender_id, content, created_at, edited_at
 
 
 --
--- TOC entry 6563 (class 0 OID 18246)
+-- TOC entry 6585 (class 0 OID 18246)
 -- Dependencies: 266
 -- Data for Name: chat_read_state; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4740,7 +4780,7 @@ COPY app.chat_read_state (thread_id, user_id, last_read_message_id, updated_at) 
 
 
 --
--- TOC entry 6614 (class 0 OID 19185)
+-- TOC entry 6636 (class 0 OID 19185)
 -- Dependencies: 317
 -- Data for Name: chat_thread_invitations; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4750,7 +4790,7 @@ COPY app.chat_thread_invitations (id, thread_id, inviter_id, invitee_id, status,
 
 
 --
--- TOC entry 6546 (class 0 OID 17372)
+-- TOC entry 6568 (class 0 OID 17372)
 -- Dependencies: 249
 -- Data for Name: chat_threads; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4766,7 +4806,7 @@ COPY app.chat_threads (id, type, booking_id, last_message_at, created_at, name) 
 
 
 --
--- TOC entry 6572 (class 0 OID 18679)
+-- TOC entry 6594 (class 0 OID 18679)
 -- Dependencies: 275
 -- Data for Name: comment_reactions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4778,7 +4818,7 @@ COPY app.comment_reactions (comment_id, user_id, kind, created_at) FROM stdin;
 
 
 --
--- TOC entry 6554 (class 0 OID 17460)
+-- TOC entry 6576 (class 0 OID 17460)
 -- Dependencies: 257
 -- Data for Name: comments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4794,7 +4834,7 @@ COPY app.comments (id, post_id, author_id, anonymous, content, created_at, paren
 
 
 --
--- TOC entry 6560 (class 0 OID 17514)
+-- TOC entry 6582 (class 0 OID 17514)
 -- Dependencies: 263
 -- Data for Name: consents; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4804,7 +4844,7 @@ COPY app.consents (id, user_id, version, consented_at) FROM stdin;
 
 
 --
--- TOC entry 6645 (class 0 OID 19831)
+-- TOC entry 6667 (class 0 OID 19831)
 -- Dependencies: 348
 -- Data for Name: daily_mood_checkins; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4815,7 +4855,7 @@ COPY app.daily_mood_checkins (id, user_id, checkin_date, mood, mood_score, energ
 
 
 --
--- TOC entry 6622 (class 0 OID 19391)
+-- TOC entry 6644 (class 0 OID 19391)
 -- Dependencies: 325
 -- Data for Name: dispute_messages; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4825,7 +4865,7 @@ COPY app.dispute_messages (id, dispute_id, sender_id, message, attachments, is_a
 
 
 --
--- TOC entry 6620 (class 0 OID 19356)
+-- TOC entry 6642 (class 0 OID 19356)
 -- Dependencies: 323
 -- Data for Name: disputes; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4835,7 +4875,7 @@ COPY app.disputes (id, booking_id, raised_by, against_user, reason, description,
 
 
 --
--- TOC entry 6601 (class 0 OID 19028)
+-- TOC entry 6623 (class 0 OID 19028)
 -- Dependencies: 304
 -- Data for Name: domains; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4845,7 +4885,7 @@ COPY app.domains (id, name) FROM stdin;
 
 
 --
--- TOC entry 6524 (class 0 OID 17163)
+-- TOC entry 6546 (class 0 OID 17163)
 -- Dependencies: 227
 -- Data for Name: email_verifications; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4857,7 +4897,7 @@ COPY app.email_verifications (id, user_id, email, otp_code, expires_at, verified
 
 
 --
--- TOC entry 6638 (class 0 OID 19743)
+-- TOC entry 6660 (class 0 OID 19743)
 -- Dependencies: 341
 -- Data for Name: emotion_logs; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4883,7 +4923,7 @@ COPY app.emotion_logs (id, user_id, emotion, intensity, detected_at, source, mes
 
 
 --
--- TOC entry 6647 (class 0 OID 19853)
+-- TOC entry 6669 (class 0 OID 19853)
 -- Dependencies: 350
 -- Data for Name: emotion_patterns; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4893,7 +4933,7 @@ COPY app.emotion_patterns (id, user_id, pattern_type, pattern_key, pattern_data,
 
 
 --
--- TOC entry 6599 (class 0 OID 19012)
+-- TOC entry 6621 (class 0 OID 19012)
 -- Dependencies: 302
 -- Data for Name: expert_audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4903,7 +4943,7 @@ COPY app.expert_audience (expert_id, audience_id) FROM stdin;
 
 
 --
--- TOC entry 6530 (class 0 OID 17216)
+-- TOC entry 6552 (class 0 OID 17216)
 -- Dependencies: 233
 -- Data for Name: expert_availabilities; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4913,7 +4953,7 @@ COPY app.expert_availabilities (id, expert_id, start_at, end_at, is_recurring, r
 
 
 --
--- TOC entry 6592 (class 0 OID 18945)
+-- TOC entry 6614 (class 0 OID 18945)
 -- Dependencies: 295
 -- Data for Name: expert_certifications; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4923,7 +4963,7 @@ COPY app.expert_certifications (id, expert_id, certificate_name, issuing_org, is
 
 
 --
--- TOC entry 6602 (class 0 OID 19038)
+-- TOC entry 6624 (class 0 OID 19038)
 -- Dependencies: 305
 -- Data for Name: expert_domain; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4933,7 +4973,7 @@ COPY app.expert_domain (expert_id, domain_id) FROM stdin;
 
 
 --
--- TOC entry 6590 (class 0 OID 18931)
+-- TOC entry 6612 (class 0 OID 18931)
 -- Dependencies: 293
 -- Data for Name: expert_education; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4943,7 +4983,7 @@ COPY app.expert_education (id, expert_id, degree, institution, year_completed, d
 
 
 --
--- TOC entry 6588 (class 0 OID 18917)
+-- TOC entry 6610 (class 0 OID 18917)
 -- Dependencies: 291
 -- Data for Name: expert_experience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4953,7 +4993,7 @@ COPY app.expert_experience (id, expert_id, "position", organization, years, desc
 
 
 --
--- TOC entry 6596 (class 0 OID 18987)
+-- TOC entry 6618 (class 0 OID 18987)
 -- Dependencies: 299
 -- Data for Name: expert_media; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4963,7 +5003,7 @@ COPY app.expert_media (id, expert_id, media_type, url, title, description, creat
 
 
 --
--- TOC entry 6593 (class 0 OID 18958)
+-- TOC entry 6615 (class 0 OID 18958)
 -- Dependencies: 296
 -- Data for Name: expert_performance; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4973,7 +5013,7 @@ COPY app.expert_performance (expert_id, response_time_avg, acceptance_rate, comp
 
 
 --
--- TOC entry 6526 (class 0 OID 17180)
+-- TOC entry 6548 (class 0 OID 17180)
 -- Dependencies: 229
 -- Data for Name: expert_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -4990,7 +5030,7 @@ COPY app.expert_profiles (id, user_id, specialties, price_per_session, rating_av
 
 
 --
--- TOC entry 6586 (class 0 OID 18900)
+-- TOC entry 6608 (class 0 OID 18900)
 -- Dependencies: 289
 -- Data for Name: expert_skills; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5000,7 +5040,7 @@ COPY app.expert_skills (expert_id, skill_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6594 (class 0 OID 18971)
+-- TOC entry 6616 (class 0 OID 18971)
 -- Dependencies: 297
 -- Data for Name: expert_status; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5014,7 +5054,7 @@ COPY app.expert_status (expert_id, is_online, last_active_at, active_score, stat
 
 
 --
--- TOC entry 6528 (class 0 OID 17199)
+-- TOC entry 6550 (class 0 OID 17199)
 -- Dependencies: 231
 -- Data for Name: listener_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5024,7 +5064,7 @@ COPY app.listener_profiles (id, user_id, intro, verified) FROM stdin;
 
 
 --
--- TOC entry 6641 (class 0 OID 19787)
+-- TOC entry 6663 (class 0 OID 19787)
 -- Dependencies: 344
 -- Data for Name: mental_health_assessments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5035,7 +5075,7 @@ COPY app.mental_health_assessments (id, user_id, assessment_type, risk_level, bu
 
 
 --
--- TOC entry 6558 (class 0 OID 17497)
+-- TOC entry 6580 (class 0 OID 17497)
 -- Dependencies: 261
 -- Data for Name: moderation_actions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5058,7 +5098,7 @@ COPY app.moderation_actions (id, admin_id, target_type, target_id, action, reaso
 
 
 --
--- TOC entry 6583 (class 0 OID 18872)
+-- TOC entry 6605 (class 0 OID 18872)
 -- Dependencies: 286
 -- Data for Name: oauth_users; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5070,7 +5110,7 @@ COPY app.oauth_users (id, app_user_id, google_id, email, name, avatar, created_a
 
 
 --
--- TOC entry 6536 (class 0 OID 17280)
+-- TOC entry 6558 (class 0 OID 17280)
 -- Dependencies: 239
 -- Data for Name: payment_intents; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5097,7 +5137,7 @@ COPY app.payment_intents (id, booking_id, user_id, provider, amount, currency, s
 
 
 --
--- TOC entry 6538 (class 0 OID 17304)
+-- TOC entry 6560 (class 0 OID 17304)
 -- Dependencies: 241
 -- Data for Name: payments; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5107,7 +5147,7 @@ COPY app.payments (id, intent_id, paid_at, status, gateway_payload) FROM stdin;
 
 
 --
--- TOC entry 6581 (class 0 OID 18840)
+-- TOC entry 6603 (class 0 OID 18840)
 -- Dependencies: 284
 -- Data for Name: payout_accounts; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5118,7 +5158,7 @@ COPY app.payout_accounts (id, user_id, bank_name, account_number, account_holder
 
 
 --
--- TOC entry 6604 (class 0 OID 19056)
+-- TOC entry 6626 (class 0 OID 19056)
 -- Dependencies: 307
 -- Data for Name: payout_requests; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5129,7 +5169,7 @@ COPY app.payout_requests (id, user_id, amount, status, payout_account_id, admin_
 
 
 --
--- TOC entry 6616 (class 0 OID 19304)
+-- TOC entry 6638 (class 0 OID 19304)
 -- Dependencies: 319
 -- Data for Name: platform_settings; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5144,7 +5184,7 @@ COPY app.platform_settings (id, key, value, description, updated_at, updated_by)
 
 
 --
--- TOC entry 6569 (class 0 OID 18629)
+-- TOC entry 6591 (class 0 OID 18629)
 -- Dependencies: 272
 -- Data for Name: post_audience; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5154,7 +5194,7 @@ COPY app.post_audience (post_id, user_id) FROM stdin;
 
 
 --
--- TOC entry 6573 (class 0 OID 18701)
+-- TOC entry 6595 (class 0 OID 18701)
 -- Dependencies: 276
 -- Data for Name: post_files; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5164,7 +5204,7 @@ COPY app.post_files (post_id, file_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6571 (class 0 OID 18650)
+-- TOC entry 6593 (class 0 OID 18650)
 -- Dependencies: 274
 -- Data for Name: post_media; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5178,7 +5218,7 @@ COPY app.post_media (id, post_id, kind, url, width, height, duration_ms, created
 
 
 --
--- TOC entry 6552 (class 0 OID 17440)
+-- TOC entry 6574 (class 0 OID 17440)
 -- Dependencies: 255
 -- Data for Name: post_reactions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5188,7 +5228,7 @@ COPY app.post_reactions (post_id, user_id, reaction, created_at) FROM stdin;
 
 
 --
--- TOC entry 6574 (class 0 OID 18718)
+-- TOC entry 6596 (class 0 OID 18718)
 -- Dependencies: 277
 -- Data for Name: post_saves; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5198,7 +5238,7 @@ COPY app.post_saves (user_id, post_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6551 (class 0 OID 17424)
+-- TOC entry 6573 (class 0 OID 17424)
 -- Dependencies: 254
 -- Data for Name: posts; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5214,7 +5254,7 @@ COPY app.posts (id, author_id, anonymous, title, content, tags, created_at, upda
 
 
 --
--- TOC entry 6657 (class 0 OID 19989)
+-- TOC entry 6679 (class 0 OID 19989)
 -- Dependencies: 363
 -- Data for Name: proactive_messages; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5224,7 +5264,7 @@ COPY app.proactive_messages (id, user_id, trigger_type, trigger_data, message_co
 
 
 --
--- TOC entry 6575 (class 0 OID 18765)
+-- TOC entry 6597 (class 0 OID 18765)
 -- Dependencies: 278
 -- Data for Name: processed_events; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5234,7 +5274,7 @@ COPY app.processed_events (idempotency_key, occurred_at) FROM stdin;
 
 
 --
--- TOC entry 6628 (class 0 OID 19473)
+-- TOC entry 6650 (class 0 OID 19473)
 -- Dependencies: 331
 -- Data for Name: product_reviews; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5244,7 +5284,7 @@ COPY app.product_reviews (id, product_id, user_id, rating, comment, created_at, 
 
 
 --
--- TOC entry 6624 (class 0 OID 19412)
+-- TOC entry 6646 (class 0 OID 19412)
 -- Dependencies: 327
 -- Data for Name: recurring_booking_templates; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5254,7 +5294,7 @@ COPY app.recurring_booking_templates (id, user_id, expert_id, channel, start_tim
 
 
 --
--- TOC entry 6618 (class 0 OID 19320)
+-- TOC entry 6640 (class 0 OID 19320)
 -- Dependencies: 321
 -- Data for Name: refunds; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5264,7 +5304,7 @@ COPY app.refunds (id, booking_id, payment_intent_id, user_id, amount, platform_f
 
 
 --
--- TOC entry 6556 (class 0 OID 17481)
+-- TOC entry 6578 (class 0 OID 17481)
 -- Dependencies: 259
 -- Data for Name: reports; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5274,7 +5314,7 @@ COPY app.reports (id, target_type, target_id, reporter_id, reason, details, crea
 
 
 --
--- TOC entry 6577 (class 0 OID 18795)
+-- TOC entry 6599 (class 0 OID 18795)
 -- Dependencies: 280
 -- Data for Name: reviews; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5285,7 +5325,7 @@ COPY app.reviews (id, user_id, expert_id, booking_id, rating, comment, created_a
 
 
 --
--- TOC entry 6606 (class 0 OID 19071)
+-- TOC entry 6628 (class 0 OID 19071)
 -- Dependencies: 309
 -- Data for Name: schema_migrations; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5312,11 +5352,13 @@ COPY app.schema_migrations (id, version, name, executed_at) FROM stdin;
 29	20251202_ai_chat_history	20251202_ai_chat_history.sql	2025-12-02 15:48:21.177235+07
 31	20251202_ai_companion_phase3	20251202_ai_companion_phase3.sql	2025-12-02 16:09:39.859081+07
 33	20251205_admin_extended_features	20251205_admin_extended_features.sql	2025-12-05 16:07:05.815648+07
+35	20251208_add_analytics_indexes	20251208_add_analytics_indexes.sql	2025-12-08 12:25:32.831085+07
+37	20251208_add_email_unique_constraint	20251208_add_email_unique_constraint.sql	2025-12-08 21:11:17.409251+07
 \.
 
 
 --
--- TOC entry 6534 (class 0 OID 17258)
+-- TOC entry 6556 (class 0 OID 17258)
 -- Dependencies: 237
 -- Data for Name: session_notes; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5326,7 +5368,7 @@ COPY app.session_notes (id, booking_id, expert_id, content, created_at) FROM std
 
 
 --
--- TOC entry 6585 (class 0 OID 18890)
+-- TOC entry 6607 (class 0 OID 18890)
 -- Dependencies: 288
 -- Data for Name: skills; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5336,7 +5378,7 @@ COPY app.skills (id, name, category, description) FROM stdin;
 
 
 --
--- TOC entry 6653 (class 0 OID 19948)
+-- TOC entry 6675 (class 0 OID 19948)
 -- Dependencies: 359
 -- Data for Name: sleep_logs; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5346,7 +5388,7 @@ COPY app.sleep_logs (id, user_id, date, sleep_at, wake_at, duration_minutes, qua
 
 
 --
--- TOC entry 6544 (class 0 OID 17351)
+-- TOC entry 6566 (class 0 OID 17351)
 -- Dependencies: 247
 -- Data for Name: tips; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5356,7 +5398,7 @@ COPY app.tips (id, from_user_id, to_user_id, amount, message, created_at) FROM s
 
 
 --
--- TOC entry 6661 (class 0 OID 20027)
+-- TOC entry 6683 (class 0 OID 20027)
 -- Dependencies: 367
 -- Data for Name: user_activity_logs; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5366,7 +5408,7 @@ COPY app.user_activity_logs (id, user_id, activity_type, activity_data, session_
 
 
 --
--- TOC entry 6632 (class 0 OID 19530)
+-- TOC entry 6654 (class 0 OID 19530)
 -- Dependencies: 335
 -- Data for Name: user_ai_settings; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5377,7 +5419,7 @@ COPY app.user_ai_settings (user_id, persona_id, relationship_level, custom_nickn
 
 
 --
--- TOC entry 6629 (class 0 OID 19494)
+-- TOC entry 6651 (class 0 OID 19494)
 -- Dependencies: 332
 -- Data for Name: user_blocks; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5387,7 +5429,7 @@ COPY app.user_blocks (blocker_id, blocked_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6522 (class 0 OID 17147)
+-- TOC entry 6544 (class 0 OID 17147)
 -- Dependencies: 225
 -- Data for Name: user_files; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5397,7 +5439,7 @@ COPY app.user_files (id, user_id, file_type, file_url, mime_type, byte_size, cre
 
 
 --
--- TOC entry 6568 (class 0 OID 18603)
+-- TOC entry 6590 (class 0 OID 18603)
 -- Dependencies: 271
 -- Data for Name: user_follows; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5408,7 +5450,7 @@ COPY app.user_follows (follower_id, followee_id, created_at) FROM stdin;
 
 
 --
--- TOC entry 6639 (class 0 OID 19761)
+-- TOC entry 6661 (class 0 OID 19761)
 -- Dependencies: 342
 -- Data for Name: user_mental_state; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5419,7 +5461,7 @@ COPY app.user_mental_state (user_id, current_mood, mood_score, stress_level, anx
 
 
 --
--- TOC entry 6519 (class 0 OID 17121)
+-- TOC entry 6541 (class 0 OID 17121)
 -- Dependencies: 222
 -- Data for Name: user_profiles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5437,7 +5479,7 @@ COPY app.user_profiles (user_id, display_name, avatar_url, bio, gender, year_of_
 
 
 --
--- TOC entry 6520 (class 0 OID 17136)
+-- TOC entry 6542 (class 0 OID 17136)
 -- Dependencies: 223
 -- Data for Name: user_roles; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5447,7 +5489,7 @@ COPY app.user_roles (user_id, role) FROM stdin;
 
 
 --
--- TOC entry 6651 (class 0 OID 19924)
+-- TOC entry 6673 (class 0 OID 19924)
 -- Dependencies: 357
 -- Data for Name: user_schedules; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5458,7 +5500,7 @@ COPY app.user_schedules (id, user_id, title, description, schedule_type, start_a
 
 
 --
--- TOC entry 6579 (class 0 OID 18822)
+-- TOC entry 6601 (class 0 OID 18822)
 -- Dependencies: 282
 -- Data for Name: user_sessions; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5583,11 +5625,15 @@ COPY app.user_sessions (id, user_id, token, device_info, ip_address, expires_at,
 117	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQ5MzAyNTMsImV4cCI6MTc2NzUyMjI1MywiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.fPzWQjE6wCmjZQT6U4LdNwCcjoINFgXqdZZiVLucaM4	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-12-05 18:24:13.101+07	2025-12-05 17:24:13.101728+07	f
 118	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjQ5MzAzNDQsImV4cCI6MTc2NzUyMjM0NCwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.cHwQJaq3Kpyf-IOBcQJFyb_9dcbPGfwaazQJeKUe_zQ	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-12-05 18:25:44.8+07	2025-12-05 17:25:44.801493+07	f
 119	2	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidHlwIjoicmVmcmVzaCIsImlhdCI6MTc2NTE2NzE2MSwiZXhwIjoxNzY3NzU5MTYxLCJhdWQiOiJoZWFsaW5nLndlYmFwcCIsImlzcyI6ImhlYWxpbmcuYXBpIn0.HVeUSc0KOwZpi9DJn9pnh1YUC8eo86wA7HjmgGILcLA	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-12-08 12:12:41.692+07	2025-12-08 11:12:41.693459+07	f
+120	2	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyIiwidHlwIjoicmVmcmVzaCIsImlhdCI6MTc2NTE3MTg0OCwiZXhwIjoxNzY3NzYzODQ4LCJhdWQiOiJoZWFsaW5nLndlYmFwcCIsImlzcyI6ImhlYWxpbmcuYXBpIn0.WPIBP6dypyIhJi-3cvowUxEBNAxh3mqnV4k4x8xh_zU	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-12-08 13:30:48.433+07	2025-12-08 12:30:48.434739+07	f
+121	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjUyMDMyNzksImV4cCI6MTc2Nzc5NTI3OSwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9._qoLqPsb5tCAgW9mHxPToS-1eWNMT-P4hFlpWEfwMXk	PostmanRuntime/7.49.1	::1	2025-12-08 22:14:39.509+07	2025-12-08 21:14:39.511056+07	f
+122	21	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMSIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjUyMDMzMjYsImV4cCI6MTc2Nzc5NTMyNiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.2YRmbT7_YrjEAL15XumP5xZ6whhssJSc97MAClPzu9E	PostmanRuntime/7.49.1	::1	2025-12-08 22:15:26.882+07	2025-12-08 21:15:26.883966+07	f
+123	22	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMiIsInR5cCI6InJlZnJlc2giLCJpYXQiOjE3NjUyMDYyMjYsImV4cCI6MTc2Nzc5ODIyNiwiYXVkIjoiaGVhbGluZy53ZWJhcHAiLCJpc3MiOiJoZWFsaW5nLmFwaSJ9.XTezqFTUUy_l3TlVItokOCLCk8x3BrOdIEJdgOeufkk	Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36	::1	2025-12-08 23:03:46.282+07	2025-12-08 22:03:46.284552+07	f
 \.
 
 
 --
--- TOC entry 6518 (class 0 OID 17102)
+-- TOC entry 6540 (class 0 OID 17102)
 -- Dependencies: 221
 -- Data for Name: users; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5611,11 +5657,12 @@ COPY app.users (id, handle, email, phone, password_hash, role_primary, is_email_
 9	hoang1999	\N	\N	$2b$10$owItQg6qIUYiJf0TKTTLMOiL0fHbwfGIYHgZOEPOfE1BNb/pcok1S	EXPERT	f	SUSPENDED	2025-10-08 19:21:54.937956+07	2025-11-27 14:38:14.645053+07
 21	mendyu1	phat@gmail.com	0988776887	$2b$10$r5cPlO4wukdZHssAhLFm7.uthUJ8zOQpi2hyEeZz6SfxW47wWk/e6	SEEKER	f	ACTIVE	2025-11-21 19:32:55.645794+07	2025-12-05 16:29:25.66973+07
 5	hoang	nguyenquyhoang.dh2022@gmail.com	\N	$2b$10$Gk/6MSlNiw7AAyKKvHeaiuELuGXf6TWx.GMgvqKayqdl2aNCES3OW	SEEKER	t	DELETED	2025-09-18 18:17:12.551167+07	2025-12-05 16:29:59.111567+07
+22	quyhoang123	cryptovn2001@gmail.com	\N	$2b$10$28LCcH.0RfYSPT/LY9pM8u3YoojqgPdsLdSFjQGVT3Y/ZSDZDC4yq	SEEKER	f	ACTIVE	2025-12-08 22:03:17.12745+07	2025-12-08 22:03:17.12745+07
 \.
 
 
 --
--- TOC entry 6542 (class 0 OID 17335)
+-- TOC entry 6564 (class 0 OID 17335)
 -- Dependencies: 245
 -- Data for Name: wallet_ledger; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5629,7 +5676,7 @@ COPY app.wallet_ledger (id, wallet_id, tx_type, amount, ref_table, ref_id, creat
 
 
 --
--- TOC entry 6540 (class 0 OID 17320)
+-- TOC entry 6562 (class 0 OID 17320)
 -- Dependencies: 243
 -- Data for Name: wallets; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5640,7 +5687,7 @@ COPY app.wallets (id, owner_user_id, balance) FROM stdin;
 
 
 --
--- TOC entry 6643 (class 0 OID 19812)
+-- TOC entry 6665 (class 0 OID 19812)
 -- Dependencies: 346
 -- Data for Name: wellness_activities; Type: TABLE DATA; Schema: app; Owner: postgres
 --
@@ -5652,7 +5699,7 @@ COPY app.wellness_activities (id, user_id, activity_type, title, description, du
 
 
 --
--- TOC entry 6726 (class 0 OID 0)
+-- TOC entry 6749 (class 0 OID 0)
 -- Dependencies: 353
 -- Name: ai_chat_history_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5661,7 +5708,7 @@ SELECT pg_catalog.setval('app.ai_chat_history_id_seq', 18, true);
 
 
 --
--- TOC entry 6727 (class 0 OID 0)
+-- TOC entry 6750 (class 0 OID 0)
 -- Dependencies: 338
 -- Name: ai_conversation_context_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5670,7 +5717,7 @@ SELECT pg_catalog.setval('app.ai_conversation_context_id_seq', 3, true);
 
 
 --
--- TOC entry 6728 (class 0 OID 0)
+-- TOC entry 6751 (class 0 OID 0)
 -- Dependencies: 333
 -- Name: ai_personas_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5679,7 +5726,7 @@ SELECT pg_catalog.setval('app.ai_personas_id_seq', 5, true);
 
 
 --
--- TOC entry 6729 (class 0 OID 0)
+-- TOC entry 6752 (class 0 OID 0)
 -- Dependencies: 336
 -- Name: ai_scheduled_notifications_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5688,7 +5735,7 @@ SELECT pg_catalog.setval('app.ai_scheduled_notifications_id_seq', 2, true);
 
 
 --
--- TOC entry 6730 (class 0 OID 0)
+-- TOC entry 6753 (class 0 OID 0)
 -- Dependencies: 364
 -- Name: ai_suggestions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5697,7 +5744,7 @@ SELECT pg_catalog.setval('app.ai_suggestions_id_seq', 1, false);
 
 
 --
--- TOC entry 6731 (class 0 OID 0)
+-- TOC entry 6754 (class 0 OID 0)
 -- Dependencies: 300
 -- Name: audience_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5706,16 +5753,16 @@ SELECT pg_catalog.setval('app.audience_id_seq', 1, false);
 
 
 --
--- TOC entry 6732 (class 0 OID 0)
+-- TOC entry 6755 (class 0 OID 0)
 -- Dependencies: 264
 -- Name: audit_logs_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.audit_logs_id_seq', 227, true);
+SELECT pg_catalog.setval('app.audit_logs_id_seq', 239, true);
 
 
 --
--- TOC entry 6733 (class 0 OID 0)
+-- TOC entry 6756 (class 0 OID 0)
 -- Dependencies: 360
 -- Name: behavior_patterns_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5724,7 +5771,7 @@ SELECT pg_catalog.setval('app.behavior_patterns_id_seq', 1, false);
 
 
 --
--- TOC entry 6734 (class 0 OID 0)
+-- TOC entry 6757 (class 0 OID 0)
 -- Dependencies: 328
 -- Name: booking_fees_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5733,7 +5780,7 @@ SELECT pg_catalog.setval('app.booking_fees_id_seq', 1, false);
 
 
 --
--- TOC entry 6735 (class 0 OID 0)
+-- TOC entry 6758 (class 0 OID 0)
 -- Dependencies: 234
 -- Name: bookings_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5742,7 +5789,7 @@ SELECT pg_catalog.setval('app.bookings_id_seq', 26, true);
 
 
 --
--- TOC entry 6736 (class 0 OID 0)
+-- TOC entry 6759 (class 0 OID 0)
 -- Dependencies: 269
 -- Name: call_events_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5751,7 +5798,7 @@ SELECT pg_catalog.setval('app.call_events_id_seq', 122, true);
 
 
 --
--- TOC entry 6737 (class 0 OID 0)
+-- TOC entry 6760 (class 0 OID 0)
 -- Dependencies: 312
 -- Name: call_metrics_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5760,7 +5807,7 @@ SELECT pg_catalog.setval('app.call_metrics_id_seq', 1, false);
 
 
 --
--- TOC entry 6738 (class 0 OID 0)
+-- TOC entry 6761 (class 0 OID 0)
 -- Dependencies: 314
 -- Name: call_recordings_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5769,7 +5816,7 @@ SELECT pg_catalog.setval('app.call_recordings_id_seq', 1, false);
 
 
 --
--- TOC entry 6739 (class 0 OID 0)
+-- TOC entry 6762 (class 0 OID 0)
 -- Dependencies: 267
 -- Name: call_sessions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5778,7 +5825,7 @@ SELECT pg_catalog.setval('app.call_sessions_id_seq', 51, true);
 
 
 --
--- TOC entry 6740 (class 0 OID 0)
+-- TOC entry 6763 (class 0 OID 0)
 -- Dependencies: 310
 -- Name: chat_attachments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5787,7 +5834,7 @@ SELECT pg_catalog.setval('app.chat_attachments_id_seq', 1, false);
 
 
 --
--- TOC entry 6741 (class 0 OID 0)
+-- TOC entry 6764 (class 0 OID 0)
 -- Dependencies: 251
 -- Name: chat_messages_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5796,7 +5843,7 @@ SELECT pg_catalog.setval('app.chat_messages_id_seq', 3, true);
 
 
 --
--- TOC entry 6742 (class 0 OID 0)
+-- TOC entry 6765 (class 0 OID 0)
 -- Dependencies: 316
 -- Name: chat_thread_invitations_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5805,7 +5852,7 @@ SELECT pg_catalog.setval('app.chat_thread_invitations_id_seq', 1, false);
 
 
 --
--- TOC entry 6743 (class 0 OID 0)
+-- TOC entry 6766 (class 0 OID 0)
 -- Dependencies: 248
 -- Name: chat_threads_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5814,7 +5861,7 @@ SELECT pg_catalog.setval('app.chat_threads_id_seq', 6, true);
 
 
 --
--- TOC entry 6744 (class 0 OID 0)
+-- TOC entry 6767 (class 0 OID 0)
 -- Dependencies: 256
 -- Name: comments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5823,7 +5870,7 @@ SELECT pg_catalog.setval('app.comments_id_seq', 9, true);
 
 
 --
--- TOC entry 6745 (class 0 OID 0)
+-- TOC entry 6768 (class 0 OID 0)
 -- Dependencies: 262
 -- Name: consents_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5832,7 +5879,7 @@ SELECT pg_catalog.setval('app.consents_id_seq', 1, false);
 
 
 --
--- TOC entry 6746 (class 0 OID 0)
+-- TOC entry 6769 (class 0 OID 0)
 -- Dependencies: 347
 -- Name: daily_mood_checkins_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5841,7 +5888,7 @@ SELECT pg_catalog.setval('app.daily_mood_checkins_id_seq', 1, true);
 
 
 --
--- TOC entry 6747 (class 0 OID 0)
+-- TOC entry 6770 (class 0 OID 0)
 -- Dependencies: 324
 -- Name: dispute_messages_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5850,7 +5897,7 @@ SELECT pg_catalog.setval('app.dispute_messages_id_seq', 1, false);
 
 
 --
--- TOC entry 6748 (class 0 OID 0)
+-- TOC entry 6771 (class 0 OID 0)
 -- Dependencies: 322
 -- Name: disputes_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5859,7 +5906,7 @@ SELECT pg_catalog.setval('app.disputes_id_seq', 1, false);
 
 
 --
--- TOC entry 6749 (class 0 OID 0)
+-- TOC entry 6772 (class 0 OID 0)
 -- Dependencies: 303
 -- Name: domains_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5868,7 +5915,7 @@ SELECT pg_catalog.setval('app.domains_id_seq', 1, false);
 
 
 --
--- TOC entry 6750 (class 0 OID 0)
+-- TOC entry 6773 (class 0 OID 0)
 -- Dependencies: 226
 -- Name: email_verifications_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5877,7 +5924,7 @@ SELECT pg_catalog.setval('app.email_verifications_id_seq', 14, true);
 
 
 --
--- TOC entry 6751 (class 0 OID 0)
+-- TOC entry 6774 (class 0 OID 0)
 -- Dependencies: 340
 -- Name: emotion_logs_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5886,7 +5933,7 @@ SELECT pg_catalog.setval('app.emotion_logs_id_seq', 16, true);
 
 
 --
--- TOC entry 6752 (class 0 OID 0)
+-- TOC entry 6775 (class 0 OID 0)
 -- Dependencies: 349
 -- Name: emotion_patterns_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5895,7 +5942,7 @@ SELECT pg_catalog.setval('app.emotion_patterns_id_seq', 1, false);
 
 
 --
--- TOC entry 6753 (class 0 OID 0)
+-- TOC entry 6776 (class 0 OID 0)
 -- Dependencies: 232
 -- Name: expert_availabilities_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5904,7 +5951,7 @@ SELECT pg_catalog.setval('app.expert_availabilities_id_seq', 1, false);
 
 
 --
--- TOC entry 6754 (class 0 OID 0)
+-- TOC entry 6777 (class 0 OID 0)
 -- Dependencies: 294
 -- Name: expert_certifications_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5913,7 +5960,7 @@ SELECT pg_catalog.setval('app.expert_certifications_id_seq', 1, false);
 
 
 --
--- TOC entry 6755 (class 0 OID 0)
+-- TOC entry 6778 (class 0 OID 0)
 -- Dependencies: 292
 -- Name: expert_education_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5922,7 +5969,7 @@ SELECT pg_catalog.setval('app.expert_education_id_seq', 1, false);
 
 
 --
--- TOC entry 6756 (class 0 OID 0)
+-- TOC entry 6779 (class 0 OID 0)
 -- Dependencies: 290
 -- Name: expert_experience_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5931,7 +5978,7 @@ SELECT pg_catalog.setval('app.expert_experience_id_seq', 1, false);
 
 
 --
--- TOC entry 6757 (class 0 OID 0)
+-- TOC entry 6780 (class 0 OID 0)
 -- Dependencies: 298
 -- Name: expert_media_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5940,7 +5987,7 @@ SELECT pg_catalog.setval('app.expert_media_id_seq', 1, false);
 
 
 --
--- TOC entry 6758 (class 0 OID 0)
+-- TOC entry 6781 (class 0 OID 0)
 -- Dependencies: 228
 -- Name: expert_profiles_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5949,7 +5996,7 @@ SELECT pg_catalog.setval('app.expert_profiles_id_seq', 7, true);
 
 
 --
--- TOC entry 6759 (class 0 OID 0)
+-- TOC entry 6782 (class 0 OID 0)
 -- Dependencies: 230
 -- Name: listener_profiles_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5958,7 +6005,7 @@ SELECT pg_catalog.setval('app.listener_profiles_id_seq', 1, false);
 
 
 --
--- TOC entry 6760 (class 0 OID 0)
+-- TOC entry 6783 (class 0 OID 0)
 -- Dependencies: 343
 -- Name: mental_health_assessments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5967,7 +6014,7 @@ SELECT pg_catalog.setval('app.mental_health_assessments_id_seq', 1, true);
 
 
 --
--- TOC entry 6761 (class 0 OID 0)
+-- TOC entry 6784 (class 0 OID 0)
 -- Dependencies: 260
 -- Name: moderation_actions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5976,7 +6023,7 @@ SELECT pg_catalog.setval('app.moderation_actions_id_seq', 13, true);
 
 
 --
--- TOC entry 6762 (class 0 OID 0)
+-- TOC entry 6785 (class 0 OID 0)
 -- Dependencies: 285
 -- Name: oauth_users_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5985,7 +6032,7 @@ SELECT pg_catalog.setval('app.oauth_users_id_seq', 2, true);
 
 
 --
--- TOC entry 6763 (class 0 OID 0)
+-- TOC entry 6786 (class 0 OID 0)
 -- Dependencies: 238
 -- Name: payment_intents_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -5994,7 +6041,7 @@ SELECT pg_catalog.setval('app.payment_intents_id_seq', 17, true);
 
 
 --
--- TOC entry 6764 (class 0 OID 0)
+-- TOC entry 6787 (class 0 OID 0)
 -- Dependencies: 240
 -- Name: payments_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6003,7 +6050,7 @@ SELECT pg_catalog.setval('app.payments_id_seq', 1, false);
 
 
 --
--- TOC entry 6765 (class 0 OID 0)
+-- TOC entry 6788 (class 0 OID 0)
 -- Dependencies: 283
 -- Name: payout_accounts_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6012,7 +6059,7 @@ SELECT pg_catalog.setval('app.payout_accounts_id_seq', 2, true);
 
 
 --
--- TOC entry 6766 (class 0 OID 0)
+-- TOC entry 6789 (class 0 OID 0)
 -- Dependencies: 306
 -- Name: payout_requests_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6021,7 +6068,7 @@ SELECT pg_catalog.setval('app.payout_requests_id_seq', 1, true);
 
 
 --
--- TOC entry 6767 (class 0 OID 0)
+-- TOC entry 6790 (class 0 OID 0)
 -- Dependencies: 318
 -- Name: platform_settings_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6030,7 +6077,7 @@ SELECT pg_catalog.setval('app.platform_settings_id_seq', 5, true);
 
 
 --
--- TOC entry 6768 (class 0 OID 0)
+-- TOC entry 6791 (class 0 OID 0)
 -- Dependencies: 273
 -- Name: post_media_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6039,7 +6086,7 @@ SELECT pg_catalog.setval('app.post_media_id_seq', 4, true);
 
 
 --
--- TOC entry 6769 (class 0 OID 0)
+-- TOC entry 6792 (class 0 OID 0)
 -- Dependencies: 253
 -- Name: posts_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6048,7 +6095,7 @@ SELECT pg_catalog.setval('app.posts_id_seq', 13, true);
 
 
 --
--- TOC entry 6770 (class 0 OID 0)
+-- TOC entry 6793 (class 0 OID 0)
 -- Dependencies: 362
 -- Name: proactive_messages_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6057,7 +6104,7 @@ SELECT pg_catalog.setval('app.proactive_messages_id_seq', 1, false);
 
 
 --
--- TOC entry 6771 (class 0 OID 0)
+-- TOC entry 6794 (class 0 OID 0)
 -- Dependencies: 330
 -- Name: product_reviews_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6066,7 +6113,7 @@ SELECT pg_catalog.setval('app.product_reviews_id_seq', 1, false);
 
 
 --
--- TOC entry 6772 (class 0 OID 0)
+-- TOC entry 6795 (class 0 OID 0)
 -- Dependencies: 326
 -- Name: recurring_booking_templates_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6075,7 +6122,7 @@ SELECT pg_catalog.setval('app.recurring_booking_templates_id_seq', 1, false);
 
 
 --
--- TOC entry 6773 (class 0 OID 0)
+-- TOC entry 6796 (class 0 OID 0)
 -- Dependencies: 320
 -- Name: refunds_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6084,7 +6131,7 @@ SELECT pg_catalog.setval('app.refunds_id_seq', 1, false);
 
 
 --
--- TOC entry 6774 (class 0 OID 0)
+-- TOC entry 6797 (class 0 OID 0)
 -- Dependencies: 258
 -- Name: reports_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6093,7 +6140,7 @@ SELECT pg_catalog.setval('app.reports_id_seq', 1, false);
 
 
 --
--- TOC entry 6775 (class 0 OID 0)
+-- TOC entry 6798 (class 0 OID 0)
 -- Dependencies: 279
 -- Name: reviews_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6102,16 +6149,16 @@ SELECT pg_catalog.setval('app.reviews_id_seq', 2, true);
 
 
 --
--- TOC entry 6776 (class 0 OID 0)
+-- TOC entry 6799 (class 0 OID 0)
 -- Dependencies: 308
 -- Name: schema_migrations_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.schema_migrations_id_seq', 33, true);
+SELECT pg_catalog.setval('app.schema_migrations_id_seq', 37, true);
 
 
 --
--- TOC entry 6777 (class 0 OID 0)
+-- TOC entry 6800 (class 0 OID 0)
 -- Dependencies: 236
 -- Name: session_notes_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6120,7 +6167,7 @@ SELECT pg_catalog.setval('app.session_notes_id_seq', 1, false);
 
 
 --
--- TOC entry 6778 (class 0 OID 0)
+-- TOC entry 6801 (class 0 OID 0)
 -- Dependencies: 287
 -- Name: skills_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6129,7 +6176,7 @@ SELECT pg_catalog.setval('app.skills_id_seq', 1, false);
 
 
 --
--- TOC entry 6779 (class 0 OID 0)
+-- TOC entry 6802 (class 0 OID 0)
 -- Dependencies: 358
 -- Name: sleep_logs_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6138,7 +6185,7 @@ SELECT pg_catalog.setval('app.sleep_logs_id_seq', 1, false);
 
 
 --
--- TOC entry 6780 (class 0 OID 0)
+-- TOC entry 6803 (class 0 OID 0)
 -- Dependencies: 246
 -- Name: tips_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6147,7 +6194,7 @@ SELECT pg_catalog.setval('app.tips_id_seq', 1, false);
 
 
 --
--- TOC entry 6781 (class 0 OID 0)
+-- TOC entry 6804 (class 0 OID 0)
 -- Dependencies: 366
 -- Name: user_activity_logs_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6156,7 +6203,7 @@ SELECT pg_catalog.setval('app.user_activity_logs_id_seq', 1, false);
 
 
 --
--- TOC entry 6782 (class 0 OID 0)
+-- TOC entry 6805 (class 0 OID 0)
 -- Dependencies: 224
 -- Name: user_files_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6165,7 +6212,7 @@ SELECT pg_catalog.setval('app.user_files_id_seq', 1, false);
 
 
 --
--- TOC entry 6783 (class 0 OID 0)
+-- TOC entry 6806 (class 0 OID 0)
 -- Dependencies: 356
 -- Name: user_schedules_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6174,25 +6221,25 @@ SELECT pg_catalog.setval('app.user_schedules_id_seq', 1, true);
 
 
 --
--- TOC entry 6784 (class 0 OID 0)
+-- TOC entry 6807 (class 0 OID 0)
 -- Dependencies: 281
 -- Name: user_sessions_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.user_sessions_id_seq', 119, true);
+SELECT pg_catalog.setval('app.user_sessions_id_seq', 123, true);
 
 
 --
--- TOC entry 6785 (class 0 OID 0)
+-- TOC entry 6808 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
 
-SELECT pg_catalog.setval('app.users_id_seq', 21, true);
+SELECT pg_catalog.setval('app.users_id_seq', 22, true);
 
 
 --
--- TOC entry 6786 (class 0 OID 0)
+-- TOC entry 6809 (class 0 OID 0)
 -- Dependencies: 244
 -- Name: wallet_ledger_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6201,7 +6248,7 @@ SELECT pg_catalog.setval('app.wallet_ledger_id_seq', 5, true);
 
 
 --
--- TOC entry 6787 (class 0 OID 0)
+-- TOC entry 6810 (class 0 OID 0)
 -- Dependencies: 242
 -- Name: wallets_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6210,7 +6257,7 @@ SELECT pg_catalog.setval('app.wallets_id_seq', 2, true);
 
 
 --
--- TOC entry 6788 (class 0 OID 0)
+-- TOC entry 6811 (class 0 OID 0)
 -- Dependencies: 345
 -- Name: wellness_activities_id_seq; Type: SEQUENCE SET; Schema: app; Owner: postgres
 --
@@ -6219,7 +6266,7 @@ SELECT pg_catalog.setval('app.wellness_activities_id_seq', 2, true);
 
 
 --
--- TOC entry 6205 (class 2606 OID 19906)
+-- TOC entry 6226 (class 2606 OID 19906)
 -- Name: ai_chat_history ai_chat_history_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6228,7 +6275,7 @@ ALTER TABLE ONLY app.ai_chat_history
 
 
 --
--- TOC entry 6172 (class 2606 OID 19592)
+-- TOC entry 6193 (class 2606 OID 19592)
 -- Name: ai_conversation_context ai_conversation_context_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6237,7 +6284,7 @@ ALTER TABLE ONLY app.ai_conversation_context
 
 
 --
--- TOC entry 6174 (class 2606 OID 19594)
+-- TOC entry 6195 (class 2606 OID 19594)
 -- Name: ai_conversation_context ai_conversation_context_user_id_context_type_context_key_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6246,7 +6293,7 @@ ALTER TABLE ONLY app.ai_conversation_context
 
 
 --
--- TOC entry 6161 (class 2606 OID 19529)
+-- TOC entry 6182 (class 2606 OID 19529)
 -- Name: ai_personas ai_personas_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6255,7 +6302,7 @@ ALTER TABLE ONLY app.ai_personas
 
 
 --
--- TOC entry 6163 (class 2606 OID 19527)
+-- TOC entry 6184 (class 2606 OID 19527)
 -- Name: ai_personas ai_personas_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6264,7 +6311,7 @@ ALTER TABLE ONLY app.ai_personas
 
 
 --
--- TOC entry 6168 (class 2606 OID 19570)
+-- TOC entry 6189 (class 2606 OID 19570)
 -- Name: ai_scheduled_notifications ai_scheduled_notifications_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6273,7 +6320,7 @@ ALTER TABLE ONLY app.ai_scheduled_notifications
 
 
 --
--- TOC entry 6228 (class 2606 OID 20020)
+-- TOC entry 6249 (class 2606 OID 20020)
 -- Name: ai_suggestions ai_suggestions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6282,7 +6329,7 @@ ALTER TABLE ONLY app.ai_suggestions
 
 
 --
--- TOC entry 6085 (class 2606 OID 19011)
+-- TOC entry 6103 (class 2606 OID 19011)
 -- Name: audience audience_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6291,7 +6338,7 @@ ALTER TABLE ONLY app.audience
 
 
 --
--- TOC entry 6087 (class 2606 OID 19009)
+-- TOC entry 6105 (class 2606 OID 19009)
 -- Name: audience audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6300,7 +6347,7 @@ ALTER TABLE ONLY app.audience
 
 
 --
--- TOC entry 5997 (class 2606 OID 17537)
+-- TOC entry 6013 (class 2606 OID 17537)
 -- Name: audit_logs audit_logs_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6309,7 +6356,7 @@ ALTER TABLE ONLY app.audit_logs
 
 
 --
--- TOC entry 6219 (class 2606 OID 19980)
+-- TOC entry 6240 (class 2606 OID 19980)
 -- Name: behavior_patterns behavior_patterns_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6318,7 +6365,7 @@ ALTER TABLE ONLY app.behavior_patterns
 
 
 --
--- TOC entry 6221 (class 2606 OID 19982)
+-- TOC entry 6242 (class 2606 OID 19982)
 -- Name: behavior_patterns behavior_patterns_user_id_pattern_type_pattern_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6327,7 +6374,7 @@ ALTER TABLE ONLY app.behavior_patterns
 
 
 --
--- TOC entry 6144 (class 2606 OID 19458)
+-- TOC entry 6165 (class 2606 OID 19458)
 -- Name: booking_fees booking_fees_booking_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6336,7 +6383,7 @@ ALTER TABLE ONLY app.booking_fees
 
 
 --
--- TOC entry 6146 (class 2606 OID 19456)
+-- TOC entry 6167 (class 2606 OID 19456)
 -- Name: booking_fees booking_fees_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6345,7 +6392,7 @@ ALTER TABLE ONLY app.booking_fees
 
 
 --
--- TOC entry 5894 (class 2606 OID 17244)
+-- TOC entry 5900 (class 2606 OID 17244)
 -- Name: bookings bookings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6354,7 +6401,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 6018 (class 2606 OID 18570)
+-- TOC entry 6035 (class 2606 OID 18570)
 -- Name: call_events call_events_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6363,7 +6410,7 @@ ALTER TABLE ONLY app.call_events
 
 
 --
--- TOC entry 6111 (class 2606 OID 19161)
+-- TOC entry 6130 (class 2606 OID 19161)
 -- Name: call_metrics call_metrics_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6372,7 +6419,7 @@ ALTER TABLE ONLY app.call_metrics
 
 
 --
--- TOC entry 6114 (class 2606 OID 19177)
+-- TOC entry 6133 (class 2606 OID 19177)
 -- Name: call_recordings call_recordings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6381,7 +6428,7 @@ ALTER TABLE ONLY app.call_recordings
 
 
 --
--- TOC entry 6008 (class 2606 OID 18543)
+-- TOC entry 6025 (class 2606 OID 18543)
 -- Name: call_sessions call_sessions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6390,7 +6437,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 6108 (class 2606 OID 19146)
+-- TOC entry 6127 (class 2606 OID 19146)
 -- Name: chat_attachments chat_attachments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6399,7 +6446,7 @@ ALTER TABLE ONLY app.chat_attachments
 
 
 --
--- TOC entry 5948 (class 2606 OID 17392)
+-- TOC entry 5961 (class 2606 OID 17392)
 -- Name: chat_members chat_members_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6408,7 +6455,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 5955 (class 2606 OID 17412)
+-- TOC entry 5968 (class 2606 OID 17412)
 -- Name: chat_messages chat_messages_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6417,7 +6464,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 6005 (class 2606 OID 18251)
+-- TOC entry 6022 (class 2606 OID 18251)
 -- Name: chat_read_state chat_read_state_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6426,7 +6473,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 6117 (class 2606 OID 19195)
+-- TOC entry 6136 (class 2606 OID 19195)
 -- Name: chat_thread_invitations chat_thread_invitations_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6435,7 +6482,7 @@ ALTER TABLE ONLY app.chat_thread_invitations
 
 
 --
--- TOC entry 5942 (class 2606 OID 17380)
+-- TOC entry 5955 (class 2606 OID 17380)
 -- Name: chat_threads chat_threads_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6444,7 +6491,7 @@ ALTER TABLE ONLY app.chat_threads
 
 
 --
--- TOC entry 6030 (class 2606 OID 18684)
+-- TOC entry 6047 (class 2606 OID 18684)
 -- Name: comment_reactions comment_reactions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6453,7 +6500,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 5975 (class 2606 OID 17469)
+-- TOC entry 5989 (class 2606 OID 17469)
 -- Name: comments comments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6462,7 +6509,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 5995 (class 2606 OID 17522)
+-- TOC entry 6011 (class 2606 OID 17522)
 -- Name: consents consents_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6471,7 +6518,7 @@ ALTER TABLE ONLY app.consents
 
 
 --
--- TOC entry 6195 (class 2606 OID 19844)
+-- TOC entry 6216 (class 2606 OID 19844)
 -- Name: daily_mood_checkins daily_mood_checkins_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6480,7 +6527,7 @@ ALTER TABLE ONLY app.daily_mood_checkins
 
 
 --
--- TOC entry 6197 (class 2606 OID 19846)
+-- TOC entry 6218 (class 2606 OID 19846)
 -- Name: daily_mood_checkins daily_mood_checkins_user_id_checkin_date_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6489,7 +6536,7 @@ ALTER TABLE ONLY app.daily_mood_checkins
 
 
 --
--- TOC entry 6135 (class 2606 OID 19399)
+-- TOC entry 6156 (class 2606 OID 19399)
 -- Name: dispute_messages dispute_messages_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6498,7 +6545,7 @@ ALTER TABLE ONLY app.dispute_messages
 
 
 --
--- TOC entry 6130 (class 2606 OID 19366)
+-- TOC entry 6150 (class 2606 OID 19366)
 -- Name: disputes disputes_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6507,7 +6554,7 @@ ALTER TABLE ONLY app.disputes
 
 
 --
--- TOC entry 6091 (class 2606 OID 19037)
+-- TOC entry 6109 (class 2606 OID 19037)
 -- Name: domains domains_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6516,7 +6563,7 @@ ALTER TABLE ONLY app.domains
 
 
 --
--- TOC entry 6093 (class 2606 OID 19035)
+-- TOC entry 6111 (class 2606 OID 19035)
 -- Name: domains domains_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6525,7 +6572,7 @@ ALTER TABLE ONLY app.domains
 
 
 --
--- TOC entry 5871 (class 2606 OID 17172)
+-- TOC entry 5877 (class 2606 OID 17172)
 -- Name: email_verifications email_verifications_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6534,7 +6581,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 6177 (class 2606 OID 19755)
+-- TOC entry 6198 (class 2606 OID 19755)
 -- Name: emotion_logs emotion_logs_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6543,7 +6590,7 @@ ALTER TABLE ONLY app.emotion_logs
 
 
 --
--- TOC entry 6200 (class 2606 OID 19864)
+-- TOC entry 6221 (class 2606 OID 19864)
 -- Name: emotion_patterns emotion_patterns_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6552,7 +6599,7 @@ ALTER TABLE ONLY app.emotion_patterns
 
 
 --
--- TOC entry 6202 (class 2606 OID 19866)
+-- TOC entry 6223 (class 2606 OID 19866)
 -- Name: emotion_patterns emotion_patterns_user_id_pattern_type_pattern_key_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6561,7 +6608,7 @@ ALTER TABLE ONLY app.emotion_patterns
 
 
 --
--- TOC entry 6089 (class 2606 OID 19016)
+-- TOC entry 6107 (class 2606 OID 19016)
 -- Name: expert_audience expert_audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6570,7 +6617,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 5889 (class 2606 OID 17225)
+-- TOC entry 5895 (class 2606 OID 17225)
 -- Name: expert_availabilities expert_availabilities_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6579,7 +6626,7 @@ ALTER TABLE ONLY app.expert_availabilities
 
 
 --
--- TOC entry 6077 (class 2606 OID 18952)
+-- TOC entry 6095 (class 2606 OID 18952)
 -- Name: expert_certifications expert_certifications_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6588,7 +6635,7 @@ ALTER TABLE ONLY app.expert_certifications
 
 
 --
--- TOC entry 6095 (class 2606 OID 19042)
+-- TOC entry 6113 (class 2606 OID 19042)
 -- Name: expert_domain expert_domain_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6597,7 +6644,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 6075 (class 2606 OID 18938)
+-- TOC entry 6093 (class 2606 OID 18938)
 -- Name: expert_education expert_education_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6606,7 +6653,7 @@ ALTER TABLE ONLY app.expert_education
 
 
 --
--- TOC entry 6073 (class 2606 OID 18924)
+-- TOC entry 6091 (class 2606 OID 18924)
 -- Name: expert_experience expert_experience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6615,7 +6662,7 @@ ALTER TABLE ONLY app.expert_experience
 
 
 --
--- TOC entry 6083 (class 2606 OID 18995)
+-- TOC entry 6101 (class 2606 OID 18995)
 -- Name: expert_media expert_media_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6624,7 +6671,7 @@ ALTER TABLE ONLY app.expert_media
 
 
 --
--- TOC entry 6079 (class 2606 OID 18965)
+-- TOC entry 6097 (class 2606 OID 18965)
 -- Name: expert_performance expert_performance_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6633,7 +6680,7 @@ ALTER TABLE ONLY app.expert_performance
 
 
 --
--- TOC entry 5877 (class 2606 OID 17190)
+-- TOC entry 5883 (class 2606 OID 17190)
 -- Name: expert_profiles expert_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6642,7 +6689,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 5879 (class 2606 OID 17192)
+-- TOC entry 5885 (class 2606 OID 17192)
 -- Name: expert_profiles expert_profiles_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6651,7 +6698,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 6071 (class 2606 OID 18905)
+-- TOC entry 6089 (class 2606 OID 18905)
 -- Name: expert_skills expert_skills_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6660,7 +6707,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 6081 (class 2606 OID 18980)
+-- TOC entry 6099 (class 2606 OID 18980)
 -- Name: expert_status expert_status_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6669,7 +6716,7 @@ ALTER TABLE ONLY app.expert_status
 
 
 --
--- TOC entry 5885 (class 2606 OID 17207)
+-- TOC entry 5891 (class 2606 OID 17207)
 -- Name: listener_profiles listener_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6678,7 +6725,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 5887 (class 2606 OID 17209)
+-- TOC entry 5893 (class 2606 OID 17209)
 -- Name: listener_profiles listener_profiles_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6687,7 +6734,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 6189 (class 2606 OID 19805)
+-- TOC entry 6210 (class 2606 OID 19805)
 -- Name: mental_health_assessments mental_health_assessments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6696,7 +6743,7 @@ ALTER TABLE ONLY app.mental_health_assessments
 
 
 --
--- TOC entry 5993 (class 2606 OID 17507)
+-- TOC entry 6009 (class 2606 OID 17507)
 -- Name: moderation_actions moderation_actions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6705,7 +6752,7 @@ ALTER TABLE ONLY app.moderation_actions
 
 
 --
--- TOC entry 5904 (class 2606 OID 18217)
+-- TOC entry 5913 (class 2606 OID 18217)
 -- Name: bookings no_overlap_per_expert; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6714,7 +6761,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 6063 (class 2606 OID 18882)
+-- TOC entry 6081 (class 2606 OID 18882)
 -- Name: oauth_users oauth_users_google_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6723,7 +6770,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 6065 (class 2606 OID 18880)
+-- TOC entry 6083 (class 2606 OID 18880)
 -- Name: oauth_users oauth_users_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6732,7 +6779,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 5915 (class 2606 OID 17290)
+-- TOC entry 5927 (class 2606 OID 17290)
 -- Name: payment_intents payment_intents_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6741,7 +6788,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5917 (class 2606 OID 17292)
+-- TOC entry 5929 (class 2606 OID 17292)
 -- Name: payment_intents payment_intents_tx_ref_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6750,7 +6797,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 5922 (class 2606 OID 17313)
+-- TOC entry 5934 (class 2606 OID 17313)
 -- Name: payments payments_intent_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6759,7 +6806,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 5924 (class 2606 OID 17311)
+-- TOC entry 5936 (class 2606 OID 17311)
 -- Name: payments payments_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6768,7 +6815,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 6059 (class 2606 OID 18849)
+-- TOC entry 6077 (class 2606 OID 18849)
 -- Name: payout_accounts payout_accounts_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6777,7 +6824,7 @@ ALTER TABLE ONLY app.payout_accounts
 
 
 --
--- TOC entry 6101 (class 2606 OID 19067)
+-- TOC entry 6120 (class 2606 OID 19067)
 -- Name: payout_requests payout_requests_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6786,7 +6833,7 @@ ALTER TABLE ONLY app.payout_requests
 
 
 --
--- TOC entry 6121 (class 2606 OID 19313)
+-- TOC entry 6140 (class 2606 OID 19313)
 -- Name: platform_settings platform_settings_key_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6795,7 +6842,7 @@ ALTER TABLE ONLY app.platform_settings
 
 
 --
--- TOC entry 6123 (class 2606 OID 19311)
+-- TOC entry 6142 (class 2606 OID 19311)
 -- Name: platform_settings platform_settings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6804,7 +6851,7 @@ ALTER TABLE ONLY app.platform_settings
 
 
 --
--- TOC entry 6026 (class 2606 OID 18633)
+-- TOC entry 6043 (class 2606 OID 18633)
 -- Name: post_audience post_audience_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6813,7 +6860,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 6033 (class 2606 OID 18706)
+-- TOC entry 6050 (class 2606 OID 18706)
 -- Name: post_files post_files_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6822,7 +6869,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 6028 (class 2606 OID 18658)
+-- TOC entry 6045 (class 2606 OID 18658)
 -- Name: post_media post_media_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6831,7 +6878,7 @@ ALTER TABLE ONLY app.post_media
 
 
 --
--- TOC entry 5973 (class 2606 OID 17448)
+-- TOC entry 5987 (class 2606 OID 17448)
 -- Name: post_reactions post_reactions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6840,7 +6887,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 6036 (class 2606 OID 18723)
+-- TOC entry 6053 (class 2606 OID 18723)
 -- Name: post_saves post_saves_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6849,7 +6896,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 5968 (class 2606 OID 17434)
+-- TOC entry 5982 (class 2606 OID 17434)
 -- Name: posts posts_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6858,7 +6905,7 @@ ALTER TABLE ONLY app.posts
 
 
 --
--- TOC entry 6226 (class 2606 OID 20000)
+-- TOC entry 6247 (class 2606 OID 20000)
 -- Name: proactive_messages proactive_messages_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6867,7 +6914,7 @@ ALTER TABLE ONLY app.proactive_messages
 
 
 --
--- TOC entry 6038 (class 2606 OID 18772)
+-- TOC entry 6055 (class 2606 OID 18772)
 -- Name: processed_events processed_events_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6876,7 +6923,7 @@ ALTER TABLE ONLY app.processed_events
 
 
 --
--- TOC entry 6153 (class 2606 OID 19482)
+-- TOC entry 6174 (class 2606 OID 19482)
 -- Name: product_reviews product_reviews_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6885,7 +6932,7 @@ ALTER TABLE ONLY app.product_reviews
 
 
 --
--- TOC entry 6142 (class 2606 OID 19428)
+-- TOC entry 6163 (class 2606 OID 19428)
 -- Name: recurring_booking_templates recurring_booking_templates_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6894,7 +6941,7 @@ ALTER TABLE ONLY app.recurring_booking_templates
 
 
 --
--- TOC entry 6128 (class 2606 OID 19331)
+-- TOC entry 6148 (class 2606 OID 19331)
 -- Name: refunds refunds_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6903,7 +6950,7 @@ ALTER TABLE ONLY app.refunds
 
 
 --
--- TOC entry 5991 (class 2606 OID 17490)
+-- TOC entry 6007 (class 2606 OID 17490)
 -- Name: reports reports_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6912,7 +6959,7 @@ ALTER TABLE ONLY app.reports
 
 
 --
--- TOC entry 6048 (class 2606 OID 18804)
+-- TOC entry 6066 (class 2606 OID 18804)
 -- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6921,7 +6968,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6050 (class 2606 OID 18864)
+-- TOC entry 6068 (class 2606 OID 18864)
 -- Name: reviews reviews_user_booking_unique; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6930,7 +6977,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6104 (class 2606 OID 19079)
+-- TOC entry 6123 (class 2606 OID 19079)
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6939,7 +6986,7 @@ ALTER TABLE ONLY app.schema_migrations
 
 
 --
--- TOC entry 6106 (class 2606 OID 19081)
+-- TOC entry 6125 (class 2606 OID 19081)
 -- Name: schema_migrations schema_migrations_version_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6948,7 +6995,7 @@ ALTER TABLE ONLY app.schema_migrations
 
 
 --
--- TOC entry 5906 (class 2606 OID 17268)
+-- TOC entry 5915 (class 2606 OID 17268)
 -- Name: session_notes session_notes_booking_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6957,7 +7004,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 5908 (class 2606 OID 17266)
+-- TOC entry 5917 (class 2606 OID 17266)
 -- Name: session_notes session_notes_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6966,7 +7013,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 6067 (class 2606 OID 18899)
+-- TOC entry 6085 (class 2606 OID 18899)
 -- Name: skills skills_name_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6975,7 +7022,7 @@ ALTER TABLE ONLY app.skills
 
 
 --
--- TOC entry 6069 (class 2606 OID 18897)
+-- TOC entry 6087 (class 2606 OID 18897)
 -- Name: skills skills_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6984,7 +7031,7 @@ ALTER TABLE ONLY app.skills
 
 
 --
--- TOC entry 6215 (class 2606 OID 19959)
+-- TOC entry 6236 (class 2606 OID 19959)
 -- Name: sleep_logs sleep_logs_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -6993,7 +7040,7 @@ ALTER TABLE ONLY app.sleep_logs
 
 
 --
--- TOC entry 6217 (class 2606 OID 19961)
+-- TOC entry 6238 (class 2606 OID 19961)
 -- Name: sleep_logs sleep_logs_user_id_date_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7002,7 +7049,7 @@ ALTER TABLE ONLY app.sleep_logs
 
 
 --
--- TOC entry 5940 (class 2606 OID 17360)
+-- TOC entry 5953 (class 2606 OID 17360)
 -- Name: tips tips_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7011,7 +7058,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 5875 (class 2606 OID 17555)
+-- TOC entry 5881 (class 2606 OID 17555)
 -- Name: email_verifications uq_email_verif_user_all; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7020,7 +7067,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 6155 (class 2606 OID 19484)
+-- TOC entry 6176 (class 2606 OID 19484)
 -- Name: product_reviews uq_product_reviews_product_user; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7029,7 +7076,7 @@ ALTER TABLE ONLY app.product_reviews
 
 
 --
--- TOC entry 6233 (class 2606 OID 20036)
+-- TOC entry 6254 (class 2606 OID 20036)
 -- Name: user_activity_logs user_activity_logs_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7038,7 +7085,7 @@ ALTER TABLE ONLY app.user_activity_logs
 
 
 --
--- TOC entry 6166 (class 2606 OID 19547)
+-- TOC entry 6187 (class 2606 OID 19547)
 -- Name: user_ai_settings user_ai_settings_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7047,7 +7094,7 @@ ALTER TABLE ONLY app.user_ai_settings
 
 
 --
--- TOC entry 6159 (class 2606 OID 19500)
+-- TOC entry 6180 (class 2606 OID 19500)
 -- Name: user_blocks user_blocks_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7056,7 +7103,7 @@ ALTER TABLE ONLY app.user_blocks
 
 
 --
--- TOC entry 5869 (class 2606 OID 17156)
+-- TOC entry 5875 (class 2606 OID 17156)
 -- Name: user_files user_files_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7065,7 +7112,7 @@ ALTER TABLE ONLY app.user_files
 
 
 --
--- TOC entry 6024 (class 2606 OID 18608)
+-- TOC entry 6041 (class 2606 OID 18608)
 -- Name: user_follows user_follows_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7074,7 +7121,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 6185 (class 2606 OID 19780)
+-- TOC entry 6206 (class 2606 OID 19780)
 -- Name: user_mental_state user_mental_state_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7083,7 +7130,7 @@ ALTER TABLE ONLY app.user_mental_state
 
 
 --
--- TOC entry 5865 (class 2606 OID 17130)
+-- TOC entry 5871 (class 2606 OID 17130)
 -- Name: user_profiles user_profiles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7092,7 +7139,7 @@ ALTER TABLE ONLY app.user_profiles
 
 
 --
--- TOC entry 5867 (class 2606 OID 17140)
+-- TOC entry 5873 (class 2606 OID 17140)
 -- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7101,7 +7148,7 @@ ALTER TABLE ONLY app.user_roles
 
 
 --
--- TOC entry 6212 (class 2606 OID 19941)
+-- TOC entry 6233 (class 2606 OID 19941)
 -- Name: user_schedules user_schedules_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7110,7 +7157,7 @@ ALTER TABLE ONLY app.user_schedules
 
 
 --
--- TOC entry 6057 (class 2606 OID 18831)
+-- TOC entry 6075 (class 2606 OID 18831)
 -- Name: user_sessions user_sessions_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7119,7 +7166,7 @@ ALTER TABLE ONLY app.user_sessions
 
 
 --
--- TOC entry 5857 (class 2606 OID 17118)
+-- TOC entry 5863 (class 2606 OID 17118)
 -- Name: users users_email_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7128,7 +7175,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5859 (class 2606 OID 17116)
+-- TOC entry 5865 (class 2606 OID 17116)
 -- Name: users users_handle_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7137,7 +7184,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5861 (class 2606 OID 18776)
+-- TOC entry 5867 (class 2606 OID 18776)
 -- Name: users users_phone_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7146,7 +7193,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5863 (class 2606 OID 17114)
+-- TOC entry 5869 (class 2606 OID 17114)
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7155,7 +7202,7 @@ ALTER TABLE ONLY app.users
 
 
 --
--- TOC entry 5938 (class 2606 OID 17344)
+-- TOC entry 5951 (class 2606 OID 17344)
 -- Name: wallet_ledger wallet_ledger_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7164,7 +7211,7 @@ ALTER TABLE ONLY app.wallet_ledger
 
 
 --
--- TOC entry 5930 (class 2606 OID 17328)
+-- TOC entry 5942 (class 2606 OID 17328)
 -- Name: wallets wallets_owner_user_id_key; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7173,7 +7220,7 @@ ALTER TABLE ONLY app.wallets
 
 
 --
--- TOC entry 5932 (class 2606 OID 17326)
+-- TOC entry 5944 (class 2606 OID 17326)
 -- Name: wallets wallets_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7182,7 +7229,7 @@ ALTER TABLE ONLY app.wallets
 
 
 --
--- TOC entry 6193 (class 2606 OID 19824)
+-- TOC entry 6214 (class 2606 OID 19824)
 -- Name: wellness_activities wellness_activities_pkey; Type: CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -7191,7 +7238,7 @@ ALTER TABLE ONLY app.wellness_activities
 
 
 --
--- TOC entry 6230 (class 1259 OID 20051)
+-- TOC entry 6251 (class 1259 OID 20051)
 -- Name: idx_activity_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7199,7 +7246,7 @@ CREATE INDEX idx_activity_type ON app.user_activity_logs USING btree (activity_t
 
 
 --
--- TOC entry 6231 (class 1259 OID 20050)
+-- TOC entry 6252 (class 1259 OID 20050)
 -- Name: idx_activity_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7207,7 +7254,7 @@ CREATE INDEX idx_activity_user_time ON app.user_activity_logs USING btree (user_
 
 
 --
--- TOC entry 6206 (class 1259 OID 19918)
+-- TOC entry 6227 (class 1259 OID 19918)
 -- Name: idx_ai_chat_recent; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7215,7 +7262,7 @@ CREATE INDEX idx_ai_chat_recent ON app.ai_chat_history USING btree (created_at D
 
 
 --
--- TOC entry 6207 (class 1259 OID 19917)
+-- TOC entry 6228 (class 1259 OID 19917)
 -- Name: idx_ai_chat_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7223,7 +7270,7 @@ CREATE INDEX idx_ai_chat_user_time ON app.ai_chat_history USING btree (user_id, 
 
 
 --
--- TOC entry 6175 (class 1259 OID 19603)
+-- TOC entry 6196 (class 1259 OID 19603)
 -- Name: idx_ai_context_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7231,7 +7278,7 @@ CREATE INDEX idx_ai_context_user ON app.ai_conversation_context USING btree (use
 
 
 --
--- TOC entry 6169 (class 1259 OID 19602)
+-- TOC entry 6190 (class 1259 OID 19602)
 -- Name: idx_ai_notifications_pending; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7239,7 +7286,7 @@ CREATE INDEX idx_ai_notifications_pending ON app.ai_scheduled_notifications USIN
 
 
 --
--- TOC entry 6170 (class 1259 OID 19601)
+-- TOC entry 6191 (class 1259 OID 19601)
 -- Name: idx_ai_notifications_user_scheduled; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7247,7 +7294,7 @@ CREATE INDEX idx_ai_notifications_user_scheduled ON app.ai_scheduled_notificatio
 
 
 --
--- TOC entry 6186 (class 1259 OID 19879)
+-- TOC entry 6207 (class 1259 OID 19879)
 -- Name: idx_assessments_risk; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7255,7 +7302,7 @@ CREATE INDEX idx_assessments_risk ON app.mental_health_assessments USING btree (
 
 
 --
--- TOC entry 6187 (class 1259 OID 19878)
+-- TOC entry 6208 (class 1259 OID 19878)
 -- Name: idx_assessments_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7263,7 +7310,7 @@ CREATE INDEX idx_assessments_user_time ON app.mental_health_assessments USING bt
 
 
 --
--- TOC entry 5998 (class 1259 OID 18593)
+-- TOC entry 6014 (class 1259 OID 18593)
 -- Name: idx_audit_action_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7271,7 +7318,7 @@ CREATE INDEX idx_audit_action_time ON app.audit_logs USING btree (action, create
 
 
 --
--- TOC entry 5999 (class 1259 OID 19129)
+-- TOC entry 6015 (class 1259 OID 19129)
 -- Name: idx_audit_logs_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7279,7 +7326,7 @@ CREATE INDEX idx_audit_logs_created_at ON app.audit_logs USING btree (created_at
 
 
 --
--- TOC entry 6000 (class 1259 OID 19128)
+-- TOC entry 6016 (class 1259 OID 19128)
 -- Name: idx_audit_logs_resource; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7287,7 +7334,15 @@ CREATE INDEX idx_audit_logs_resource ON app.audit_logs USING btree (resource, re
 
 
 --
--- TOC entry 6001 (class 1259 OID 19127)
+-- TOC entry 6017 (class 1259 OID 20096)
+-- Name: idx_audit_logs_user_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_audit_logs_user_created ON app.audit_logs USING btree (user_id, created_at);
+
+
+--
+-- TOC entry 6018 (class 1259 OID 19127)
 -- Name: idx_audit_logs_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7295,7 +7350,7 @@ CREATE INDEX idx_audit_logs_user_id ON app.audit_logs USING btree (user_id);
 
 
 --
--- TOC entry 6002 (class 1259 OID 18591)
+-- TOC entry 6019 (class 1259 OID 18591)
 -- Name: idx_audit_time_desc; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7303,7 +7358,7 @@ CREATE INDEX idx_audit_time_desc ON app.audit_logs USING btree (created_at DESC)
 
 
 --
--- TOC entry 6003 (class 1259 OID 18592)
+-- TOC entry 6020 (class 1259 OID 18592)
 -- Name: idx_audit_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7311,7 +7366,7 @@ CREATE INDEX idx_audit_user_time ON app.audit_logs USING btree (user_id, created
 
 
 --
--- TOC entry 5890 (class 1259 OID 17542)
+-- TOC entry 5896 (class 1259 OID 17542)
 -- Name: idx_avail_expert; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7319,7 +7374,7 @@ CREATE INDEX idx_avail_expert ON app.expert_availabilities USING btree (expert_i
 
 
 --
--- TOC entry 6222 (class 1259 OID 20046)
+-- TOC entry 6243 (class 1259 OID 20046)
 -- Name: idx_behavior_user_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7327,7 +7382,7 @@ CREATE INDEX idx_behavior_user_type ON app.behavior_patterns USING btree (user_i
 
 
 --
--- TOC entry 5895 (class 1259 OID 17543)
+-- TOC entry 5901 (class 1259 OID 17543)
 -- Name: idx_booking_expert; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7335,7 +7390,7 @@ CREATE INDEX idx_booking_expert ON app.bookings USING btree (expert_id, start_at
 
 
 --
--- TOC entry 6147 (class 1259 OID 19464)
+-- TOC entry 6168 (class 1259 OID 19464)
 -- Name: idx_booking_fees_booking; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7343,7 +7398,7 @@ CREATE INDEX idx_booking_fees_booking ON app.booking_fees USING btree (booking_i
 
 
 --
--- TOC entry 5896 (class 1259 OID 17544)
+-- TOC entry 5902 (class 1259 OID 17544)
 -- Name: idx_booking_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7351,7 +7406,7 @@ CREATE INDEX idx_booking_user ON app.bookings USING btree (user_id, start_at);
 
 
 --
--- TOC entry 5897 (class 1259 OID 19098)
+-- TOC entry 5903 (class 1259 OID 19098)
 -- Name: idx_bookings_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7359,7 +7414,15 @@ CREATE INDEX idx_bookings_created_at ON app.bookings USING btree (created_at DES
 
 
 --
--- TOC entry 5898 (class 1259 OID 19096)
+-- TOC entry 5904 (class 1259 OID 20083)
+-- Name: idx_bookings_expert_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_bookings_expert_created ON app.bookings USING btree (expert_id, created_at);
+
+
+--
+-- TOC entry 5905 (class 1259 OID 19096)
 -- Name: idx_bookings_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7367,7 +7430,7 @@ CREATE INDEX idx_bookings_expert_id ON app.bookings USING btree (expert_id);
 
 
 --
--- TOC entry 5899 (class 1259 OID 19099)
+-- TOC entry 5906 (class 1259 OID 19099)
 -- Name: idx_bookings_start_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7375,7 +7438,7 @@ CREATE INDEX idx_bookings_start_at ON app.bookings USING btree (start_at);
 
 
 --
--- TOC entry 5900 (class 1259 OID 19097)
+-- TOC entry 5907 (class 1259 OID 19097)
 -- Name: idx_bookings_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7383,7 +7446,32 @@ CREATE INDEX idx_bookings_status ON app.bookings USING btree (status);
 
 
 --
--- TOC entry 5901 (class 1259 OID 19095)
+-- TOC entry 5908 (class 1259 OID 20082)
+-- Name: idx_bookings_status_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_bookings_status_created ON app.bookings USING btree (status, created_at);
+
+
+--
+-- TOC entry 6812 (class 0 OID 0)
+-- Dependencies: 5908
+-- Name: INDEX idx_bookings_status_created; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_bookings_status_created IS 'For booking analytics by status and date';
+
+
+--
+-- TOC entry 5909 (class 1259 OID 20084)
+-- Name: idx_bookings_user_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_bookings_user_created ON app.bookings USING btree (user_id, created_at);
+
+
+--
+-- TOC entry 5910 (class 1259 OID 19095)
 -- Name: idx_bookings_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7391,7 +7479,7 @@ CREATE INDEX idx_bookings_user_id ON app.bookings USING btree (user_id);
 
 
 --
--- TOC entry 5902 (class 1259 OID 18793)
+-- TOC entry 5911 (class 1259 OID 18793)
 -- Name: idx_bookings_user_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7399,7 +7487,7 @@ CREATE INDEX idx_bookings_user_status ON app.bookings USING btree (user_id, stat
 
 
 --
--- TOC entry 6009 (class 1259 OID 18586)
+-- TOC entry 6026 (class 1259 OID 18586)
 -- Name: idx_call_callee_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7407,7 +7495,7 @@ CREATE INDEX idx_call_callee_time ON app.call_sessions USING btree (callee_id, s
 
 
 --
--- TOC entry 6010 (class 1259 OID 18585)
+-- TOC entry 6027 (class 1259 OID 18585)
 -- Name: idx_call_caller_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7415,7 +7503,7 @@ CREATE INDEX idx_call_caller_time ON app.call_sessions USING btree (caller_id, s
 
 
 --
--- TOC entry 6019 (class 1259 OID 18601)
+-- TOC entry 6036 (class 1259 OID 18601)
 -- Name: idx_call_events_call_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7423,7 +7511,7 @@ CREATE INDEX idx_call_events_call_at ON app.call_events USING btree (call_id, at
 
 
 --
--- TOC entry 6020 (class 1259 OID 18597)
+-- TOC entry 6037 (class 1259 OID 18597)
 -- Name: idx_call_events_call_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7431,7 +7519,7 @@ CREATE INDEX idx_call_events_call_time ON app.call_events USING btree (call_id, 
 
 
 --
--- TOC entry 6112 (class 1259 OID 19167)
+-- TOC entry 6131 (class 1259 OID 19167)
 -- Name: idx_call_metrics_call_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7439,7 +7527,7 @@ CREATE INDEX idx_call_metrics_call_id ON app.call_metrics USING btree (call_id);
 
 
 --
--- TOC entry 6115 (class 1259 OID 19183)
+-- TOC entry 6134 (class 1259 OID 19183)
 -- Name: idx_call_recordings_call_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7447,7 +7535,7 @@ CREATE INDEX idx_call_recordings_call_id ON app.call_recordings USING btree (cal
 
 
 --
--- TOC entry 6011 (class 1259 OID 20077)
+-- TOC entry 6028 (class 1259 OID 20077)
 -- Name: idx_call_sessions_started_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7455,7 +7543,7 @@ CREATE INDEX idx_call_sessions_started_at ON app.call_sessions USING btree (star
 
 
 --
--- TOC entry 6012 (class 1259 OID 20076)
+-- TOC entry 6029 (class 1259 OID 20076)
 -- Name: idx_call_sessions_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7463,7 +7551,7 @@ CREATE INDEX idx_call_sessions_status ON app.call_sessions USING btree (status);
 
 
 --
--- TOC entry 6013 (class 1259 OID 18602)
+-- TOC entry 6030 (class 1259 OID 18602)
 -- Name: idx_call_sessions_thread_start; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7471,7 +7559,7 @@ CREATE INDEX idx_call_sessions_thread_start ON app.call_sessions USING btree (th
 
 
 --
--- TOC entry 6014 (class 1259 OID 18596)
+-- TOC entry 6031 (class 1259 OID 18596)
 -- Name: idx_call_thread_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7479,7 +7567,7 @@ CREATE INDEX idx_call_thread_time ON app.call_sessions USING btree (thread_id, s
 
 
 --
--- TOC entry 6015 (class 1259 OID 18559)
+-- TOC entry 6032 (class 1259 OID 18559)
 -- Name: idx_call_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7487,7 +7575,7 @@ CREATE INDEX idx_call_user_time ON app.call_sessions USING btree (caller_id, sta
 
 
 --
--- TOC entry 6016 (class 1259 OID 18560)
+-- TOC entry 6033 (class 1259 OID 18560)
 -- Name: idx_call_user_time2; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7495,7 +7583,7 @@ CREATE INDEX idx_call_user_time2 ON app.call_sessions USING btree (callee_id, st
 
 
 --
--- TOC entry 6109 (class 1259 OID 19152)
+-- TOC entry 6128 (class 1259 OID 19152)
 -- Name: idx_chat_attachments_message_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7503,7 +7591,7 @@ CREATE INDEX idx_chat_attachments_message_id ON app.chat_attachments USING btree
 
 
 --
--- TOC entry 5949 (class 1259 OID 19118)
+-- TOC entry 5962 (class 1259 OID 19118)
 -- Name: idx_chat_members_thread_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7511,7 +7599,7 @@ CREATE INDEX idx_chat_members_thread_id ON app.chat_members USING btree (thread_
 
 
 --
--- TOC entry 5950 (class 1259 OID 18243)
+-- TOC entry 5963 (class 1259 OID 18243)
 -- Name: idx_chat_members_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7519,7 +7607,7 @@ CREATE INDEX idx_chat_members_thread_user ON app.chat_members USING btree (threa
 
 
 --
--- TOC entry 5951 (class 1259 OID 19119)
+-- TOC entry 5964 (class 1259 OID 19119)
 -- Name: idx_chat_members_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7527,7 +7615,7 @@ CREATE INDEX idx_chat_members_user_id ON app.chat_members USING btree (user_id);
 
 
 --
--- TOC entry 5956 (class 1259 OID 19122)
+-- TOC entry 5969 (class 1259 OID 19122)
 -- Name: idx_chat_messages_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7535,7 +7623,7 @@ CREATE INDEX idx_chat_messages_created_at ON app.chat_messages USING btree (crea
 
 
 --
--- TOC entry 5957 (class 1259 OID 19153)
+-- TOC entry 5970 (class 1259 OID 19153)
 -- Name: idx_chat_messages_deleted; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7543,7 +7631,7 @@ CREATE INDEX idx_chat_messages_deleted ON app.chat_messages USING btree (deleted
 
 
 --
--- TOC entry 5958 (class 1259 OID 19121)
+-- TOC entry 5971 (class 1259 OID 19121)
 -- Name: idx_chat_messages_sender_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7551,7 +7639,7 @@ CREATE INDEX idx_chat_messages_sender_id ON app.chat_messages USING btree (sende
 
 
 --
--- TOC entry 5959 (class 1259 OID 18244)
+-- TOC entry 5972 (class 1259 OID 18244)
 -- Name: idx_chat_messages_thread_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7559,7 +7647,7 @@ CREATE INDEX idx_chat_messages_thread_created ON app.chat_messages USING btree (
 
 
 --
--- TOC entry 5960 (class 1259 OID 19120)
+-- TOC entry 5973 (class 1259 OID 19120)
 -- Name: idx_chat_messages_thread_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7567,7 +7655,7 @@ CREATE INDEX idx_chat_messages_thread_id ON app.chat_messages USING btree (threa
 
 
 --
--- TOC entry 5961 (class 1259 OID 18598)
+-- TOC entry 5974 (class 1259 OID 18598)
 -- Name: idx_chat_messages_thread_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7575,7 +7663,7 @@ CREATE INDEX idx_chat_messages_thread_time ON app.chat_messages USING btree (thr
 
 
 --
--- TOC entry 6006 (class 1259 OID 18600)
+-- TOC entry 6023 (class 1259 OID 18600)
 -- Name: idx_chat_read_state_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7583,7 +7671,7 @@ CREATE INDEX idx_chat_read_state_thread_user ON app.chat_read_state USING btree 
 
 
 --
--- TOC entry 6118 (class 1259 OID 19212)
+-- TOC entry 6137 (class 1259 OID 19212)
 -- Name: idx_chat_thread_invitations_invitee; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7591,7 +7679,7 @@ CREATE INDEX idx_chat_thread_invitations_invitee ON app.chat_thread_invitations 
 
 
 --
--- TOC entry 6119 (class 1259 OID 19211)
+-- TOC entry 6138 (class 1259 OID 19211)
 -- Name: idx_chat_thread_invitations_thread; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7599,7 +7687,7 @@ CREATE INDEX idx_chat_thread_invitations_thread ON app.chat_thread_invitations U
 
 
 --
--- TOC entry 5943 (class 1259 OID 19116)
+-- TOC entry 5956 (class 1259 OID 19116)
 -- Name: idx_chat_threads_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7607,7 +7695,7 @@ CREATE INDEX idx_chat_threads_booking_id ON app.chat_threads USING btree (bookin
 
 
 --
--- TOC entry 5944 (class 1259 OID 19117)
+-- TOC entry 5957 (class 1259 OID 19117)
 -- Name: idx_chat_threads_last_message_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7615,7 +7703,7 @@ CREATE INDEX idx_chat_threads_last_message_at ON app.chat_threads USING btree (l
 
 
 --
--- TOC entry 5945 (class 1259 OID 18245)
+-- TOC entry 5958 (class 1259 OID 18245)
 -- Name: idx_chat_threads_last_msg; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7623,7 +7711,7 @@ CREATE INDEX idx_chat_threads_last_msg ON app.chat_threads USING btree (last_mes
 
 
 --
--- TOC entry 5946 (class 1259 OID 19213)
+-- TOC entry 5959 (class 1259 OID 19213)
 -- Name: idx_chat_threads_name; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7631,7 +7719,7 @@ CREATE INDEX idx_chat_threads_name ON app.chat_threads USING btree (name);
 
 
 --
--- TOC entry 6198 (class 1259 OID 19882)
+-- TOC entry 6219 (class 1259 OID 19882)
 -- Name: idx_checkins_user_date; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7639,7 +7727,7 @@ CREATE INDEX idx_checkins_user_date ON app.daily_mood_checkins USING btree (user
 
 
 --
--- TOC entry 5976 (class 1259 OID 19111)
+-- TOC entry 5990 (class 1259 OID 19111)
 -- Name: idx_comments_author_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7647,7 +7735,7 @@ CREATE INDEX idx_comments_author_id ON app.comments USING btree (author_id);
 
 
 --
--- TOC entry 5977 (class 1259 OID 19113)
+-- TOC entry 5991 (class 1259 OID 19113)
 -- Name: idx_comments_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7655,7 +7743,7 @@ CREATE INDEX idx_comments_created_at ON app.comments USING btree (created_at DES
 
 
 --
--- TOC entry 5978 (class 1259 OID 19239)
+-- TOC entry 5992 (class 1259 OID 19239)
 -- Name: idx_comments_moderation_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7663,7 +7751,7 @@ CREATE INDEX idx_comments_moderation_status ON app.comments USING btree (moderat
 
 
 --
--- TOC entry 5979 (class 1259 OID 18792)
+-- TOC entry 5993 (class 1259 OID 18792)
 -- Name: idx_comments_parent_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7671,7 +7759,7 @@ CREATE INDEX idx_comments_parent_created_at ON app.comments USING btree (post_id
 
 
 --
--- TOC entry 5980 (class 1259 OID 19112)
+-- TOC entry 5994 (class 1259 OID 19112)
 -- Name: idx_comments_parent_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7679,7 +7767,7 @@ CREATE INDEX idx_comments_parent_id ON app.comments USING btree (parent_id) WHER
 
 
 --
--- TOC entry 5981 (class 1259 OID 17549)
+-- TOC entry 5995 (class 1259 OID 17549)
 -- Name: idx_comments_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7687,7 +7775,15 @@ CREATE INDEX idx_comments_post ON app.comments USING btree (post_id, created_at)
 
 
 --
--- TOC entry 5982 (class 1259 OID 18754)
+-- TOC entry 5996 (class 1259 OID 20090)
+-- Name: idx_comments_post_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_comments_post_created ON app.comments USING btree (post_id, created_at);
+
+
+--
+-- TOC entry 5997 (class 1259 OID 18754)
 -- Name: idx_comments_post_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7695,7 +7791,7 @@ CREATE INDEX idx_comments_post_created_at ON app.comments USING btree (post_id, 
 
 
 --
--- TOC entry 5983 (class 1259 OID 19110)
+-- TOC entry 5998 (class 1259 OID 19110)
 -- Name: idx_comments_post_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7703,7 +7799,7 @@ CREATE INDEX idx_comments_post_id ON app.comments USING btree (post_id);
 
 
 --
--- TOC entry 5984 (class 1259 OID 18755)
+-- TOC entry 5999 (class 1259 OID 18755)
 -- Name: idx_comments_post_parent_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7711,7 +7807,7 @@ CREATE INDEX idx_comments_post_parent_created_at ON app.comments USING btree (po
 
 
 --
--- TOC entry 5985 (class 1259 OID 18594)
+-- TOC entry 6000 (class 1259 OID 18594)
 -- Name: idx_comments_post_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7719,7 +7815,7 @@ CREATE INDEX idx_comments_post_time ON app.comments USING btree (post_id, create
 
 
 --
--- TOC entry 6136 (class 1259 OID 19410)
+-- TOC entry 6157 (class 1259 OID 19410)
 -- Name: idx_dispute_messages_dispute; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7727,7 +7823,7 @@ CREATE INDEX idx_dispute_messages_dispute ON app.dispute_messages USING btree (d
 
 
 --
--- TOC entry 6131 (class 1259 OID 19387)
+-- TOC entry 6151 (class 1259 OID 19387)
 -- Name: idx_disputes_booking; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7735,7 +7831,15 @@ CREATE INDEX idx_disputes_booking ON app.disputes USING btree (booking_id);
 
 
 --
--- TOC entry 6132 (class 1259 OID 19388)
+-- TOC entry 6152 (class 1259 OID 20095)
+-- Name: idx_disputes_created_at; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_disputes_created_at ON app.disputes USING btree (created_at);
+
+
+--
+-- TOC entry 6153 (class 1259 OID 19388)
 -- Name: idx_disputes_raised_by; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7743,7 +7847,7 @@ CREATE INDEX idx_disputes_raised_by ON app.disputes USING btree (raised_by);
 
 
 --
--- TOC entry 6133 (class 1259 OID 19389)
+-- TOC entry 6154 (class 1259 OID 19389)
 -- Name: idx_disputes_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7751,7 +7855,7 @@ CREATE INDEX idx_disputes_status ON app.disputes USING btree (status);
 
 
 --
--- TOC entry 5872 (class 1259 OID 18219)
+-- TOC entry 5878 (class 1259 OID 18219)
 -- Name: idx_email_verif_user_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7759,7 +7863,7 @@ CREATE INDEX idx_email_verif_user_created ON app.email_verifications USING btree
 
 
 --
--- TOC entry 6178 (class 1259 OID 19875)
+-- TOC entry 6199 (class 1259 OID 19875)
 -- Name: idx_emotion_logs_detected; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7767,7 +7871,7 @@ CREATE INDEX idx_emotion_logs_detected ON app.emotion_logs USING btree (detected
 
 
 --
--- TOC entry 6179 (class 1259 OID 19874)
+-- TOC entry 6200 (class 1259 OID 19874)
 -- Name: idx_emotion_logs_source; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7775,7 +7879,7 @@ CREATE INDEX idx_emotion_logs_source ON app.emotion_logs USING btree (source, de
 
 
 --
--- TOC entry 6180 (class 1259 OID 19873)
+-- TOC entry 6201 (class 1259 OID 19873)
 -- Name: idx_emotion_logs_user_emotion; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7783,7 +7887,7 @@ CREATE INDEX idx_emotion_logs_user_emotion ON app.emotion_logs USING btree (user
 
 
 --
--- TOC entry 6181 (class 1259 OID 19872)
+-- TOC entry 6202 (class 1259 OID 19872)
 -- Name: idx_emotion_logs_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7791,7 +7895,7 @@ CREATE INDEX idx_emotion_logs_user_time ON app.emotion_logs USING btree (user_id
 
 
 --
--- TOC entry 5891 (class 1259 OID 19093)
+-- TOC entry 5897 (class 1259 OID 19093)
 -- Name: idx_expert_availabilities_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7799,7 +7903,7 @@ CREATE INDEX idx_expert_availabilities_expert_id ON app.expert_availabilities US
 
 
 --
--- TOC entry 5892 (class 1259 OID 19094)
+-- TOC entry 5898 (class 1259 OID 19094)
 -- Name: idx_expert_availabilities_start_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7807,7 +7911,7 @@ CREATE INDEX idx_expert_availabilities_start_at ON app.expert_availabilities USI
 
 
 --
--- TOC entry 5880 (class 1259 OID 19091)
+-- TOC entry 5886 (class 1259 OID 19091)
 -- Name: idx_expert_profiles_kyc_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7815,7 +7919,7 @@ CREATE INDEX idx_expert_profiles_kyc_status ON app.expert_profiles USING btree (
 
 
 --
--- TOC entry 5881 (class 1259 OID 19092)
+-- TOC entry 5887 (class 1259 OID 19092)
 -- Name: idx_expert_profiles_rating_avg; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7823,7 +7927,7 @@ CREATE INDEX idx_expert_profiles_rating_avg ON app.expert_profiles USING btree (
 
 
 --
--- TOC entry 5882 (class 1259 OID 19090)
+-- TOC entry 5888 (class 1259 OID 19090)
 -- Name: idx_expert_profiles_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7831,7 +7935,7 @@ CREATE INDEX idx_expert_profiles_user_id ON app.expert_profiles USING btree (use
 
 
 --
--- TOC entry 5883 (class 1259 OID 17541)
+-- TOC entry 5889 (class 1259 OID 17541)
 -- Name: idx_expert_specs; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7839,7 +7943,7 @@ CREATE INDEX idx_expert_specs ON app.expert_profiles USING gin (specialties);
 
 
 --
--- TOC entry 6182 (class 1259 OID 19876)
+-- TOC entry 6203 (class 1259 OID 19876)
 -- Name: idx_mental_state_stress; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7847,7 +7951,7 @@ CREATE INDEX idx_mental_state_stress ON app.user_mental_state USING btree (stres
 
 
 --
--- TOC entry 6183 (class 1259 OID 19877)
+-- TOC entry 6204 (class 1259 OID 19877)
 -- Name: idx_mental_state_vulnerability; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7855,7 +7959,7 @@ CREATE INDEX idx_mental_state_vulnerability ON app.user_mental_state USING btree
 
 
 --
--- TOC entry 6061 (class 1259 OID 18888)
+-- TOC entry 6079 (class 1259 OID 18888)
 -- Name: idx_oauth_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7863,7 +7967,7 @@ CREATE INDEX idx_oauth_users_email ON app.oauth_users USING btree (email);
 
 
 --
--- TOC entry 6203 (class 1259 OID 19883)
+-- TOC entry 6224 (class 1259 OID 19883)
 -- Name: idx_patterns_user_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7871,7 +7975,7 @@ CREATE INDEX idx_patterns_user_type ON app.emotion_patterns USING btree (user_id
 
 
 --
--- TOC entry 5919 (class 1259 OID 17546)
+-- TOC entry 5931 (class 1259 OID 17546)
 -- Name: idx_pay_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7879,7 +7983,7 @@ CREATE INDEX idx_pay_status ON app.payments USING btree (status);
 
 
 --
--- TOC entry 5909 (class 1259 OID 19101)
+-- TOC entry 5918 (class 1259 OID 19101)
 -- Name: idx_payment_intents_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7887,7 +7991,15 @@ CREATE INDEX idx_payment_intents_booking_id ON app.payment_intents USING btree (
 
 
 --
--- TOC entry 5910 (class 1259 OID 19102)
+-- TOC entry 5919 (class 1259 OID 20087)
+-- Name: idx_payment_intents_provider; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_payment_intents_provider ON app.payment_intents USING btree (provider);
+
+
+--
+-- TOC entry 5920 (class 1259 OID 19102)
 -- Name: idx_payment_intents_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7895,7 +8007,24 @@ CREATE INDEX idx_payment_intents_status ON app.payment_intents USING btree (stat
 
 
 --
--- TOC entry 5911 (class 1259 OID 19103)
+-- TOC entry 5921 (class 1259 OID 20085)
+-- Name: idx_payment_intents_status_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_payment_intents_status_created ON app.payment_intents USING btree (status, created_at);
+
+
+--
+-- TOC entry 6813 (class 0 OID 0)
+-- Dependencies: 5921
+-- Name: INDEX idx_payment_intents_status_created; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_payment_intents_status_created IS 'For revenue analytics';
+
+
+--
+-- TOC entry 5922 (class 1259 OID 19103)
 -- Name: idx_payment_intents_tx_ref; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7903,7 +8032,15 @@ CREATE INDEX idx_payment_intents_tx_ref ON app.payment_intents USING btree (tx_r
 
 
 --
--- TOC entry 5912 (class 1259 OID 19100)
+-- TOC entry 5923 (class 1259 OID 20086)
+-- Name: idx_payment_intents_user_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_payment_intents_user_created ON app.payment_intents USING btree (user_id, created_at);
+
+
+--
+-- TOC entry 5924 (class 1259 OID 19100)
 -- Name: idx_payment_intents_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7911,7 +8048,7 @@ CREATE INDEX idx_payment_intents_user_id ON app.payment_intents USING btree (use
 
 
 --
--- TOC entry 5920 (class 1259 OID 19104)
+-- TOC entry 5932 (class 1259 OID 19104)
 -- Name: idx_payments_intent_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7919,7 +8056,7 @@ CREATE INDEX idx_payments_intent_id ON app.payments USING btree (intent_id);
 
 
 --
--- TOC entry 6096 (class 1259 OID 19231)
+-- TOC entry 6114 (class 1259 OID 19231)
 -- Name: idx_payout_requests_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7927,7 +8064,7 @@ CREATE INDEX idx_payout_requests_created ON app.payout_requests USING btree (cre
 
 
 --
--- TOC entry 6097 (class 1259 OID 19069)
+-- TOC entry 6115 (class 1259 OID 19069)
 -- Name: idx_payout_requests_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7935,7 +8072,7 @@ CREATE INDEX idx_payout_requests_status ON app.payout_requests USING btree (stat
 
 
 --
--- TOC entry 6098 (class 1259 OID 19230)
+-- TOC entry 6116 (class 1259 OID 19230)
 -- Name: idx_payout_requests_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7943,7 +8080,15 @@ CREATE INDEX idx_payout_requests_user ON app.payout_requests USING btree (user_i
 
 
 --
--- TOC entry 6099 (class 1259 OID 19068)
+-- TOC entry 6117 (class 1259 OID 20092)
+-- Name: idx_payout_requests_user_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_payout_requests_user_created ON app.payout_requests USING btree (user_id, created_at);
+
+
+--
+-- TOC entry 6118 (class 1259 OID 19068)
 -- Name: idx_payout_requests_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7951,7 +8096,7 @@ CREATE INDEX idx_payout_requests_user_id ON app.payout_requests USING btree (use
 
 
 --
--- TOC entry 5913 (class 1259 OID 17545)
+-- TOC entry 5925 (class 1259 OID 17545)
 -- Name: idx_pi_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7959,7 +8104,7 @@ CREATE INDEX idx_pi_status ON app.payment_intents USING btree (status);
 
 
 --
--- TOC entry 6031 (class 1259 OID 18717)
+-- TOC entry 6048 (class 1259 OID 18717)
 -- Name: idx_post_files_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7967,7 +8112,7 @@ CREATE INDEX idx_post_files_post ON app.post_files USING btree (post_id, created
 
 
 --
--- TOC entry 5969 (class 1259 OID 19114)
+-- TOC entry 5983 (class 1259 OID 19114)
 -- Name: idx_post_reactions_post_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7975,7 +8120,7 @@ CREATE INDEX idx_post_reactions_post_id ON app.post_reactions USING btree (post_
 
 
 --
--- TOC entry 5970 (class 1259 OID 19115)
+-- TOC entry 5984 (class 1259 OID 19115)
 -- Name: idx_post_reactions_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7983,7 +8128,7 @@ CREATE INDEX idx_post_reactions_user_id ON app.post_reactions USING btree (user_
 
 
 --
--- TOC entry 6034 (class 1259 OID 18734)
+-- TOC entry 6051 (class 1259 OID 18734)
 -- Name: idx_post_saves_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7991,7 +8136,7 @@ CREATE INDEX idx_post_saves_post ON app.post_saves USING btree (post_id, created
 
 
 --
--- TOC entry 5962 (class 1259 OID 18697)
+-- TOC entry 5975 (class 1259 OID 18697)
 -- Name: idx_posts_author; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -7999,7 +8144,15 @@ CREATE INDEX idx_posts_author ON app.posts USING btree (author_id, created_at DE
 
 
 --
--- TOC entry 5963 (class 1259 OID 19109)
+-- TOC entry 5976 (class 1259 OID 20088)
+-- Name: idx_posts_author_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_posts_author_created ON app.posts USING btree (author_id, created_at);
+
+
+--
+-- TOC entry 5977 (class 1259 OID 19109)
 -- Name: idx_posts_author_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8007,7 +8160,7 @@ CREATE INDEX idx_posts_author_id ON app.posts USING btree (author_id);
 
 
 --
--- TOC entry 5964 (class 1259 OID 17548)
+-- TOC entry 5978 (class 1259 OID 17548)
 -- Name: idx_posts_created; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8015,7 +8168,7 @@ CREATE INDEX idx_posts_created ON app.posts USING btree (created_at DESC);
 
 
 --
--- TOC entry 5965 (class 1259 OID 18696)
+-- TOC entry 5979 (class 1259 OID 18696)
 -- Name: idx_posts_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8023,7 +8176,7 @@ CREATE INDEX idx_posts_created_at ON app.posts USING btree (created_at DESC);
 
 
 --
--- TOC entry 5966 (class 1259 OID 18698)
+-- TOC entry 5980 (class 1259 OID 18698)
 -- Name: idx_posts_privacy; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8031,7 +8184,7 @@ CREATE INDEX idx_posts_privacy ON app.posts USING btree (privacy);
 
 
 --
--- TOC entry 6223 (class 1259 OID 20047)
+-- TOC entry 6244 (class 1259 OID 20047)
 -- Name: idx_proactive_pending; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8039,7 +8192,7 @@ CREATE INDEX idx_proactive_pending ON app.proactive_messages USING btree (schedu
 
 
 --
--- TOC entry 6224 (class 1259 OID 20048)
+-- TOC entry 6245 (class 1259 OID 20048)
 -- Name: idx_proactive_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8047,7 +8200,7 @@ CREATE INDEX idx_proactive_user ON app.proactive_messages USING btree (user_id, 
 
 
 --
--- TOC entry 6148 (class 1259 OID 19493)
+-- TOC entry 6169 (class 1259 OID 19493)
 -- Name: idx_product_reviews_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8055,7 +8208,7 @@ CREATE INDEX idx_product_reviews_created_at ON app.product_reviews USING btree (
 
 
 --
--- TOC entry 6149 (class 1259 OID 19490)
+-- TOC entry 6170 (class 1259 OID 19490)
 -- Name: idx_product_reviews_product_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8063,7 +8216,7 @@ CREATE INDEX idx_product_reviews_product_id ON app.product_reviews USING btree (
 
 
 --
--- TOC entry 6150 (class 1259 OID 19492)
+-- TOC entry 6171 (class 1259 OID 19492)
 -- Name: idx_product_reviews_rating; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8071,7 +8224,7 @@ CREATE INDEX idx_product_reviews_rating ON app.product_reviews USING btree (rati
 
 
 --
--- TOC entry 6151 (class 1259 OID 19491)
+-- TOC entry 6172 (class 1259 OID 19491)
 -- Name: idx_product_reviews_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8079,7 +8232,7 @@ CREATE INDEX idx_product_reviews_user_id ON app.product_reviews USING btree (use
 
 
 --
--- TOC entry 5971 (class 1259 OID 18595)
+-- TOC entry 5985 (class 1259 OID 18595)
 -- Name: idx_react_post; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8087,7 +8240,7 @@ CREATE INDEX idx_react_post ON app.post_reactions USING btree (post_id);
 
 
 --
--- TOC entry 6137 (class 1259 OID 19441)
+-- TOC entry 6158 (class 1259 OID 19441)
 -- Name: idx_recurring_templates_active; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8095,7 +8248,7 @@ CREATE INDEX idx_recurring_templates_active ON app.recurring_booking_templates U
 
 
 --
--- TOC entry 6138 (class 1259 OID 19440)
+-- TOC entry 6159 (class 1259 OID 19440)
 -- Name: idx_recurring_templates_expert; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8103,7 +8256,7 @@ CREATE INDEX idx_recurring_templates_expert ON app.recurring_booking_templates U
 
 
 --
--- TOC entry 6139 (class 1259 OID 19442)
+-- TOC entry 6160 (class 1259 OID 19442)
 -- Name: idx_recurring_templates_next_date; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8111,7 +8264,7 @@ CREATE INDEX idx_recurring_templates_next_date ON app.recurring_booking_template
 
 
 --
--- TOC entry 6140 (class 1259 OID 19439)
+-- TOC entry 6161 (class 1259 OID 19439)
 -- Name: idx_recurring_templates_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8119,7 +8272,7 @@ CREATE INDEX idx_recurring_templates_user ON app.recurring_booking_templates USI
 
 
 --
--- TOC entry 6124 (class 1259 OID 19352)
+-- TOC entry 6143 (class 1259 OID 19352)
 -- Name: idx_refunds_booking; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8127,7 +8280,15 @@ CREATE INDEX idx_refunds_booking ON app.refunds USING btree (booking_id);
 
 
 --
--- TOC entry 6125 (class 1259 OID 19354)
+-- TOC entry 6144 (class 1259 OID 20094)
+-- Name: idx_refunds_created_at; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_refunds_created_at ON app.refunds USING btree (created_at);
+
+
+--
+-- TOC entry 6145 (class 1259 OID 19354)
 -- Name: idx_refunds_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8135,7 +8296,7 @@ CREATE INDEX idx_refunds_status ON app.refunds USING btree (status);
 
 
 --
--- TOC entry 6126 (class 1259 OID 19353)
+-- TOC entry 6146 (class 1259 OID 19353)
 -- Name: idx_refunds_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8143,7 +8304,7 @@ CREATE INDEX idx_refunds_user ON app.refunds USING btree (user_id);
 
 
 --
--- TOC entry 5986 (class 1259 OID 19229)
+-- TOC entry 6001 (class 1259 OID 19229)
 -- Name: idx_reports_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8151,7 +8312,7 @@ CREATE INDEX idx_reports_created_at ON app.reports USING btree (created_at DESC)
 
 
 --
--- TOC entry 5987 (class 1259 OID 19130)
+-- TOC entry 6002 (class 1259 OID 19130)
 -- Name: idx_reports_reporter_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8159,7 +8320,7 @@ CREATE INDEX idx_reports_reporter_id ON app.reports USING btree (reporter_id);
 
 
 --
--- TOC entry 5988 (class 1259 OID 19228)
+-- TOC entry 6003 (class 1259 OID 19228)
 -- Name: idx_reports_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8167,7 +8328,24 @@ CREATE INDEX idx_reports_status ON app.reports USING btree (status);
 
 
 --
--- TOC entry 5989 (class 1259 OID 17550)
+-- TOC entry 6004 (class 1259 OID 20089)
+-- Name: idx_reports_status_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_reports_status_created ON app.reports USING btree (status, created_at);
+
+
+--
+-- TOC entry 6814 (class 0 OID 0)
+-- Dependencies: 6004
+-- Name: INDEX idx_reports_status_created; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_reports_status_created IS 'For moderation analytics';
+
+
+--
+-- TOC entry 6005 (class 1259 OID 17550)
 -- Name: idx_reports_target; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8175,7 +8353,7 @@ CREATE INDEX idx_reports_target ON app.reports USING btree (target_type, target_
 
 
 --
--- TOC entry 6039 (class 1259 OID 19125)
+-- TOC entry 6056 (class 1259 OID 19125)
 -- Name: idx_reviews_booking_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8183,7 +8361,7 @@ CREATE INDEX idx_reviews_booking_id ON app.reviews USING btree (booking_id);
 
 
 --
--- TOC entry 6040 (class 1259 OID 19126)
+-- TOC entry 6057 (class 1259 OID 19126)
 -- Name: idx_reviews_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8191,7 +8369,15 @@ CREATE INDEX idx_reviews_created_at ON app.reviews USING btree (created_at DESC)
 
 
 --
--- TOC entry 6041 (class 1259 OID 19123)
+-- TOC entry 6058 (class 1259 OID 20093)
+-- Name: idx_reviews_expert_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_reviews_expert_created ON app.reviews USING btree (expert_id, created_at);
+
+
+--
+-- TOC entry 6059 (class 1259 OID 19123)
 -- Name: idx_reviews_expert_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8199,7 +8385,7 @@ CREATE INDEX idx_reviews_expert_id ON app.reviews USING btree (expert_id);
 
 
 --
--- TOC entry 6042 (class 1259 OID 18867)
+-- TOC entry 6060 (class 1259 OID 18867)
 -- Name: idx_reviews_expert_rating; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8207,7 +8393,7 @@ CREATE INDEX idx_reviews_expert_rating ON app.reviews USING btree (expert_id, ra
 
 
 --
--- TOC entry 6043 (class 1259 OID 18820)
+-- TOC entry 6061 (class 1259 OID 18820)
 -- Name: idx_reviews_expert_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8215,7 +8401,7 @@ CREATE INDEX idx_reviews_expert_time ON app.reviews USING btree (expert_id, crea
 
 
 --
--- TOC entry 6044 (class 1259 OID 20075)
+-- TOC entry 6062 (class 1259 OID 20075)
 -- Name: idx_reviews_is_hidden; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8223,7 +8409,7 @@ CREATE INDEX idx_reviews_is_hidden ON app.reviews USING btree (is_hidden) WHERE 
 
 
 --
--- TOC entry 6045 (class 1259 OID 18866)
+-- TOC entry 6063 (class 1259 OID 18866)
 -- Name: idx_reviews_user_booking; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8231,7 +8417,7 @@ CREATE INDEX idx_reviews_user_booking ON app.reviews USING btree (user_id, booki
 
 
 --
--- TOC entry 6046 (class 1259 OID 19124)
+-- TOC entry 6064 (class 1259 OID 19124)
 -- Name: idx_reviews_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8239,7 +8425,7 @@ CREATE INDEX idx_reviews_user_id ON app.reviews USING btree (user_id);
 
 
 --
--- TOC entry 6208 (class 1259 OID 20044)
+-- TOC entry 6229 (class 1259 OID 20044)
 -- Name: idx_schedules_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8247,7 +8433,7 @@ CREATE INDEX idx_schedules_type ON app.user_schedules USING btree (user_id, sche
 
 
 --
--- TOC entry 6209 (class 1259 OID 20043)
+-- TOC entry 6230 (class 1259 OID 20043)
 -- Name: idx_schedules_upcoming; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8255,7 +8441,7 @@ CREATE INDEX idx_schedules_upcoming ON app.user_schedules USING btree (start_at)
 
 
 --
--- TOC entry 6210 (class 1259 OID 20042)
+-- TOC entry 6231 (class 1259 OID 20042)
 -- Name: idx_schedules_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8263,7 +8449,7 @@ CREATE INDEX idx_schedules_user_time ON app.user_schedules USING btree (user_id,
 
 
 --
--- TOC entry 6102 (class 1259 OID 19082)
+-- TOC entry 6121 (class 1259 OID 19082)
 -- Name: idx_schema_migrations_version; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8271,7 +8457,7 @@ CREATE INDEX idx_schema_migrations_version ON app.schema_migrations USING btree 
 
 
 --
--- TOC entry 6051 (class 1259 OID 18838)
+-- TOC entry 6069 (class 1259 OID 18838)
 -- Name: idx_sessions_token; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8279,7 +8465,7 @@ CREATE INDEX idx_sessions_token ON app.user_sessions USING btree (token);
 
 
 --
--- TOC entry 6052 (class 1259 OID 18837)
+-- TOC entry 6070 (class 1259 OID 18837)
 -- Name: idx_sessions_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8287,7 +8473,7 @@ CREATE INDEX idx_sessions_user_time ON app.user_sessions USING btree (user_id, c
 
 
 --
--- TOC entry 6213 (class 1259 OID 20045)
+-- TOC entry 6234 (class 1259 OID 20045)
 -- Name: idx_sleep_user_date; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8295,7 +8481,7 @@ CREATE INDEX idx_sleep_user_date ON app.sleep_logs USING btree (user_id, date DE
 
 
 --
--- TOC entry 6229 (class 1259 OID 20049)
+-- TOC entry 6250 (class 1259 OID 20049)
 -- Name: idx_suggestions_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8303,7 +8489,7 @@ CREATE INDEX idx_suggestions_user ON app.ai_suggestions USING btree (user_id, cr
 
 
 --
--- TOC entry 6164 (class 1259 OID 19600)
+-- TOC entry 6185 (class 1259 OID 19600)
 -- Name: idx_user_ai_settings_persona; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8311,7 +8497,7 @@ CREATE INDEX idx_user_ai_settings_persona ON app.user_ai_settings USING btree (p
 
 
 --
--- TOC entry 6156 (class 1259 OID 19512)
+-- TOC entry 6177 (class 1259 OID 19512)
 -- Name: idx_user_blocks_blocked; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8319,7 +8505,7 @@ CREATE INDEX idx_user_blocks_blocked ON app.user_blocks USING btree (blocked_id)
 
 
 --
--- TOC entry 6157 (class 1259 OID 19511)
+-- TOC entry 6178 (class 1259 OID 19511)
 -- Name: idx_user_blocks_blocker; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8327,7 +8513,7 @@ CREATE INDEX idx_user_blocks_blocker ON app.user_blocks USING btree (blocker_id)
 
 
 --
--- TOC entry 6021 (class 1259 OID 18699)
+-- TOC entry 6038 (class 1259 OID 18699)
 -- Name: idx_user_follows_followee; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8335,7 +8521,7 @@ CREATE INDEX idx_user_follows_followee ON app.user_follows USING btree (followee
 
 
 --
--- TOC entry 6022 (class 1259 OID 18700)
+-- TOC entry 6039 (class 1259 OID 18700)
 -- Name: idx_user_follows_follower; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8343,7 +8529,7 @@ CREATE INDEX idx_user_follows_follower ON app.user_follows USING btree (follower
 
 
 --
--- TOC entry 6053 (class 1259 OID 19089)
+-- TOC entry 6071 (class 1259 OID 19089)
 -- Name: idx_user_sessions_expires_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8351,7 +8537,7 @@ CREATE INDEX idx_user_sessions_expires_at ON app.user_sessions USING btree (expi
 
 
 --
--- TOC entry 6054 (class 1259 OID 19088)
+-- TOC entry 6072 (class 1259 OID 19088)
 -- Name: idx_user_sessions_token; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8359,7 +8545,7 @@ CREATE INDEX idx_user_sessions_token ON app.user_sessions USING btree (token);
 
 
 --
--- TOC entry 6055 (class 1259 OID 19087)
+-- TOC entry 6073 (class 1259 OID 19087)
 -- Name: idx_user_sessions_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8367,7 +8553,24 @@ CREATE INDEX idx_user_sessions_user_id ON app.user_sessions USING btree (user_id
 
 
 --
--- TOC entry 5848 (class 1259 OID 19084)
+-- TOC entry 5849 (class 1259 OID 20079)
+-- Name: idx_users_created_at; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_users_created_at ON app.users USING btree (created_at);
+
+
+--
+-- TOC entry 6815 (class 0 OID 0)
+-- Dependencies: 5849
+-- Name: INDEX idx_users_created_at; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_users_created_at IS 'For user growth analytics';
+
+
+--
+-- TOC entry 5850 (class 1259 OID 19084)
 -- Name: idx_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8375,7 +8578,41 @@ CREATE INDEX idx_users_email ON app.users USING btree (email);
 
 
 --
--- TOC entry 5849 (class 1259 OID 19083)
+-- TOC entry 5851 (class 1259 OID 20098)
+-- Name: idx_users_email_lower; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_users_email_lower ON app.users USING btree (lower((email)::text));
+
+
+--
+-- TOC entry 6816 (class 0 OID 0)
+-- Dependencies: 5851
+-- Name: INDEX idx_users_email_lower; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_users_email_lower IS 'Fast case-insensitive email lookup for login';
+
+
+--
+-- TOC entry 5852 (class 1259 OID 20097)
+-- Name: idx_users_email_unique; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE UNIQUE INDEX idx_users_email_unique ON app.users USING btree (email) WHERE (email IS NOT NULL);
+
+
+--
+-- TOC entry 6817 (class 0 OID 0)
+-- Dependencies: 5852
+-- Name: INDEX idx_users_email_unique; Type: COMMENT; Schema: app; Owner: postgres
+--
+
+COMMENT ON INDEX app.idx_users_email_unique IS 'Ensure email uniqueness when provided (NULL allowed)';
+
+
+--
+-- TOC entry 5853 (class 1259 OID 19083)
 -- Name: idx_users_handle; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8383,7 +8620,7 @@ CREATE INDEX idx_users_handle ON app.users USING btree (handle);
 
 
 --
--- TOC entry 5850 (class 1259 OID 17540)
+-- TOC entry 5854 (class 1259 OID 17540)
 -- Name: idx_users_role; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8391,7 +8628,15 @@ CREATE INDEX idx_users_role ON app.users USING btree (role_primary);
 
 
 --
--- TOC entry 5851 (class 1259 OID 19086)
+-- TOC entry 5855 (class 1259 OID 20081)
+-- Name: idx_users_role_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_users_role_created ON app.users USING btree (role_primary, created_at);
+
+
+--
+-- TOC entry 5856 (class 1259 OID 19086)
 -- Name: idx_users_role_primary; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8399,7 +8644,7 @@ CREATE INDEX idx_users_role_primary ON app.users USING btree (role_primary);
 
 
 --
--- TOC entry 5852 (class 1259 OID 19085)
+-- TOC entry 5857 (class 1259 OID 19085)
 -- Name: idx_users_status; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8407,7 +8652,15 @@ CREATE INDEX idx_users_status ON app.users USING btree (status);
 
 
 --
--- TOC entry 5933 (class 1259 OID 19108)
+-- TOC entry 5858 (class 1259 OID 20080)
+-- Name: idx_users_status_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_users_status_created ON app.users USING btree (status, created_at);
+
+
+--
+-- TOC entry 5945 (class 1259 OID 19108)
 -- Name: idx_wallet_ledger_created_at; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8415,7 +8668,7 @@ CREATE INDEX idx_wallet_ledger_created_at ON app.wallet_ledger USING btree (crea
 
 
 --
--- TOC entry 5934 (class 1259 OID 19107)
+-- TOC entry 5946 (class 1259 OID 19107)
 -- Name: idx_wallet_ledger_tx_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8423,7 +8676,15 @@ CREATE INDEX idx_wallet_ledger_tx_type ON app.wallet_ledger USING btree (tx_type
 
 
 --
--- TOC entry 5935 (class 1259 OID 19106)
+-- TOC entry 5947 (class 1259 OID 20091)
+-- Name: idx_wallet_ledger_wallet_created; Type: INDEX; Schema: app; Owner: postgres
+--
+
+CREATE INDEX idx_wallet_ledger_wallet_created ON app.wallet_ledger USING btree (wallet_id, created_at);
+
+
+--
+-- TOC entry 5948 (class 1259 OID 19106)
 -- Name: idx_wallet_ledger_wallet_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8431,7 +8692,7 @@ CREATE INDEX idx_wallet_ledger_wallet_id ON app.wallet_ledger USING btree (walle
 
 
 --
--- TOC entry 5936 (class 1259 OID 18590)
+-- TOC entry 5949 (class 1259 OID 18590)
 -- Name: idx_wallet_ledger_wallet_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8439,7 +8700,7 @@ CREATE INDEX idx_wallet_ledger_wallet_time ON app.wallet_ledger USING btree (wal
 
 
 --
--- TOC entry 5926 (class 1259 OID 17547)
+-- TOC entry 5938 (class 1259 OID 17547)
 -- Name: idx_wallet_owner; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8447,7 +8708,7 @@ CREATE INDEX idx_wallet_owner ON app.wallets USING btree (owner_user_id);
 
 
 --
--- TOC entry 5927 (class 1259 OID 19105)
+-- TOC entry 5939 (class 1259 OID 19105)
 -- Name: idx_wallets_owner_user_id; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8455,7 +8716,7 @@ CREATE INDEX idx_wallets_owner_user_id ON app.wallets USING btree (owner_user_id
 
 
 --
--- TOC entry 6190 (class 1259 OID 19881)
+-- TOC entry 6211 (class 1259 OID 19881)
 -- Name: idx_wellness_type; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8463,7 +8724,7 @@ CREATE INDEX idx_wellness_type ON app.wellness_activities USING btree (activity_
 
 
 --
--- TOC entry 6191 (class 1259 OID 19880)
+-- TOC entry 6212 (class 1259 OID 19880)
 -- Name: idx_wellness_user_time; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8471,7 +8732,7 @@ CREATE INDEX idx_wellness_user_time ON app.wellness_activities USING btree (user
 
 
 --
--- TOC entry 5952 (class 1259 OID 18576)
+-- TOC entry 5965 (class 1259 OID 18576)
 -- Name: uq_chat_member; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8479,7 +8740,7 @@ CREATE UNIQUE INDEX uq_chat_member ON app.chat_members USING btree (thread_id, u
 
 
 --
--- TOC entry 5873 (class 1259 OID 17178)
+-- TOC entry 5879 (class 1259 OID 17178)
 -- Name: uq_email_verif_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8487,7 +8748,7 @@ CREATE UNIQUE INDEX uq_email_verif_user ON app.email_verifications USING btree (
 
 
 --
--- TOC entry 5925 (class 1259 OID 18588)
+-- TOC entry 5937 (class 1259 OID 18588)
 -- Name: uq_payments_intent; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8495,7 +8756,7 @@ CREATE UNIQUE INDEX uq_payments_intent ON app.payments USING btree (intent_id);
 
 
 --
--- TOC entry 6060 (class 1259 OID 18855)
+-- TOC entry 6078 (class 1259 OID 18855)
 -- Name: uq_payout_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8503,7 +8764,7 @@ CREATE UNIQUE INDEX uq_payout_user ON app.payout_accounts USING btree (user_id);
 
 
 --
--- TOC entry 5918 (class 1259 OID 18587)
+-- TOC entry 5930 (class 1259 OID 18587)
 -- Name: uq_pi_txref; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8511,7 +8772,7 @@ CREATE UNIQUE INDEX uq_pi_txref ON app.payment_intents USING btree (tx_ref);
 
 
 --
--- TOC entry 5853 (class 1259 OID 18578)
+-- TOC entry 5859 (class 1259 OID 18578)
 -- Name: uq_users_email; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8519,7 +8780,7 @@ CREATE UNIQUE INDEX uq_users_email ON app.users USING btree (email) WHERE (email
 
 
 --
--- TOC entry 5854 (class 1259 OID 18577)
+-- TOC entry 5860 (class 1259 OID 18577)
 -- Name: uq_users_handle; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8527,7 +8788,7 @@ CREATE UNIQUE INDEX uq_users_handle ON app.users USING btree (handle);
 
 
 --
--- TOC entry 5855 (class 1259 OID 18777)
+-- TOC entry 5861 (class 1259 OID 18777)
 -- Name: uq_users_phone; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8535,7 +8796,7 @@ CREATE UNIQUE INDEX uq_users_phone ON app.users USING btree (phone) WHERE (phone
 
 
 --
--- TOC entry 5928 (class 1259 OID 18589)
+-- TOC entry 5940 (class 1259 OID 18589)
 -- Name: uq_wallet_owner; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8543,7 +8804,7 @@ CREATE UNIQUE INDEX uq_wallet_owner ON app.wallets USING btree (owner_user_id);
 
 
 --
--- TOC entry 5953 (class 1259 OID 18599)
+-- TOC entry 5966 (class 1259 OID 18599)
 -- Name: ux_chat_members_thread_user; Type: INDEX; Schema: app; Owner: postgres
 --
 
@@ -8551,7 +8812,7 @@ CREATE UNIQUE INDEX ux_chat_members_thread_user ON app.chat_members USING btree 
 
 
 --
--- TOC entry 6363 (class 2620 OID 19607)
+-- TOC entry 6385 (class 2620 OID 19607)
 -- Name: ai_conversation_context trg_ai_context_updated; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8559,7 +8820,7 @@ CREATE TRIGGER trg_ai_context_updated BEFORE UPDATE ON app.ai_conversation_conte
 
 
 --
--- TOC entry 6361 (class 2620 OID 19605)
+-- TOC entry 6383 (class 2620 OID 19605)
 -- Name: ai_personas trg_ai_personas_updated; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8567,7 +8828,7 @@ CREATE TRIGGER trg_ai_personas_updated BEFORE UPDATE ON app.ai_personas FOR EACH
 
 
 --
--- TOC entry 6359 (class 2620 OID 19470)
+-- TOC entry 6381 (class 2620 OID 19470)
 -- Name: disputes trg_disputes_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8575,7 +8836,7 @@ CREATE TRIGGER trg_disputes_updated_at BEFORE UPDATE ON app.disputes FOR EACH RO
 
 
 --
--- TOC entry 6353 (class 2620 OID 18242)
+-- TOC entry 6375 (class 2620 OID 18242)
 -- Name: chat_members trg_dm_member_limit; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8583,7 +8844,7 @@ CREATE TRIGGER trg_dm_member_limit BEFORE INSERT ON app.chat_members FOR EACH RO
 
 
 --
--- TOC entry 6364 (class 2620 OID 19884)
+-- TOC entry 6386 (class 2620 OID 19884)
 -- Name: user_mental_state trg_mental_state_updated; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8591,7 +8852,7 @@ CREATE TRIGGER trg_mental_state_updated BEFORE UPDATE ON app.user_mental_state F
 
 
 --
--- TOC entry 6354 (class 2620 OID 18736)
+-- TOC entry 6376 (class 2620 OID 18736)
 -- Name: posts trg_posts_set_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8599,7 +8860,7 @@ CREATE TRIGGER trg_posts_set_updated_at BEFORE UPDATE OF title, content, tags, p
 
 
 --
--- TOC entry 6360 (class 2620 OID 19471)
+-- TOC entry 6382 (class 2620 OID 19471)
 -- Name: recurring_booking_templates trg_recurring_templates_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8607,7 +8868,7 @@ CREATE TRIGGER trg_recurring_templates_updated_at BEFORE UPDATE ON app.recurring
 
 
 --
--- TOC entry 6358 (class 2620 OID 19468)
+-- TOC entry 6380 (class 2620 OID 19468)
 -- Name: refunds trg_refunds_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8615,7 +8876,7 @@ CREATE TRIGGER trg_refunds_updated_at BEFORE UPDATE ON app.refunds FOR EACH ROW 
 
 
 --
--- TOC entry 6357 (class 2620 OID 18869)
+-- TOC entry 6379 (class 2620 OID 18869)
 -- Name: reviews trg_reviews_set_updated_at; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8623,7 +8884,7 @@ CREATE TRIGGER trg_reviews_set_updated_at BEFORE UPDATE ON app.reviews FOR EACH 
 
 
 --
--- TOC entry 6365 (class 2620 OID 20052)
+-- TOC entry 6387 (class 2620 OID 20052)
 -- Name: user_schedules trg_schedules_updated; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8631,7 +8892,7 @@ CREATE TRIGGER trg_schedules_updated BEFORE UPDATE ON app.user_schedules FOR EAC
 
 
 --
--- TOC entry 6355 (class 2620 OID 19245)
+-- TOC entry 6377 (class 2620 OID 19245)
 -- Name: reports trg_update_comment_report_count; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8639,7 +8900,7 @@ CREATE TRIGGER trg_update_comment_report_count AFTER INSERT OR DELETE ON app.rep
 
 
 --
--- TOC entry 6356 (class 2620 OID 19244)
+-- TOC entry 6378 (class 2620 OID 19244)
 -- Name: reports trg_update_post_report_count; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8647,7 +8908,7 @@ CREATE TRIGGER trg_update_post_report_count AFTER INSERT OR DELETE ON app.report
 
 
 --
--- TOC entry 6362 (class 2620 OID 19606)
+-- TOC entry 6384 (class 2620 OID 19606)
 -- Name: user_ai_settings trg_user_ai_settings_updated; Type: TRIGGER; Schema: app; Owner: postgres
 --
 
@@ -8655,7 +8916,15 @@ CREATE TRIGGER trg_user_ai_settings_updated BEFORE UPDATE ON app.user_ai_setting
 
 
 --
--- TOC entry 6344 (class 2606 OID 19912)
+-- TOC entry 6374 (class 2620 OID 20100)
+-- Name: users trg_validate_email; Type: TRIGGER; Schema: app; Owner: postgres
+--
+
+CREATE TRIGGER trg_validate_email BEFORE INSERT OR UPDATE ON app.users FOR EACH ROW EXECUTE FUNCTION app.validate_email_format();
+
+
+--
+-- TOC entry 6365 (class 2606 OID 19912)
 -- Name: ai_chat_history ai_chat_history_persona_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8664,7 +8933,7 @@ ALTER TABLE ONLY app.ai_chat_history
 
 
 --
--- TOC entry 6345 (class 2606 OID 19907)
+-- TOC entry 6366 (class 2606 OID 19907)
 -- Name: ai_chat_history ai_chat_history_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8673,7 +8942,7 @@ ALTER TABLE ONLY app.ai_chat_history
 
 
 --
--- TOC entry 6337 (class 2606 OID 19595)
+-- TOC entry 6358 (class 2606 OID 19595)
 -- Name: ai_conversation_context ai_conversation_context_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8682,7 +8951,7 @@ ALTER TABLE ONLY app.ai_conversation_context
 
 
 --
--- TOC entry 6335 (class 2606 OID 19576)
+-- TOC entry 6356 (class 2606 OID 19576)
 -- Name: ai_scheduled_notifications ai_scheduled_notifications_persona_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8691,7 +8960,7 @@ ALTER TABLE ONLY app.ai_scheduled_notifications
 
 
 --
--- TOC entry 6336 (class 2606 OID 19571)
+-- TOC entry 6357 (class 2606 OID 19571)
 -- Name: ai_scheduled_notifications ai_scheduled_notifications_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8700,7 +8969,7 @@ ALTER TABLE ONLY app.ai_scheduled_notifications
 
 
 --
--- TOC entry 6351 (class 2606 OID 20021)
+-- TOC entry 6372 (class 2606 OID 20021)
 -- Name: ai_suggestions ai_suggestions_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8709,7 +8978,7 @@ ALTER TABLE ONLY app.ai_suggestions
 
 
 --
--- TOC entry 6348 (class 2606 OID 19983)
+-- TOC entry 6369 (class 2606 OID 19983)
 -- Name: behavior_patterns behavior_patterns_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8718,7 +8987,7 @@ ALTER TABLE ONLY app.behavior_patterns
 
 
 --
--- TOC entry 6329 (class 2606 OID 19459)
+-- TOC entry 6350 (class 2606 OID 19459)
 -- Name: booking_fees booking_fees_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8727,7 +8996,7 @@ ALTER TABLE ONLY app.booking_fees
 
 
 --
--- TOC entry 6241 (class 2606 OID 19132)
+-- TOC entry 6262 (class 2606 OID 19132)
 -- Name: bookings bookings_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8736,7 +9005,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 6242 (class 2606 OID 19443)
+-- TOC entry 6263 (class 2606 OID 19443)
 -- Name: bookings bookings_recurring_template_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8745,7 +9014,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 6243 (class 2606 OID 17247)
+-- TOC entry 6264 (class 2606 OID 17247)
 -- Name: bookings bookings_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8754,7 +9023,7 @@ ALTER TABLE ONLY app.bookings
 
 
 --
--- TOC entry 6278 (class 2606 OID 18571)
+-- TOC entry 6299 (class 2606 OID 18571)
 -- Name: call_events call_events_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8763,7 +9032,7 @@ ALTER TABLE ONLY app.call_events
 
 
 --
--- TOC entry 6311 (class 2606 OID 19162)
+-- TOC entry 6332 (class 2606 OID 19162)
 -- Name: call_metrics call_metrics_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8772,7 +9041,7 @@ ALTER TABLE ONLY app.call_metrics
 
 
 --
--- TOC entry 6312 (class 2606 OID 19178)
+-- TOC entry 6333 (class 2606 OID 19178)
 -- Name: call_recordings call_recordings_call_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8781,7 +9050,7 @@ ALTER TABLE ONLY app.call_recordings
 
 
 --
--- TOC entry 6274 (class 2606 OID 18580)
+-- TOC entry 6295 (class 2606 OID 18580)
 -- Name: call_sessions call_sessions_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8790,7 +9059,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 6275 (class 2606 OID 18554)
+-- TOC entry 6296 (class 2606 OID 18554)
 -- Name: call_sessions call_sessions_callee_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8799,7 +9068,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 6276 (class 2606 OID 18549)
+-- TOC entry 6297 (class 2606 OID 18549)
 -- Name: call_sessions call_sessions_caller_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8808,7 +9077,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 6277 (class 2606 OID 18544)
+-- TOC entry 6298 (class 2606 OID 18544)
 -- Name: call_sessions call_sessions_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8817,7 +9086,7 @@ ALTER TABLE ONLY app.call_sessions
 
 
 --
--- TOC entry 6310 (class 2606 OID 19147)
+-- TOC entry 6331 (class 2606 OID 19147)
 -- Name: chat_attachments chat_attachments_message_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8826,7 +9095,7 @@ ALTER TABLE ONLY app.chat_attachments
 
 
 --
--- TOC entry 6254 (class 2606 OID 17393)
+-- TOC entry 6275 (class 2606 OID 17393)
 -- Name: chat_members chat_members_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8835,7 +9104,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 6255 (class 2606 OID 17398)
+-- TOC entry 6276 (class 2606 OID 17398)
 -- Name: chat_members chat_members_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8844,7 +9113,7 @@ ALTER TABLE ONLY app.chat_members
 
 
 --
--- TOC entry 6256 (class 2606 OID 17418)
+-- TOC entry 6277 (class 2606 OID 17418)
 -- Name: chat_messages chat_messages_sender_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8853,7 +9122,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 6257 (class 2606 OID 17413)
+-- TOC entry 6278 (class 2606 OID 17413)
 -- Name: chat_messages chat_messages_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8862,7 +9131,7 @@ ALTER TABLE ONLY app.chat_messages
 
 
 --
--- TOC entry 6271 (class 2606 OID 18262)
+-- TOC entry 6292 (class 2606 OID 18262)
 -- Name: chat_read_state chat_read_state_last_read_message_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8871,7 +9140,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 6272 (class 2606 OID 18252)
+-- TOC entry 6293 (class 2606 OID 18252)
 -- Name: chat_read_state chat_read_state_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8880,7 +9149,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 6273 (class 2606 OID 18257)
+-- TOC entry 6294 (class 2606 OID 18257)
 -- Name: chat_read_state chat_read_state_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8889,7 +9158,7 @@ ALTER TABLE ONLY app.chat_read_state
 
 
 --
--- TOC entry 6313 (class 2606 OID 19206)
+-- TOC entry 6334 (class 2606 OID 19206)
 -- Name: chat_thread_invitations chat_thread_invitations_invitee_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8898,7 +9167,7 @@ ALTER TABLE ONLY app.chat_thread_invitations
 
 
 --
--- TOC entry 6314 (class 2606 OID 19201)
+-- TOC entry 6335 (class 2606 OID 19201)
 -- Name: chat_thread_invitations chat_thread_invitations_inviter_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8907,7 +9176,7 @@ ALTER TABLE ONLY app.chat_thread_invitations
 
 
 --
--- TOC entry 6315 (class 2606 OID 19196)
+-- TOC entry 6336 (class 2606 OID 19196)
 -- Name: chat_thread_invitations chat_thread_invitations_thread_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8916,7 +9185,7 @@ ALTER TABLE ONLY app.chat_thread_invitations
 
 
 --
--- TOC entry 6253 (class 2606 OID 17381)
+-- TOC entry 6274 (class 2606 OID 17381)
 -- Name: chat_threads chat_threads_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8925,7 +9194,7 @@ ALTER TABLE ONLY app.chat_threads
 
 
 --
--- TOC entry 6284 (class 2606 OID 18685)
+-- TOC entry 6305 (class 2606 OID 18685)
 -- Name: comment_reactions comment_reactions_comment_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8934,7 +9203,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 6285 (class 2606 OID 18690)
+-- TOC entry 6306 (class 2606 OID 18690)
 -- Name: comment_reactions comment_reactions_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8943,7 +9212,7 @@ ALTER TABLE ONLY app.comment_reactions
 
 
 --
--- TOC entry 6261 (class 2606 OID 18743)
+-- TOC entry 6282 (class 2606 OID 18743)
 -- Name: comments comments_author_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8952,7 +9221,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6262 (class 2606 OID 17475)
+-- TOC entry 6283 (class 2606 OID 17475)
 -- Name: comments comments_author_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8961,7 +9230,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6263 (class 2606 OID 19234)
+-- TOC entry 6284 (class 2606 OID 19234)
 -- Name: comments comments_moderated_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8970,7 +9239,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6264 (class 2606 OID 18748)
+-- TOC entry 6285 (class 2606 OID 18748)
 -- Name: comments comments_parent_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8979,7 +9248,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6265 (class 2606 OID 18738)
+-- TOC entry 6286 (class 2606 OID 18738)
 -- Name: comments comments_post_fk; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8988,7 +9257,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6266 (class 2606 OID 17470)
+-- TOC entry 6287 (class 2606 OID 17470)
 -- Name: comments comments_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -8997,7 +9266,7 @@ ALTER TABLE ONLY app.comments
 
 
 --
--- TOC entry 6270 (class 2606 OID 17523)
+-- TOC entry 6291 (class 2606 OID 17523)
 -- Name: consents consents_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9006,7 +9275,7 @@ ALTER TABLE ONLY app.consents
 
 
 --
--- TOC entry 6342 (class 2606 OID 19847)
+-- TOC entry 6363 (class 2606 OID 19847)
 -- Name: daily_mood_checkins daily_mood_checkins_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9015,7 +9284,7 @@ ALTER TABLE ONLY app.daily_mood_checkins
 
 
 --
--- TOC entry 6325 (class 2606 OID 19400)
+-- TOC entry 6346 (class 2606 OID 19400)
 -- Name: dispute_messages dispute_messages_dispute_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9024,7 +9293,7 @@ ALTER TABLE ONLY app.dispute_messages
 
 
 --
--- TOC entry 6326 (class 2606 OID 19405)
+-- TOC entry 6347 (class 2606 OID 19405)
 -- Name: dispute_messages dispute_messages_sender_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9033,7 +9302,7 @@ ALTER TABLE ONLY app.dispute_messages
 
 
 --
--- TOC entry 6321 (class 2606 OID 19377)
+-- TOC entry 6342 (class 2606 OID 19377)
 -- Name: disputes disputes_against_user_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9042,7 +9311,7 @@ ALTER TABLE ONLY app.disputes
 
 
 --
--- TOC entry 6322 (class 2606 OID 19382)
+-- TOC entry 6343 (class 2606 OID 19382)
 -- Name: disputes disputes_assigned_admin_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9051,7 +9320,7 @@ ALTER TABLE ONLY app.disputes
 
 
 --
--- TOC entry 6323 (class 2606 OID 19367)
+-- TOC entry 6344 (class 2606 OID 19367)
 -- Name: disputes disputes_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9060,7 +9329,7 @@ ALTER TABLE ONLY app.disputes
 
 
 --
--- TOC entry 6324 (class 2606 OID 19372)
+-- TOC entry 6345 (class 2606 OID 19372)
 -- Name: disputes disputes_raised_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9069,7 +9338,7 @@ ALTER TABLE ONLY app.disputes
 
 
 --
--- TOC entry 6237 (class 2606 OID 17173)
+-- TOC entry 6258 (class 2606 OID 17173)
 -- Name: email_verifications email_verifications_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9078,7 +9347,7 @@ ALTER TABLE ONLY app.email_verifications
 
 
 --
--- TOC entry 6338 (class 2606 OID 19756)
+-- TOC entry 6359 (class 2606 OID 19756)
 -- Name: emotion_logs emotion_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9087,7 +9356,7 @@ ALTER TABLE ONLY app.emotion_logs
 
 
 --
--- TOC entry 6343 (class 2606 OID 19867)
+-- TOC entry 6364 (class 2606 OID 19867)
 -- Name: emotion_patterns emotion_patterns_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9096,7 +9365,7 @@ ALTER TABLE ONLY app.emotion_patterns
 
 
 --
--- TOC entry 6305 (class 2606 OID 19022)
+-- TOC entry 6326 (class 2606 OID 19022)
 -- Name: expert_audience expert_audience_audience_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9105,7 +9374,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 6306 (class 2606 OID 19017)
+-- TOC entry 6327 (class 2606 OID 19017)
 -- Name: expert_audience expert_audience_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9114,7 +9383,7 @@ ALTER TABLE ONLY app.expert_audience
 
 
 --
--- TOC entry 6240 (class 2606 OID 17226)
+-- TOC entry 6261 (class 2606 OID 17226)
 -- Name: expert_availabilities expert_availabilities_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9123,7 +9392,7 @@ ALTER TABLE ONLY app.expert_availabilities
 
 
 --
--- TOC entry 6301 (class 2606 OID 18953)
+-- TOC entry 6322 (class 2606 OID 18953)
 -- Name: expert_certifications expert_certifications_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9132,7 +9401,7 @@ ALTER TABLE ONLY app.expert_certifications
 
 
 --
--- TOC entry 6307 (class 2606 OID 19048)
+-- TOC entry 6328 (class 2606 OID 19048)
 -- Name: expert_domain expert_domain_domain_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9141,7 +9410,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 6308 (class 2606 OID 19043)
+-- TOC entry 6329 (class 2606 OID 19043)
 -- Name: expert_domain expert_domain_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9150,7 +9419,7 @@ ALTER TABLE ONLY app.expert_domain
 
 
 --
--- TOC entry 6300 (class 2606 OID 18939)
+-- TOC entry 6321 (class 2606 OID 18939)
 -- Name: expert_education expert_education_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9159,7 +9428,7 @@ ALTER TABLE ONLY app.expert_education
 
 
 --
--- TOC entry 6299 (class 2606 OID 18925)
+-- TOC entry 6320 (class 2606 OID 18925)
 -- Name: expert_experience expert_experience_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9168,7 +9437,7 @@ ALTER TABLE ONLY app.expert_experience
 
 
 --
--- TOC entry 6304 (class 2606 OID 18996)
+-- TOC entry 6325 (class 2606 OID 18996)
 -- Name: expert_media expert_media_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9177,7 +9446,7 @@ ALTER TABLE ONLY app.expert_media
 
 
 --
--- TOC entry 6302 (class 2606 OID 18966)
+-- TOC entry 6323 (class 2606 OID 18966)
 -- Name: expert_performance expert_performance_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9186,7 +9455,7 @@ ALTER TABLE ONLY app.expert_performance
 
 
 --
--- TOC entry 6238 (class 2606 OID 17193)
+-- TOC entry 6259 (class 2606 OID 17193)
 -- Name: expert_profiles expert_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9195,7 +9464,7 @@ ALTER TABLE ONLY app.expert_profiles
 
 
 --
--- TOC entry 6297 (class 2606 OID 18906)
+-- TOC entry 6318 (class 2606 OID 18906)
 -- Name: expert_skills expert_skills_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9204,7 +9473,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 6298 (class 2606 OID 18911)
+-- TOC entry 6319 (class 2606 OID 18911)
 -- Name: expert_skills expert_skills_skill_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9213,7 +9482,7 @@ ALTER TABLE ONLY app.expert_skills
 
 
 --
--- TOC entry 6303 (class 2606 OID 18981)
+-- TOC entry 6324 (class 2606 OID 18981)
 -- Name: expert_status expert_status_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9222,7 +9491,7 @@ ALTER TABLE ONLY app.expert_status
 
 
 --
--- TOC entry 6279 (class 2606 OID 18609)
+-- TOC entry 6300 (class 2606 OID 18609)
 -- Name: user_follows fk_follow_from; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9231,7 +9500,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 6280 (class 2606 OID 18614)
+-- TOC entry 6301 (class 2606 OID 18614)
 -- Name: user_follows fk_follow_to; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9240,7 +9509,7 @@ ALTER TABLE ONLY app.user_follows
 
 
 --
--- TOC entry 6295 (class 2606 OID 18850)
+-- TOC entry 6316 (class 2606 OID 18850)
 -- Name: payout_accounts fk_payout_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9249,7 +9518,7 @@ ALTER TABLE ONLY app.payout_accounts
 
 
 --
--- TOC entry 6290 (class 2606 OID 18815)
+-- TOC entry 6311 (class 2606 OID 18815)
 -- Name: reviews fk_review_booking; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9258,7 +9527,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6291 (class 2606 OID 18810)
+-- TOC entry 6312 (class 2606 OID 18810)
 -- Name: reviews fk_review_expert; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9267,7 +9536,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6292 (class 2606 OID 18805)
+-- TOC entry 6313 (class 2606 OID 18805)
 -- Name: reviews fk_review_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9276,7 +9545,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6294 (class 2606 OID 18832)
+-- TOC entry 6315 (class 2606 OID 18832)
 -- Name: user_sessions fk_session_user; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9285,7 +9554,7 @@ ALTER TABLE ONLY app.user_sessions
 
 
 --
--- TOC entry 6239 (class 2606 OID 17210)
+-- TOC entry 6260 (class 2606 OID 17210)
 -- Name: listener_profiles listener_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9294,7 +9563,7 @@ ALTER TABLE ONLY app.listener_profiles
 
 
 --
--- TOC entry 6340 (class 2606 OID 19806)
+-- TOC entry 6361 (class 2606 OID 19806)
 -- Name: mental_health_assessments mental_health_assessments_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9303,7 +9572,7 @@ ALTER TABLE ONLY app.mental_health_assessments
 
 
 --
--- TOC entry 6269 (class 2606 OID 17508)
+-- TOC entry 6290 (class 2606 OID 17508)
 -- Name: moderation_actions moderation_actions_admin_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9312,7 +9581,7 @@ ALTER TABLE ONLY app.moderation_actions
 
 
 --
--- TOC entry 6296 (class 2606 OID 18883)
+-- TOC entry 6317 (class 2606 OID 18883)
 -- Name: oauth_users oauth_users_app_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9321,7 +9590,7 @@ ALTER TABLE ONLY app.oauth_users
 
 
 --
--- TOC entry 6246 (class 2606 OID 17293)
+-- TOC entry 6267 (class 2606 OID 17293)
 -- Name: payment_intents payment_intents_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9330,7 +9599,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 6247 (class 2606 OID 17298)
+-- TOC entry 6268 (class 2606 OID 17298)
 -- Name: payment_intents payment_intents_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9339,7 +9608,7 @@ ALTER TABLE ONLY app.payment_intents
 
 
 --
--- TOC entry 6248 (class 2606 OID 17314)
+-- TOC entry 6269 (class 2606 OID 17314)
 -- Name: payments payments_intent_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9348,7 +9617,7 @@ ALTER TABLE ONLY app.payments
 
 
 --
--- TOC entry 6309 (class 2606 OID 19223)
+-- TOC entry 6330 (class 2606 OID 19223)
 -- Name: payout_requests payout_requests_processed_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9357,7 +9626,7 @@ ALTER TABLE ONLY app.payout_requests
 
 
 --
--- TOC entry 6316 (class 2606 OID 19314)
+-- TOC entry 6337 (class 2606 OID 19314)
 -- Name: platform_settings platform_settings_updated_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9366,7 +9635,7 @@ ALTER TABLE ONLY app.platform_settings
 
 
 --
--- TOC entry 6281 (class 2606 OID 18634)
+-- TOC entry 6302 (class 2606 OID 18634)
 -- Name: post_audience post_audience_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9375,7 +9644,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 6282 (class 2606 OID 18639)
+-- TOC entry 6303 (class 2606 OID 18639)
 -- Name: post_audience post_audience_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9384,7 +9653,7 @@ ALTER TABLE ONLY app.post_audience
 
 
 --
--- TOC entry 6286 (class 2606 OID 18712)
+-- TOC entry 6307 (class 2606 OID 18712)
 -- Name: post_files post_files_file_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9393,7 +9662,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 6287 (class 2606 OID 18707)
+-- TOC entry 6308 (class 2606 OID 18707)
 -- Name: post_files post_files_post_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9402,7 +9671,7 @@ ALTER TABLE ONLY app.post_files
 
 
 --
--- TOC entry 6283 (class 2606 OID 18659)
+-- TOC entry 6304 (class 2606 OID 18659)
 -- Name: post_media post_media_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9411,7 +9680,7 @@ ALTER TABLE ONLY app.post_media
 
 
 --
--- TOC entry 6259 (class 2606 OID 17449)
+-- TOC entry 6280 (class 2606 OID 17449)
 -- Name: post_reactions post_reactions_post_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9420,7 +9689,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 6260 (class 2606 OID 17454)
+-- TOC entry 6281 (class 2606 OID 17454)
 -- Name: post_reactions post_reactions_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9429,7 +9698,7 @@ ALTER TABLE ONLY app.post_reactions
 
 
 --
--- TOC entry 6288 (class 2606 OID 18729)
+-- TOC entry 6309 (class 2606 OID 18729)
 -- Name: post_saves post_saves_post_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9438,7 +9707,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 6289 (class 2606 OID 18724)
+-- TOC entry 6310 (class 2606 OID 18724)
 -- Name: post_saves post_saves_user_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9447,7 +9716,7 @@ ALTER TABLE ONLY app.post_saves
 
 
 --
--- TOC entry 6258 (class 2606 OID 17435)
+-- TOC entry 6279 (class 2606 OID 17435)
 -- Name: posts posts_author_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9456,7 +9725,7 @@ ALTER TABLE ONLY app.posts
 
 
 --
--- TOC entry 6349 (class 2606 OID 20006)
+-- TOC entry 6370 (class 2606 OID 20006)
 -- Name: proactive_messages proactive_messages_persona_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9465,7 +9734,7 @@ ALTER TABLE ONLY app.proactive_messages
 
 
 --
--- TOC entry 6350 (class 2606 OID 20001)
+-- TOC entry 6371 (class 2606 OID 20001)
 -- Name: proactive_messages proactive_messages_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9474,7 +9743,7 @@ ALTER TABLE ONLY app.proactive_messages
 
 
 --
--- TOC entry 6330 (class 2606 OID 19485)
+-- TOC entry 6351 (class 2606 OID 19485)
 -- Name: product_reviews product_reviews_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9483,7 +9752,7 @@ ALTER TABLE ONLY app.product_reviews
 
 
 --
--- TOC entry 6327 (class 2606 OID 19434)
+-- TOC entry 6348 (class 2606 OID 19434)
 -- Name: recurring_booking_templates recurring_booking_templates_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9492,7 +9761,7 @@ ALTER TABLE ONLY app.recurring_booking_templates
 
 
 --
--- TOC entry 6328 (class 2606 OID 19429)
+-- TOC entry 6349 (class 2606 OID 19429)
 -- Name: recurring_booking_templates recurring_booking_templates_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9501,7 +9770,7 @@ ALTER TABLE ONLY app.recurring_booking_templates
 
 
 --
--- TOC entry 6317 (class 2606 OID 19332)
+-- TOC entry 6338 (class 2606 OID 19332)
 -- Name: refunds refunds_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9510,7 +9779,7 @@ ALTER TABLE ONLY app.refunds
 
 
 --
--- TOC entry 6318 (class 2606 OID 19337)
+-- TOC entry 6339 (class 2606 OID 19337)
 -- Name: refunds refunds_payment_intent_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9519,7 +9788,7 @@ ALTER TABLE ONLY app.refunds
 
 
 --
--- TOC entry 6319 (class 2606 OID 19347)
+-- TOC entry 6340 (class 2606 OID 19347)
 -- Name: refunds refunds_processed_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9528,7 +9797,7 @@ ALTER TABLE ONLY app.refunds
 
 
 --
--- TOC entry 6320 (class 2606 OID 19342)
+-- TOC entry 6341 (class 2606 OID 19342)
 -- Name: refunds refunds_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9537,7 +9806,7 @@ ALTER TABLE ONLY app.refunds
 
 
 --
--- TOC entry 6267 (class 2606 OID 17491)
+-- TOC entry 6288 (class 2606 OID 17491)
 -- Name: reports reports_reporter_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9546,7 +9815,7 @@ ALTER TABLE ONLY app.reports
 
 
 --
--- TOC entry 6268 (class 2606 OID 19217)
+-- TOC entry 6289 (class 2606 OID 19217)
 -- Name: reports reports_resolved_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9555,7 +9824,7 @@ ALTER TABLE ONLY app.reports
 
 
 --
--- TOC entry 6293 (class 2606 OID 20070)
+-- TOC entry 6314 (class 2606 OID 20070)
 -- Name: reviews reviews_hidden_by_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9564,7 +9833,7 @@ ALTER TABLE ONLY app.reviews
 
 
 --
--- TOC entry 6244 (class 2606 OID 17269)
+-- TOC entry 6265 (class 2606 OID 17269)
 -- Name: session_notes session_notes_booking_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9573,7 +9842,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 6245 (class 2606 OID 17274)
+-- TOC entry 6266 (class 2606 OID 17274)
 -- Name: session_notes session_notes_expert_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9582,7 +9851,7 @@ ALTER TABLE ONLY app.session_notes
 
 
 --
--- TOC entry 6347 (class 2606 OID 19962)
+-- TOC entry 6368 (class 2606 OID 19962)
 -- Name: sleep_logs sleep_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9591,7 +9860,7 @@ ALTER TABLE ONLY app.sleep_logs
 
 
 --
--- TOC entry 6251 (class 2606 OID 17361)
+-- TOC entry 6272 (class 2606 OID 17361)
 -- Name: tips tips_from_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9600,7 +9869,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 6252 (class 2606 OID 17366)
+-- TOC entry 6273 (class 2606 OID 17366)
 -- Name: tips tips_to_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9609,7 +9878,7 @@ ALTER TABLE ONLY app.tips
 
 
 --
--- TOC entry 6352 (class 2606 OID 20037)
+-- TOC entry 6373 (class 2606 OID 20037)
 -- Name: user_activity_logs user_activity_logs_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9618,7 +9887,7 @@ ALTER TABLE ONLY app.user_activity_logs
 
 
 --
--- TOC entry 6333 (class 2606 OID 19553)
+-- TOC entry 6354 (class 2606 OID 19553)
 -- Name: user_ai_settings user_ai_settings_persona_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9627,7 +9896,7 @@ ALTER TABLE ONLY app.user_ai_settings
 
 
 --
--- TOC entry 6334 (class 2606 OID 19548)
+-- TOC entry 6355 (class 2606 OID 19548)
 -- Name: user_ai_settings user_ai_settings_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9636,7 +9905,7 @@ ALTER TABLE ONLY app.user_ai_settings
 
 
 --
--- TOC entry 6331 (class 2606 OID 19506)
+-- TOC entry 6352 (class 2606 OID 19506)
 -- Name: user_blocks user_blocks_blocked_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9645,7 +9914,7 @@ ALTER TABLE ONLY app.user_blocks
 
 
 --
--- TOC entry 6332 (class 2606 OID 19501)
+-- TOC entry 6353 (class 2606 OID 19501)
 -- Name: user_blocks user_blocks_blocker_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9654,7 +9923,7 @@ ALTER TABLE ONLY app.user_blocks
 
 
 --
--- TOC entry 6236 (class 2606 OID 17157)
+-- TOC entry 6257 (class 2606 OID 17157)
 -- Name: user_files user_files_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9663,7 +9932,7 @@ ALTER TABLE ONLY app.user_files
 
 
 --
--- TOC entry 6339 (class 2606 OID 19781)
+-- TOC entry 6360 (class 2606 OID 19781)
 -- Name: user_mental_state user_mental_state_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9672,7 +9941,7 @@ ALTER TABLE ONLY app.user_mental_state
 
 
 --
--- TOC entry 6234 (class 2606 OID 17131)
+-- TOC entry 6255 (class 2606 OID 17131)
 -- Name: user_profiles user_profiles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9681,7 +9950,7 @@ ALTER TABLE ONLY app.user_profiles
 
 
 --
--- TOC entry 6235 (class 2606 OID 17141)
+-- TOC entry 6256 (class 2606 OID 17141)
 -- Name: user_roles user_roles_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9690,7 +9959,7 @@ ALTER TABLE ONLY app.user_roles
 
 
 --
--- TOC entry 6346 (class 2606 OID 19942)
+-- TOC entry 6367 (class 2606 OID 19942)
 -- Name: user_schedules user_schedules_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9699,7 +9968,7 @@ ALTER TABLE ONLY app.user_schedules
 
 
 --
--- TOC entry 6250 (class 2606 OID 17345)
+-- TOC entry 6271 (class 2606 OID 17345)
 -- Name: wallet_ledger wallet_ledger_wallet_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9708,7 +9977,7 @@ ALTER TABLE ONLY app.wallet_ledger
 
 
 --
--- TOC entry 6249 (class 2606 OID 17329)
+-- TOC entry 6270 (class 2606 OID 17329)
 -- Name: wallets wallets_owner_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9717,7 +9986,7 @@ ALTER TABLE ONLY app.wallets
 
 
 --
--- TOC entry 6341 (class 2606 OID 19825)
+-- TOC entry 6362 (class 2606 OID 19825)
 -- Name: wellness_activities wellness_activities_user_id_fkey; Type: FK CONSTRAINT; Schema: app; Owner: postgres
 --
 
@@ -9725,11 +9994,11 @@ ALTER TABLE ONLY app.wellness_activities
     ADD CONSTRAINT wellness_activities_user_id_fkey FOREIGN KEY (user_id) REFERENCES app.users(id) ON DELETE CASCADE;
 
 
--- Completed on 2025-12-08 11:18:10
+-- Completed on 2025-12-09 21:10:14
 
 --
 -- PostgreSQL database dump complete
 --
 
-\unrestrict gklijQ4bsubrABeH6bSEcDjwhkUQKEqHOGSpX8PWHZOcKZLMoZga2ilxchYA3NZ
+\unrestrict VhPIZbc7rND5aDgZxZkrL3IU5DSoBMs95cbsLgooefYm5xF6JdIfWddGvvRljv9
 

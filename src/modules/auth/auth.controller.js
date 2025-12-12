@@ -5,17 +5,63 @@ import jwt from "jsonwebtoken";
 import * as UsersRepo from "../users/users.repo.js";
 import passport from "passport";
 
+// ========== FORGOT PASSWORD ==========
+export const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const ip = req.ip;
+  const agent = req.headers['user-agent'];
+
+  const result = await AuthService.forgotPassword({ email, ip, agent });
+  return success(res, "auth.forgotPassword.success", result);
+});
+
+// ========== VERIFY RESET OTP ==========
+export const verifyResetOtp = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    return failure(res, "Email and OTP are required", 400);
+  }
+
+  const result = await AuthService.verifyResetOtp({ email, otp });
+  return success(res, "auth.verifyOtp.success", result);
+});
+
+// ========== RESET PASSWORD ==========
+export const resetPassword = asyncHandler(async (req, res) => {
+  const { email, otp, new_password, reset_token } = req.body;
+
+  if (!new_password) {
+    return failure(res, "New password is required", 400);
+  }
+
+  const result = await AuthService.resetPassword({
+    email,
+    otp,
+    newPassword: new_password,
+    resetToken: reset_token
+  });
+  return success(res, "auth.resetPassword.success", result);
+});
+
 export const register = asyncHandler(async (req, res) => {
-  const { handle, password } = req.body;          // ✅ chỉ 2 field
-  const data = await AuthService.registerStep1({ handle, password });
+  const { handle, email, password } = req.body;
+  const data = await AuthService.registerStep1({ handle, email, password });
   return created(res, "auth.register.success", data);
 });
 
 export const login = asyncHandler(async (req, res) => {
-  const { handle, password } = req.body;
+  // Accept 'identifier', 'email', or 'handle' for backward compatibility
+  const { handle, email, identifier, password } = req.body;
+  const loginIdentifier = identifier || email || handle;
+
+  if (!loginIdentifier || !password) {
+    return failure(res, "Email/handle and password are required");
+  }
+
   const ip = req.ip;
   const agent = req.headers['user-agent'];
-  const data = await AuthService.login({ handle, password, ip, agent });
+  const data = await AuthService.login({ identifier: loginIdentifier, password, ip, agent });
   return success(res, "auth.login.success", data);
 });
 

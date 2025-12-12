@@ -220,11 +220,8 @@ export const securityHeadersMiddleware = (req, res, next) => {
   res.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
 
-  // CORS headers
-  res.set('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGINS || '*');
-  res.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With, X-Request-ID');
-  res.set('Access-Control-Max-Age', '86400');
+  // CORS headers are handled by cors() middleware in app.js
+  // Do not set them here to avoid conflicts
 
   next();
 };
@@ -239,14 +236,13 @@ export const handlePreflight = (req, res, next) => {
 };
 
 // Combine all request middleware
+// NOTE: handlePreflight removed - cors() middleware handles OPTIONS requests
 export const requestMiddleware = [
   requestIdMiddleware,
   requestDurationMiddleware,
   requestBodySizeMiddleware,
   requestTimeoutMiddleware(30000),
-  validateContentType(['application/json', 'multipart/form-data']),
   securityHeadersMiddleware,
-  handlePreflight,
 ];
 
 // Apply request middleware to routes

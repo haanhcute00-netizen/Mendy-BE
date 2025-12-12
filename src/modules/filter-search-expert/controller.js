@@ -1,8 +1,10 @@
-// src/modules/experts/experts.search.controller.js
+// src/modules/filter-search-expert/controller.js
 // Advanced Expert Search Controller
 import { asyncHandler } from "../../utils/asyncHandler.js";
 import { success, failure } from "../../utils/response.js";
+import { logger } from "../../utils/logger.js";
 import * as SearchService from "./service.js";
+import { SearchErrors, getErrorStatus } from "./errors.js";
 
 /**
  * @route GET /api/v1/public/experts/search/advanced
@@ -38,6 +40,8 @@ import * as SearchService from "./service.js";
  * - limit: number - Items per page (default: 20, max: 100)
  */
 export const advancedSearch = asyncHandler(async (req, res) => {
+    const startTime = Date.now();
+
     try {
         const filters = {
             // Text search
@@ -94,11 +98,32 @@ export const advancedSearch = asyncHandler(async (req, res) => {
 
         const result = await SearchService.advancedSearch(filters);
 
+        // Log request metrics
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'api_request',
+            endpoint: '/expert-search/advanced',
+            method: 'GET',
+            ip: req.ip,
+            duration: `${duration}ms`,
+            resultCount: result.experts.length,
+            totalCount: result.pagination.total
+        });
+
         return success(res, "experts.search.success", result);
     } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error({
+            type: 'api_error',
+            endpoint: '/expert-search/advanced',
+            error: error.message,
+            code: error.code || SearchErrors.INTERNAL_ERROR.code,
+            duration: `${duration}ms`
+        });
+
         return failure(res, error.message, {
-            code: error.code || "SEARCH_FAILED",
-            status: error.status || 500
+            code: error.code || SearchErrors.DB_ERROR.code,
+            status: getErrorStatus(error)
         });
     }
 });
@@ -109,14 +134,33 @@ export const advancedSearch = asyncHandler(async (req, res) => {
  * @access Public
  */
 export const getSearchFacets = asyncHandler(async (req, res) => {
+    const startTime = Date.now();
+
     try {
         const facets = await SearchService.getSearchFacets();
 
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'api_request',
+            endpoint: '/expert-search/facets',
+            method: 'GET',
+            ip: req.ip,
+            duration: `${duration}ms`
+        });
+
         return success(res, "experts.facets.success", facets);
     } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error({
+            type: 'api_error',
+            endpoint: '/expert-search/facets',
+            error: error.message,
+            duration: `${duration}ms`
+        });
+
         return failure(res, error.message, {
-            code: error.code || "FACETS_FAILED",
-            status: error.status || 500
+            code: error.code || SearchErrors.DB_ERROR.code,
+            status: getErrorStatus(error)
         });
     }
 });
@@ -128,15 +172,33 @@ export const getSearchFacets = asyncHandler(async (req, res) => {
  */
 export const getExpertFullDetails = asyncHandler(async (req, res) => {
     const { expertId } = req.params;
+    const startTime = Date.now();
 
     try {
         const expert = await SearchService.getExpertFullDetails(parseInt(expertId));
 
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'api_request',
+            endpoint: `/expert-search/${expertId}/full`,
+            method: 'GET',
+            ip: req.ip,
+            duration: `${duration}ms`
+        });
+
         return success(res, "experts.details.success", expert);
     } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error({
+            type: 'api_error',
+            endpoint: `/expert-search/${expertId}/full`,
+            error: error.message,
+            duration: `${duration}ms`
+        });
+
         return failure(res, error.message, {
-            code: error.code || "EXPERT_DETAILS_FAILED",
-            status: error.status || 500
+            code: error.code || SearchErrors.EXPERT_NOT_FOUND.code,
+            status: getErrorStatus(error)
         });
     }
 });
@@ -149,15 +211,34 @@ export const getExpertFullDetails = asyncHandler(async (req, res) => {
 export const getSimilarExperts = asyncHandler(async (req, res) => {
     const { expertId } = req.params;
     const limit = parseInt(req.query.limit) || 5;
+    const startTime = Date.now();
 
     try {
         const similarExperts = await SearchService.getSimilarExperts(parseInt(expertId), limit);
 
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'api_request',
+            endpoint: `/expert-search/${expertId}/similar`,
+            method: 'GET',
+            ip: req.ip,
+            duration: `${duration}ms`,
+            resultCount: similarExperts.length
+        });
+
         return success(res, "experts.similar.success", similarExperts);
     } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error({
+            type: 'api_error',
+            endpoint: `/expert-search/${expertId}/similar`,
+            error: error.message,
+            duration: `${duration}ms`
+        });
+
         return failure(res, error.message, {
-            code: error.code || "SIMILAR_EXPERTS_FAILED",
-            status: error.status || 500
+            code: error.code || SearchErrors.DB_ERROR.code,
+            status: getErrorStatus(error)
         });
     }
 });
@@ -169,6 +250,7 @@ export const getSimilarExperts = asyncHandler(async (req, res) => {
  */
 export const quickFilterExperts = asyncHandler(async (req, res) => {
     const { filter } = req.query;
+    const startTime = Date.now();
 
     try {
         let filters = {
@@ -237,14 +319,34 @@ export const quickFilterExperts = asyncHandler(async (req, res) => {
 
         const result = await SearchService.advancedSearch(filters);
 
+        const duration = Date.now() - startTime;
+        logger.info({
+            type: 'api_request',
+            endpoint: '/expert-search/quick-filters',
+            method: 'GET',
+            ip: req.ip,
+            filter: filter || 'none',
+            duration: `${duration}ms`,
+            resultCount: result.experts.length
+        });
+
         return success(res, "experts.quick_filter.success", {
             filter_applied: filter || 'none',
             ...result
         });
     } catch (error) {
+        const duration = Date.now() - startTime;
+        logger.error({
+            type: 'api_error',
+            endpoint: '/expert-search/quick-filters',
+            filter: filter || 'none',
+            error: error.message,
+            duration: `${duration}ms`
+        });
+
         return failure(res, error.message, {
-            code: error.code || "QUICK_FILTER_FAILED",
-            status: error.status || 500
+            code: error.code || SearchErrors.DB_ERROR.code,
+            status: getErrorStatus(error)
         });
     }
 });

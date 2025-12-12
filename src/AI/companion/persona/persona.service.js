@@ -4,10 +4,69 @@
 
 import * as personaRepo from './persona.repo.js';
 
+// ========== CACHING (Task 16) ==========
+
+const cache = {
+    personas: { data: null, expireAt: 0 },
+    userSettings: new Map() // userId -> { data, expireAt }
+};
+
+const CACHE_TTL = {
+    PERSONAS: 10 * 60 * 1000,      // 10 minutes
+    USER_SETTINGS: 5 * 60 * 1000   // 5 minutes
+};
+
+const getCachedPersonas = async () => {
+    const now = Date.now();
+    if (cache.personas.data && cache.personas.expireAt > now) {
+        return cache.personas.data;
+    }
+
+    const personas = await personaRepo.getAllPersonas();
+    cache.personas = {
+        data: personas,
+        expireAt: now + CACHE_TTL.PERSONAS
+    };
+    return personas;
+};
+
+const getCachedUserSettings = async (userId) => {
+    const now = Date.now();
+    const cached = cache.userSettings.get(userId);
+
+    if (cached && cached.expireAt > now) {
+        return cached.data;
+    }
+
+    return null; // Cache miss
+};
+
+const setCachedUserSettings = (userId, data) => {
+    cache.userSettings.set(userId, {
+        data,
+        expireAt: Date.now() + CACHE_TTL.USER_SETTINGS
+    });
+};
+
+const invalidateUserSettingsCache = (userId) => {
+    cache.userSettings.delete(userId);
+};
+
+// Cleanup expired cache entries periodically
+setInterval(() => {
+    const now = Date.now();
+    for (const [userId, cached] of cache.userSettings.entries()) {
+        if (cached.expireAt < now) {
+            cache.userSettings.delete(userId);
+        }
+    }
+}, 60 * 1000); // Every minute
+
 // ========== PERSONA MANAGEMENT ==========
 
 export const listPersonas = async () => {
-    return await personaRepo.getAllPersonas();
+    // Task 16: Use cached personas
+    return await getCachedPersonas();
 };
 
 export const getPersona = async (personaId) => {
@@ -21,6 +80,12 @@ export const getPersona = async (personaId) => {
 // ========== USER SETTINGS ==========
 
 export const getUserSettings = async (userId) => {
+    // Task 16: Check cache first
+    const cached = await getCachedUserSettings(userId);
+    if (cached) {
+        return cached;
+    }
+
     let settings = await personaRepo.getUserAISettings(userId);
 
     // Auto-create default settings if not exists
@@ -34,7 +99,38 @@ export const getUserSettings = async (userId) => {
         settings = await personaRepo.getUserAISettings(userId);
     }
 
+    // Task 16: Cache the settings
+    setCachedUserSettings(userId, settings);
+
     return settings;
+};
+
+// ========== NICKNAME VALIDATION (Task 4) ==========
+const MAX_NICKNAME_LENGTH = 50;
+
+const sanitizeNickname = (nickname) => {
+    if (nickname === null || nickname === undefined) {
+        return null;
+    }
+
+    // Must be string
+    if (typeof nickname !== 'string') {
+        return null;
+    }
+
+    // Remove XSS-risky characters: < > " ' & and control characters
+    let sanitized = nickname
+        .replace(/[<>"'&]/g, '')
+        .replace(/[\x00-\x1F\x7F]/g, '')
+        .trim();
+
+    // Limit length
+    if (sanitized.length > MAX_NICKNAME_LENGTH) {
+        sanitized = sanitized.substring(0, MAX_NICKNAME_LENGTH);
+    }
+
+    // Return null if empty after sanitization
+    return sanitized.length > 0 ? sanitized : null;
 };
 
 export const updateUserSettings = async (userId, updates) => {
@@ -53,11 +149,24 @@ export const updateUserSettings = async (userId, updates) => {
         }
     }
 
+    // Task 4: Sanitize custom_nickname
+    if (updates.custom_nickname !== undefined) {
+        updates.custom_nickname = sanitizeNickname(updates.custom_nickname);
+    }
+
     // Ensure settings exist first
     await getUserSettings(userId);
 
+    // Task 16: Invalidate cache on update
+    invalidateUserSettingsCache(userId);
+
     const updated = await personaRepo.updateUserAISettings(userId, updates);
-    return await personaRepo.getUserAISettings(userId);
+    const newSettings = await personaRepo.getUserAISettings(userId);
+
+    // Cache the new settings
+    setCachedUserSettings(userId, newSettings);
+
+    return newSettings;
 };
 
 export const selectPersona = async (userId, personaId) => {
@@ -66,8 +175,16 @@ export const selectPersona = async (userId, personaId) => {
         throw { status: 404, message: 'Persona not found' };
     }
 
+    // Task 16: Invalidate cache on persona change
+    invalidateUserSettingsCache(userId);
+
     await personaRepo.createUserAISettings(userId, { persona_id: personaId });
-    return await personaRepo.getUserAISettings(userId);
+    const newSettings = await personaRepo.getUserAISettings(userId);
+
+    // Cache the new settings
+    setCachedUserSettings(userId, newSettings);
+
+    return newSettings;
 };
 
 // ========== RELATIONSHIP GROWTH ==========
