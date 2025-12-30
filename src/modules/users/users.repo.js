@@ -21,6 +21,40 @@ export async function createUser({ handle, email, passwordHash }) {
   return rows[0];
 }
 
+// NEW: Create user with display_name (creates user + profile in transaction)
+export async function createUserWithProfile({ handle, email, passwordHash, displayName }) {
+  // Start transaction
+  const client = await (await import("../../config/db.js")).pool.connect();
+  try {
+    await client.query('BEGIN');
+
+    // Create user
+    const { rows: userRows } = await client.query(
+      `INSERT INTO app.users (handle, email, password_hash)
+       VALUES ($1, $2, $3)
+       RETURNING id, handle, email, role_primary, status, created_at`,
+      [handle, email || null, passwordHash]
+    );
+    const user = userRows[0];
+
+    // Create profile with display_name
+    await client.query(
+      `INSERT INTO app.user_profiles (user_id, display_name, is_anonymous)
+       VALUES ($1, $2, true)`,
+      [user.id, displayName]
+    );
+
+    await client.query('COMMIT');
+
+    return { ...user, display_name: displayName };
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
+  }
+}
+
 export const findAppUserById = async (id) => {
   const result = await query(
     `SELECT * FROM app.users WHERE id = $1`,

@@ -34,9 +34,19 @@ export const signRefresh = (user) =>
   });
 
 
-export async function registerStep1({ handle, email, password }) {
+export async function registerStep1({ handle, email, password, displayName }) {
   if (!handle || !password) {
     const e = new Error("handle & password are required"); e.status = 400; throw e;
+  }
+
+  // Validate display_name (required)
+  if (!displayName || !displayName.trim()) {
+    const e = new Error("display_name is required"); e.status = 400; throw e;
+  }
+
+  const trimmedDisplayName = displayName.trim();
+  if (trimmedDisplayName.length < 2 || trimmedDisplayName.length > 50) {
+    const e = new Error("display_name must be between 2 and 50 characters"); e.status = 400; throw e;
   }
 
   // Validate email if provided
@@ -58,7 +68,12 @@ export async function registerStep1({ handle, email, password }) {
   if (existed) { const e = new Error("Handle already exists"); e.status = 409; throw e; }
 
   const hash = await bcrypt.hash(password, 10);
-  const user = await UsersRepo.createUser({ handle, email: email || null, passwordHash: hash });
+  const user = await UsersRepo.createUserWithProfile({
+    handle,
+    email: email || null,
+    passwordHash: hash,
+    displayName: trimmedDisplayName
+  });
   const token = sign(user);
   return { user, token, expires_in: TOKEN_TTL };
 }

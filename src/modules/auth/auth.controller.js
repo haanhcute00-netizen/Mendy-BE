@@ -45,8 +45,8 @@ export const resetPassword = asyncHandler(async (req, res) => {
 });
 
 export const register = asyncHandler(async (req, res) => {
-  const { handle, email, password } = req.body;
-  const data = await AuthService.registerStep1({ handle, email, password });
+  const { handle, email, password, display_name } = req.body;
+  const data = await AuthService.registerStep1({ handle, email, password, displayName: display_name });
   return created(res, "auth.register.success", data);
 });
 

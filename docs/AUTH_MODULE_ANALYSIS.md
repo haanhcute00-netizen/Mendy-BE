@@ -49,7 +49,8 @@ src/config/
 {
   "handle": "username123",      // Bắt buộc - unique
   "email": "user@example.com",  // Tùy chọn - unique nếu có
-  "password": "mypassword"      // Bắt buộc
+  "password": "mypassword",     // Bắt buộc
+  "display_name": "Nguyễn Văn A" // Bắt buộc - 2-50 ký tự
 }
 ```
 
@@ -65,7 +66,8 @@ src/config/
       "email": "user@example.com",
       "role_primary": "SEEKER",
       "status": "ACTIVE",
-      "created_at": "2025-12-25T10:00:00Z"
+      "created_at": "2025-12-25T10:00:00Z",
+      "display_name": "Nguyễn Văn A"
     },
     "token": "eyJhbGciOiJIUzI1NiIs...",
     "expires_in": "1h"
@@ -79,24 +81,28 @@ src/config/
 | handle | Bắt buộc, unique |
 | email | Tùy chọn, format email hợp lệ, unique |
 | password | Bắt buộc |
+| display_name | Bắt buộc, 2-50 ký tự |
 
 **Error Cases:**
 | Status | Message | Nguyên nhân |
 |--------|---------|-------------|
 | 400 | "handle & password are required" | Thiếu handle hoặc password |
+| 400 | "display_name is required" | Thiếu display_name |
+| 400 | "display_name must be between 2 and 50 characters" | display_name không hợp lệ |
 | 400 | "Invalid email format" | Email không đúng định dạng |
 | 409 | "Handle already exists" | Handle đã tồn tại |
 | 409 | "Email already exists" | Email đã được sử dụng |
 
 **Flow:**
 ```
-1. Validate input (handle, email format)
+1. Validate input (handle, email format, display_name)
 2. Check handle exists → 409 nếu có
 3. Check email exists (nếu có email) → 409 nếu có
 4. Hash password với bcrypt (salt rounds = 10)
 5. Insert user vào DB với role = "SEEKER"
-6. Generate JWT access token
-7. Return user + token
+6. Insert user_profile với display_name
+7. Generate JWT access token
+8. Return user + token
 ```
 
 ---
