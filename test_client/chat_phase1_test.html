@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Phase 1 Test - Healing App</title>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #4A90A4;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin: 20px 0 10px;
+            font-size: 18px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #4A90A4;
+        }
+
+        button {
+            background: #4A90A4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background: #3d7a8c;
+        }
+
+        button.danger {
+            background: #e74c3c;
+        }
+
+        button.danger:hover {
+            background: #c0392b;
+        }
+
+        button.secondary {
+            background: #95a5a6;
+        }
+
+        .reactions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .reaction-btn {
+            background: #f0f0f0;
+            border: 2px solid transparent;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.2s;
+        }
+
+        .reaction-btn:hover {
+            background: #e0e0e0;
+            transform: scale(1.1);
+        }
+
+        .reaction-btn.active {
+            border-color: #4A90A4;
+            background: #e8f4f8;
+        }
+
+        .log {
+            background: #1e1e1e;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        .messages {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .message.mine {
+            background: #e8f4f8;
+            margin-left: 20%;
+        }
+
+        .message.deleted {
+            background: #fee;
+            color: #999;
+            font-style: italic;
+        }
+
+        .message .meta {
+            font-size: 11px;
+            color: #999;
+            margin-top: 5px;
+        }
+
+        .message .reactions-display {
+            margin-top: 8px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .message .reaction-badge {
+            background: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .message .reply-preview {
+            background: #e0e0e0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            font-size: 12px;
+            border-left: 3px solid #4A90A4;
+        }
+
+        .typing-indicator {
+            color: #999;
+            font-style: italic;
+            padding: 5px 0;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+
+        .status.online {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status.offline {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Chat Phase 1 Test - Healing App</h1>
+
+        <!-- Auth Section -->
+        <div class="section">
+            <h2>🔐 Authentication</h2>
+            <div class="form-group">
+                <label>JWT Token</label>
+                <input type="text" id="token" placeholder="Paste your JWT token here">
+            </div>
+            <div class="form-group">
+                <label>API Base URL</label>
+                <input type="text" id="baseUrl" value="http://localhost:4000">
+            </div>
+            <button onclick="connectSocket()">Connect Socket</button>
+            <button onclick="testConnection()">Test API Connection</button>
+            <span id="connectionStatus" class="status offline">Disconnected</span>
+        </div>
+
+        <div class="grid">
+            <!-- Thread Section -->
+            <div class="section">
+                <h2>💬 Threads</h2>
+                <div class="form-group">
+                    <label>Thread ID</label>
+                    <input type="number" id="threadId" placeholder="Enter thread ID">
+                </div>
+                <button onclick="joinThread()">Join Thread</button>
+                <button onclick="leaveThread()">Leave Thread</button>
+                <button onclick="loadMessages()">Load Messages</button>
+
+                <div id="typingIndicator" class="typing-indicator"></div>
+                <div id="messages" class="messages"></div>
+            </div>
+
+            <!-- Send Message Section -->
+            <div class="section">
+                <h2>📝 Send Message</h2>
+                <div class="form-group">
+                    <label>Message Content</label>
+                    <textarea id="messageContent" rows="3" placeholder="Type your message..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Reply To Message ID (optional)</label>
+                    <input type="number" id="replyToId" placeholder="Message ID to reply to">
+                </div>
+                <div class="form-group">
+                    <label>Message Type</label>
+                    <select id="messageType">
+                        <option value="TEXT">TEXT</option>
+                        <option value="VOICE">VOICE</option>
+                        <option value="IMAGE">IMAGE</option>
+                        <option value="FILE">FILE</option>
+                    </select>
+                </div>
+                <button onclick="sendMessage()">Send Message</button>
+                <button onclick="startTyping()">Start Typing</button>
+                <button onclick="stopTyping()">Stop Typing</button>
+            </div>
+        </div>
+
+        <!-- Reactions Section -->
+        <div class="section">
+            <h2>💝 Reactions (Healing-Specific)</h2>
+            <div class="form-group">
+                <label>Message ID to React</label>
+                <input type="number" id="reactMessageId" placeholder="Enter message ID">
+            </div>
+            <div class="reactions">
+                <button class="reaction-btn" onclick="addReaction('HUG')" title="Ôm ấp, đồng cảm">🤗 HUG</button>
+                <button class="reaction-btn" onclick="addReaction('STRONG')" title="Cổ vũ, mạnh mẽ">💪 STRONG</button>
+                <button class="reaction-btn" onclick="addReaction('GRATEFUL')" title="Biết ơn">🙏 GRATEFUL</button>
+                <button class="reaction-btn" onclick="addReaction('SUPPORT')" title="Ủng hộ, yêu thương">❤️
+                    SUPPORT</button>
+                <button class="reaction-btn" onclick="addReaction('UNDERSTOOD')" title="Đã hiểu, ghi nhận">✨
+                    UNDERSTOOD</button>
+                <button class="reaction-btn" onclick="addReaction('GROWTH')" title="Tiến bộ, phát triển">🌱
+                    GROWTH</button>
+            </div>
+            <button onclick="getReactions()" class="secondary">Get Reactions</button>
+            <button onclick="removeReactionPrompt()" class="danger">Remove Reaction</button>
+        </div>
+
+        <!-- Delete Section -->
+        <div class="section">
+            <h2>🗑️ Delete for Everyone</h2>
+            <div class="form-group">
+                <label>Message ID to Delete</label>
+                <input type="number" id="deleteMessageId" placeholder="Enter message ID">
+            </div>
+            <button onclick="deleteForEveryone()" class="danger">Delete for Everyone (24h limit)</button>
+        </div>
+
+        <!-- Voice Message Section -->
+        <div class="section">
+            <h2>🎤 Voice Message</h2>
+            <div class="form-group">
+                <label>Voice URL (Cloudinary/S3)</label>
+                <input type="text" id="voiceUrl" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>Duration (seconds)</label>
+                <input type="number" id="voiceDuration" placeholder="60">
+            </div>
+            <button onclick="sendVoiceMessage()">Send Voice Message</button>
+        </div>
+
+        <!-- Log Section -->
+        <div class="section">
+            <h2>📋 Event Log</h2>
+            <button onclick="clearLog()">Clear Log</button>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <script>
+        let socket = null;
+        let currentThreadId = null;
+        const baseUrl = () => document.getElementById('baseUrl').value;
+        const token = () => document.getElementById('token').value;
+
+        function log(msg, type = 'info') {
+            const logEl = document.getElementById('log');
+            const time = new Date().toLocaleTimeString();
+            const prefix = type === 'error' ? '❌' : type === 'success' ? '✅' : 'ℹ️';
+            logEl.innerHTML = `[${time}] ${prefix} ${msg}\n` + logEl.innerHTML;
+        }
+
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+
+        async function testConnection() {
+            try {
+                const res = await fetch(`${baseUrl()}/health`);
+                const data = await res.json();
+                log(`API Connected: ${JSON.stringify(data)}`, 'success');
+            } catch (e) {
+                log(`API Error: ${e.message}`, 'error');
+            }
+        }
+
+        function connectSocket() {
+            if (socket) socket.disconnect();
+
+            socket = io(baseUrl(), {
+                auth: { token: token() },
+                transports: ['websocket', 'polling']
+            });
+
+            socket.on('connect', () => {
+                log('Socket connected!', 'success');
+                document.getElementById('connectionStatus').className = 'status online';
+                document.getElementById('connectionStatus').textContent = 'Connected';
+            });
+
+            socket.on('disconnect', () => {
+                log('Socket disconnected', 'error');
+                document.getElementById('connectionStatus').className = 'status offline';
+                document.getElementById('connectionStatus').textContent = 'Disconnected';
+            });
+
+            socket.on('connect_error', (err) => {
+                log(`Socket error: ${err.message}`, 'error');
+            });
+
+            // Thread events
+            socket.on('presence:joined', (data) => log(`User ${data.userId} joined thread ${data.threadId}`));
+            socket.on('presence:left', (data) => log(`User ${data.userId} left thread ${data.threadId}`));
+
+            // Typing events
+            socket.on('user:typing', (data) => {
+                const indicator = document.getElementById('typingIndicator');
+                if (data.isTyping) {
+                    indicator.textContent = `User ${data.userId} is typing...`;
+                } else {
+                    indicator.textContent = '';
+                }
+            });
+
+            // Message events
+            socket.on('message:new', (msg) => {
+                log(`New message: ${JSON.stringify(msg)}`, 'success');
+                appendMessage(msg);
+            });
+
+            // Reaction events
+            socket.on('message:reacted', (data) => {
+                log(`Reaction added: ${data.reaction.type} on message ${data.messageId} by user ${data.reaction.userId}`, 'success');
+            });
+
+            socket.on('message:unreacted', (data) => {
+                log(`Reaction removed: ${data.type} on message ${data.messageId} by user ${data.userId}`);
+            });
+
+            // Delete events
+            socket.on('message:deleted', (data) => {
+                log(`Message ${data.messageId} deleted for everyone`, 'success');
+                const msgEl = document.querySelector(`[data-message-id="${data.messageId}"]`);
+                if (msgEl) {
+                    msgEl.classList.add('deleted');
+                    msgEl.querySelector('.content').textContent = '[Tin nhắn đã bị xóa]';
+                }
+            });
+
+            // Read events
+            socket.on('read:updated', (data) => {
+                log(`User ${data.userId} read up to message ${data.last_read_message_id}`);
+            });
+
+            // Online status
+            socket.on('user:online', (data) => log(`User ${data.userId} is online`));
+            socket.on('user:offline', (data) => log(`User ${data.userId} is offline (last seen: ${data.lastSeen})`));
+        }
+
+        function joinThread() {
+            const threadId = document.getElementById('threadId').value;
+            if (!threadId) return alert('Enter thread ID');
+            currentThreadId = Number(threadId);
+            socket.emit('thread:join', currentThreadId);
+            log(`Joining thread ${currentThreadId}...`);
+        }
+
+        function leaveThread() {
+            if (!currentThreadId) return;
+            socket.emit('thread:leave', currentThreadId);
+            log(`Left thread ${currentThreadId}`);
+            currentThreadId = null;
+        }
+
+        async function loadMessages() {
+            const threadId = document.getElementById('threadId').value;
+            if (!threadId) return alert('Enter thread ID');
+
+            try {
+                const res = await fetch(`${baseUrl()}/api/v1/chat/threads/${threadId}/messages?limit=20`, {
+                    headers: { 'Authorization': `Bearer ${token()}` }
+                });
+                const data = await res.json();
+                log(`Loaded ${data.data?.length || 0} messages`, 'success');
+
+                const container = document.getElementById('messages');
+                container.innerHTML = '';
+                (data.data || []).reverse().forEach(appendMessage);
+            } catch (e) {
+                log(`Error loading messages: ${e.message}`, 'error');
+            }
+        }
+
+        function appendMessage(msg) {
+            const container = document.getElementById('messages');
+            const div = document.createElement('div');
+            div.className = `message ${msg.deleted_for_all ? 'deleted' : ''}`;
+            div.dataset.messageId = msg.id;
+
+            let replyHtml = '';
+            if (msg.reply_to_id && msg.reply_content) {
+                replyHtml = `<div class="reply-preview">↩️ ${msg.reply_content.substring(0, 50)}...</div>`;
+            }
+
+            let reactionsHtml = '';
+            if (msg.reactions && Object.keys(msg.reactions).length > 0) {
+                reactionsHtml = '<div class="reactions-display">' +
+                    Object.entries(msg.reactions).map(([type, count]) =>
+                        `<span class="reaction-badge">${getEmoji(type)} ${count}</span>`
+                    ).join('') + '</div>';
+            }
+
+            const typeIcon = msg.message_type === 'VOICE' ? '🎤' : msg.message_type === 'IMAGE' ? '🖼️' : msg.message_type === 'FILE' ? '📎' : '';
+
+            div.innerHTML = `
+        ${replyHtml}
+        <div class="content">${typeIcon} ${msg.deleted_for_all ? '[Tin nhắn đã bị xóa]' : msg.content}</div>
+        <div class="meta">
+          ID: ${msg.id} | From: ${msg.sender_handle || msg.sender_id} | ${new Date(msg.created_at).toLocaleString()}
+          ${msg.edited_at ? '(edited)' : ''}
+        </div>
+        ${reactionsHtml}
+      `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function getEmoji(type) {
+            const map = { HUG: '🤗', STRONG: '💪', GRATEFUL: '🙏', SUPPORT: '❤️', UNDERSTOOD: '✨', GROWTH: '🌱' };
+            return map[type] || '👍';
+        }
+
+        function sendMessage() {
+            const content = document.getElementById('messageContent').value;
+            const replyToId = document.getElementById('replyToId').value;
+            const messageType = document.getElementById('messageType').value;
+
+            if (!currentThreadId) return alert('Join a thread first');
+            if (!content && messageType === 'TEXT') return alert('Enter message content');
+
+            socket.emit('message:send', {
+                threadId: currentThreadId,
+                content,
+                replyToId: replyToId ? Number(replyToId) : null,
+                messageType
+            }, (response) => {
+                if (response.ok) {
+                    log(`Message sent: ${response.message.id}`, 'success');
+                    document.getElementById('messageContent').value = '';
+                    document.getElementById('replyToId').value = '';
+                } else {
+                    log(`Send error: ${response.error}`, 'error');
+                }
+            });
+        }
+
+        function startTyping() {
+            if (!currentThreadId) return alert('Join a thread first');
+            socket.emit('typing:start', { threadId: currentThreadId });
+            log('Started typing...');
+        }
+
+        function stopTyping() {
+            if (!currentThreadId) return alert('Join a thread first');
+            socket.emit('typing:stop', { threadId: currentThreadId });
+            log('Stopped typing');
+        }
+
+        async function addReaction(type) {
+            const messageId = document.getElementById('reactMessageId').value;
+            if (!messageId) return alert('Enter message ID');
+
+            // Via Socket
+            socket.emit('reaction:add', { messageId: Number(messageId), type }, (response) => {
+                if (response.ok) {
+                    log(`Reaction ${type} added via socket`, 'success');
+                } else {
+                    log(`Reaction error: ${response.error}`, 'error');
+                }
+            });
+
+            // Or via REST API
+            // try {
+            //   const res = await fetch(`${baseUrl()}/api/v1/chat/messages/${messageId}/react`, {
+            //     method: 'POST',
+            //     headers: { 'Authorization': `Bearer ${token()}`, 'Content-Type': 'application/json' },
+            //     body: JSON.stringify({ type })
+            //   });
+            //   const data = await res.json();
+            //   log(`Reaction API response: ${JSON.stringify(data)}`, data.success ? 'success' : 'error');
+            // } catch (e) {
+            //   log(`Reaction error: ${e.message}`, 'error');
+            // }
+        }
+
+        async function getReactions() {
+            const messageId = document.getElementById('reactMessageId').value;
+            if (!messageId) return alert('Enter message ID');
+
+            try {
+                const res = await fetch(`${baseUrl()}/api/v1/chat/messages/${messageId}/reactions`, {
+                    headers: { 'Authorization': `Bearer ${token()}` }
+                });
+                const data = await res.json();
+                log(`Reactions: ${JSON.stringify(data.data)}`, 'success');
+            } catch (e) {
+                log(`Error: ${e.message}`, 'error');
+            }
+        }
+
+        function removeReactionPrompt() {
+            const messageId = document.getElementById('reactMessageId').value;
+            if (!messageId) return alert('Enter message ID');
+
+            const type = prompt('Enter reaction type to remove (HUG, STRONG, GRATEFUL, SUPPORT, UNDERSTOOD, GROWTH):');
+            if (!type) return;
+
+            socket.emit('reaction:remove', { messageId: Number(messageId), type: type.toUpperCase() }, (response) => {
+                if (response.ok) {
+                    log(`Reaction ${type} removed`, 'success');
+                } else {
+                    log(`Remove error: ${response.error}`, 'error');
+                }
+            });
+        }
+
+        async function deleteForEveryone() {
+            const messageId = document.getElementById('deleteMessageId').value;
+            if (!messageId) return alert('Enter message ID');
+
+            if (!confirm('Delete this message for everyone? This cannot be undone.')) return;
+
+            // Via Socket
+            socket.emit('message:delete', { messageId: Number(messageId) }, (response) => {
+                if (response.ok) {
+                    log(`Message ${messageId} deleted for everyone`, 'success');
+                } else {
+                    log(`Delete error: ${response.error}`, 'error');
+                }
+            });
+
+            // Or via REST API
+            // try {
+            //   const res = await fetch(`${baseUrl()}/api/v1/chat/messages/${messageId}/everyone`, {
+            //     method: 'DELETE',
+            //     headers: { 'Authorization': `Bearer ${token()}` }
+            //   });
+            //   const data = await res.json();
+            //   log(`Delete response: ${JSON.stringify(data)}`, data.success ? 'success' : 'error');
+            // } catch (e) {
+            //   log(`Delete error: ${e.message}`, 'error');
+            // }
+        }
+
+        async function sendVoiceMessage() {
+            const threadId = document.getElementById('threadId').value;
+            const voiceUrl = document.getElementById('voiceUrl').value;
+            const voiceDuration = document.getElementById('voiceDuration').value;
+
+            if (!threadId) return alert('Enter thread ID');
+            if (!voiceUrl) return alert('Enter voice URL');
+
+            try {
+                const res = await fetch(`${baseUrl()}/api/v1/chat/threads/${threadId}/voice`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token()}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        voice_url: voiceUrl,
+                        voice_duration: voiceDuration ? Number(voiceDuration) : null
+                    })
+                });
+                const data = await res.json();
+                log(`Voice message response: ${JSON.stringify(data)}`, data.success ? 'success' : 'error');
+            } catch (e) {
+                log(`Voice error: ${e.message}`, 'error');
+            }
+        }
+
+        // Auto-connect if token exists in localStorage
+        window.onload = () => {
+            const savedToken = localStorage.getItem('jwt_token');
+            if (savedToken) {
+                document.getElementById('token').value = savedToken;
+            }
+        };
+
+        // Save token to localStorage
+        document.getElementById('token').addEventListener('change', (e) => {
+            localStorage.setItem('jwt_token', e.target.value);
+        });
+    </script>
+</body>
+
+</html>
