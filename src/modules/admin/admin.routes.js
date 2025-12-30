@@ -128,6 +128,17 @@ import {
   getComparisonAnalytics
 } from "./admin.analytics.controller.js";
 
+// Import enhanced analytics controllers (NEW)
+import {
+  getCohortAnalysis,
+  getSessionQualityAnalytics,
+  getExpertPerformanceAnalytics,
+  getFinancialHealthDashboard,
+  getContentEngagementAnalytics,
+  exportAnalyticsData,
+  getAnomalyAlerts
+} from "./admin.analytics.enhanced.js";
+
 const router = Router();
 
 // Apply admin middleware to all routes
@@ -160,6 +171,17 @@ router.get("/analytics/user-growth", getUserGrowthAnalytics);      // User growt
 router.get("/analytics/bookings-detailed", getBookingAnalyticsDetailed);  // Detailed booking analytics
 router.get("/analytics/realtime", getRealTimeMetrics);             // Real-time metrics (last 24h, 1h, 15m)
 router.get("/analytics/comparison", getComparisonAnalytics);       // Period comparison (day/week/month)
+
+// ============================================
+// NEW ENHANCED ANALYTICS ROUTES
+// ============================================
+router.get("/analytics/cohort", getCohortAnalysis);                // Cohort analysis - user retention
+router.get("/analytics/session-quality", getSessionQualityAnalytics);  // Session quality metrics
+router.get("/analytics/expert-performance", getExpertPerformanceAnalytics);  // Expert performance
+router.get("/analytics/financial-health", getFinancialHealthDashboard);  // Financial health dashboard
+router.get("/analytics/content-engagement", getContentEngagementAnalytics);  // Content engagement
+router.get("/analytics/export", exportAnalyticsData);              // Export analytics data (CSV/JSON)
+router.get("/analytics/alerts", getAnomalyAlerts);                 // Anomaly detection alerts
 
 // User management routes
 router.get("/users", getUsers);

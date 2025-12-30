@@ -95,19 +95,30 @@ export const googleAuth = passport.authenticate("google", {
 
 export const googleCallback = (req, res, next) => {
   passport.authenticate("google", { session: false }, async (err, user) => {
+    const frontendUrl = process.env.FRONTEND_URL || 'https://mendy-three.vercel.app';
+
     if (err || !user) {
       console.error("Google OAuth error:", err);
-      return unauthorized(res, "auth.login.invalidCredentials");
+      // Redirect về FE với error
+      return res.redirect(`${frontendUrl}/auth/callback?error=login_failed`);
     }
 
     const accessToken = AuthService.signAccess(user);
     const refreshToken = AuthService.signRefresh(user);
 
-    return success(res, "auth.login.success", {
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      user,
-    });
+    // Redirect về Frontend với data
+    const responseData = {
+      success: true,
+      message: "Đăng nhập thành công",
+      data: {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        user,
+      }
+    };
+
+    const encodedData = encodeURIComponent(JSON.stringify(responseData));
+    return res.redirect(`${frontendUrl}/auth/callback?data=${encodedData}`);
   })(req, res, next);
 };
 
